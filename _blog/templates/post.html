@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %} {{ page_title }} - {{ site_title }} {% endblock %}
+
+{% block content %}
+    <div itemscope itemtype="http://schema.org/NewsArticle">
+    <meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="http://{{ site_url }}/{{ page_url }}"/>
+    <div class="page-header">
+      <h3 itemprop="name">{{ page_title }}</h3>
+      {% if page_brefing %}<p class="lead" itemprop="description">{{ page_brefing }}</p>{% endif %}
+      {% if page_date %}
+        <small>
+          <p class="text-right">
+            ارسال شده <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+                توسط <span itemprop="name">{{ page_author }}</span>
+              </span>
+              در تاریخ <span itemprop="datePublished">{{ page_date }}</span>
+          </p>
+        </small>
+      {% endif %}
+    </div>
+      <section itemprop="articleBody">
+        {{ page_content }}
+      </section>
+      <div>
+        برچسب ها:
+      {% for tag in page_tags %}
+        <a href="/tag/{{ tag|replace(' ', '-') }}.html">
+            <span class="label label-default" itemprop="about">{{ tag }}</span>
+        </a>
+      {% endfor %}
+    </div>
+    </div>
+{% endblock %}

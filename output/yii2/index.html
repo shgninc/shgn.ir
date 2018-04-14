@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+
+        <title>PHP, frameworks, Yii2</title>
+
+        <meta name="description" content="What's going on with PHP and frameworks. Yii2">
+        <meta name="author" content="Alexander Makarov">
+        <meta name="translator" content="Seyed Sajjad Shahcheraghean">
+
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="PHP,%20frameworks,%20Yii2_files/reveal.css">
+        <link rel="stylesheet" href="PHP,%20frameworks,%20Yii2_files/samdark.css" id="theme">
+        <link rel="stylesheet" href="PHP,%20frameworks,%20Yii2_files/style.css">
+        <link rel="stylesheet" href="PHP,%20frameworks,%20Yii2_files/style-rtl.css">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="PHP,%20frameworks,%20Yii2_files/zenburn.css">
+
+        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+        <script>
+            document.write( '<link rel="stylesheet" href="../../css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script><link rel="stylesheet" href="PHP,%20frameworks,%20Yii2_files/paper.css" type="text/css" media="print">
+
+        <!--[if lt IE 9]>
+<script src="../../lib/js/html5shiv.js"></script>
+<![endif]-->
+    </head>
+
+    <body style="transition: -moz-transform 0.8s ease 0s;">
+
+        <!--
+        HOTKEYS:
+          - s
+          - ESC
+          - b
+        -->
+        <div class="reveal default center">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div style="width: 960px; height: 700px; transform: translate(-50%, -50%) scale(1) translate(50%, 50%);" class="slides">
+
+                <section class="present" style="top: -350px; display: block;">
+                    <section>
+                    <h1>PHP, frameworks, Yii2</h1>
+                    <p>
+                        <a class="roll" href="http://rmcreative.ru/author"><span data-title="Alexander Makarov">Alexander Makarov</span></a> |
+                        <a class="roll" href="http://shgn.ir"><span data-title="سید سجاد شاهچراغیان">سید سجاد شاهچراغیان</span></a>
+                    </p>
+                    <p>
+                        <small>
+                            <a class="roll" href="http://www.yiiframework.com/"><span data-title="Yii core team,">Yii core team,</span></a>
+                            <a class="roll" href="http://www.stay.com/"><span data-title="Stay.com,">Stay.com,</span></a>
+                            <a class="roll" href="http://shgn.ir/php/yii-framework/"><span data-title="Yii فارسی">Yii فارسی</span></a>
+                        </small>
+                    </p>
+
+                    <p>
+                        <a class="roll" href="http://shgn.ir/" title="دست نوشته های یک تازه کار"><span data-title="دست نوشته های یک تازه کار">دست نوشته های یک تازه کار</span></a>
+                    </p>
+
+                    <ul class="sponsors">
+                        <li><img src="PHP,%20frameworks,%20Yii2_files/sponsor_microsoft.png" alt="Microsoft"></li>
+                        <li><img src="PHP,%20frameworks,%20Yii2_files/sponsor_odesk.png" alt="oDesk"></li>
+                        <li><img src="PHP,%20frameworks,%20Yii2_files/sponsor_magento.png" alt="Magento"></li>
+                        <li><img src="PHP,%20frameworks,%20Yii2_files/sponsor_hostingmaks.png" alt="HostingMaks"></li>
+                        <li><img src="PHP,%20frameworks,%20Yii2_files/sponsor_jelastic.png" alt="Jelastic"></li>
+                        <li><img src="PHP,%20frameworks,%20Yii2_files/sponsor_global_technology_foundation.png" alt="Global technology foundation"></li>
+                        <li><img src="PHP,%20frameworks,%20Yii2_files/sponsor_stfalcon.png" alt="stfalcon.com"></li>
+                    </ul>
+
+                    <a class="roll" href="http://slides.rmcreative.ru/2013/php-frameworks-yii2-en">
+                        <span data-title="نسخه انگلیسی اسلایدهای Yii2">
+                            نسخه انگلیسی اسلایدهای Yii2
+                        </span>
+                    </a>
+                    </section>
+                    <section>
+                        <h2>توضیحاتی درباره این اسلاید</h2>
+                        <p>این اسلاید توسط آقای الکساندر ماکاروف، که یکی از توسعه دهندگان اصلی فریمورک Yii هستند در همایشی به نام، همایش روز فریمورک
+                            این مطالب را ارائه کرده اند که شامل:
+                        </p>
+                    </section>
+                    <section>
+                        <ul>
+                            <li>نگاهی اجمالی به زبان های توسعه وب</li>
+                            <li>نگاهی اجمالی به مبحث فریمورک ها به ویژه ZF2 و Symphony2</li>
+                            <li>معرفی اجمالی فریمورک Yii</li>
+                            <li>نگاهی عمیق تر به فریمورک Yii</li>
+                            <li>معرفی نسخه ۲ فریمورک Yii</li>
+                            <li>بیان مختصری پیرامون ساختار آن</li>
+                            <li>بیان تفاوت های ساختاری جدید در آن</li>
+                            <li>بررسی عمیق تر AR</li>
+                            <li>بررسی کمک کننده ها</li>
+                            <li>بررسی خطایاب ها</li>
+                            <li>نگاهی اجمالی به مبحث i18n</li>
+                            <li>موارد پیشبینی شده برای آینده</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>سخن مترجم</h2>
+                        <p> با توجه به پیشرفت روز افزون و سریع فریمورک ها در php دیگر جایی برای درنگ و زمانی برای سرگردانی مابین انواع فریمورک های بیشمار
+                            PHP باقی نمی ماند. پس تقاضا می شوند این اسلایدها را تا به انتها مشاهده کرده سپس تصمیم گیری کنید.
+                            البته در زمینه های قدرت و سرعت و کارآیی و دیگر مؤلفه ها برای انتخاب یک فریمورک مباحث بسیار زیاد شده
+                            است، اما درگیر شدن یک برنامه نویس مبتدی در این مباحث برابر است با ضایع شدن عمرش که باز نمی گردد.
+                            لازم به ذکر است که بسیار از مطالب در این اسلایدها ممکن است کلی بیان شده باشند و دلیل آن هم این است
+                            که این اسلایدها صرفا برای معرفی فریمورک Yii به ویژه نسخه ۲ آن در آن همایش تهیه شده است که تصاویر آن
+                            را که حاوی توضیحات آقای ماکاروف، البته به زبان روسی است، را در آدرس زیر مشاهده نمایید.
+                        </p>
+                        <a class="roll" href="youtube.com/watch?v=vsjWXUlzxvk" target="_blank"><span data-title="October 12 - Php Frameworks Day, Kiev">October 12 - Php Frameworks Day, Kiev</span></a>
+                    </section>
+                </section>
+
+                <section class="future" style="top: -160px; display: block;">
+                    <h2>PHP بزرگترین است!</h2>
+                    <ul>
+                        <li>بهترن انتخاب برای طراحی و توسعه وب است.</li>
+                        <li><a class="roll" href="http://w3techs.com/technologies/overview/programming_language/all">
+                                <span data-title="ابزاری است که بیشترین استفاده را در این زمینه دارد">
+                                    ابزاری است که بیشترین استفاده را در این زمینه دارد.
+                                </span></a> (81%!).</li>
+                        <li>استفاده از زبان برنامه نویسی ای که بیشتر فریمورک ها با آن ارائه شده اند لذت بخش است.</li>
+                    </ul>
+                </section>
+
+                <section class="future" style="top: -269.5px; display: block;">
+                    <h2>PHP در زمینه های زیر در حال<strong>آسان تر</strong> و پیشرفته تر شدن است</h2>
+
+                    <ul>
+                        <li>کارآیی.</li>
+                        <li>کد.</li>
+                        <li>API برای هش کردن کلمات عبور.</li>
+                        <li>سازنده ها.</li>
+                        <li>وب سرور داخلی.</li>
+                        <li><a class="roll" href="http://www.slideshare.net/jpauli/php55-new-features-23608435">
+                                <span data-title="و بیشتر ...">
+                                    و بیشتر ...
+                                </span></a></li>
+                    </ul>
+                </section>
+
+                <section class="future" style="top: -84px; display: block;">
+                    <h2>و این <strong>شگفت انگیز</strong> است!</h2>
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h2>مواردی هم وجود دارد که ناراحت کننده است</h2>
+
+                    <ul>
+                        <li><a class="roll" href="http://blog.ircmaxell.com/2013/09/rambling-on-internals.html">
+                                <span data-title="افراد خسته و عصبانی می شوند و بعد آن را ترک می کنند">
+                                    افراد خسته و عصبانی می شوند و بعد آن را ترک می کنند.
+                                </span></a></li>
+                        <li>شالوده و زیربنای آن خیلی قدیمی است.</li>
+                        <li>تیم هسته PHP خیلی بزرگ نیست.</li>
+                    </ul>
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h2>PHP به شما نیاز دارد!</h2>
+
+                    <ul>
+                        <li><a class="roll" href="http://www.php.net/get-involved.php">
+                                <span data-title="get-involved">get-involved</span></a></li>
+                        <li><a class="roll" href="http://www.slideshare.net/pierrej/php-core-get-rid-of-bugs-and-contribute">
+                                <span data-title="بیشتر در اسلایدهای Pierre Joye">
+                                    بیشتر در اسلایدهای Pierre Joy
+                                </span></a></li>
+                    </ul>
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h2>خوب <strong>فریمورک ها</strong> چطور؟</h2>
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h2>اول خبرهای خوب</h2>
+
+                    <ul>
+                        <li><a class="roll" href="https://github.com/"><span data-title="Github">Github</span></a> یک مکانی خوب برای کدهای PHP است.</li>
+                        <li>PSR-0 و Composer (ضمن تشکر از <a class="roll" href="http://www.php-fig.org/"><span data-title="php-fig">php-fig</span></a>).</li>
+                        <li>فریمورک های <strong>پایدار، دارای پشتیبانی و عقب افتاده سازگار</strong>
+                            وجود دارند.</li>
+                    </ul>
+
+                    <img src="PHP,%20frameworks,%20Yii2_files/github.png" alt="GitHub">
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h2>و اکنون <strong>درباره خبرهای ناخوشایند...</strong></h2>
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h2>عوارض جانبی</h2>
+
+                    <ul>
+                        <li><a class="roll" href="http://framework.zend.com/"><span data-title="ZF 2">ZF 2</span></a> و <a class="roll" href="http://symfony.com/"><span data-title="Symfony 2">Symfony 2</span></a> بسیار انعطاف پذیر و پیچیده هستند.</li>
+                        <li>حتی بیشتر از آن چیزی که ZF1 و Symfony 1 بودند.</li>
+                        <li>خیلی ها فکر می کنند که فقط اینها راه حل درست و مناسب هستند.</li>
+                    </ul>
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <p>تمامی مشکلات در علم کامپیوتر از طریق راههای غیر متعارف
+                        دیگر قابل حل هستند ... به غیر از مشکلاتی که از طریق لایه های زیادی
+                        از این راه ها به وجود آمده اند.</p>
+                    <br>
+                    <p style="text-align: right; margin-right: 20px; font-style: italic">David Wheeler</p>
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h2><strong>چرا</strong> چیزهایی را که می توانند ساده باشند، <strong>پیچیده</strong> می کنیم؟ </h2>
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h2>پیچیده کردن یک چیز ساده <strong>مشکل تر</strong> از ایجاد آن چیز به صورت
+                        <strong>پیچیده</strong> است.</h2>
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h2>اما دلیل پیچیدگی چیست؟</h2>
+
+                    <ul>
+                        <li><strong>همه قالب ها را می شناسند</strong>. وقتی که نام قالب ها در interfaceها و متدها است همه چیز روشن و واضح است.</li>
+                        <li><strong>آزمایش آن ساده تر است</strong>.</li>
+                        <li>اما <strong>چه می شود اگر</strong> تصمیم به تعویض یک DBMS با دیگری داشته باشیم؟ چه می شود اگر تصمیم به جابجایی HTTP با چیز دیگری را داشته باشیم؟ و چه می شود اگر ...
+                        </li>
+                    </ul>
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h2>نتیجه تمام آنها در این موارد است</h2>
+
+                    <ul>
+                        <li><strong>سوء تفاهم، عادت به قالب ها</strong>. قالب ها معمولا درباره نحوه پیاده سازی هستند اما نه درباره چرایی و چگونگی کاری که انجام می دهند.</li>
+                        <li>بعضی وقتها آزمایش کردن آسان است اما<strong> نوشتن روزانه کدها و خطایابی و آموختن مهمتر است</strong>.</li>
+            <li>لایه های زیادی وجود دارند. شما می توانید آزمایش های نامتعارفی را انجام دهید، اما شما روزانه با APIهای فریمورک سر و کار دارید.</li>
+                        <li><strong>آن روی سکه انعطاف پذیری پیچیدگی است</strong>. عدم انعطاف پذیری به ندرت مورد نیاز است.</li>
+                        <li><strong>شما نمی توانید چیزهای روتین</strong> را به برنامه نویسان شایسته
+                            <strong>بدون صرف زمانی مهم برای آموزش آنها</strong> بدهید.</li>
+                    </ul>
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h2>در نتیجه، آیا SF2 و ZF2 <strong>مضر</strong>هستند؟</h2>
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h2>خیر. فقط <strong>نوع دیدگاهشان متفاوت</strong> است.</h2>
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h2>SF2 و ZF2 فقط دارای پیچیدگی نیستند بلکه</h2>
+
+                    <ul>
+                        <li>APIها پایدار.</li>
+                        <li>کدهای مطمئن.</li>
+                        <li>نسخه های قدیمی سازگار.</li>
+                        <li>پشتیبانی از آن فریمورک برای سالهای متمادی در آینده.</li>
+                        <li>مستندات بسیار خوب.</li>
+                        <li>پشتیبانی تجاری, آموزشهای مرتب و سازماندهی شده (که Yii هنوز این را ندارد).</li>
+                        <li>...؟</li>
+                    </ul>
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h2>پس چه باید کرد؟</h2>
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h2>انتخاب یک فریمورک کاربردی و علمی</h2>
+
+                    <ul>
+                        <li>بدون پیچیدگی خیلی زیاد.</li>
+                        <li>یادگیری آسان.</li>
+                        <li>مرموز نبودن.</li>
+                        <li>لایه های کمتر.</li>
+                        <li>تنظیمات کمتر.</li>
+                        <li>APIهای ساده و پایدار.</li>
+                    </ul>
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <img src="PHP,%20frameworks,%20Yii2_files/yii.png" alt="Yii">
+                    <br>
+                    فریمورک
+                    <h3><strong>کاربردی و عملی</strong></h3>
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h2>فریمورک عادی و معمولی افسانه است</h2>
+
+                    <ul>
+                        <li><strong>اختراع مجدد چرخ</strong> = بد.</li>
+                        <li><strong><a class="roll" href="http://fa.wikipedia.org/wiki/%D8%AA%D8%B2%D8%B1%DB%8C%D9%82_%D9%86%DB%8C%D8%A7%D8%B2%D9%85%D9%86%D8%AF%DB%8C">
+                            <span data-title="تزریق وابستگی"> تزریق وابستگی </span></a> و قالب های آسان</strong> = خوب.</li>
+                        <li><strong>ارائه برخی ویژگی های جدید</strong> = بهتر از بقیه.</li>
+                        <li><strong>بدون وابستگی</strong> = همیشه بهتره.</li>
+                        <li><strong>فاقد ویژگی برخی ویژگی ها</strong> = بد.</li>
+                    </ul>
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h2>واقعا مهم است که</h2>
+
+                    <ul>
+                        <li><strong>یادگیری</strong> آسان و ساده.</li>
+                        <li><strong>خطایابی</strong> و
+                            <strong>رفع خطای</strong> ساده.</li>
+                        <li>سر راه قرار نگرفتن و مانع نشدن.</li>
+                        <li><strong>جامعه</strong> فعال و صمیمی.</li>
+                        <li><strong>نسخه های قدیمی سازگار</strong> و
+                            <strong>پایدار</strong>.</li>
+                        <li>اعمال <strong>تنظیمات</strong> و
+                            <strong>تغییرات</strong> ساده و راحت.</li>
+                        <li><strong>دوستش داشته باشید</strong> ;)</li>
+                    </ul>
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <img src="PHP,%20frameworks,%20Yii2_files/history.png" alt="Yii history">
+
+                    <div style="direction: ltr;text-align: left">Prado, с 2004 → Yii 1.0, 2008 → Yii 1.1, 2010 → ;)</div>
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h2>Yii چیست؟</h2>
+
+                    <ul>
+                        <li>PHP5 MVC.</li>
+                        <li>متعادل، پایدار و دارای پشتیبانی.</li>
+                        <li><a class="roll" href="https://github.com/yiisoft/yii2/blob/master/docs/guide/database-basics.md#basic-sql-queries"><span data-title="DAO">DAO</span></a>, <a class="roll" href="https://github.com/yiisoft/yii2/blob/master/docs/guide/active-record.md"><span data-title="AR">AR</span></a>, <a class="roll" href="https://github.com/yiisoft/yii2/blob/master/docs/guide/migration.md"><span data-title="migrations">migrations</span></a>.</li>
+                        <li><a class="roll" href="https://github.com/yiisoft/yii2/blob/master/docs/guide/caching.md"><span data-title="Caching">Caching</span></a></li>
+                        <li><a class="roll" href="https://github.com/yiisoft/yii2/blob/master/docs/guide/form.md"><span data-title="Forms">Forms</span></a>.</li>
+                        <li><a class="roll" href="https://github.com/yiisoft/yii2/blob/master/docs/guide/error.md"><span data-title="error handler">error handler</span></a>, <a class="roll" href="https://github.com/yiisoft/yii2/blob/master/docs/guide/logging.md"><span data-title="log">log</span></a>.</li>
+                        <li><a class="roll" href="https://github.com/yiisoft/yii2/blob/master/docs/guide/gii.md"><span data-title="Code generator">Code generator</span></a>.</li>
+                        <li><a class="roll" href="https://github.com/yiisoft/yii2/blob/master/docs/guide/i18n.md"><span data-title="I18n(CLDR)">I18n(CLDR)</span></a>.</li>
+                        <li>Widgets.</li>
+                        <li>گواهی نامه <a class="roll" href="http://www.yiiframework.com/license/"><span data-title="BSD">BSD</span></a>.</li>
+                        <li>مستندات خوب و جامعه صمیمی.</li>
+                    </ul>
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h2>مستندات <strong>بینهایت</strong> مهم هستند</h2>
+
+                    <ul>
+                        <li>مستند سازی همزمان با کدنویسی.</li>
+                        <li>ترجمه راهنمای اصلی به ۱۶ زبان.</li>
+                        <li>مثالها و تمرین ها.</li>
+                        <li>کتابها.</li>
+                    </ul>
+
+                    <img src="PHP,%20frameworks,%20Yii2_files/docs.jpg" alt="Docs">
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h3>همچنان <strong>سریعترین</strong> فریمورک PHP<sup>*</sup></h3>
+                    <p>*<sub>به غیر از PECL و microframeworks</sub></p>
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h2>کارآیی</h2>
+                    <img src="PHP,%20frameworks,%20Yii2_files/performance.png" alt="Yii performance">
+                    <br>
+                    <a class="roll" href="http://docs.phalconphp.com/en/latest/reference/benchmark/hello-world.html"><span data-title="اندازه گیری شده توسط تیم Phalcon">اندازه گیری شده توسط تیم Phalcon</span></a>
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    ضمن تشکر از جامعه Yii، این فریمورک<strong> سریعتر</strong> و<strong >مصرف حافظه اش</strong> کمتر شده است
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <img src="PHP,%20frameworks,%20Yii2_files/projects.png" alt="Projects">
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <img src="PHP,%20frameworks,%20Yii2_files/projects_int.png" alt="And more projects">
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+
+                    همچین چیزی در Yii وجود ندارد:
+
+                    <div style="direction: ltr"><code>
+                        setMyCoolFactoryDependencyInjectionContainer()
+                        </code></div>
+
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    Yii توانایی استفاده از Symfony 2, ZF2 و کامپوننیت هایی که قابل بارگذاری با composer هستند، را دارد.
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h2>Yii یک فریمورک <strong>کاربردی</strong> است</h2>
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h2>حالا درباره Yii2</h2>
+
+                    <img src="PHP,%20frameworks,%20Yii2_files/yay.jpg">
+
+                    <ul>
+                        <li><a class="roll" href="https://github.com/yiisoft/yii2/"><span data-title="https://github.com/yiisoft/yii2/">https://github.com/yiisoft/yii2/</span></a> composer مورد نیاز است.</li>
+                        <li><a class="roll" href="https://github.com/yiisoft/yii2/blob/master/docs/guide/index.md"><span data-title="پیش نویس مستندات">پیش نویس مستندات</span></a></li>
+                    </ul>
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h2>تفاوت های آن با نسخه ۱.۱</h2>
+                    <ul>
+                        <li>به هیچ عنوان با نسخه ۱.۱ سازگار نیست</li>
+                        <li>تمامی ایدهای خوب نسخه قدیمی حفظ شده اما ساختار آن فرق کرده است</li>
+                    </ul>
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h2>پیش نیاز ها</h2>
+
+                    <ul style="direction: ltr;text-align: left">
+                        <li>PHP 5.3.7+</li>
+                        <li>mb_string</li>
+                        <li>PDO</li>
+                        <li>intl</li>
+                    </ul>
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h2>اما چرا php 5.4 یا بالاتر نه؟</h2>
+
+                    <ul>
+                        <li>شما می توانید از نسخه ۵.۴ دربرنامه هایتا استفاده کنید.</li>
+                        <li>نسخه های بالاتر PHP برای خود فریمورک مورد نیاز نیستند.</li>
+                        <li>با توجه به وضعیت فعلی، استفاده از این نسخه و بالاتر هنوز زود است.</li>
+                    </ul>
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h2>namespaces</h2>
+
+                    <ul>
+                        <li>تمامی کلاسها دارای فضای نام شده اند..</li>
+                        <li>نام کلاسها بدون پیشوند <code>C</code>.</li>
+                        <li><a class="roll" href="https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md"><span data-title="PSR-0">PSR-0</span></a>.</li>
+                        <li>فضاهای نام تو در تو خیلی عمیق نیستند.</li>
+                    </ul>
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h2>کلاسهای پایه</h2>
+
+                    <ul style="direction: ltr;text-align: left">
+                        <li style="padding-left: 0;"><code>\yii\base\Object</code> — getters and setters, <code>init</code> method,
+                            configuring via array, <code>Object::className()</code>.</li>
+                        <li style="padding-left: 0;"><code>\yii\base\Component extends Object</code> — event, behavior.</li>
+                    </ul>
+
+                    <pre><code class="php">
+<span class="class"><span class="keyword">class</span> <span class="title">GoogleMap</span> <span class="keyword">extends</span> \<span class="title">yii</span>\<span class="title">base</span>\<span class="title">Object</span>
+{</span>
+  <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">(<span class="variable">$param1</span>, <span class="variable">$param2</span>, <span class="variable">$config</span> = array<span class="params">()</span>)</span>
+  {</span>
+    <span class="comment">// ...</span>
+    <span class="keyword">parent</span>::__construct(<span class="variable">$config</span>);
+  }
+
+  <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">init</span><span class="params">()</span>
+  {</span>
+    <span class="comment">// ...</span>
+    <span class="keyword">parent</span>::init();
+  }
+}
+				</code></pre>
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h2>ایجاد یک شئ</h2>
+                    <pre><code class="php">
+<span class="variable">$object</span> = \Yii::createObject(<span class="keyword">array</span>(
+  <span class="string">'class'</span> =&gt; <span class="string">'\app\components\GoogleMap'</span>,
+  <span class="string">'apiKey'</span> =&gt; <span class="string">'xyz'</span>,
+  <span class="string">'apiSecret'</span> =&gt; <span class="string">'cde'</span>,
+), <span class="variable">$param1</span>, <span class="variable">$param2</span>);
+				</code></pre>
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h2>رویدادها</h2>
+                    <pre><code class="php">
+<span class="variable">$component</span>-&gt;on(<span class="variable">$eventName</span>, <span class="variable">$handler</span>);
+<span class="variable">$component</span>-&gt;off(<span class="variable">$eventName</span>, <span class="variable">$handler</span>);
+<span class="variable">$component</span>-&gt;trigger(<span class="variable">$eventName</span>, Event <span class="variable">$eventObject</span> = null);
+				</code></pre>
+
+                    <p>رویدادهای سراسری:</p>
+                    <pre><code class="php">
+<span class="comment">// raising event</span>
+\Yii::<span class="variable">$app</span>-&gt;trigger(<span class="variable">$eventName</span>);
+
+<span class="comment">// subscribing</span>
+\Yii::<span class="variable">$app</span>-&gt;on(<span class="variable">$eventName</span>, <span class="variable">$handler</span>);
+				</code></pre>
+
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h2>شفاف سازی</h2>
+
+                    <ul>
+                        <li>ساختار بهتر کلاسها.</li>
+                        <li>نامگذاری بهتر.</li>
+                        <li>عدم استفاده از مجموعه های خارجی بیشتر (به دلیل  <a class="roll" href="http://us3.php.net/manual/en/book.spl.php"><span data-title="SPL">SPL</span></a> در PHP 5.3).</li>
+                    </ul>
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h2>ویوها</h2>
+
+                    <ul>
+                        <li>شئ <code>View</code> — داده ها، assetها <code>نمایش</code>.</li>
+                        <li>خصیصه <code>this$</code> در قالبها به شئ ویو اشاره دارد.</li>
+                        <li>خصیصه <code>this-&gt;context$</code> به کنترلر یا ویجت اشاره دارد.</li>
+                        <li>قابل استفاده در برنامه های کنسول.</li>
+                        <li>قالب ها نسبت به نسخه ۱.۱ تفاوت دارند.</li>
+                        <li>قابلیت اجرا از طریق (<a class="roll" href="http://smarty.com/"><span data-title="Smarty">Smarty</span></a>, <a class="roll" href="http://twig.sensiolabs.org/"><span data-title="Twig">Twig</span></a>).</li>
+                    </ul>
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h2>ویجت ها</h2>
+
+                    <pre><code class="php">
+<span class="keyword">use</span> \yii\widgets\Menu;
+
+<span class="comment">// ...</span>
+
+<span class="keyword">echo</span> Menu::widget(<span class="keyword">array</span>(
+  <span class="string">'items'</span> =&gt; <span class="variable">$items</span>,
+));
+				</code></pre>
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h2>ActiveForm</h2>
+                    <pre><code class="php">
+<span class="keyword">use</span> yii\widgets\ActiveForm;
+
+<span class="preprocessor">&lt;?php</span> <span class="variable">$form</span> = ActiveForm::begin(); <span class="preprocessor">?&gt;</span>
+  <span class="preprocessor">&lt;?php</span> <span class="keyword">echo</span> <span class="variable">$form</span>-&gt;field(<span class="variable">$model</span>, <span class="string">'username'</span>)-&gt;textInput(); <span class="preprocessor">?&gt;</span>
+  <span class="preprocessor">&lt;?php</span> <span class="keyword">echo</span> <span class="variable">$form</span>-&gt;field(<span class="variable">$model</span>, <span class="string">'password'</span>)-&gt;passwordInput(); <span class="preprocessor">?&gt;</span>
+  &lt;div class=<span class="string">"form-actions"</span>&gt;
+    <span class="preprocessor">&lt;?php</span> <span class="keyword">echo</span> Html::submitButton(<span class="string">'Login'</span>); <span class="preprocessor">?&gt;</span>
+  &lt;/div&gt;
+<span class="preprocessor">&lt;?php</span> ActiveForm::end(); <span class="preprocessor">?&gt;</span>
+				</code></pre>
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h2>بسته Asset</h2>
+
+                    <ul>
+                        <li>اسکریپت ها توسط پکیج ها ثبت می شوند (بسته ای).</li>
+                        <li>برطرف شدن مشکل وابستگی اسکریپت ها.</li>
+                        <li>می توانید با استفاده از فرمان کنسول، بسته ها را فشرده و منتقل کنید.</li>
+                    </ul>
+
+                    <pre><code class="php">
+app\config\AppAsset::<span class="keyword">register</span>($<span class="keyword">this</span>);
+				</code></pre>
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h2>کنترلر</h2>
+
+                    <ul>
+                        <li class="php"><code>return $this-&gt;render(...);</code></li>
+                        <li>APIهای وب و کنسول خیلی شبیه به هم هستند.</li>
+                        <li>request و response.</li>
+                        <li>فیلترها اکنون به صورت behaviors هستند.</li>
+                    </ul>
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h2>مدل</h2>
+
+                    <ul>
+                        <li>تعاریف اعتبار سنجی ها از تعاریف سناریوها جدا شده است.</li>
+                        <li>مقداردهی های بسته ها مثل زیر بدون اعتبارسنجی و سناریو ها ناممکن است.</li>
+                    </ul>
+
+                    <p>کلاس <code>CFormModel</code> از زمانی که <code>Model</code> نقش آن را بازی می کند، حذف شده است. کار با فرمها ساده تر شده.</p>
+                    <pre><code class="php">
+<span class="variable">$model</span>->attributes = <span class="string">$_POST</span>;
+				</code></pre>
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h2>AR, DAO, Query Builder, criteria</h2>
+
+                    <p>کد ثابت و یکسان برای همه.</p>
+
+                    <pre><code class="php">
+<span class="variable">$query</span> = new \yii\db\Query;
+<span class="variable">$query</span>-&gt;select(<span class="string">'id, name'</span>)
+  -&gt;from(<span class="string">'tbl_user'</span>)
+  -&gt;orderBy(<span class="string">'id DESC'</span>)
+  -&gt;limit(<span class="number">10</span>);
+
+<span class="variable">$command</span> = <span class="variable">$query</span>-&gt;createCommand();
+echo <span class="variable">$command</span>-&gt;sql;
+<span class="variable">$rows</span> = <span class="variable">$command</span>-&gt;queryAll();
+
+<span class="variable">$users</span> = User::model()-&gt;find()
+  -&gt;orderBy(<span class="string">'id DESC'</span>)
+  -&gt;limit(<span class="number">10</span>)
+  -&gt;all();
+				</code></pre>
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h2>مدل AR و finder از هم جدا شدند</h2>
+
+                    <pre><code class="php">
+<span class="variable">$finder</span> = Post::find()-&gt;where(<span class="keyword">array</span>(<span class="string">'a'</span> =&gt; <span class="number">10</span>));
+<span class="variable">$finder2</span> = <span class="keyword">clone</span> <span class="variable">$finder</span>;
+<span class="variable">$finder2</span>-&gt;addWhere(<span class="keyword">array</span>(<span class="string">'b'</span> =&gt; <span class="number">1</span>));
+
+<span class="variable">$model</span> = <span class="variable">$finder</span>-&gt;one();
+<span class="variable">$model2</span> = <span class="variable">$finder2</span>-&gt;one();
+
+<span class="comment">// shortcuts</span>
+<span class="variable">$post</span> = Post::find(<span class="number">10</span>); <span class="comment">// pk = 10</span>
+<span class="variable">$post</span> = Post::find(<span class="keyword">array</span>(<span class="string">'a'</span> =&gt; <span class="number">10</span>, <span class="string">'b'</span> =&gt; <span class="number">1</span>)); <span class="comment">// where a = 10 and b = 1</span>
+				</code></pre>
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h2>ارتباطات در AR</h2>
+
+                    <ul>
+                        <li>فقط has one, has many.</li>
+                        <li>تعریف شده به عنوان متد.</li>
+                    </ul>
+
+                    <pre><code class="php">
+<span class="class"><span class="keyword">class</span> <span class="title">User</span> <span class="keyword">extends</span> \<span class="title">yii</span>\<span class="title">db</span>\<span class="title">ActiveRecord</span>
+{</span>
+  <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getPosts</span><span class="params">()</span>
+  {</span>
+    <span class="keyword">return</span> <span class="variable">$this</span>-&gt;hasMany(<span class="string">'Post'</span>, <span class="keyword">array</span>(<span class="string">'user_id'</span> =&gt; <span class="string">'id'</span>));
+  }
+
+  <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getActivePosts</span><span class="params">()</span>
+  {</span>
+    <span class="keyword">return</span> <span class="variable">$this</span>-&gt;hasMany(<span class="string">'Post'</span>, <span class="keyword">array</span>(<span class="string">'user_id'</span> =&gt; <span class="string">'id'</span>))
+      -&gt;where(<span class="keyword">array</span>(<span class="string">'status'</span> =&gt; Post::STATUS_ACTIVE));
+  }
+}
+				</code></pre>
+
+                    <pre><code class="php">
+<span class="variable">$posts</span> = <span class="variable">$user</span>-&gt;getPosts()-&gt;limit(<span class="number">10</span>)-&gt;all();
+<span class="variable">$postCount</span> = <span class="variable">$user</span>-&gt;getPosts()-&gt;count();
+				</code></pre>
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h2>AR برای ارتباطاتش از JOIN استفاده نمی کند</h2>
+
+                    <ul>
+                        <li>نزدیکتر به عملکرد عاقلانه است.</li>
+                        <li>کش کردن ساده تر.</li>
+                        <li>قابلیت کار با noSQL (اجرای Redis در شاخه اصلی خودش قرار دارد).</li>
+                    </ul>
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h2>AR به عنوان آرایه</h2>
+
+                    <pre><code class="php">
+<span class="variable">$posts</span> = Post::find()-&gt;limit(<span class="number">10</span>)-&gt;asArray()-&gt;all();
+<span class="keyword">foreach</span>(<span class="variable">$posts</span> as <span class="variable">$post</span>) {
+  echo <span class="variable">$post</span>[<span class="string">'title'</span>].<span class="string">"\n"</span>;
+}
+				</code></pre>
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h2>استفاده از link و attributes در ارتباط ها</h2>
+
+                    <p>متد <code>()save</code> فقط تغییرات را ذخیره می کند.</p>
+
+                    <p>برای ذخیره رکوردهای مرتبط متد جدیدی به نام <code>link</code> ارائه شده است.</p>
+                    <pre><code class="php">
+<span class="variable">$comment</span> = new Comment();
+<span class="variable">$comment</span>-&gt;text = <span class="string">'Hello, Yii!'</span>;
+
+<span class="regexp">//</span> INSERT INTO post_comment ...
+<span class="variable">$post</span>-&gt;link(<span class="string">'comments'</span>, <span class="variable">$comment</span>);
+
+<span class="regexp">//</span> DELETE FROM post_comment ...
+<span class="variable">$post</span>-&gt;unlink(<span class="string">'comments'</span>, <span class="variable">$comment</span>);
+				</code></pre>
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h2>کنسول</h2>
+
+                    <p>APIها خیلی شبیه به وب شده است.</p>
+
+                    <img src="PHP,%20frameworks,%20Yii2_files/cli.png" alt="console">
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h2>Helpers</h2>
+
+                    <ul>
+                        <li>همچنان کلاسهای static.</li>
+                        <li>قابلیت تعمیم (به کارگیری قابلیت <a class="roll" href="http://php.net/manual/en/language.oop5.late-static-bindings.php"><span data-title="static">static</span></a> و <a class="roll" href="http://www.php.net/manual/en/language.namespaces.rationale.php"><span data-title="namespace">namespace</span></a> در شئ گرایی).</li>
+                        <li>ArrayHelper, StringHelper, Security, FileHelper...</li>
+                    </ul>
+
+                    <pre><code class="php">
+<span class="variable">$mergedConfig</span> = <span class="constant">ArrayHelper::</span>merge(<span class="variable">$baseConfig</span>, <span class="variable">$specificConfig</span>);
+
+<span class="variable">$posts</span> = <span class="constant">Post::</span>model()-&gt;limit(<span class="number">10</span>)-&gt;all();
+<span class="variable">$titles</span> = <span class="constant">ArrayHelper::</span>getColumn(<span class="string">'title'</span>);
+
+<span class="variable">$hash</span> = <span class="constant">Security::</span>generatePasswordHash(<span class="variable">$password</span>);
+<span class="regexp">//</span> ...saving hash to <span class="constant">DB</span>...
+
+<span class="regexp">//</span> reading hash from <span class="constant">DB</span> on login
+<span class="keyword">if</span> (<span class="constant">Security::</span>verifyPassword(<span class="variable">$password</span>, <span class="variable">$hash</span>) {
+  <span class="regexp">//</span> <span class="constant">OK</span>
+} <span class="keyword">else</span> {
+  <span class="regexp">//</span> wrong password
+}
+				</code></pre>
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h2>خطاها</h2>
+
+                    <ul>
+                        <li>تمام خطاها تبدیل به استثناها شده است.</li>
+                        <li>توانایی گرفتن و ثبت خطاهای وخیم.</li>
+                        <li>قالب نمایش خطاهای جدید.</li>
+                    </ul>
+
+                    <img src="PHP,%20frameworks,%20Yii2_files/yii2_error.png" alt="">
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h2>خطایاب</h2>
+
+                    <img src="PHP,%20frameworks,%20Yii2_files/debug_toolbar.png">
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h2>خطا یاب</h2>
+
+                    <img src="PHP,%20frameworks,%20Yii2_files/debug_app.png">
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h2>تولید کننده کد</h2>
+
+                    <img src="PHP,%20frameworks,%20Yii2_files/gii.png">
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h2>قالب های برنامه</h2>
+
+                    <ul>
+                        <li><a class="roll" href="https://github.com/yiisoft/yii2/tree/master/apps/basic"><span data-title="پایه ای">  پایه ای</span></a></li>
+                        <li><a class="roll" href="https://github.com/yiisoft/yii2/tree/master/apps/advanced"><span data-title="پیشرفته">  پیشرفته</span></a></li>
+                        <li>متعلق به خودتان</li>
+                    </ul>
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h2>i18n مبینی بر intl</h2>
+
+                    <ul>
+                        <li><a class="roll" href="https://github.com/yiisoft/yii2/pull/917"><span data-title="https://github.com/yiisoft/yii2/pull/917">https://github.com/yiisoft/yii2/pull/917</span></a></li>
+                        <li>قبل چطور بود: i18n -> کدهای ما -> CLDR</li>
+                        <li>اکنون: i81n -> (intl + ICU + CLDR)</li>
+                    </ul>
+
+                    <pre><code class="php">
+<span class="keyword">echo</span> \Yii::t(<span class="string">'app'</span>, <span class="string">'There {n, plural, =0{are no cats} =1{is one cat} other{are # cats}}!'</span>, <span class="keyword">array</span>(
+    <span class="string">'n'</span> =&gt; <span class="number">13</span>,
+));
+<span class="comment">// Здесь {n, plural, =0{котов нет} =1{есть один кот} one{# кот} few{# кота} many{# котов} other{# кота}}!</span>
+
+<span class="keyword">echo</span> \Yii::t(<span class="string">'app'</span>, <span class="string">'{n,number} is spelled as {n, spellout}'</span>, <span class="keyword">array</span>(
+    <span class="string">'n'</span> =&gt; <span class="number">42</span>,
+));
+									</code></pre>
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h2>مستندات</h2>
+                    <ul>
+                        <li>APIها همزمان با تغییرات مستند می شوند</li>
+                        <li><a class="roll" href="https://github.com/yiisoft/yii2/wiki/Core-framework-code-style"><span data-title="Code style (almost PSR-1 and PSR-2)">Code style (almost PSR-1 and PSR-2)</span></a></li>
+                        <li>آقای <a class="roll" href="http://www.larryullman.com/2013/05/06/yii-2-public-preview-and-the-yii-book/"><span data-title="Larry Ullman">Larry Ullman</span></a> در حال نوشتن کتابی است.</li>
+                        <li><a class="roll" href="https://github.com/yiisoft/yii2/blob/master/docs/guide/index.md"><span data-title="پیشنویس راهنما">پیشنویس راهنما</span></a></li>
+                    </ul>
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h2>کارآیی</h2>
+
+                    <ul>
+                        <li>به خاطر بار گذاری کلاس PSR-0 .</li>
+                        <li>کلاسهای کمتر.</li>
+                        <li>استفاده از حافظه کمتر.</li>
+                        <li>کلاس AR جدید سریعتر و نیاز به حافظه کمتری دارد.</li>
+                        <li>asArray</li>
+                    </ul>
+
+                    <img src="PHP,%20frameworks,%20Yii2_files/yii2-blog.png" alt="">
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h2>Composer</h2>
+
+                    <ul>
+                        <li>همانطور که طراحی شده استفاده کنید یا بندازیدش...</li>
+                        <li>کامپوننت هایی به غیر از هسته</li>
+                        <li>مخازن اکستنشن</li>
+                    </ul>
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <ul>
+                        <li>تمامی کدها در مخزن اصلی موجود است.</li>
+                        <li>برای پکیج ها یک زیرشاخه مخزن فقط خواندنی ایجاد شده.</li>
+                        <li>امکان بسته های فشرده برای افرادی که کار با composer را دوست ندارند.</li>
+                    </ul>
+
+                    <p>آغاز به کار با Yii2:</p>
+
+                    <pre><code class="php">
+curl -s http://getcomposer.org/installer | php
+php composer.phar <span class="operator"><span class="keyword">create</span>-project --stability=dev yiisoft/yii2-app-basic .
+				</span></code></pre>
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h2>طرح ها</h2>
+
+                    <ul>
+                        <li>noSQL برای AR (Redis)</li>
+                        <li>gridview (شروع شده)</li>
+                        <li>تولید کننده مستندات APIها</li>
+                        <li>مستندات (حالت پیش نویس)</li>
+                        <li>تعمیر خطاها</li>
+                    </ul>
+                </section>
+
+                <section class="future" style="top: -20px; display: none;">
+                    <h2>سرعت پیشرفت</h2>
+
+                    <ul>
+                        <li>فعالیت بیش از اندازه جامه در بدو شروع، که اکنون به آن سرعت نیست (به دلیل اینکه بیشتر موضوعات وجود دارند؟)</li>
+                        <li>431 fork, 1248 followes (1327/3100 for 1.1).</li>
+                        <li>و خیلی موضوعات هم هست که باید انجام شوند :(</li>
+                    </ul>
+                </section>
+
+                <section class="future" style="top: -156.5px; display: block;">
+                    <h2>هنوز قابلیت استفاده در محصولات را ندارد! <a class="roll" href="https://www.theprintful.com/"><span data-title=";)">;)</span></a></h2>
+                    <p>نسخه ۱.۱ پایدار است و تا سال ۲۰۱۶ پشتیبانی می شود</p>
+                </section>
+
+                <section class="future" style="top: -84px; display: block;">
+                    <h2>حتما باید امتحانش کنید</h2>
+                </section>
+
+                <section class="future" style="top: -350px; display: block;">
+                    <h2>سوالات؟</h2>
+
+                    <ul class="php" style="text-align: left">
+                        <li><a class="roll" href="http://slides.rmcreative.ru/2013/php-frameworks-yii2-en/#/"><span data-title="php-frameworks-yii2">php-frameworks-yii2</span></a></li>
+                        <li><a class="roll" href="http://www.yiiframework.com/"><span data-title="yiiframework.com">yiiframework.com</span></a></li>
+                        <li><a class="roll" href="http://yiicookbook.org/"><span data-title="yiicookbook.org">yiicookbook.org</span></a></li>
+                        <li><a class="roll" href="http://shgn.ir/php/yii-framework/"><span data-title="shgn.ir/php/yii-framework">shgn.ir/php/yii-framework</span></a></li>
+                        <li><a class="roll" href="http://forum.iranphp.org/Forum-YII"><span data-title="iranphp.org/Forum-YII">iranphp.org/Forum-YII</span></a></li>
+                        <li><a class="roll" href="http://www.yiiframework.com/forum/index.php/forum/41-persian/"><span data-title="yiiframework.com/forum/persian">yiiframework.com/forum/persian</span></a></li>
+                    </ul>
+
+                    <img src="PHP,%20frameworks,%20Yii2_files/elephant.png">
+                </section>
+
+            </div>
+
+            <div style="display: block;" class="progress"><span style="width: 0px;"></span></div><aside style="display: block;" class="controls"><div class="navigate-left"></div><div class="navigate-right enabled"></div><div class="navigate-up"></div><div class="navigate-down"></div></aside><div class="state-background"></div><div class="pause-overlay"></div></div>
+
+        <script src="PHP,%20frameworks,%20Yii2_files/head.js"></script>
+        <script src="PHP,%20frameworks,%20Yii2_files/reveal.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+
+                theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: '/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: '/plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: '/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: '/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: '/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: '/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+                    // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+                ]
+            });
+
+        </script>
+        <!--script src="PHP,%20frameworks,%20Yii2_files/highlight.js" type="text/javascript"></script>
+        <script src="PHP,%20frameworks,%20Yii2_files/zoom.js" type="text/javascript"></script>
+        <script src="PHP,%20frameworks,%20Yii2_files/notes.js" type="text/javascript"></script-->
+
+
+
+    </body></html>

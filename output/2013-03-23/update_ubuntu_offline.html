@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title> به روز رسانی برنامه ها در ابونتو به صورت off-line - دست نوشته های یک تازه کار </title>
+    <meta name="description" content="تا به حال شده که به خاطر تعدد دفعات update بسته های ubuntu (ماهی چند نوبت)، حجم حساب اینترنتی شما تمام شده باشد؟"/>
+    <meta name="keywords" content=" ubuntu, linux, apt" />
+
+    <!-- Bootstrap -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <!-- link href="style/bootstrap/css/bootstrap.css" rel="stylesheet" crossorigin="anonymous" -->
+
+    <link href="https://rawgit.com/richleland/pygments-css/master/github.css" rel="stylesheet" crossorigin="anonymous">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+    body {
+      direction: rtl;
+    }
+    p {
+        font-size: 1.3em;
+        line-height: 1.5em;
+        text-align: justify;
+      }
+  pre {
+        direction: ltr;
+        border-left: 5px solid #6ce26c;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header navbar-right">
+          <a class="navbar-brand" href="/">دست نوشته های یک تازه کار</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            
+                
+                    <li><a href="/about.html" title="درباره ما">درباره ما</a></li>
+                
+                    <li><a href="/contacus.html" title="ارتباط با ما">ارتباط با ما</a></li>
+                
+                    <li><a href="http://shgn.ir/tag/linux.html" title="linux">linux</a></li>
+                
+                    <li><a href="http://shgn.ir/yii2/" title="معرفی Yii2">معرفی Yii2</a></li>
+                
+            
+          </ul>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-9">
+            
+    <div itemscope itemtype="http://schema.org/NewsArticle">
+    <meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="http://shgn.ir/2013-03-23/update_ubuntu_offline.html"/>
+    <div class="page-header">
+      <h3 itemprop="name">به روز رسانی برنامه ها در ابونتو به صورت off-line</h3>
+      
+      
+        <small>
+          <p class="text-right">
+            ارسال شده <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+                توسط <span itemprop="name">سید سجاد شاهچراغیان</span>
+              </span>
+              در تاریخ <span itemprop="datePublished">2013-03-23</span>
+          </p>
+        </small>
+      
+    </div>
+      <section itemprop="articleBody">
+        <p>تا به حال شده که به خاطر تعدد دفعات <code>update</code> بسته های <code>ubuntu</code> (ماهی چند نوبت)، حجم حساب اینترنتی شما تمام شده باشد؟ به خصوص این که اگر چند رایانه داشته باشید که روی همه آنها اوبونتو نصب باشد که آن وقت مشکل دوچندان می شود. چرا که اگر بخواهید تمام آن رایانه ها به روز باشند. بنده خودم خیلی با این موضوع سر و کار دارم، به همین خاطر با جستجو در اینترنت توانستم چند راه برای این موضوع پیدا کنم.</p>
+<p>در این نوشته فرض بر این است که حداقل یک سیستم به اینترنت متصل می باشد و دیگری نیست. و بر روی تمامی رایانه ها سیستم عامل <a href="https://en.wikipedia.org/wiki/Ubuntu_(operating_system)" title="Ubuntu_(Linux_operating_system)">Ubuntu</a> نصب می باشد.</p>
+<h3>راه اول: بوسیله برنامه Synaptic Package Manager</h3>
+<p>در این بخش ضمن معرفی برنامه ای قدرتمند برای مدیریت بسته های نرم افزاری سیستم عامل ابونتو، آن را نصب و طریقه انجام آپدیت را شرح می دهیم.
+  - برای نصب این برنامه مفید فقط کافی است تا در ترمینال رایانه ای که به اینتر نت متصل است، فرمان زیر را اجرا نمایید:</p>
+<pre class="codehilite"><code>sudo apt-get install synaptic</code></pre>
+
+
+<ul>
+<li>
+<p>سپس با استفاده از فرمان زیر در ترمینال مخازن را ببه روز رسانی کنید:</p>
+<p>sudo apt-get update</p>
+</li>
+<li>
+<p>بعد از آن برنامه <code>Synaptic Package Manager</code> را اجرا کرده و دکمه <code>"Mark All Upgrades"</code> را بزنید تا تمامی بسته ها برای آپدیت انتخاب شوند.</p>
+</li>
+</ul>
+<p><img alt="Synaptec Package Manager" src="http://i.stack.imgur.com/99tff.png" /></p>
+<ul>
+<li>اگر از شما برای انتخاب بسته های لازم اضافه سوال کرد، شما دکمه<code>"Mark</code>" را بزنید تا آن بسته ها نیز انتخاب شوند.</li>
+</ul>
+<p><img alt="Additional Packages" src="http://i.stack.imgur.com/FEwxP.png" /></p>
+<ul>
+<li>
+<p>در نهایت دکمه <code>"Apply"</code> را بزنید تا برنامه شروع به آپیدت بسته های نرم افزاری موجود بکند.</p>
+</li>
+<li>
+<p>بعد از اتمام به روز رسانی یه شاخه به نام <code>update</code> در مسیر خانه کاربرتان ایجاد کرده و، <code>"File -&gt; Generate package download script"</code> را در برنامه <code>synaptec</code> انتخاب نموده و در پنجره باز شده آدرس مسیر <code>update</code> را که ایجاد کرده بودید به آن داده و نام فایل را به آن اختصاص دهید سپس آن را ذخیره کنید، در اینجا ما نام فایل را <code>update-offline.sh</code> می گزاریم.</p>
+</li>
+<li>
+<p>از طریق برنامه ترمینال به مسیر <code>update</code> که ایجاد کردید بروید و در آن جا فرمان زیر را اجرا کنید:</p>
+<p>cp /var/cache/apt/archives/*.deb .</p>
+</li>
+</ul>
+<p>با این دستور تمامی فایلهایی که سیستم فعلی که به اینترنت متصل بوده را آپدیت کرده اند و پسوند آنها <code>deb.</code> می باشد، را به مسیر ایجاد شده <code>update</code> منتقل می کند.</p>
+<ul>
+<li>
+<p>شاخه <code>update</code> که اکنون حاوی تمامی فایل های <code>deb.</code> برای آپدیت می باشد را بوسیله <code>USB</code> فلش یا <code>CD</code> یا <code>DVD</code> می توانید به سیستم یا سیستم های دیگر که به اینترنت متصل نیستند منتقل کنید.</p>
+</li>
+<li>
+<p>اکنون بر روی سیستم (یا سیستم هایی) که به اینترنت متصل نیستند در مسیر خانه کاربر یک شاخه به نام <code>offline</code> ایجاد کنید و شاخه <code>update</code> را داخل آن بریزید. به این ترتیب ساختار آن باید به شکل زیر باشد:</p>
+<ul>
+<li>home
+ +- username
+   +-  offline
+     +-  Updates (contains the .deb files)</li>
+</ul>
+</li>
+<li>
+<p>در سیستمی که به انترنت متصل نمی باشد، برنامه ترمینال را اجرا کرده و به شاخه <code>offline</code> رفته و در آنجا دستور زیر را اجرا کنید تا فایل شاخص برای بسته های موجود تهیه شود:</p>
+<p>apt-ftparchive packages . &gt; Packages</p>
+</li>
+</ul>
+<p>اکنون در آنجا شما یه فایل به نام <code>Packages</code> مشاهده می کنید.</p>
+<ul>
+<li>
+<p>حالا باید فایل <code>source.list</code> را با دسترسی <code>root</code> باز کنید:</p>
+<p>gksu gedit /etc/apt/sources.list</p>
+</li>
+<li>
+<p>به محض باز شدن فایل در همان بالا آن، دکمه <code>"Enter"</code> را بزنید تا یک خط خالی باز شود و در آن خط متن زیر را اضافه کنید و فایل را ذخیره نمایید:</p>
+<p>deb file:/home/username/offline /</p>
+</li>
+</ul>
+<p>توجه کنید که کلمه <code>username</code> که در خط بالا آمده است باید با نام کاربری که در آن سیستم لاگین می کنید جابجا شود.</p>
+<p>نکته: برای راحتی بیشتر و اگر که این رایانه هرگز به اینترنت قرار نیست که متصل شود می توانید ابتدای دیگر خطوط موجود در این فایل را علامت <code>#</code> قرار دهید تا دیگر مخازن برای به روز رسانی غیر فعال شوند.</p>
+<ul>
+<li>
+<p>اکنون کافی است تا برای آپدیت اوبونتوی خود دستور زیر را اجرا کنید:</p>
+<p>sudo apt-get update
+sudo apt-get upgrade</p>
+</li>
+</ul>
+<p>خوب این یک راه برای آپدیت <code>offline</code> سیستم عامل اوبونتوی رایانه تان بود.</p>
+<h4>راه دوم: استفاده از برنامه apt-offline</h4>
+<p>این برنامه هم قابل اجرا در حالت خط فرمانی <code>(CLI)</code>، و هم در حالت گرافیکی می باشد. با در نظر گرفتن فرضیات بالا به ترتیب زیر عمل می کنیم:
+  * ابتدا این برنامه را هم روی رایانه ای که به اینترنت متصل است و هم رایانه ای که به اینترنت متصل نیست به صورت زیر نصب می کنیم:</p>
+<pre class="codehilite"><code>sudo apt-get install apt-offline apt-offline-gui</code></pre>
+
+
+<ul>
+<li>
+<p>برای راحتی بیشتر از طریق ترمینال دستور زیر را در رایانه ای که به اینترنت متصل نیست زده تا برنامه اجرا شود:</p>
+<p>sudo apt-offline-gui</p>
+</li>
+<li>
+<p>در پنجره باز شده گزینه اول <code>"Generate Signature"</code> را زده و یه فایل <code>sig.</code> را ایجاد می کنیم.</p>
+</li>
+<li>
+<p>آن فایل ایجاد شده را به رایانه ای که اینترنت دارد منتقل می کنیم. در آن رایانه نیز همان برنامه <code>aptt-offline-gui</code> را همانطور که در بالا گفتیم اجرا کرده و گزینه <code>"Download Packages or Updates"</code> را زده و در آن آدرس فایل <code>sig.</code> منتقل شده را داد و مسیر ذخیر آپدیت را مشخص کرده و سپس دکمه <code>Download</code> را می زنیم.</p>
+</li>
+<li>
+<p>پس از اتمام دانلود آپدیت ها، فایل آپدیت ذخیره شده را به رایانه اول منتقل می کنیم.</p>
+</li>
+<li>
+<p>در رایانه ای که اینترنت متصل نیست در بنامه <code>apt-offline-gui</code> گزینه <code>"Install Packages or Updates"</code> را زده و در آنجا مسیر فایل آپدیت منتقل شده را داده و دکمه <code>"Install"</code> را می زنیم.</p>
+</li>
+<li>
+<p>اکنون برنامه شروع به آپدیت سیستم کرده</p>
+</li>
+</ul>
+<p>البته برای انجام این کار راههای دیگری هم هستند که اگر انشاء الله به آنها دست یافتیم، آنها را نیز توضیح می دهیم.</p>
+      </section>
+      <div>
+        برچسب ها:
+      
+        <a href="/tag/ubuntu.html">
+            <span class="label label-default" itemprop="about">ubuntu</span>
+        </a>
+      
+        <a href="/tag/linux.html">
+            <span class="label label-default" itemprop="about">linux</span>
+        </a>
+      
+        <a href="/tag/apt.html">
+            <span class="label label-default" itemprop="about">apt</span>
+        </a>
+      
+    </div>
+    </div>
+
+        </div>
+        <div class="col-md-3">
+          <div class="panel-group">
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                من در stackexchange.com
+              </div>
+              <div class="panel-body">
+                <div class="col-md-3 col-md-offset-9">
+                  <a href="http://stackexchange.com/users/887576" target="_blank">
+                    <img src="http://stackexchange.com/users/flair/887576.png" width="208" height="58" alt="profile for shgnInc on Stack Exchange, a network of free, community-driven Q&A sites" title="profile for shgnInc on Stack Exchange, a network of free, community-driven Q&A sites">
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr />
+    <footer>
+      <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+              
+              <strong>پیشنهادی های</strong>
+              <ul>
+                
+                    <li><a href="https://github.com/shgninc">GitHub</a></li>
+                
+                    <li><a href="http://google.com">Google</a></li>
+                
+              </ul>
+              
+            </div>
+            <div class="col-md-6">
+              <strong>دسترسی های ساده</strong>
+              <ul>
+                <li><a href="/">تمامی پست ها</a></li>
+                <li><a href="/tags.html">فهرست تگ ها</a></li>
+              </ul>
+            </div>
+            <div class="col-md-12">
+              <p class="text-center"><small>shgn.ir &copy; 2015</small></p>
+            </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha256-KXn5puMvxCw+dAYznun+drMdG1IFl3agK0p/pqT9KAo= sha512-2e8qq0ETcfWRI4HJBzQiA3UoyFk6tbNyG+qSaIBZLyW9Xf3sWZHN/lxe9fTh1U45DpPf07yj94KsUHHWe4Yk1A==" crossorigin="anonymous"></script>
+  </body>
+</html>

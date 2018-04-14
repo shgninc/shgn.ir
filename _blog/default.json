@@ -1,0 +1,23 @@
+{
+    "render_dir": "output",
+    "template_dir": "_blog/templates",
+    "pages_dir": "_blog/pages",
+    "site": {
+        "url": "shgn.ir",
+        "title": "دست نوشته های یک تازه کار",
+        "author": "سید سجاد شاهچراغیان",
+        "briefing": "این وبلاگ پیرامون تجربیات، دانسته ها، اینجاب درباره linux, database, mysql, mariadb, datamart, galera cluster,apache می باشد.",
+        "links": {
+          "درباره ما": "/about.html",
+          "ارتباط با ما": "/contacus.html",
+          "معرفی Yii2":"http://shgn.ir/yii2/",
+          "linux":"http://shgn.ir/tag/linux.html"
+        },
+        "footer_links": {
+          "GitHub": "https://github.com/shgninc",
+          "Google": "http://google.com"
+        }
+    },
+    "date_format": "%Y-%m-%d %H:%M",
+    "items_per_page": 8
+}

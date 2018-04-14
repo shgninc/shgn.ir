@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title> نحوه ایجاد یک Stored Procedures در MySQL5- بخش اول - دست نوشته های یک تازه کار </title>
+    <meta name="description" content="یک روشی که خیلی مورد پسند بنده واقع شده، روشی است که در آن با استفاده از استور پروسیجرها کار هایم با دیتابیس را انجام می دهم. استور پروسیجر ها امکانی است که برخی نرم افزارهای مدیریت پایگاه داده ها آن را حمایت کرده و برخی خیر. از جلمه این پایگاه داده ها می توان از `MySQL، MSSQL` و... نام برد."/>
+    <meta name="keywords" content=" database, sql, mysql, stored_procedure" />
+
+    <!-- Bootstrap -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <!-- link href="style/bootstrap/css/bootstrap.css" rel="stylesheet" crossorigin="anonymous" -->
+
+    <link href="https://rawgit.com/richleland/pygments-css/master/github.css" rel="stylesheet" crossorigin="anonymous">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+    body {
+      direction: rtl;
+    }
+    p {
+        font-size: 1.3em;
+        line-height: 1.5em;
+        text-align: justify;
+      }
+  pre {
+        direction: ltr;
+        border-left: 5px solid #6ce26c;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header navbar-right">
+          <a class="navbar-brand" href="/">دست نوشته های یک تازه کار</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            
+                
+                    <li><a href="/about.html" title="درباره ما">درباره ما</a></li>
+                
+                    <li><a href="/contacus.html" title="ارتباط با ما">ارتباط با ما</a></li>
+                
+                    <li><a href="http://shgn.ir/tag/linux.html" title="linux">linux</a></li>
+                
+                    <li><a href="http://shgn.ir/yii2/" title="معرفی Yii2">معرفی Yii2</a></li>
+                
+            
+          </ul>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-9">
+            
+    <div itemscope itemtype="http://schema.org/NewsArticle">
+    <meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="http://shgn.ir/2012-11-28/create_mysql_stored_procedures1.html"/>
+    <div class="page-header">
+      <h3 itemprop="name">نحوه ایجاد یک Stored Procedures در MySQL5- بخش اول</h3>
+      
+      
+        <small>
+          <p class="text-right">
+            ارسال شده <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+                توسط <span itemprop="name">سید سجاد شاهچراغیان</span>
+              </span>
+              در تاریخ <span itemprop="datePublished">2012-11-28</span>
+          </p>
+        </small>
+      
+    </div>
+      <section itemprop="articleBody">
+        <p><center>
+<img class="img-rounded" style="width: 500px; height: 350px;" data-holder-rendered="true"  alt="نحوه ایجاد یک Stored Procedures در MySQL5- بخش اول" src="MySQL.png" title="نحوه ایجاد یک Stored Procedures در MySQL5- بخش اول">
+</center></p>
+<p>برای کار با بانک اطلاعاتی روش های متداول و مرسوم زیادی وجود دارد. اما یک روشی که خیلی مورد پسند بنده واقع شده، روشی است که در آن با استفاده از استور پروسیجرها کار هایم با دیتابیس را انجام می دهم. استور پروسیجر ها امکانی است که برخی نرم افزارهای مدیریت پایگاه داده ها آن را حمایت کرده و برخی خیر. از جلمه این پایگاه داده ها می توان از <code>MySQL، MSSQL</code> و... نام برد.</p>
+<p>در این نوشته نحوه ایجاد و کار با این امکان در نرم افزار مدیریت پایگاه داده های <code>MySQL</code> را بیان می کنم.</p>
+<p>یک روتین ذخیره شده شامل یک سری کدهای <code>SQL</code> ذخیره شده در بانک اطلاعاتی می باشند.</p>
+<p>استور پروسیجر روشی برای انجام یک سری دستورات متداول و تکراری مورد نیاز است. آن به شما امکان تعریف متغییر، دنبال کردن کنترل و استفاده از دیگر تکنیک های برنامه نویسی را می دهد.</p>
+<p>سعی می کنم که مراحل ایجاد یک استور پروسیجر را در چند گام به طور مختصر بیان کنم. امید وارم که مفید و کاربردی باشد.</p>
+<p>مراحل کار به ترتیب زیر می باشد:</p>
+<h3>گام ۱: انتخاب جداکننده</h3>
+<p>جداکننده یک یا رشته ای از حروف است که پایان یک فرمان <code>SQL</code> را مشخص می کند. به طور کلی، تا به امروز این جداکننده حرف <code>(;)</code> بوده ولی برای استفاده در استور پروسیجرها مشکلاتی را ایجاد می کند. پس بهتر است تا از حرف یا حروفی دیگ به جای آن استفاده شود. در این مثال از دو حرف <code>(//)</code> استفاده می کنیم.</p>
+<h3>گام ۲ : نحوه کار با استور پروسیجرها</h3>
+<h4>ایجاد یک استور پروسیجر</h4>
+<pre class="codehilite"><code>DELIMITER //
+CREATE PROCEDURE `p2` ()
+  LANGUAGE SQL
+  DETERMINISTIC
+  SQL SECURITY DEFINER
+  COMMENT 'A procedure'
+  BEGIN
+    SELECT 'Hello World !';
+END//</code></pre>
+
+
+<p>بخش اول دستورات پروسیجر را ایجاد نموده. بخش بعدی کدهایی هستند که ویژگی های پروسیجر را تعریف می نمایند. و در نهایت نام و بدنه پروسیجر را داریم.</p>
+<p>تعریف نام استور پروسیجرها به کوچک یا بزرگ بودن حروف حساس نبوده، و پروسیجر های همنام نیز نمی توان تعریف کرد. در قسمت بدنه پروسیجر نمی توان از دستورات ویرایشی دیتابیس استفاده کرد.</p>
+<p>چهار ویژگی تعریف شده در این مثال:</p>
+<ul>
+<li><code>Language</code>: به منظور قابل حمل و استفاده در جاهای مختلف است. پیش فرض آن <code>SQL</code> می باشد.</li>
+<li><code>Deterministic</code>: این دستور برای اهداف <code>replication</code> و <code>logging</code> استفاده می شود. مقدار پیش فرض آن <code>NOT DETERMIINISTIC</code> است.</li>
+<li><code>SQL Security</code>: به هنگام فراخوانی پروسیجر، مجوزهای دسترسی کاربر را بررسی می کند. مقدار <code>INVOKE</code> کاربری است که پروسیجر را فراخوانی می کند. مقدار <code>DEFENDER</code> کاربر ایجاد کننده پروسیجر می باشد. مقدار پیش فرض <code>DEFENDER</code> است.</li>
+<li><code>Comment</code>: به منظور افزودن توضیحات به کدها می باشد. مقدار پیش فرض " " می باشد.</li>
+</ul>
+<h4>فراخوانی یک استور پروسیجر</h4>
+<p>برای این منظور فقط نیاز است تا از کلمه کلیدی <code>CALL</code> به همراه نام استور پروسیجر و پرانتزهای آن مشتمل بر تمام پارامترهای تعریف شده استفاده کرد. پرانتزها الزامی هستند.</p>
+<pre class="codehilite"><code>CALL stored_procedure_name (param1, param2, ....)
+CALL procedure1(10 , 'string parameter' , @parameter_var);</code></pre>
+
+
+<h4>تغییر یک استور پروسیجر</h4>
+<p>برای این منظور <code>MySQL</code> دستور <code>ALTER PROCEDURE</code> را دارد، اما قط امکان تغییر ویژگی های مشخصی را می دهد. برای تغییر بدنه یا پارامترها باید پروسیجر را حذف و مجدد ایجاد نمایید.</p>
+<h4>حذف یک استور پروسیجر</h4>
+<pre class="codehilite"><code>DROP PROCEDURE IF EXISTS p2;</code></pre>
+
+
+<p>این یک فرمان خیلی ساده است. قسمت <code>IF EXIST</code> از وقع خطا در صورتی که پروسیجر وجود نداشته باشد جلوگیری می کند.</p>
+<h3>گام ۳: پارامترها</h3>
+<p>اجازه بدید تا نحوه تعریف انواع پارامترها را در استور پروسیجرها را نشان دهم:</p>
+<ul>
+<li><code>CREATE PROCEDURE proc1 ()</code>: فاقد پارامتر</li>
+<li><code>CREATE PROCEDURE proc1 (IN varname DATA-TYPE)</code>: یک پارامتر ورودی. پارامترها به طور پیش فرض ورودی هستند. استفاده از این کلمه ااختیاری است(IN).</li>
+<li><code>CREATE PROCEDURE proc1 (OUT varname DATA-TYPE)</code>: یک پارامتر خروجی.</li>
+<li><code>CREATE PROCEDURE proc1 (INOUT varname DATA-TYPE)</code>: یک پارامتر که هم ورودی است و هم خروجی.</li>
+</ul>
+<p>مثال برای پارامتر ورودی:</p>
+<pre class="codehilite"><code>DELIMITER //
+CREATE PROCEDURE `proc_IN` (IN var1 INT)
+BEGIN
+  SELECT var1 + 2 AS result;
+END//&lt;/pre&gt;</code></pre>
+
+
+<p>مثال برای پارامتر خروجی:</p>
+<pre class="codehilite"><code>DELIMITER //
+CREATE PROCEDURE `proc_OUT` (OUT var1 VARCHAR(100))
+BEGIN
+  SET var1 = 'This is a test';
+END //&lt;/pre&gt;</code></pre>
+
+
+<p>مثال برای پارامتر ورودی/خروجی:</p>
+<pre class="codehilite"><code>DELIMITER //
+CREATE PROCEDURE `proc_INOUT` (INOUT var1 INT)
+BEGIN
+  SET var1 = var1 * 2;
+END //&lt;/pre&gt;</code></pre>
+
+
+<p>در این نوشته با بخشی از <code>Stored Procedure</code>ها در <code>MySQL</code> آشنا شدید. ادامه این مطلب را در <a href="../2012-11-30/create_mysql_stored_procedures2.html">بخش دوم</a> از این نوشته می توانید دنبال کنید</p>
+      </section>
+      <div>
+        برچسب ها:
+      
+        <a href="/tag/database.html">
+            <span class="label label-default" itemprop="about">database</span>
+        </a>
+      
+        <a href="/tag/sql.html">
+            <span class="label label-default" itemprop="about">sql</span>
+        </a>
+      
+        <a href="/tag/mysql.html">
+            <span class="label label-default" itemprop="about">mysql</span>
+        </a>
+      
+        <a href="/tag/stored_procedure.html">
+            <span class="label label-default" itemprop="about">stored_procedure</span>
+        </a>
+      
+    </div>
+    </div>
+
+        </div>
+        <div class="col-md-3">
+          <div class="panel-group">
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                من در stackexchange.com
+              </div>
+              <div class="panel-body">
+                <div class="col-md-3 col-md-offset-9">
+                  <a href="http://stackexchange.com/users/887576" target="_blank">
+                    <img src="http://stackexchange.com/users/flair/887576.png" width="208" height="58" alt="profile for shgnInc on Stack Exchange, a network of free, community-driven Q&A sites" title="profile for shgnInc on Stack Exchange, a network of free, community-driven Q&A sites">
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr />
+    <footer>
+      <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+              
+              <strong>پیشنهادی های</strong>
+              <ul>
+                
+                    <li><a href="https://github.com/shgninc">GitHub</a></li>
+                
+                    <li><a href="http://google.com">Google</a></li>
+                
+              </ul>
+              
+            </div>
+            <div class="col-md-6">
+              <strong>دسترسی های ساده</strong>
+              <ul>
+                <li><a href="/">تمامی پست ها</a></li>
+                <li><a href="/tags.html">فهرست تگ ها</a></li>
+              </ul>
+            </div>
+            <div class="col-md-12">
+              <p class="text-center"><small>shgn.ir &copy; 2015</small></p>
+            </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha256-KXn5puMvxCw+dAYznun+drMdG1IFl3agK0p/pqT9KAo= sha512-2e8qq0ETcfWRI4HJBzQiA3UoyFk6tbNyG+qSaIBZLyW9Xf3sWZHN/lxe9fTh1U45DpPf07yj94KsUHHWe4Yk1A==" crossorigin="anonymous"></script>
+  </body>
+</html>
