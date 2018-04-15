@@ -1,5 +1,5 @@
 title: نصب Galer Cluster بر روی debian8
-briefing: Galer Cluster یک برنامه کلاستر همزمان چند سرور master برمبنای replication همزمان می باشد.
+briefing: یک برنامه کلاستر همزمان چند سرور master برمبنای replication همزمان می باشد.
 date_time: 2017-08-16 18:36
 slug: galera_cluster
 tags: linux, debian, galera, mariadb, cluster
