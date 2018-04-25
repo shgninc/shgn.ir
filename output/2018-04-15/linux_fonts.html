@@ -7,7 +7,7 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title> افزودن فونت های فارسی در لینوکس - دست نوشته های یک تازه کار </title>
     <meta name="description" content="استفاده از زبان فارسی برای فارسی زبانان عزیز در سیستم عامل لینوکس."/>
-    <meta name="keywords" content=" linux, fonts, persian," />
+    <meta name="keywords" content=" linux, fonts, persian" />
 
     <!-- Bootstrap -->
     <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
@@ -30,10 +30,13 @@
         line-height: 1.5em;
         text-align: justify;
       }
-  pre {
+    pre {
         direction: ltr;
         border-left: 5px solid #6ce26c;
       }
+    .panel-body ul li{
+        margin: 10px 0;
+    }
     </style>
   </head>
   <body>
@@ -79,8 +82,8 @@
       
     </div>
       <section itemprop="articleBody">
-        <p>امروزه کاربران فارسی زبانی که از توزیع های مختلف لینوکس (دسکتاپ) جهت امورات و کارهای روزمره خود بهره می برند، برای نوشتن مطالب مورد نیاز به زبان فارسی در برنامه های مختلف پردازش متن از قبیل liberOfficeیا openOffice و...، فونت های مختلف فارسی را لازم دارند.
-برای افزودن فونت های متنوع در لینوکس یک راه بسیار ساده و کاربردی وجود دارد. فقط کافی است تا یک پوشه در /home کاربر با نام .fonts به صورت زیر اضافه نمایید:</p>
+        <p>امروزه کاربران فارسی زبانی که از توزیع های مختلف لینوکس (دسکتاپ) جهت امورات و کارهای روزمره خود بهره می برند، برای نوشتن مطالب مورد نیاز به زبان فارسی در برنامه های مختلف پردازش متن از قبیل <code>liberOffice</code>یا <code>openOffice</code> و...، فونت های مختلف فارسی را لازم دارند.
+برای افزودن فونت های متنوع در لینوکس یک راه بسیار ساده و کاربردی وجود دارد. فقط کافی است تا یک پوشه در <code>/home</code> کاربر با نام <code>.fonts</code> به صورت زیر اضافه نمایید:</p>
 <pre class="codehilite"><code>mkdir /home/username/.fonts</code></pre>
 
 
@@ -97,8 +100,8 @@
             <span class="label label-default" itemprop="about">fonts</span>
         </a>
       
-        <a href="/tag/persian,.html">
-            <span class="label label-default" itemprop="about">persian,</span>
+        <a href="/tag/persian.html">
+            <span class="label label-default" itemprop="about">persian</span>
         </a>
       
     </div>
@@ -120,21 +123,20 @@
               </div>
             </div>
 
-            <!--
+
             <div class="panel-group">
             <div class="panel panel-primary">
               <div class="panel-heading">
                 تازه ترین مطالب
               </div>
               <div class="panel-body">
-                <div class="col-md-3 col-md-offset-9">
-                  <a href="http://stackexchange.com/users/887576" target="_blank">
-                    <img src="http://stackexchange.com/users/flair/887576.png" width="208" height="58" alt="profile for shgnInc on Stack Exchange, a network of free, community-driven Q&A sites" title="profile for shgnInc on Stack Exchange, a network of free, community-driven Q&A sites">
-                  </a>
-                </div>
+                  <ul>
+                  
+              </ul>
+
               </div>
             </div>
-            -->
+
 
           </div>
         </div>
@@ -149,9 +151,13 @@
               <strong>پیشنهادی های</strong>
               <ul>
                 
+                    <li><a href="http://www.ashena.net/">Ashena</a></li>
+                
                     <li><a href="https://github.com/shgninc">GitHub</a></li>
                 
-                    <li><a href="http://google.com">Google</a></li>
+                    <li><a href="http://vasni.ir/">Vasni</a></li>
+                
+                    <li><a href="https://www.instagram.com/shgninc/">Instagram</a></li>
                 
               </ul>
               
