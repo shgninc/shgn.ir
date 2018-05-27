@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title> تنظیم بهینه Mysql برای استفاده از حافظه - دست نوشته های یک تازه کار </title>
+    <meta name="description" content="ارائه برخی راهکارهای انجام تنظیمات دیتابیس `Mysql` برای استفاده از حافظه به صورت بهینه مطرح می گردد."/>
+    <meta name="keywords" content=" mysql, database, optimization" />
+
+    <!-- Bootstrap -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <!-- link href="style/bootstrap/css/bootstrap.css" rel="stylesheet" crossorigin="anonymous" -->
+
+    <link href="https://rawgit.com/richleland/pygments-css/master/github.css" rel="stylesheet" crossorigin="anonymous">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+    body {
+      direction: rtl;
+    }
+    p {
+        font-size: 1.3em;
+        line-height: 1.5em;
+        text-align: justify;
+      }
+    pre {
+        direction: ltr;
+        border-left: 5px solid #6ce26c;
+      }
+    .panel-body ul li{
+        margin: 10px 0;
+    }
+    a {
+        color: #4608ad;
+      }
+    .panel-group .panel {
+        margin-bottom: 5px;
+    }
+    .panel-primary > .panel-heading {
+        background-color: #4608ad;
+    }
+    .navbar-default {
+        background-color: #4608ad;
+    }
+    .navbar-default .navbar-brand {
+        color: #ffffff;
+    }
+    .navbar-default .navbar-nav > li > a {
+        color: #ffffff;
+    }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header navbar-right">
+          <a class="navbar-brand" href="/">دست نوشته های یک تازه کار</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            
+                
+                    <li><a href="/about.html" title="درباره ما">درباره ما</a></li>
+                
+                    <li><a href="/contacus.html" title="ارتباط با ما">ارتباط با ما</a></li>
+                
+                    <li><a href="http://shgn.ir/tag/linux.html" title="linux">linux</a></li>
+                
+                    <li><a href="http://shgn.ir/yii2/" title="معرفی Yii2">معرفی Yii2</a></li>
+                
+                    <li><a href="/links.html" title="لینک های مفید">لینک های مفید</a></li>
+                
+            
+          </ul>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-9">
+            
+    <div itemscope itemtype="http://schema.org/NewsArticle">
+    <meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="http://shgn.ir/2018-05-05/Configuring-MySQL-Memory-Usage.html"/>
+    <div class="page-header">
+      <h3 itemprop="name">تنظیم بهینه Mysql برای استفاده از حافظه</h3>
+      
+      
+        <small>
+          <p class="text-right">
+            ارسال شده <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+                توسط <span itemprop="name">سید سجاد شاهچراغیان</span>
+              </span>
+              در تاریخ <span itemprop="datePublished">2018-05-05</span>
+          </p>
+        </small>
+      
+    </div>
+      <section itemprop="articleBody">
+        <p>در این نوشته، برخی راهکارهای انجام تنظیمات بهینه دیتابیس <code>Mysql</code> برای استفاده از حافظه مطرح می گردد. </p>
+<p>برای بهره گیری بهینه و پایدار از <code>MySql</code> انجام تنظیمات صحیح برای استفاده مناسب از منابع حافظه در دسترس یکی از مهم ترین موارد برای بررسی می باشد. در <code>Mysql 5.7</code> یکی از اشتباهات رایج عدم تغییر تنظیمات پیش فرض هست که از حجم بسیار پایین حافظه استفاده می کند،می باشد. اما تنظیم ناصحیح آن می تواند کارآیی نامناسب یا حتی کِرَش کردن آن سرویس را در پی داشته باشد.</p>
+<p>اولین قانون در تنظیم استفاده حافظه <code>Mysql</code> این است که هیچگاه اجازه ندهید <code>Mysql</code> موجب شود که سیستم عامل از <code>swap</code> استفاده کند چرا که فعالیت اصلی <code>swap</code> می تواند کارآیی <code>Mysql</code> را به صورت چشمگیری کاهش دهد. نکته مهم اینجا کلمه فعالیت است. زمانی که <code>MySql</code> در حال اجرا می باشد، استفاده مقداری از <code>swap</code> به صورت فایل که مربوط به خود سیستم عامل می شود، مشکلی نخواهد داشت. چیزی که نمی خواهیم swap کردن به صورت ثابت در هنگام کار کردن می باشد، همانطور که در فیلدهای <code>si</code> و <code>so</code> خروجی فرمان <code>vmstat</code> قابل رویت است.</p>
+<p><center></p>
+<p><img alt="خروجی فرمان vmstat" src="No-Significant-Swapping.png" /></p>
+<p>مثال: swap متعارف</p>
+<p><img alt="خروجی فرمان vmstat" src="Heavy-Swapping.png" /></p>
+<p>مثال: swap خیلی سنگین</p>
+<p></center></p>
+<p>اگر مقداری بیشتر از  1MB/sec را از حافظه در دسترس، یا فعالیت swap را ثبت کرده اید، باید تنظمیات انجام شده برای حافظه را بازبینی کنید.</p>
+<p>تخصیص حافظه در <code>Mysql</code> پیچیده است. بافرهای عمومی، بافرهای قبل از ارتباط (بستگی به میزان بارگزاری در زمان کار دارد)، و برخی تخصیص حافظه کنترل نشده (از قبیل حافظه هایی که داخل استور پروسیجر ها استفاده می شوند)، همگی این ها دست به دست هم داده اند تا انجام محاسبات سخت برای فضای کاری شما را فراهم آورند. بهتر است میزان فضای مورد استفاده از حافظه مجازی مورد استفاده <code>Mysql</code> را مورد بازبینی قرار دهید. این کار را می توانید با فرمان <code>top</code> یا <code>ps</code> به صورت ذیل انجام دهید.</p>
+<pre class="codehilite"><code>ps aux | grep mysqld
+
+mysql     3939 30.3 53.4 11635184 8748364 ?    Sl   Apr08 9106:41 /usr/sbin/mysqld</code></pre>
+
+
+<blockquote>
+<p>ستون پنجم نشان دهنده میزان استفاده از حافظه مجازی که حدودا ۱۱گیگ می باشد، است.</p>
+</blockquote>
+<p>قابل اشاره است که حافظه مجازی نوعا درحال تغییر می باشد. استفاده از آن به عنوان یک پارامتر در سیستم مانیتورنگ برای آگاه سازی شما در مواقع ضرور ایده خوبی می باشد. اجازه ندهید حافظه مجازی مورد استفاده <code>mysqld</code> از 90% افزایش یابد.</p>
+<p>کم کم وقت آن رسیده که با احتیاط کامل شروع به انجام تنظیمات بافر عمومی و بافر قبل ارتباطات کرده، و بعد آنها را آن طور که صلاح می دانید افزایش دهید. خیلی از آن ها از جمله <a href="https://dev.mysql.com/doc/refman/5.7/en/innodb-buffer-pool-resize.html"><code>innodb_buffer_pool_size</code></a> را می توانید به صورت در حال اجرا و از طریق کنسول خود <code>Mysql</code> انجام دهید.</p>
+<p>مسئله اصلی این است که باید تصمیم گیری کنید که در مقابل دیگر برنامه های در حال اجرا در سیستم، چه میزان فضای حافظه را باید به <code>Mysql</code> تخصیص داد؟ در بیشتر حالات نباید بیش از 90% حافظه اصلی سیستم به آن تخصیص داد، و مقداری را هم باید برای سیستم عامل و دیگر برنامه ها از قبیل کش فایل های باینری لاگ، فایل های موقت و غیره باقی گذاشت.</p>
+<p>حالاتی که <code>Mysql</code> باید کمتر از 90% حافظه را استفاده کند:</p>
+<ul>
+<li>اگر پردازش های مهم دیگر چه به صورت موردی یا مستمر نیز بر روی همان سرور در حال اجرا باشند. اگر برنامه های زمانبندی شده سنگینی دارید که میزان زیادی حافظه را نیاز دارند، باید حساب کنید.</li>
+<li>اگر قصد استفاده از کش سیستم عامل برای موتورهای ذخیره سازی را دارید. با <code>InnoDB</code>، ما در بیشتر حالات استفاده از <code>innodb_flush_method=O_DIRECT</code> را که موجب می شود از سیستم کش فایلی سیسیتم عامل استفاده نشود راتوصیه می کنیم. به هر حال، مواردی  از قبیل بافر I/O هم هست که بر روی <code>InnoDB</code> تأثیر می گذارد. اگر همچنان موتور <code>MyISAM</code> اجرا می کنید، به کش سیستم عامل برای داده های بخشی از جداول نیاز دارید. البته با موتور <code>TokuDB</code> برای برخی بارگزاری ها اتفاقا استفاده از کش سیستم عامل خوب هست. </li>
+<li>اگر کارهای شما درخواست های زیادی داشته، جداول موقت <code>MyISAM</code> روی دیسک، فایل های مرتب شده، برخی دیگر فایل های مورد نیاز که <code>Mysql</code> ایجاد کرده است را برای کارآیی بهینه به کش سیستم عامل نیاز دارد.   </li>
+</ul>
+<p>آنچنان که می دانید میزان فضای حافظه مورد نیاز برای کل <code>Mysql</code> چقدر است، باید برای میزان حفاظه مورد نیاز داخلی آن نیز برنامه داشته باشید. اولین بخش استفاده از حافظه در <code>Mysql</code> مربوط به بارگزاری فضای کاری می باشد - اگر شما ارتباطات فعال همزمان بسیار زیاد که <code>select</code> های سنگینی که حافظه زیادی برای مرتب سازی یا جداول موقت، نیاز داشته باشند، پس شما به حافظه بسیار زیادی نیاز دارید(خصوصا اگر <code>Performance Schema</code> فعال باشد). در حالات دیگر این حجم از حافظه کم است. پس شما برای این منظور به طور کلی یه چیزی بین ۱ تا ۱۰گیگ لازم دارید.    </p>
+<p>از جمله دیگر مواردی که باید برای آن فکری شود، تکه تکه شدن حافظه است. این مهم بستگی به کتابخانه تخصیص حافظه ای (glibc, TCMalloc, jemalloc, etc.) دارد که استفاده می کنید، تنظیمات سیستم عامل از قبیل <code>Transparent Huge Pages</code> (THP) و فضای کاری شاید نشان دهنده افزایش استفاده از حافظه به مرور زمان است (تا زمانی که به وضعیت ثبات برسد). می توان 10% برای تکه تکه شدن حافظه حساب باز کرد و بیشتر از آن استفاده مورد نیاز است.       </p>
+<p>در پایان هم، نوبت به بافرهای عمومی و کش ها می رسد. نوعا، تنها نگرانی شما باید به خاطر <code>innodb_buffer_pool_size</code> باشد. اما باید پارامترهای <code>key_buffer_size</code>، <code>tokudb_cache_size</code>، <code>query_cache_size</code> را هم به خوبی لحاظ کنید. این پارامترها بر روی تخصیص حافظه کلی تأثیر گزار هستند، هر چند که آنها در واحد بایت محاسبه نشوند.Performance _Schema ممکن است حافظه بسیار زیادی را اشغال کند، به ویژه اگر تعداد بسیار زیادی از ارتباطات یا جداول را داشته باشید.</p>
+<p>زمانی که اندازه بافرها و کش ها را تعیین می کنید باید دقیقا بدانید که در حال مشخص کردن چه چیزهایی هستید. برای <code>innodb_buffer_pool_size</code> به خاطر داشته باشید که 5 تا 10% از حفاظه را برای ساختار داده های دیگر بوده و اگر از فشرده سازی استفاده کرده و یا مقدار <code>innodb_page_size</code> را کمتر از 16K قرار دهید، این عدد بزرگتر می شود. برای <code>tokudb_cache_size</code>، خیلی مهم است که به خاطر داشته باشید که تنظیمات یک راهنما است، نه یک <strong>محدودیت</strong>: اندازه کش می تواند اندکی بالاتر از آن چه که تعریف شده است پیش روی کند. </p>
+<p>برای سیستم های با حجم حافظه بالا، کش دیتابیس به اندازه مصرف مورد نیاز آن افزایش پیدا می کند، و شما بیشترین فضای ممکن را در اختیار آن قرار داده اید. زمانی که شما حافظه سیستم را افزایش می دهید، به این معنا است که اندازه کش دیتابیس را افزایش داده اید.   </p>
+<p>اجازه بدید تا با یک مثال ادامه دهیم. فرض کنید که سیستمی هست با 16 گیگ حافظه که بر روی آن فقط برنامه <code>Mysql</code> با موتور ذخیره سازی InnoDB با پارامتر <code>innodb_flush_method=O_DIRECT</code> در حال اجرا می باشد، که ما می توانیم 90% (یا 14.4 گیگ) از حافظه را به <code>Mysql</code> تخصیص دهیم. برای فضای کاری، ما فرض می کنیم که مدیریت ارتباطات و دیگر سربارهای مبنی بر اراتباطات روی <code>Mysql</code> نهایتا 1گیگ نیاز داشته (13.4 گیگ رها می شود). مقدار 0.4 گیگ را هم فرض می کنیم که برای مصارف عمومی از قبیل ( <code>innodb_log_buffer_size</code>، کش جداول, دیگر نیاز ها)  استفاده شده، پس فضای یاقی مانده 13 گیگ می باشد. نظر به  5 تا 7% سرباری که استخر بافر InnoDB داشته، به دلیل انجام مشهود تنظیمات <code>innodb_buffer_pool_size=12G</code>  می باشد، مقداری که معمولا با میزان حافظه 16گیگ به خوبی عمل می کند.</p>
+<p>اکنون که تنظیمات استفاده از حافظه برای <code>Mysql</code> انجام شد، باید تنظیمات سیستم عامل را هم یک بررسی داشته باشیم. اولین سوالی که پرسیده می شود این است که اگر می خواهیم که <code>Mysql</code> از swap استفاده نکند، آیا باید این امکان فعال باشد؟ برای بیشتر حالات پاسخ مثبت است - این امکان (حداقل با ۴گیگ و کمتر از 25% حافظه نصب شده نباشد) به دو دلیل خوب است که فعال باشد:</p>
+<ul>
+<li>برخی برنامه های سیستم عامل مثل دیتابیس سرور هستند که تا زمانی که استفاده نشوند از حافظه استفاده نمی کنند. پس بهتر است تا این گونه برنامه ها به جای نگهداری و اشغال حافظه رم، در swap نگهداری شوند.</li>
+<li>اگر در تنظیمات <code>Mysql</code> دچار اشتباه شده یا تعدادی پردازش اضافه از میزان فضای پیش بینی شده، بیشتر استفاده کند، این هم موقعیت خوبی هست تا این گونه برنامه را نیز برای آزاد سازی فضای حافظه رم، آن ها را در swap نگهداری کرد</li>
+</ul>
+<p>با در نظر گرفتن این که ما قصد استفاده از swap را برای زمانی داریم که حافظه کافی وجود نداشته و یا پردازش هایی که کاری انجام نمی دهند را داریم، پس می توان میزان درصد استفاده از آن را برای سیستم عامل کاهش داد.  </p>
+<pre class="codehilite"><code>echo 1 &gt;  /proc/sys/vm/swappiness</code></pre>
+
+
+<p>بدون این تنظیمات، ممکن است سیستم عامل موجب swap شدن <code>Mysql</code> شود به این دلیل که از نظر سیستم عامل آن نیاز به کش کردن میزان زیادتری فایل دارند (که البته این انتخابی اشتباه برای <code>Mysql</code> است).  </p>
+<p>مورد بعدی زمانی است که تنظیمات سیستم عامل نابود کننده خطای <code>Out Of Memory</code> است. ممکن است در فایل لاگ کرنل پیامی مثل پیام زیر را مشاهده نمایید:</p>
+<pre class="codehilite"><code>   Apr 24 02:43:18 db01 kernel: Out of memory: Kill process 22211 (mysqld) score 986 or sacrifice child</code></pre>
+
+
+<p>زمانی که خود <code>Mysql</code> دچار خطا شود، تنها کار منطقی خارج کردن آنها از حافظه است. هر چند که، این مشکل واقعی به علت یکی از فعالیت های خود شمااست: اسکریپت ها، پشتیبان ها و غیره. در این حالت، ممکن است که بخواهید آن پردازش را خارج کنید اگر سیستم حافظه کافی به جای <code>Mysql</code> نداشته باشد. </p>
+<p>به منظور کاهش اولیت برنامه <code>Mysql</code> در سرویس <a href="https://en.wikipedia.org/wiki/Out_of_memory"><code>OOM Killer</code></a> می توانید به ترتیب زیر عمل کنید:  </p>
+<pre class="codehilite"><code>echo '-800' &gt; /proc/$(pidof mysqld)/oom_score_adj</code></pre>
+
+
+<p>این تنظم باعث می شود تا کرنل لینوکس برای خارج کردن برنامه هایی که بیشتر حافظه مصرف می کنند بهتر تصمیم گیری کند.</p>
+<p>در پایان بر روی یک سیستم با بیش از یک هسته <code>CPU</code>، بهتر است که درباره <a href="https://en.wikipedia.org/wiki/Non-uniform_memory_access"><code>NUMA</code></a> زمانی که برای تخصیص حافظه <code>Mysql</code> بیشتر مراقب باشید. در نسخه های جدید <code>Mysql</code>، می توانید تنظیم زیر را انجام دهید: </p>
+<pre class="codehilite"><code>innodb_numa_interleave=1</code></pre>
+
+
+<p>در نسخه های قدیمی می توانید به صورت دستی  و با اجرای فرمان زیر قبل از اجرای سرویس <code>Mysql</code> اجرا می شود:</p>
+<pre class="codehilite"><code>numactl --interleave=all</code></pre>
+
+
+<p>یا از تنظیمات <a href="https://www.percona.com/doc/percona-server/5.6/performance/innodb_numa_support.html"><code>numa_interleave</code></a> در سرور <code>Percona</code> استفاده نمایید.</p>
+<h4>منبع: <a href="https://www.percona.com/blog/2016/05/03/best-practices-for-configuring-optimal-mysql-memory-usage/">percona</a></h4>
+      </section>
+      <div>
+        برچسب ها:
+      
+        <a href="/tag/mysql.html">
+            <span class="label label-default" itemprop="about">mysql</span>
+        </a>
+      
+        <a href="/tag/database.html">
+            <span class="label label-default" itemprop="about">database</span>
+        </a>
+      
+        <a href="/tag/optimization.html">
+            <span class="label label-default" itemprop="about">optimization</span>
+        </a>
+      
+    </div>
+    </div>
+
+        </div>
+        <div class="col-md-3">
+          <div class="panel-group">
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                من در stackexchange.com
+              </div>
+              <div class="panel-body">
+                <div class="col-md-3 col-md-offset-9">
+                  <a href="http://stackexchange.com/users/887576" target="_blank">
+                    <img src="http://stackexchange.com/users/flair/887576.png" width="208" height="58" alt="profile for shgnInc on Stack Exchange, a network of free, community-driven Q&A sites" title="profile for shgnInc on Stack Exchange, a network of free, community-driven Q&A sites">
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel-group">
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                تازه ترین مطالب
+              </div>
+              <div class="panel-body">
+                  <ul>
+                  
+              </ul>
+
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <hr />
+    <footer>
+      <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+              
+              <strong>پیشنهادی های</strong>
+              <ul>
+                
+                    <li><a href="http://www.ashena.net/">Ashena</a></li>
+                
+                    <li><a href="https://github.com/shgninc">GitHub</a></li>
+                
+                    <li><a href="http://vasni.ir/">Vasni</a></li>
+                
+                    <li><a href="https://www.instagram.com/shgninc/">Instagram</a></li>
+                
+                    <li><a href="https://twitter.com/shahcheraghian">Twiteer</a></li>
+                
+              </ul>
+              
+            </div>
+            <div class="col-md-6">
+              <strong>دسترسی های ساده</strong>
+              <ul>
+                <li><a href="/">تمامی پست ها</a></li>
+                <li><a href="/tags.html">فهرست تگ ها</a></li>
+              </ul>
+            </div>
+            <div class="col-md-12">
+              <p class="text-center"><small>shgn.ir &copy; 2018</small></p>
+            </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha256-KXn5puMvxCw+dAYznun+drMdG1IFl3agK0p/pqT9KAo= sha512-2e8qq0ETcfWRI4HJBzQiA3UoyFk6tbNyG+qSaIBZLyW9Xf3sWZHN/lxe9fTh1U45DpPf07yj94KsUHHWe4Yk1A==" crossorigin="anonymous"></script>
+  </body>
+</html>

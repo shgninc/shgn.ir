@@ -10,6 +10,7 @@
         "links": {
           "درباره ما": "/about.html",
           "ارتباط با ما": "/contacus.html",
+          "لینک های مفید": "/links.html",
           "معرفی Yii2":"http://shgn.ir/yii2/",
           "linux":"http://shgn.ir/tag/linux.html"
         },
@@ -17,7 +18,8 @@
           "GitHub": "https://github.com/shgninc",
           "Instagram": "https://www.instagram.com/shgninc/",
           "Vasni": "http://vasni.ir/",
-          "Ashena": "http://www.ashena.net/"
+          "Ashena": "http://www.ashena.net/",
+          "Twiteer": "https://twitter.com/shahcheraghian"
         }
     },
     "date_format": "%Y-%m-%d %H:%M",
