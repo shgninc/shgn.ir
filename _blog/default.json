@@ -4,6 +4,7 @@
     "pages_dir": "_blog/pages",
     "site": {
         "url": "shgn.ir",
+        "lang": "fa",
         "title": "دست نوشته های یک تازه کار",
         "author": "سید سجاد شاهچراغیان",
         "briefing": "این وبلاگ پیرامون تجربیات، دانسته ها، اینجاب درباره linux, database, mysql, mariadb, datamart, galera cluster,apache می باشد.",
@@ -23,5 +24,15 @@
         }
     },
     "date_format": "%Y-%m-%d %H:%M",
-    "items_per_page": 8
+    "items_per_page": 8,
+    "lang":{
+        "fa":{
+           "Posts_with_tag": "پستهای تگ شده با ",
+           "List_of_tags": "لیست تگها"
+        },
+        "en":{
+           "Posts_with_tag":"Posts with tag ",
+           "List_of_tags": "List of tags"
+        }
+    }
 }
