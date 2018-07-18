@@ -22,34 +22,6 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-      <script type='text/javascript'>
-//some default pre init
-var Countly = Countly || {};
-Countly.q = Countly.q || [];
-
-//provide countly initialization parameters
-Countly.app_key = '1d970b0c74ea3da592948facbb7f96aab3a1156d';
-Countly.url = 'http://136.243.98.196';
-
-Countly.q.push(['track_sessions']);
-Countly.q.push(['track_pageview']);
-Countly.q.push(['track_clicks']);
-Countly.q.push(['track_scrolls']);
-Countly.q.push(['track_errors']);
-Countly.q.push(['track_links']);
-Countly.q.push(['track_forms']);
-Countly.q.push(['collect_from_forms']);
-
-//load countly script asynchronously
-(function() {
-   var cly = document.createElement('script'); cly.type = 'text/javascript';
-   cly.async = true;
-   //enter url of script here
-   cly.src = 'http://136.243.98.196/sdk/web/countly.min.js';
-   cly.onload = function(){Countly.init()};
-   var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(cly, s);
-})();
-</script>
     <style>
     body {
       direction: rtl;
@@ -87,7 +59,6 @@ Countly.q.push(['collect_from_forms']);
     </style>
   </head>
   <body>
-  <noscript><img src='http://136.243.98.196/pixel.png?app_key=1d970b0c74ea3da592948facbb7f96aab3a1156d&begin_session=1'/></noscript>
     <nav class="navbar navbar-default">
       <div class="container-fluid">
         <div class="navbar-header navbar-right">
@@ -126,23 +97,25 @@ Countly.q.push(['collect_from_forms']);
       
         <li><a href="/tag/ubuntu.html">ubuntu</a> - 6</li>
       
-        <li><a href="/tag/database.html">database</a> - 4</li>
+        <li><a href="/tag/database.html">database</a> - 5</li>
       
         <li><a href="/tag/mysql.html">mysql</a> - 3</li>
       
-        <li><a href="/tag/php.html">php</a> - 2</li>
+        <li><a href="/tag/galera.html">galera</a> - 2</li>
+      
+        <li><a href="/tag/sql.html">sql</a> - 2</li>
+      
+        <li><a href="/tag/mariadb.html">mariadb</a> - 2</li>
       
         <li><a href="/tag/terminal.html">terminal</a> - 2</li>
       
         <li><a href="/tag/stored_procedure.html">stored_procedure</a> - 2</li>
       
-        <li><a href="/tag/sql.html">sql</a> - 2</li>
-      
-        <li><a href="/tag/galera.html">galera</a> - 1</li>
+        <li><a href="/tag/php.html">php</a> - 2</li>
       
         <li><a href="/tag/kernel.html">kernel</a> - 1</li>
       
-        <li><a href="/tag/nautilus.html">nautilus</a> - 1</li>
+        <li><a href="/tag/galera_cluster.html">galera_cluster</a> - 1</li>
       
         <li><a href="/tag/GNU.html">GNU</a> - 1</li>
       
@@ -152,7 +125,7 @@ Countly.q.push(['collect_from_forms']);
       
         <li><a href="/tag/cluster.html">cluster</a> - 1</li>
       
-        <li><a href="/tag/persian.html">persian</a> - 1</li>
+        <li><a href="/tag/nautilus.html">nautilus</a> - 1</li>
       
         <li><a href="/tag/video.html">video</a> - 1</li>
       
@@ -164,13 +137,13 @@ Countly.q.push(['collect_from_forms']);
       
         <li><a href="/tag/live.html">live</a> - 1</li>
       
+        <li><a href="/tag/optimization.html">optimization</a> - 1</li>
+      
         <li><a href="/tag/opensource.html">opensource</a> - 1</li>
       
         <li><a href="/tag/email.html">email</a> - 1</li>
       
         <li><a href="/tag/shell.html">shell</a> - 1</li>
-      
-        <li><a href="/tag/mariadb.html">mariadb</a> - 1</li>
       
         <li><a href="/tag/debian.html">debian</a> - 1</li>
       
@@ -184,7 +157,7 @@ Countly.q.push(['collect_from_forms']);
       
         <li><a href="/tag/windows.html">windows</a> - 1</li>
       
-        <li><a href="/tag/optimization.html">optimization</a> - 1</li>
+        <li><a href="/tag/persian.html">persian</a> - 1</li>
       
         <li><a href="/tag/iso.html">iso</a> - 1</li>
       
@@ -224,19 +197,21 @@ Countly.q.push(['collect_from_forms']);
       
         <li><a href="//tag/mysql.html" title="mysql">mysql</a></li>
       
-        <li><a href="//tag/php.html" title="php">php</a></li>
+        <li><a href="//tag/galera.html" title="galera">galera</a></li>
+      
+        <li><a href="//tag/sql.html" title="sql">sql</a></li>
+      
+        <li><a href="//tag/mariadb.html" title="mariadb">mariadb</a></li>
       
         <li><a href="//tag/terminal.html" title="terminal">terminal</a></li>
       
         <li><a href="//tag/stored_procedure.html" title="stored_procedure">stored_procedure</a></li>
       
-        <li><a href="//tag/sql.html" title="sql">sql</a></li>
-      
-        <li><a href="//tag/galera.html" title="galera">galera</a></li>
+        <li><a href="//tag/php.html" title="php">php</a></li>
       
         <li><a href="//tag/kernel.html" title="kernel">kernel</a></li>
       
-        <li><a href="//tag/nautilus.html" title="nautilus">nautilus</a></li>
+        <li><a href="//tag/galera_cluster.html" title="galera_cluster">galera_cluster</a></li>
       
         <li><a href="//tag/GNU.html" title="GNU">GNU</a></li>
       
@@ -246,7 +221,7 @@ Countly.q.push(['collect_from_forms']);
       
         <li><a href="//tag/cluster.html" title="cluster">cluster</a></li>
       
-        <li><a href="//tag/persian.html" title="persian">persian</a></li>
+        <li><a href="//tag/nautilus.html" title="nautilus">nautilus</a></li>
       
         <li><a href="//tag/video.html" title="video">video</a></li>
       
@@ -258,13 +233,13 @@ Countly.q.push(['collect_from_forms']);
       
         <li><a href="//tag/live.html" title="live">live</a></li>
       
+        <li><a href="//tag/optimization.html" title="optimization">optimization</a></li>
+      
         <li><a href="//tag/opensource.html" title="opensource">opensource</a></li>
       
         <li><a href="//tag/email.html" title="email">email</a></li>
       
         <li><a href="//tag/shell.html" title="shell">shell</a></li>
-      
-        <li><a href="//tag/mariadb.html" title="mariadb">mariadb</a></li>
       
         <li><a href="//tag/debian.html" title="debian">debian</a></li>
       
@@ -278,7 +253,7 @@ Countly.q.push(['collect_from_forms']);
       
         <li><a href="//tag/windows.html" title="windows">windows</a></li>
       
-        <li><a href="//tag/optimization.html" title="optimization">optimization</a></li>
+        <li><a href="//tag/persian.html" title="persian">persian</a></li>
       
         <li><a href="//tag/iso.html" title="iso">iso</a></li>
       

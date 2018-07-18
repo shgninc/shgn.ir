@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title> مهاجرت از دیتابیس mariadb به galera cluster - دست نوشته های یک تازه کار </title>
+    <meta name="description" content="در این نوشتار، مراحل مهاجرت از یک دیتابیس mariadb که حاوی اطلاعات می باشد، به کلاسترینگ galera بدون نیاز به ایجاد تغییرات زیاد، بیان شده است."/>
+    <meta name="keywords" content=" galera, galera_cluster, mariadb, database" />
+
+    <!-- Bootstrap -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <!-- link href="style/bootstrap/css/bootstrap.css" rel="stylesheet" crossorigin="anonymous" -->
+
+    <link href="https://rawgit.com/richleland/pygments-css/master/github.css" rel="stylesheet" crossorigin="anonymous">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <style>
+    body {
+      direction: rtl;
+    }
+    p {
+        font-size: 1.3em;
+        line-height: 1.5em;
+        text-align: justify;
+      }
+    pre {
+        direction: ltr;
+        border-left: 5px solid #6ce26c;
+      }
+    .panel-body ul li{
+        margin: 10px 0;
+    }
+    a {
+        color: #4608ad;
+      }
+    .panel-group .panel {
+        margin-bottom: 5px;
+    }
+    .panel-primary > .panel-heading {
+        background-color: #4608ad;
+    }
+    .navbar-default {
+        background-color: #4608ad;
+    }
+    .navbar-default .navbar-brand {
+        color: #ffffff;
+    }
+    .navbar-default .navbar-nav > li > a {
+        color: #ffffff;
+    }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header navbar-right">
+          <a class="navbar-brand" href="/">دست نوشته های یک تازه کار</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            
+                
+                    <li><a href="/about.html" title="درباره ما">درباره ما</a></li>
+                
+                    <li><a href="/contacus.html" title="ارتباط با ما">ارتباط با ما</a></li>
+                
+                    <li><a href="http://shgn.ir/tag/linux.html" title="linux">linux</a></li>
+                
+                    <li><a href="http://shgn.ir/yii2/" title="معرفی Yii2">معرفی Yii2</a></li>
+                
+                    <li><a href="/links.html" title="لینک های مفید">لینک های مفید</a></li>
+                
+            
+          </ul>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-9">
+            
+    <div itemscope itemtype="http://schema.org/NewsArticle">
+    <meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="http://shgn.ir/2018-07-18/migrate_from_mariadb_instace_to_galera_cluster.html"/>
+    <div class="page-header">
+      <h3 itemprop="name">مهاجرت از دیتابیس mariadb به galera cluster</h3>
+      
+      
+        <small>
+          <p class="text-right">
+            ارسال شده <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+                توسط <span itemprop="name">سید سجاد شاهچراغیان</span>
+              </span>
+              در تاریخ <span itemprop="datePublished">2018-07-18</span>
+          </p>
+        </small>
+      
+    </div>
+      <section itemprop="articleBody">
+        <h3>شروع قصه</h3>
+<p>با سلام به همه، ما معمولا در هر دیتاسنتری که راه اندازی می کنیم، به خاطر اهمیت و حجم بسیار زیاد اطلاعات، دیتابیس ها را در کلاسترینگ قرار می دهیم. اما به دلیل اجرای سیاست های عجولانه متأسفانه در یک دیتاسنتر این مهم اتفاق نیفتاد و خاصا با یک <a href="https://www.lifewire.com/database-instance-1019612">instace دیتابیس</a> <code>mariadb</code> راه اندازی شده بود که با توجه حساسیت بالا اطلاعات ریسک زیاد داشت. پس بالاخره تصمیم بر این شد که این یک نود دیتابیس به کلاسترینگ منتقل شود. در اینجا چند مشئله بود که می توانست مشکل ساز باشه و موجب دغده گروه شده بود:</p>
+<p>-1 ماشین های وجازی دیتابیس ها با یک دیسک معمولی کار می کردند و در کنار آن، یک هارد <code>SSD</code> نیز برای دیتابیس ها به آنها وصل بود که دیتابیس جاری که زیر بار بود نیز از آن استفاده می کرد. نگرانی آنجایی بود که آن دیسک باید به ماشین کلاستر شده متصل می شد. چه اتفاقی برای دیتایی که تا کنون جمع آوری شده بود می افتاد؟
+  2- آیا این انتقال و مهاجرات باعث از بین رفتن اطلاعات نمی شد؟
+  3- آیا راهی مطمئن برای انجام این مهم بدون هیچ گونه اشکال وجود داشت؟</p>
+<p>اینها دغده ها و سوالاتی بود که گروه با آنها سر و کله می زد.</p>
+<p><img alt="Mixedup" src="mixedup.jpg" /></p>
+<h3>نوری در تاریکی</h3>
+<p>بالاخره پس از کلی سرو کله زدن، جسجتو کردن متوجه شدیم که راهی بسیار بسیار ساده برای رفع تمامی این نگرانی های وجود دارد. راهی که موجب شد تا به راحتی بتوانیم این مهاجرت را بدون کوچکترین مشکلی انجام دهیم. در آغاز انجامش به نظر خیلی مشکل و غیر ممکن بود اما وقتی که شیرجه زدیم داخل راهکار، متوجه شدیم که خیلی هم آسان، ساده و قابل انجام هست.</p>
+<p>در کنار تمام مزیت ها و ویژگی هایی که Galera_cluster دارد، این راهم باید به آن اضافه کنیم که به شما این امکان را می دهد تا بتوانید یک نمونه از دیتابیس <code>mariadb</code> را به راحتی به یکی از نودهای کلاسترینگ خودش تبدیل می کند.</p>
+<p><img alt="light_tunel" src="light_tunel.jpg" /></p>
+<h3>قدم به قدم تا ریسیدن به نتیجه</h3>
+<p>برای رفع این مشکل و استفاده از این راهکاری باید گام به گام و با دقت خیلی زیاد جلو می رفتیم و تا از مراحل قبلی مطمئن نمی شدیم نمی توانستیم به گام های بعدی برسیم.</p>
+<h4>گام اول: آماده سازی</h4>
+<p>در گام اول، ما دو ماشین مجازی دیگه نیز به عنوان نودهای دیگر کلاسترینگ گلرا نصب و آماده کردیم. در این مراحل <code>Debian 9</code> بر روی تمامی ماشین های مجازی نصب گردید. سپس، بعد از انجام تنظیمات شبکه ای و نصب برنامه اولیه برنامه های مورد نیاز به صورت زیر نصب شدند:</p>
+<pre class="codehilite"><code>sudo apt install software-properties-common
+sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8</code></pre>
+
+
+<p>| نکته ای که باید در نظر داشت در دبیان ۹ به بالا لازم است تا برنامه <code>dirmngr</code> نیز نصب شود.</p>
+<p>سپس مخزن نصب برنامه <code>Galera Cluster</code> به سیستم عامل اضافه گردید:</p>
+<pre class="codehilite"><code>sudo add-apt-repository 'deb [arch=amd64,i386,ppc64el] http://mirror.nodesdirect.com/mariadb/repo/10.2/debian stretch main'
+sudo apt update</code></pre>
+
+
+<h4>گام دوم: نصب و راه اندازی</h4>
+<p>در این مرحله باید برنامه <code>Galera Cluster</code> را به سادگی هر چه تمام بر روی ماشین های مجازی نصب و تنظیمات لازم را انجام می دادیم:</p>
+<pre class="codehilite"><code>sudo apt install -y rsync mariadb-server</code></pre>
+
+
+<p>البته مراحل نصب و راه اندازی <code>Galera Cluster</code> در مطلبی به نام <a href="http://shgn.ir/2017-08-16/galera_cluster.html">نصب Galer Cluster بر روی debian8</a> که قبلا نوشته شده به سادگی انجام تنظیمات در آن توضیح داد شده است.</p>
+<h4>گام سوم: انتقال نود اول</h4>
+<p>در این مرحله لازم بود که اولین و مهمتریم نود دیتابیس که حاوی تمامی اطلاعات مورد بحث بود را به کلاسترینگ اضافه نماییم. برای انجام این مهم، مراحلی نیز باید انجام می شد:</p>
+<p>ابتدا لازم بود تا از متصل نشدن این نود به کلاسترینگ مطمئن شویم:</p>
+<pre class="codehilite"><code>sudo service mysql start --wsrep_on=OFF</code></pre>
+
+
+<p>سپس به منظور اطمینان از این که تمامی ساختار دیتابیس در قالب کلاسترینگ گلرا قرار می گیرد باید برنامه زیر اجرا می شد:</p>
+<pre class="codehilite"><code>sudo mysql_upgrade -u root -p</code></pre>
+
+
+<p>احتمال این که اجرای این برنامه خطاهایی را تولید کند بود، که البته ضمن توجه به آنها می توان از آنها رد شد. بعد از اجرای این برنامه باید سرویس دیتابیس متوقف می شد:</p>
+<pre class="codehilite"><code>sudo service mysql stop</code></pre>
+
+
+<h4>گام چهارم: شروع کلاسترینگ</h4>
+<p>بعد از موفقیت در طی مراحل قبلی به آخرین مرحله که راه اندازی کلاسترینگ است می رسیم. در این مرحله و برای اطمینان از راه اندازی ابتدا با نود اول که حاوی اطاعلات است شروع می کنیم:</p>
+<pre class="codehilite"><code>sudo galera_new_cluster</code></pre>
+
+
+<p>بعد از اجرای این دستور و به منظور اطمینان از اجرای صحیح سرویس دیتابیس دستور زیر را اجرا شد:</p>
+<pre class="codehilite"><code>sudo ps aux | grep mysql</code></pre>
+
+
+<p>که انتظار خروجی زیر می رفت:</p>
+<pre class="codehilite"><code>mysql 1057 14.0 15.5 1225420 159668 ? Ssl 01:50 0:00 /usr/sbin/mysqld --wsrep-new-cluster --wsrep_start_position=00000000-0000-0000-0000-000000000000:-1</code></pre>
+
+
+<h4>گام پنجم: راه اندازی کل کلاستر</h4>
+<p>اکنون پس از اطمیان از صحت اجرای نود اول کلاسترینگ، باید نودهای بعدی را نیز  یکی یکی به کلاسترینگ اضافه می شد،پس بر روی هر کدام از نود های دستور زیر اجرا شد:</p>
+<pre class="codehilite"><code>sudo service mysql start</code></pre>
+
+
+<p>| نکته قابل توجه این است که با توجه به حجم دیتابیس در نود اول، معمولا راه اندازی دیگر نودهای گلرا مدتی طول می کشد باید صبور باشید. زیرا گلرا در حال همسان سازی دیگر نودها با نود اصلی می باشد.</p>
+<p>####گام ششم: اطمینان از کلاسترینگ
+ در این مرحله و برای اطمینان کامل از کلاستر شدن تمامی نودها می توان دستور زیر را اجرا نمود:</p>
+<pre class="codehilite"><code>mysql -u root -p -e &quot;SHOW STATUS LIKE 'wsrep_cluster_size';&quot;
+Enter password:
++--------------------+-------+
+| Variable_name      | Value |
++--------------------+-------+
+| wsrep_cluster_size | 3     |
++--------------------+-------+</code></pre>
+
+
+<h3>در پایان</h3>
+<p>در پایان بعد از اطمینان از صحت عملکرد تمامی مراحل برنامه اطلاعات، متوجه شدیم که بعضی وقت ها مشکلات به ظاهر بزرگ با راهکارهایی ساده و دم دستی قابل حا هستند.</p>
+<p><img alt="relaxing" src="relaxing.jpeg" /></p>
+      </section>
+      <div>
+        برچسب ها:
+      
+        <a href="/tag/galera.html">
+            <span class="label label-default" itemprop="about">galera</span>
+        </a>
+      
+        <a href="/tag/galera_cluster.html">
+            <span class="label label-default" itemprop="about">galera_cluster</span>
+        </a>
+      
+        <a href="/tag/mariadb.html">
+            <span class="label label-default" itemprop="about">mariadb</span>
+        </a>
+      
+        <a href="/tag/database.html">
+            <span class="label label-default" itemprop="about">database</span>
+        </a>
+      
+    </div>
+    </div>
+
+        </div>
+        <div class="col-md-3">
+          <div class="panel-group">
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                من در stackexchange.com
+              </div>
+              <div class="panel-body">
+                <div class="col-md-3 col-md-offset-9">
+                  <a href="http://stackexchange.com/users/887576" target="_blank">
+                    <img src="http://stackexchange.com/users/flair/887576.png" width="208" height="58" alt="profile for shgnInc on Stack Exchange, a network of free, community-driven Q&A sites" title="profile for shgnInc on Stack Exchange, a network of free, community-driven Q&A sites">
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel-group">
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                تازه ترین مطالب
+              </div>
+              <div class="panel-body">
+                  <ul>
+                  
+              </ul>
+
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <hr />
+    <footer>
+      <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+              
+              <strong>پیشنهادی های</strong>
+              <ul>
+                
+                    <li><a href="http://www.ashena.net/">Ashena</a></li>
+                
+                    <li><a href="https://github.com/shgninc">GitHub</a></li>
+                
+                    <li><a href="http://vasni.ir/">Vasni</a></li>
+                
+                    <li><a href="https://www.instagram.com/shgninc/">Instagram</a></li>
+                
+                    <li><a href="https://twitter.com/shahcheraghian">Twiteer</a></li>
+                
+              </ul>
+              
+            </div>
+            <div class="col-md-6">
+              <strong>دسترسی های ساده</strong>
+              <ul>
+                <li><a href="/">تمامی پست ها</a></li>
+                <li><a href="/tags.html">فهرست تگ ها</a></li>
+              </ul>
+            </div>
+            <div class="col-md-12">
+              <p class="text-center"><small>shgn.ir &copy; 2018</small></p>
+            </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha256-KXn5puMvxCw+dAYznun+drMdG1IFl3agK0p/pqT9KAo= sha512-2e8qq0ETcfWRI4HJBzQiA3UoyFk6tbNyG+qSaIBZLyW9Xf3sWZHN/lxe9fTh1U45DpPf07yj94KsUHHWe4Yk1A==" crossorigin="anonymous"></script>
+  </body>
+</html>

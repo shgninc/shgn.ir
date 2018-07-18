@@ -22,34 +22,6 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-      <script type='text/javascript'>
-//some default pre init
-var Countly = Countly || {};
-Countly.q = Countly.q || [];
-
-//provide countly initialization parameters
-Countly.app_key = '1d970b0c74ea3da592948facbb7f96aab3a1156d';
-Countly.url = 'http://136.243.98.196';
-
-Countly.q.push(['track_sessions']);
-Countly.q.push(['track_pageview']);
-Countly.q.push(['track_clicks']);
-Countly.q.push(['track_scrolls']);
-Countly.q.push(['track_errors']);
-Countly.q.push(['track_links']);
-Countly.q.push(['track_forms']);
-Countly.q.push(['collect_from_forms']);
-
-//load countly script asynchronously
-(function() {
-   var cly = document.createElement('script'); cly.type = 'text/javascript';
-   cly.async = true;
-   //enter url of script here
-   cly.src = 'http://136.243.98.196/sdk/web/countly.min.js';
-   cly.onload = function(){Countly.init()};
-   var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(cly, s);
-})();
-</script>
     <style>
     body {
       direction: rtl;
@@ -87,7 +59,6 @@ Countly.q.push(['collect_from_forms']);
     </style>
   </head>
   <body>
-  <noscript><img src='http://136.243.98.196/pixel.png?app_key=1d970b0c74ea3da592948facbb7f96aab3a1156d&begin_session=1'/></noscript>
     <nav class="navbar navbar-default">
       <div class="container-fluid">
         <div class="navbar-header navbar-right">
@@ -119,6 +90,23 @@ Countly.q.push(['collect_from_forms']);
       <h2>Posts with tag 'mariadb'</h2>
       <p class="lead"></p>
     </div>
+      
+        <h3><a href="/2018-07-18/migrate_from_mariadb_instace_to_galera_cluster.html" title="مهاجرت از دیتابیس mariadb به galera cluster">مهاجرت از دیتابیس mariadb به galera cluster</a></h3>
+            
+                <a href="/tag/galera.html">
+                    <span class="label label-default">galera</span></a>
+            
+                <a href="/tag/galera_cluster.html">
+                    <span class="label label-default">galera_cluster</span></a>
+            
+                <a href="/tag/mariadb.html">
+                    <span class="label label-default">mariadb</span></a>
+            
+                <a href="/tag/database.html">
+                    <span class="label label-default">database</span></a>
+            
+        <p>در این نوشتار، مراحل مهاجرت از یک دیتابیس mariadb که حاوی اطلاعات می باشد، به کلاسترینگ galera بدون نیاز به ایجاد تغییرات زیاد، بیان شده است.</p>
+        <hr />
       
         <h3><a href="/2017-08-16/galera_cluster.html" title="نصب Galer Cluster بر روی debian8">نصب Galer Cluster بر روی debian8</a></h3>
             
@@ -174,6 +162,8 @@ Countly.q.push(['collect_from_forms']);
               <div class="panel-body">
                   <ul>
                   
+        <li><a href="/2018-07-18/migrate_from_mariadb_instace_to_galera_cluster.html" title="مهاجرت از دیتابیس mariadb به galera cluster">مهاجرت از دیتابیس mariadb به galera cluster</a></li>
+      
         <li><a href="/2017-08-16/galera_cluster.html" title="نصب Galer Cluster بر روی debian8">نصب Galer Cluster بر روی debian8</a></li>
       
               </ul>
