@@ -167,8 +167,8 @@ sudo apt update</code></pre>
 
 
 <p>| نکته قابل توجه این است که با توجه به حجم دیتابیس در نود اول، معمولا راه اندازی دیگر نودهای گلرا مدتی طول می کشد باید صبور باشید. زیرا گلرا در حال همسان سازی دیگر نودها با نود اصلی می باشد.</p>
-<p>####گام ششم: اطمینان از کلاسترینگ
- در این مرحله و برای اطمینان کامل از کلاستر شدن تمامی نودها می توان دستور زیر را اجرا نمود:</p>
+<h4>گام ششم: اطمینان از کلاسترینگ</h4>
+<p>در این مرحله و برای اطمینان کامل از کلاستر شدن تمامی نودها می توان دستور زیر را اجرا نمود:</p>
 <pre class="codehilite"><code>mysql -u root -p -e &quot;SHOW STATUS LIKE 'wsrep_cluster_size';&quot;
 Enter password:
 +--------------------+-------+
@@ -181,6 +181,12 @@ Enter password:
 <h3>در پایان</h3>
 <p>در پایان بعد از اطمینان از صحت عملکرد تمامی مراحل برنامه اطلاعات، متوجه شدیم که بعضی وقت ها مشکلات به ظاهر بزرگ با راهکارهایی ساده و دم دستی قابل حا هستند.</p>
 <p><img alt="relaxing" src="relaxing.jpeg" /></p>
+<h2>منابع:</h2>
+<ul>
+<li><a href="https://www.linode.com/docs/databases/mariadb/set-up-mariadb-clusters-with-galera-debian-and-ubuntu/">Set Up MariaDB Clusters with Galera Debian and Ubuntu</a></li>
+<li><a href="http://galeracluster.com/documentation-webpages/migration.html">Migrating to Galera Cluster</a></li>
+<li><a href="http://galeracluster.com/documentation-webpages/mysqlwsrepoptions.html">MySQL wsrep Options</a></li>
+</ul>
       </section>
       <div>
         برچسب ها:
@@ -248,7 +254,7 @@ Enter password:
               <strong>پیشنهادی های</strong>
               <ul>
                 
-                    <li><a href="http://www.ashena.net/">Ashena</a></li>
+                    <li><a href="https://virgool.io/@shgninc">Virgool</a></li>
                 
                     <li><a href="https://github.com/shgninc">GitHub</a></li>
                 

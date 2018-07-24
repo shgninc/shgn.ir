@@ -5,9 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title> Posts with tag 'microsoft' - دست نوشته های یک تازه کار </title>
-    <meta name="description" content="این وبلاگ پیرامون تجربیات، دانسته ها، اینجاب درباره linux, database, mysql, mariadb, datamart, galera cluster,apache می باشد."/>
-    <meta name="keywords" content="" />
+    <title> لاگین خودکار با SSH - دست نوشته های یک تازه کار </title>
+    <meta name="description" content="بعضی وقت ها پیش آمده که از تکرار ورود نام کاربر و کلمه در لاگین SSH خسته شده باشید."/>
+    <meta name="keywords" content=" linux, ssh" />
 
     <!-- Bootstrap -->
     <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
@@ -86,37 +86,70 @@
       <div class="row">
         <div class="col-md-9">
             
+    <div itemscope itemtype="http://schema.org/NewsArticle">
+    <meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="http://shgn.ir/2018-07-23/ssh_automatic_login.html"/>
     <div class="page-header">
-      <h2>Posts with tag 'microsoft'</h2>
-      <p class="lead"></p>
+      <h3 itemprop="name">لاگین خودکار با SSH</h3>
+      
+      
+        <small>
+          <p class="text-right">
+            ارسال شده <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+                توسط <span itemprop="name">سید سجاد شاهچراغیان</span>
+              </span>
+              در تاریخ <span itemprop="datePublished">2018-07-23</span>
+          </p>
+        </small>
+      
     </div>
+      <section itemprop="articleBody">
+        <p>شاید برای شما هم اتفاق افتاده باشه که، پشتیبانی سرورهای زیادی را بر عهده داشته و نیاز داشته باشید تا در یک لحظه به چندین سرور <code>ssh</code> بزنید.</p>
+<p>اگر این اتفاق برایتان افتاده باشد، حتما با پروسه ورود نام کاربری و کلمه عبور هم برخورد کرده اید. این که در بعضی وقت ها هم خسته کننده و هم کند کننده است. با روش زیر می توانید کاری کنید که شما فقط فرمان <code>ssh</code> را زده و به صورت خودکار بر روی سرور لاگین می شوید.</p>
+<p>| نکته قابل توجه این است که با این کار باید خیلی بیشتر مراقب سیستم کلاینت خود باشید چون هر فردی با حساب کاربری شما می تواند بدون ورورد نام کاربری و کلمه عبور به سرورهای شما دسترسی پیدا کند.</p>
+<p>##گام های خودکار سازی
+ مراحل آماده سازی و انجام اقدامات لازم برای خودکار سازی ورود به سرورها به ترتیب زیر می باشد:</p>
+<h3>تولید کلدیSSH</h3>
+<p>در ابتدا نیاز دارید تا یک کلید خصوصی و عمومی برای <code>ssh</code> به صورت زیر تولید کنید:</p>
+<pre class="codehilite"><code>$ ssh-keygen -t rsa -b 2048
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/username/.ssh/id_rsa): 
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in /home/username/.ssh/id_rsa.
+Your public key has been saved in /home/username/.ssh/id_rsa.pub.</code></pre>
+
+
+<p>دقت داشته باشید که این کلید دقیقا برابر با نام کاربری و کلمه عبور شما هست.</p>
+<h3>ارسال کلید به سرور</h3>
+<p>در گام بعدی باید کلید عمومی تولید شده خود را بر روی سرور منتقل کنید:</p>
+<pre class="codehilite"><code>$ ssh-copy-id id@server
+id@server's password:</code></pre>
+
+
+<h4>خاتمه</h4>
+<p>اکنون هر زمان که نیاز به ورود داشتید کافی است تا فرمان زیر را اجرا کنید و بدون ورود هیچ گونه نام کاربری و کلمه عبوری به سرور وراد شوید:</p>
+<pre class="codehilite"><code>ssh id@server</code></pre>
+
+
+<p>در پایان مشاهده کردید که به سادگی و راحتی هر چه تمام خودکار سازی ورود به سرورها با <code>ssh</code> انجام شد.</p>
+<h4>منبع:</h4>
+<ul>
+<li><a href="https://serverfault.com/a/241593/194975">How to automate SSH login with password?</a></li>
+</ul>
+      </section>
+      <div>
+        برچسب ها:
       
-        <h3><a href="/2013-01-20/HyperTem_linux_alternative.html" title="نرم افزاری معادل Microsoft HyperTerminal در linux">نرم افزاری معادل Microsoft HyperTerminal در linux</a></h3>
-            
-                <a href="/tag/microsoft.html">
-                    <span class="label label-default">microsoft</span></a>
-            
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
-            
-                <a href="/tag/windows.html">
-                    <span class="label label-default">windows</span></a>
-            
-                <a href="/tag/terminal.html">
-                    <span class="label label-default">terminal</span></a>
-            
-        <p>از جمله نرم افزارهایی که در اوبونتو می تواند به جای برنامه `Microsoft HyperTerminal` برای کا با پورتهای سریال به کار رود نرم افزار `GTKTerm` می باشد.</p>
-        <hr />
+        <a href="/tag/linux.html">
+            <span class="label label-default" itemprop="about">linux</span>
+        </a>
       
+        <a href="/tag/ssh.html">
+            <span class="label label-default" itemprop="about">ssh</span>
+        </a>
       
-              <ul class="pagination">
-                
-                    
-                        <li class="active"><a href="#">0 <span class="sr-only">(current)</span></a></li>
-                    
-                
-              </ul>
-      
+    </div>
+    </div>
 
         </div>
         <div class="col-md-3">
@@ -142,8 +175,6 @@
               <div class="panel-body">
                   <ul>
                   
-        <li><a href="/2013-01-20/HyperTem_linux_alternative.html" title="نرم افزاری معادل Microsoft HyperTerminal در linux">نرم افزاری معادل Microsoft HyperTerminal در linux</a></li>
-      
               </ul>
 
               </div>
