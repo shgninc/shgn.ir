@@ -98,5 +98,14 @@ type: post
 
 ![relaxing](relaxing.jpeg)
 
+
+##منابع:
+ * [Set Up MariaDB Clusters with Galera Debian and Ubuntu][MariaDB_Clusters]
+ * [Migrating to Galera Cluster][Migrating_to_Galera]
+ * [MySQL wsrep Options][wsrep_Options]
+
 [database_instace]: https://www.lifewire.com/database-instance-1019612
 [galer_debian8]: http://shgn.ir/2017-08-16/galera_cluster.html 
+[MariaDB_Clusters]: https://www.linode.com/docs/databases/mariadb/set-up-mariadb-clusters-with-galera-debian-and-ubuntu/
+[Migrating_to_Galera]: http://galeracluster.com/documentation-webpages/migration.html
+[wsrep_Options]: http://galeracluster.com/documentation-webpages/mysqlwsrepoptions.html
