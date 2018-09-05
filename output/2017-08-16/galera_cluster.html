@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title> نصب Galer Cluster بر روی debian8 - دست نوشته های یک تازه کار </title>
-    <meta name="description" content="یک برنامه کلاستر همزمان چند سرور master برمبنای replication همزمان می باشد."/>
+    <meta name="description" content="یک برنامه کلاستر همزمان چند سرور Master-Master برمبنای replication همزمان می باشد."/>
     <meta name="keywords" content=" linux, debian, galera, mariadb, cluster" />
 
     <!-- Bootstrap -->
@@ -103,8 +103,8 @@
       
     </div>
       <section itemprop="articleBody">
-        <p>برنامه Galera Cluster یک برنامه متن باز و رایگان clustering چند سرور به صورت Master با replication همزمان بر روی آنها در بستر MariDB می باشد. این نوع از کلاسترینگ فقط بر روی لینوکس قابل پیاده سازی بوده و فقط از موتور ذخیره سازی دیتابیس XtraDB یا InnoDB حمایت می کند. کار کردن با MariaDB ۱۰.۱، به طور پیش فرض wsrep API این کلاسترینگ در MariaDB درون سازی شده است.</p>
-<p>برای نصب Galera Cluster، نیاز به دریافت و نصب آن به صورت جداگانه نمی باشد. در نسخه های جدید، این برنامه به همراه برنامه <code>mariadb-server</code> نصب می شود. باید دقت شود که فلسفه کاری Galera Cluster بر مبنای تعداد نود های فرد می باشد، بنابراین، برای ۳ نود توضیحات ارائه شده و در هرجا که کدها تکی بود، باید بر روی هر سه نود به طور همسان اجرا شوند.</p>
+        <p>برنامه <code>Galera Cluster</code> یک برنامه متن باز و رایگان <code>clustering</code> چند سرور به صورت <code>Master-Master</code> با <code>replication</code> همزمان بر روی آنها در بستر <code>MariDB</code> می باشد. این نوع از کلاسترینگ فقط بر روی لینوکس قابل پیاده سازی بوده و فقط از موتور ذخیره سازی دیتابیس <code>XtraDB</code> یا <code>InnoDB</code> حمایت می کند. کار کردن با <code>MariaDB</code> نسخه 10.1 به بالا، به طور پیش فرض <code>wsrep API</code> این کلاسترینگ در <code>MariaDB</code> درون سازی شده است.</p>
+<p>برای نصب <code>Galera Cluster</code>، نیاز به دریافت و نصب آن به صورت جداگانه نمی باشد. در نسخه های جدید، این برنامه به همراه برنامه <code>mariadb-server</code> نصب می شود. باید دقت شود که فلسفه کاری <code>Galera Cluster</code> بر مبنای تعداد نود های فرد می باشد، بنابراین، برای ۳ نود توضیحات ارائه شده و در هرجا که کدها تکی بود، باید بر روی هر سه نود به طور همسان اجرا شوند.</p>
 <h3>مراحل نصب</h3>
 <p>مراحل نصب بر روی دبیان8:</p>
 <pre class="codehilite"><code>$ sudo apt-get install software-properties-common
