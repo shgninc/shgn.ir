@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!— Global site tag (gtag.js) - Google Analytics —>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-124515881-2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-124515881-2');
+    </script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title> آموزش برنامه نویسی Flask - فصل۱ - دست نوشته های یک تازه کار </title>
+    <meta name="description" content="در واقع فلسک یک میکرو فریمورک می باشد که با زبان پایتون نوشته شده و بسیار ساده و سبک عمل می کند."/>
+    <meta name="keywords" content="لینوکس،لینوکس مشهد،آموزش,پایتون,پایتون مشهد,آموزش لینوکس,دیتابیس,آموزش دیتابیس,برنامه نویسی,linux,database,mysql,mariadb,datamart,galera cluster,apache,big data,dataware house,cluster,galera,percona,python,php,tutorial,debian,ubuntu,centos,arch linux,mashhad linux,iran linux,debian mashhad, python, flask, linux, programming,tutorial" />
+
+    <!-- Bootstrap -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <!-- link href="style/bootstrap/css/bootstrap.css" rel="stylesheet" crossorigin="anonymous" -->
+
+    <link href="https://rawgit.com/richleland/pygments-css/master/github.css" rel="stylesheet" crossorigin="anonymous">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <style>
+    body {
+      direction: rtl;
+    }
+    p {
+        font-size: 1.3em;
+        line-height: 1.5em;
+        text-align: justify;
+      }
+    pre {
+        direction: ltr;
+        border-left: 5px solid #6ce26c;
+      }
+    .panel-body ul li{
+        margin: 10px 0;
+    }
+    a {
+        color: #4608ad;
+      }
+    .panel-group .panel {
+        margin-bottom: 5px;
+    }
+    .panel-primary > .panel-heading {
+        background-color: #4608ad;
+    }
+    .navbar-default {
+        background-color: #4608ad;
+    }
+    .navbar-default .navbar-brand {
+        color: #ffffff;
+    }
+    .navbar-default .navbar-nav > li > a {
+        color: #ffffff;
+    }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header navbar-right">
+          <a class="navbar-brand" href="/">دست نوشته های یک تازه کار</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            
+                
+                    <li><a href="/about.html" title="درباره ما">درباره ما</a></li>
+                
+                    <li><a href="/contacus.html" title="ارتباط با ما">ارتباط با ما</a></li>
+                
+                    <li><a href="http://shgn.ir/tag/linux.html" title="linux">linux</a></li>
+                
+                    <li><a href="http://shgn.ir/yii2/" title="معرفی Yii2">معرفی Yii2</a></li>
+                
+                    <li><a href="/links.html" title="لینک های مفید">لینک های مفید</a></li>
+                
+            
+          </ul>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-9">
+            
+    <div itemscope itemtype="http://schema.org/NewsArticle">
+    <meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="http://shgn.ir/2018-09-09/Flask-tutorial-01.html"/>
+    <div class="page-header">
+      <h3 itemprop="name">آموزش برنامه نویسی Flask - فصل۱</h3>
+      
+      
+        <small>
+          <p class="text-right">
+            ارسال شده <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+                توسط <span itemprop="name">سید سجاد شاهچراغیان</span>
+              </span>
+              در تاریخ <span itemprop="datePublished">2018-09-09</span>
+          </p>
+        </small>
+      
+    </div>
+      <section itemprop="articleBody">
+        <h2>آشنایی با Flask</h2>
+<p>فلسک یک ساختار یا چهارچوب برنامه نویسی است که خود با زبان برنامه نویسی <a href="https://en.wikipedia.org/wiki/Python_(programming_language)">پایتون</a> تولید شده است. فلسک بر پایه ابزارهای <a href="http://werkzeug.pocoo.org/"><code>Werkzeug WSGI</code></a> و موتور تولید صفحات HTML <a href="http://jinja.pocoo.org/docs/2.10/templates/">Jinja2</a> می باشد.</p>
+<p>در واقع فلسک یک میکرو فریمورک می باشد. این میکرو فریمورک به خودی خود، مانند دیگر فریمورک ها، لایه داخلی ارتباط و مدیریت دیتابیس و یا ابزار اعتبار سنج فرم را نداشته، بلکه از کتابخانه های بیرونی که این قابلیت ها را فراهم می کنند، می تواند بهره بگیرد.</p>
+<h3>مراحل نصب Flask</h3>
+<p>برای نصب فلسک نیاز به <a href="https://www.python.org/download/releases/2.6/">نسخه ۲.۶</a> و بالاتر زبان برنامه نویسی پایتون می باشد.
+ هر چند که فلسک و دیگر برنامه های وابسته آن با <a href="https://www.python.org/download/releases/3.0/">پایتون ۳</a> نیز به خوبی می توانند کار کنند. اما با توجه به کتابخانه هایی که ممکن است از آنها در یک برنامه فلسک استفاده شود، پیشنهاد می شود تا <a href="https://www.python.org/download/releases/2.7/">نسخه ۲.۷</a> برنامه نویسی پایتون نصب شود.</p>
+<h4>نصب virtualenv</h4>
+<p>بسته <code>virtualenv</code> یک محیط مجازی برای پایتون فراهم می کند تا هر برنامه به خودی خود با انواع نسخه های موجود کتابخانه ها در برنامه نویسی پایتون دچار مشکل نشود.</p>
+<p>جهت نصب آن در محیط لینوکس از دستورز زیر استفاده می شود:</p>
+<pre class="codehilite"><code>Sudo apt-get install virtualenv</code></pre>
+
+
+<p>به محض نصب، می توانید به صورت زیر، یک محیط جدا برای برنامه خود ایجاد کنید:</p>
+<pre class="codehilite"><code>mkdir newproj
+cd newproj
+virtualenv venv</code></pre>
+
+
+<p>برای فعال سازی آن محیط دستور زیر را وارد نمایید:</p>
+<pre class="codehilite"><code>venv/bin/activate</code></pre>
+
+
+<h4>نصب Flask</h4>
+<p>اکنون برای نصب خود برنامه فلسک آماده هستیم. جهت نصب برنامه فلسک دستورات زیر را وارد می کنیم:</p>
+<pre class="codehilite"><code>pip install Flask</code></pre>
+
+
+<p>همانطور که مشاهده کردید مراحل نصب به سادگی اجرا و به اتمام رسید و به سادگی هر چه بیشتر برنامه فلسک را توانستید نصب نمایید.</p>
+<p>| <strong>البته بدون نصب virtualenv و فقط با اجرای نصب بخش فلسک، آن برنامه قابل اجرا و دسترسی در کل سیستم شما خواهد بود.</strong></p>
+<p>در اولین نوشته این آموزش صرفا سعی شد تا آشنایی اولیه ایجاد و روش نصب برنامه فلسک آموزش داده شود. انشاء الله در مطالب بعدی به مباحث ایجاد برنامه و مسیریابی آن می پردازیم.</p>
+      </section>
+      <div>
+        برچسب ها:
+      
+        <a href="/tag/python.html">
+            <span class="label label-default" itemprop="about">python</span>
+        </a>
+      
+        <a href="/tag/flask.html">
+            <span class="label label-default" itemprop="about">flask</span>
+        </a>
+      
+        <a href="/tag/linux.html">
+            <span class="label label-default" itemprop="about">linux</span>
+        </a>
+      
+        <a href="/tag/programming,tutorial.html">
+            <span class="label label-default" itemprop="about">programming,tutorial</span>
+        </a>
+      
+    </div>
+    </div>
+
+        </div>
+        <div class="col-md-3">
+          <div class="panel-group">
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                من در stackexchange.com
+              </div>
+              <div class="panel-body">
+                <div class="col-md-3 col-md-offset-9">
+                  <a href="http://stackexchange.com/users/887576" target="_blank">
+                    <img src="http://stackexchange.com/users/flair/887576.png" width="208" height="58" alt="profile for shgnInc on Stack Exchange, a network of free, community-driven Q&A sites" title="profile for shgnInc on Stack Exchange, a network of free, community-driven Q&A sites">
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel-group">
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                تازه ترین مطالب
+              </div>
+              <div class="panel-body">
+                  <ul>
+                  
+              </ul>
+
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <hr />
+    <footer>
+      <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+              
+              <strong>پیشنهادی های</strong>
+              <ul>
+                
+                    <li><a href="https://virgool.io/@shgninc">Virgool</a></li>
+                
+                    <li><a href="https://github.com/shgninc">GitHub</a></li>
+                
+                    <li><a href="http://vasni.ir/">Vasni</a></li>
+                
+                    <li><a href="https://www.instagram.com/shgninc/">Instagram</a></li>
+                
+                    <li><a href="https://twitter.com/shahcheraghian">Twiteer</a></li>
+                
+              </ul>
+              
+            </div>
+            <div class="col-md-6">
+              <strong>دسترسی های ساده</strong>
+              <ul>
+                <li><a href="/">تمامی پست ها</a></li>
+                <li><a href="/tags.html">فهرست تگ ها</a></li>
+              </ul>
+            </div>
+            <div class="col-md-12">
+              <p class="text-center"><small>shgn.ir &copy; 2018</small></p>
+            </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha256-KXn5puMvxCw+dAYznun+drMdG1IFl3agK0p/pqT9KAo= sha512-2e8qq0ETcfWRI4HJBzQiA3UoyFk6tbNyG+qSaIBZLyW9Xf3sWZHN/lxe9fTh1U45DpPf07yj94KsUHHWe4Yk1A==" crossorigin="anonymous"></script>
+  </body>
+</html>
