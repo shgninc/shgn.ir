@@ -14,8 +14,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title> آموزش برنامه نویسی Flask - فصل۱ - دست نوشته های یک تازه کار </title>
-    <meta name="description" content="در واقع فلسک یک میکرو فریمورک می باشد که با زبان پایتون نوشته شده و بسیار ساده و سبک عمل می کند."/>
+    <title> آموزش برنامه نویسی Flask - فصل۲ - دست نوشته های یک تازه کار </title>
+    <meta name="description" content="دسترسی سریع و ساده به آدرس ها و بخش های مختلف سایت از مزایای مهم این فریمورک می باشد."/>
     <meta name="keywords" content="لینوکس،لینوکس مشهد،آموزش,پایتون,پایتون مشهد,آموزش لینوکس,دیتابیس,آموزش دیتابیس,برنامه نویسی,linux,database,mysql,mariadb,datamart,galera cluster,apache,big data,dataware house,cluster,galera,percona,python,php,tutorial,debian,ubuntu,centos,arch linux,mashhad linux,iran linux,debian mashhad, python, flask, linux, programming, tutorial" />
 
     <!-- Bootstrap -->
@@ -96,9 +96,9 @@
         <div class="col-md-9">
             
     <div itemscope itemtype="http://schema.org/NewsArticle">
-    <meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="http://shgn.ir/2018-09-09/Flask-tutorial-01.html"/>
+    <meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="http://shgn.ir/2018-09-24/Flask-tutorial-02.html"/>
     <div class="page-header">
-      <h3 itemprop="name">آموزش برنامه نویسی Flask - فصل۱</h3>
+      <h3 itemprop="name">آموزش برنامه نویسی Flask - فصل۲</h3>
       
       
         <small>
@@ -106,42 +106,92 @@
             ارسال شده <span itemprop="author" itemscope itemtype="https://schema.org/Person">
                 توسط <span itemprop="name">سید سجاد شاهچراغیان</span>
               </span>
-              در تاریخ <span itemprop="datePublished">2018-09-09</span>
+              در تاریخ <span itemprop="datePublished">2018-09-24</span>
           </p>
         </small>
       
     </div>
       <section itemprop="articleBody">
-        <h2>آشنایی با Flask</h2>
-<p>فلسک یک ساختار یا چهارچوب برنامه نویسی است که خود با زبان برنامه نویسی <a href="https://en.wikipedia.org/wiki/Python_(programming_language)">پایتون</a> تولید شده است. فلسک بر پایه ابزارهای <a href="http://werkzeug.pocoo.org/"><code>Werkzeug WSGI</code></a> و موتور تولید صفحات HTML <a href="http://jinja.pocoo.org/docs/2.10/templates/">Jinja2</a> می باشد.</p>
-<p>در واقع فلسک یک میکرو فریمورک می باشد. این میکرو فریمورک به خودی خود، مانند دیگر فریمورک ها، لایه داخلی ارتباط و مدیریت دیتابیس و یا ابزار اعتبار سنج فرم را نداشته، بلکه از کتابخانه های بیرونی که این قابلیت ها را فراهم می کنند، می تواند بهره بگیرد.</p>
-<h3>مراحل نصب Flask</h3>
-<p>برای نصب فلسک نیاز به <a href="https://www.python.org/download/releases/2.6/">نسخه ۲.۶</a> و بالاتر زبان برنامه نویسی پایتون می باشد.
- هر چند که فلسک و دیگر برنامه های وابسته آن با <a href="https://www.python.org/download/releases/3.0/">پایتون ۳</a> نیز به خوبی می توانند کار کنند. اما با توجه به کتابخانه هایی که ممکن است از آنها در یک برنامه فلسک استفاده شود، پیشنهاد می شود تا <a href="https://www.python.org/download/releases/2.7/">نسخه ۲.۷</a> برنامه نویسی پایتون نصب شود.</p>
-<h4>نصب virtualenv</h4>
-<p>بسته <code>virtualenv</code> یک محیط مجازی برای پایتون فراهم می کند تا هر برنامه به خودی خود با انواع نسخه های موجود کتابخانه ها در برنامه نویسی پایتون دچار مشکل نشود.</p>
-<p>جهت نصب آن در محیط لینوکس از دستورز زیر استفاده می شود:</p>
-<pre class="codehilite"><code>Sudo apt-get install virtualenv</code></pre>
+        <p>در مطلب <a href="http://shgn.ir/2018-09-09/Flask-tutorial-01.html">قبلی</a> با میکروفریمورک <code>flask</code> آشنا شدیم. همچنین به نحوه نصب آن اشاره ای شد. در این مطلب سعی می شود تا نحوه فراخوانی و اجرای بخش های مختلف متدها یا کنترلرها در این فریمورک آشنا شویم.</p>
+<h2>مسیریابی در Flask</h2>
+<p>فریمورک های امروزی برای به یاد ماندن آدرس های <code>URL</code> به سادگی هر چه بیشتر برای کاربران، از تکنیک <code>routing</code> استفاده می کنند. به عبارت دیگر دسترسی به یک 
+صفحه مشخص سایت به طور مستقیم خیلی کاربردی تر از این است که از طریق صفحه اصلی سایت به آن صفحه دسترسی پیدا کنیم.</p>
+<p>در <code>Flask</code> 
+از متد <code>route()</code> برای تخصیص یک آدرس به یک تابع استفاده می شود:</p>
+<pre class="codehilite"><code>@app.route(‘/hello’)
+def hello_world():
+    return ‘hello world’</code></pre>
 
 
-<p>به محض نصب، می توانید به صورت زیر، یک محیط جدا برای برنامه خود ایجاد کنید:</p>
-<pre class="codehilite"><code>mkdir newproj
-cd newproj
-virtualenv venv</code></pre>
+<p>همچنین برای همین منظور می توان از متد <code>add_url_rule()</code> استفاده کرد. این متد نیز همانند متد <code>route()</code> یک آدرس را به یک تابع تخصیص می دهد:</p>
+<pre class="codehilite"><code>def hello_world():
+   return ‘hello world’
+app.add_url_rule(‘/’, ‘hello’, hello_world)</code></pre>
 
 
-<p>برای فعال سازی آن محیط دستور زیر را وارد نمایید:</p>
-<pre class="codehilite"><code>venv/bin/activate</code></pre>
+<h2>آدرس های پویا</h2>
+<p>از دیگز امکانات ارائه شده در <code>Flask</code>، استفاده از آدرس های پویا با بهره گیری از متغییرها می باشد. این مهم به این صورت قابل انجام است که، در آدرس یک <code>&lt;variable-name&gt;</code> نیز ارسال شده که در متد<code>route()</code>ی
+که به یک تابع تخصیص شده، آن متغییر را هم نیز به آن تابع ارسال می کند. برای نمونه:</p>
+<pre class="codehilite"><code>from flask import Flask
+app = Flask(__name__)
+
+@app.route('/hello/&lt;name&gt;')
+def hello_name(name):
+   return 'Hello %s!' % name
+
+if __name__ == '__main__':
+   app.run(debug = True)</code></pre>
 
 
-<h4>نصب Flask</h4>
-<p>اکنون برای نصب خود برنامه فلسک آماده هستیم. جهت نصب برنامه فلسک دستورات زیر را وارد می کنیم:</p>
-<pre class="codehilite"><code>pip install Flask</code></pre>
+<p>اگر آدرس درخواست شده به صورت زیر باشد، برنامه آن نام را بر می گرداند:</p>
+<pre class="codehilite"><code>http://localhost:5000/hello/user.</code></pre>
 
 
-<p>همانطور که مشاهده کردید مراحل نصب به سادگی اجرا و به اتمام رسید و به سادگی هر چه بیشتر برنامه فلسک را توانستید نصب نمایید.</p>
-<p>| <strong>البته بدون نصب virtualenv و فقط با اجرای نصب بخش فلسک، آن برنامه قابل اجرا و دسترسی در کل سیستم شما خواهد بود.</strong></p>
-<p>در اولین نوشته این آموزش صرفا سعی شد تا آشنایی اولیه ایجاد و روش نصب برنامه فلسک آموزش داده شود. انشاء الله در مطالب بعدی به مباحث ایجاد برنامه و مسیریابی آن می پردازیم.</p>
+<p>از دیگر امکانات فلسک، تعیین نوع متغییر دریافت شده از آدرس می باشد. این نوع به صورت پیش فرض <code>String</code> هست، با این وجود از انواع زیر نیز می توان استفاده کرد:
+<code>int</code>, <code>float</code>, <code>path</code></p>
+<p>در مثال زیر این انواع مشهد می باشند:</p>
+<pre class="codehilite"><code>from flask import Flask
+app = Flask(__name__)
+
+@app.route('/blog/&lt;int:postID&gt;')
+def show_blog(postID):
+   return 'Blog Number %d' % postID
+
+@app.route('/rev/&lt;float:revNo&gt;')
+def revision(revNo):
+   return 'Revision Number %f' % revNo
+
+if __name__ == '__main__':
+   app.run()</code></pre>
+
+
+<h2>تولید آدرس</h2>
+<p>جهت تولید آدرس پویا برای یک تابع مشخص می توان از متد <code>url_for()</code> استفاده کرد.این متد، به عنوان اولین پارامتر، نام تابع و پارامترهای بعدی به عنوان پارامترهای قابل دریافت آن تابع را دریافت می کند. برای مثال:</p>
+<pre class="codehilite"><code>from flask import Flask, redirect, url_for
+app = Flask(__name__)
+
+@app.route('/admin')
+def hello_admin():
+   return 'Hello Admin'
+
+@app.route('/guest/&lt;guest&gt;')
+def hello_guest(guest):
+   return 'Hello %s as Guest' % guest
+
+@app.route('/user/&lt;name&gt;')
+def hello_user(name):
+   if name =='admin':
+      return redirect(url_for('hello_admin'))
+   else:
+      return redirect(url_for('hello_guest',guest = name))
+
+if __name__ == '__main__':
+   app.run(debug = True)</code></pre>
+
+
+<h2>در پایان</h2>
+<p>همانطور که مشاهده کردید، مسیریابی نیز در این فریمورک بسیار ساده و کاربردی بوده و برخلاف دیگر فریمورک ها پیچیدگی ندارد. انشاء الله در مطالب بعدی درباره انواع متدهای
+مورد استفاده از در <code>HTTP</code> همانند <code>GET</code>, <code>PUT</code> و... صحبت خواهد شد.</p>
       </section>
       <div>
         برچسب ها:

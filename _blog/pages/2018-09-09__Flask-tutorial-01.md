@@ -2,7 +2,7 @@ title: آموزش برنامه نویسی Flask - فصل۱
 briefing: در واقع فلسک یک میکرو فریمورک می باشد که با زبان پایتون نوشته شده و بسیار ساده و سبک عمل می کند.
 date_time: 2018-09-09 21:37
 slug: Flask-tutorial-01
-tags: python, flask, linux, programming,tutorial
+tags: python, flask, linux, programming, tutorial
 type: post
 
 ##آشنایی با Flask
