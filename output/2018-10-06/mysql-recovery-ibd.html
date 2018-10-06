@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!— Global site tag (gtag.js) - Google Analytics —>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-124515881-2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-124515881-2');
+    </script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title> بازیابی جداول دیتابیس از فایل های .frm و .ibd در MySql و Mariadb - دست نوشته های یک تازه کار </title>
+    <meta name="description" content="این وبلاگ پیرامون تجربیات، دانسته ها، اینجاب درباره linux, database, mysql, mariadb, datamart, galera cluster,apache می باشد."/>
+    <meta name="keywords" content="لینوکس،لینوکس مشهد،آموزش,پایتون,پایتون مشهد,آموزش لینوکس,دیتابیس,آموزش دیتابیس,برنامه نویسی,linux,database,mysql,mariadb,datamart,galera cluster,apache,big data,dataware house,cluster,galera,percona,python,php,tutorial,debian,ubuntu,centos,arch linux,mashhad linux,iran linux,debian mashhad, mariadb, mysql, database, recovery" />
+
+    <!-- Bootstrap -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <!-- link href="style/bootstrap/css/bootstrap.css" rel="stylesheet" crossorigin="anonymous" -->
+
+    <link href="https://rawgit.com/richleland/pygments-css/master/github.css" rel="stylesheet" crossorigin="anonymous">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <style>
+    body {
+      direction: rtl;
+    }
+    p {
+        font-size: 1.3em;
+        line-height: 1.5em;
+        text-align: justify;
+      }
+    pre {
+        direction: ltr;
+        border-left: 5px solid #6ce26c;
+      }
+    .panel-body ul li{
+        margin: 10px 0;
+    }
+    a {
+        color: #4608ad;
+      }
+    .panel-group .panel {
+        margin-bottom: 5px;
+    }
+    .panel-primary > .panel-heading {
+        background-color: #4608ad;
+    }
+    .navbar-default {
+        background-color: #4608ad;
+    }
+    .navbar-default .navbar-brand {
+        color: #ffffff;
+    }
+    .navbar-default .navbar-nav > li > a {
+        color: #ffffff;
+    }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header navbar-right">
+          <a class="navbar-brand" href="/">دست نوشته های یک تازه کار</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            
+                
+                    <li><a href="http://shgn.ir/tag/linux.html" title="لینوکس">لینوکس</a></li>
+                
+                    <li><a href="http://shgn.ir/yii2/" title="معرفی Yii2">معرفی Yii2</a></li>
+                
+                    <li><a href="/links.html" title="لینک های مفید">لینک های مفید</a></li>
+                
+                    <li><a href="/about.html" title="درباره ما">درباره ما</a></li>
+                
+                    <li><a href="/contacus.html" title="ارتباط با ما">ارتباط با ما</a></li>
+                
+                    <li><a href="http://shgn.ir/tag/database.html" title="دیتابیس">دیتابیس</a></li>
+                
+            
+          </ul>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-9">
+            
+    <div itemscope itemtype="http://schema.org/NewsArticle">
+    <meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="http://shgn.ir/2018-10-06/mysql-recovery-ibd.html"/>
+    <div class="page-header">
+      <h3 itemprop="name">بازیابی جداول دیتابیس از فایل های .frm و .ibd در MySql و Mariadb</h3>
+      
+      
+        <small>
+          <p class="text-right">
+            ارسال شده <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+                توسط <span itemprop="name">سید سجاد شاهچراغیان</span>
+              </span>
+              در تاریخ <span itemprop="datePublished">2018-10-06</span>
+          </p>
+        </small>
+      
+    </div>
+      <section itemprop="articleBody">
+        <h2>مقدمه</h2>
+<p>چند وقت پیش حجم زیادی از اطلاعات را در یک دیتابیس وارد کردیم. تبدیل این اطلاعات به جداول تحت <code>MySql/Mariadb</code> بسیار زمان بر و پر زحمت بوده است. زیرا برخی از فیلد های این اطلاعات شامل تاریخ بوده که در بازه های زمانی متفاوت با فرمت های مختلف ثبت شده اند.</p>
+<h2>بروز مشکل</h2>
+<p>پس از اتمام انتقال کل این اطلاعات به درستی در  دیتابیس، مشکلی پیش آمد که می توانست تمام زحمات مارا از بین ببرد. این مشکل، خراب شدن رم سیستم بود که به ناچار و تا درست شدن مشکل رم،‌با سیستم دیگری کار می کردیم. در این حین و با توجه به نیاز به این اطلاعات هارد سیستم را باز کرده و آن را با تبدیلی به سیستم دیگری متصل کردیم. اکنون با توجه به این که ما از لینوکس استفاده می کنیم، از بابت دسترسی به فایل ها مشکلی نبود، اما مشکل این جا بود که ما به فایل های دیتابیس نیاز داشتیم. </p>
+<p><img alt="recovering-mariadb-from-ibd-and-frm-files" src="Schienenbruch-750x300.jpg" /></p>
+<p>سروسی mysql که بر روی هر سیستم که نصب می شود به یک سری فایل به غیر فایل های اصلی جداول دیتابیس ها مثل <code>ibdata1</code>، <code>ib_logfile0</code>، <code>ib_logfile1</code> و... را اجرا و تعامل دارد.
+ به عبارت دیگر فایل های اصلی دیتابیس <code>.frm</code> و <code>.idb</code> با وجود این که حاوی اطلاعات هستند، در سرویس <code>mysql</code> دیگر به تنهایی قابل استفاده نمی باشند و فایل های مذکور نیز باید به همراه آن ها نیز منتقل شوند.</p>
+<p>نکته ای که خیلی مهم بوده و باید به آن توجه داشت این است که در تنظیمات دیتابیس اولیه خط زیر باید بوده باشد. این تنظیم سرویس <a href="http://shgn.ir/tag/mysql.html"><code>Mysql</code></a> را ملزم می کند تا اطلاعات هر جدول را در فایل مربوط به خود آن ذخیره کند.</p>
+<h2>راهکار اول</h2>
+<p>راهکار اول این بود که آن فایل های اصلی مذکور که برای <a href="http://shgn.ir/tag/mysql.html"><code>Mysql</code></a> مهم هستند نیز به همراه فایل های یتابیس به سیستم جدید منتقل شده و با فایل ها جاری جایگزین شوند که انجام این کار باعث از بین رفتن وضعیت جاری دیتابیس و خرابی اطلاعات جاری آن می شود.
+پس عملا این راهکار را زمانی می توان انجام داد که هیچ اطلاعاتی در دیتابیس وجود نداشته و یا یک سیستم موقتی برای این کار در نظر گرفته و این پروسه را بر روی آن انجام داد.</p>
+<h2>راهکار دوم</h2>
+<p>بازیابی اطلاعات موجود در فایل های دیتابیس می باشد. این کار عملیاتی بوده اما درصد خیلی پایینی از ریسک را برای حفظ اطلاعات در حین بازیابی، نیز به همراه خود دارد.
+برای شروع پیشنهاد می شود تا ابتدا یک پشتیبان از دیتابیس خود تهیه کنید.
+گام بعدی ایجاد ساختار جدول می باشد. برای دستیابی به آن باید از فایل <code>.frm</code> استفاده نمود. با استفاده از دستور <code>mysqlfrm</code> می توان این ساختار را به دست آورد.
+همچنین می توانید از سایت <a href="https://recovery.twindb.com/">twindb.com</a> به ساختار جداول رسید. در گام بعدی لازم است تا این ساختار را در دیتابیس خود ایجاد نمایید.</p>
+<p>در این مرحله، بعدی از ایجاد جدول دو فایل <code>.frm</code> و <code>.idb</code> برای آن ایجاد شده است. اکنون باید ارتباط ساختار(frm) از دیتا(ibd) را جدا کنیم:</p>
+<pre class="codehilite"><code>ALTER TABLE mage_core_resource DISCARD TABLESPACE;</code></pre>
+
+
+<p>در مرحله بعدی دو تنظیم مهم باید در تنظیمات دیتابیس <a href="http://shgn.ir/tag/mysql.html"><code>Mysql</code></a> اضافه کنید:</p>
+<pre class="codehilite"><code>[mysqld]
+innodb_file_per_table = 1
+innodb_force_recovery = 1</code></pre>
+
+
+<p>اکنون برای اعمال تنظیمات و انجام تغییرات،‌باید سرویس <a href="http://shgn.ir/tag/mysql.html"><code>Mysql</code></a> را متوقف کنیم:</p>
+<pre class="codehilite"><code>sudo service mysql stop</code></pre>
+
+
+<p>به طور همزمان فایل <code>.idb</code> حاوی اطلاعات را به با فایل <code>.idb</code> ای که <a href="http://shgn.ir/tag/mysql.html"><code>Mysql</code></a> برای جدول جدید ایجاد کرده جایگزین می کنیم. اکنون سرویس <a href="http://shgn.ir/tag/mysql.html"><code>Mysql</code></a> را اجرا می کنیم:</p>
+<pre class="codehilite"><code>sudo service mysql start</code></pre>
+
+
+<p>همانطور که مشاهده می کنید همچنان آن جدول فاقد اطلاعات می باشد که به دلیل جدا کردن دیتا از ساختار جدول در مراحل قبلی بود. اکنون باید این ارتباط را با دیتای جدید برقرار کنیم:</p>
+<pre class="codehilite"><code>ALTER TABLE mage_core_resource IMPORT TABLESPACE;</code></pre>
+
+
+<p>ممکن است در حین اجرا با خطای زیر مواجه شدید، از راهکار اول استفاده کرده و از داشتن فضای کافی برای ذخیره اطلاعات مطمئن شوید:</p>
+<pre class="codehilite"><code>ERROR 1030 (HY000): Got error -1 from storage engine</code></pre>
+
+
+<h2>خاتمه</h2>
+<p>در پایان در صورتی که اطلاعات مهمی بر روی دیتابیس خود ندارید، راهکار اول، مطمئن تر بوده، اما در صوتری که دیتابیس سرور شما حاوی اطلاعات هست، راهکار دوم پیشنهاد می شود.</p>
+<h4>منابع</h4>
+<ul>
+<li><a href="http://sq4ind.eu/restoring-corrupted-innodb-mysql-databases/">Restoring corrupted InnoDB MySQL databases</a></li>
+<li><a href="https://medium.com/magebit/recover-innodb-database-from-frm-and-ibd-files-99fdb0deccad">Recover InnoDB database from .frm and .ibd files</a></li>
+</ul>
+      </section>
+      <div>
+        برچسب ها:
+      
+        <a href="/tag/mariadb.html">
+            <span class="label label-default" itemprop="about">mariadb</span>
+        </a>
+      
+        <a href="/tag/mysql.html">
+            <span class="label label-default" itemprop="about">mysql</span>
+        </a>
+      
+        <a href="/tag/database.html">
+            <span class="label label-default" itemprop="about">database</span>
+        </a>
+      
+        <a href="/tag/recovery.html">
+            <span class="label label-default" itemprop="about">recovery</span>
+        </a>
+      
+    </div>
+    </div>
+
+        </div>
+        <div class="col-md-3">
+          <div class="panel-group">
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                من در stackexchange.com
+              </div>
+              <div class="panel-body">
+                <div class="col-md-3 col-md-offset-9">
+                  <a href="http://stackexchange.com/users/887576" target="_blank">
+                    <img src="http://stackexchange.com/users/flair/887576.png" width="208" height="58" alt="profile for shgnInc on Stack Exchange, a network of free, community-driven Q&A sites" title="profile for shgnInc on Stack Exchange, a network of free, community-driven Q&A sites">
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel-group">
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                تازه ترین مطالب
+              </div>
+              <div class="panel-body">
+                  <ul>
+                  
+              </ul>
+
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <hr />
+    <footer>
+      <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+              
+              <strong>پیشنهادی های</strong>
+              <ul>
+                
+                    <li><a href="https://virgool.io/@shgninc">Virgool</a></li>
+                
+                    <li><a href="https://github.com/shgninc">GitHub</a></li>
+                
+                    <li><a href="http://vasni.ir/">Vasni</a></li>
+                
+                    <li><a href="https://www.instagram.com/shgninc/">Instagram</a></li>
+                
+                    <li><a href="https://twitter.com/shahcheraghian">Twiteer</a></li>
+                
+              </ul>
+              
+            </div>
+            <div class="col-md-6">
+              <strong>دسترسی های ساده</strong>
+              <ul>
+                <li><a href="/">تمامی پست ها</a></li>
+                <li><a href="/tags.html">فهرست تگ ها</a></li>
+              </ul>
+            </div>
+            <div class="col-md-12">
+              <p class="text-center"><small>shgn.ir &copy; 2018</small></p>
+            </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha256-KXn5puMvxCw+dAYznun+drMdG1IFl3agK0p/pqT9KAo= sha512-2e8qq0ETcfWRI4HJBzQiA3UoyFk6tbNyG+qSaIBZLyW9Xf3sWZHN/lxe9fTh1U45DpPf07yj94KsUHHWe4Yk1A==" crossorigin="anonymous"></script>
+  </body>
+</html>
