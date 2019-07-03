@@ -75,7 +75,7 @@
         </div>
         <ul class="nav navbar-nav navbar-right">
             {% if site_links %}
-                {% for title, link in site_links.iteritems() %}
+                {% for title, link in site_links.items() %}
                     <li><a href="{{ link }}" title="{{ title }}">{{ title }}</a></li>
                 {% endfor %}
             {% endif %}
@@ -133,7 +133,7 @@
               {% if site_footer_links %}
               <strong>پیشنهادی های</strong>
               <ul>
-                {% for title, link in site_footer_links.iteritems() %}
+                {% for title, link in site_footer_links.items() %}
                     <li><a href="{{ link }}">{{ title }}</a></li>
                 {% endfor %}
               </ul>

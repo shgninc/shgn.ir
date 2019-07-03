@@ -15,8 +15,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title> آموزش برنامه نویسی Flask - فصل۳ - دست نوشته های یک تازه کار </title>
-    <meta name="description" content="A brief description of post."/>
-    <meta name="keywords" content="لینوکس،لینوکس مشهد،آموزش,پایتون,پایتون مشهد,آموزش لینوکس,دیتابیس,آموزش دیتابیس,برنامه نویسی,linux,database,mysql,mariadb,datamart,galera cluster,apache,big data,dataware house,cluster,galera,percona,python,php,tutorial,debian,ubuntu,centos,arch linux,mashhad linux,iran linux,debian mashhad, python, flask, linux, programming, tutorial" />
+    <meta name="description" content="امروزه پروتکل `http`در دنیای وب به عنوان پایه گذار ارتباط اطلاعات هست."/>
+    <meta name="keywords" content="لینوکس،لینوکس مشهد،آموزش,پایتون,پایتون مشهد,آموزش لینوکس,دیتابیس,آموزش دیتابیس,برنامه نویسی,linux,database,mysql,mariadb,datamart,galera cluster,apache,big data,dataware house,cluster,galera,percona,python,php,tutorial,debian,ubuntu,centos,arch linux,mashhad linux,iran linux,debian mashhad, python, flask, programming, tutorial" />
 
     <!-- Bootstrap -->
     <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
@@ -76,17 +76,17 @@
         <ul class="nav navbar-nav navbar-right">
             
                 
-                    <li><a href="http://shgn.ir/tag/linux.html" title="لینوکس">لینوکس</a></li>
+                    <li><a href="http://shgn.ir/tag/database.html" title="دیتابیس">دیتابیس</a></li>
                 
-                    <li><a href="http://shgn.ir/yii2/" title="معرفی Yii2">معرفی Yii2</a></li>
+                    <li><a href="/contacus.html" title="ارتباط با ما">ارتباط با ما</a></li>
+                
+                    <li><a href="http://shgn.ir/tag/linux.html" title="لینوکس">لینوکس</a></li>
                 
                     <li><a href="/links.html" title="لینک های مفید">لینک های مفید</a></li>
                 
                     <li><a href="/about.html" title="درباره ما">درباره ما</a></li>
                 
-                    <li><a href="/contacus.html" title="ارتباط با ما">ارتباط با ما</a></li>
-                
-                    <li><a href="http://shgn.ir/tag/database.html" title="دیتابیس">دیتابیس</a></li>
+                    <li><a href="http://shgn.ir/yii2/" title="معرفی Yii2">معرفی Yii2</a></li>
                 
             
           </ul>
@@ -114,7 +114,55 @@
       
     </div>
       <section itemprop="articleBody">
-        <p>امروزه پروتکل <code>http</code>در دنیای وب به عنوان پایه گذار ارتباط اطلاعات هست. در این پروتکل متدهای متفاوتی برای دسترسی به اطلاعات هستند  </p>
+        <p>امروزه پروتکل <code>http</code>در دنیای وب به عنوان پایه گذار ارتباط اطلاعات هست. در این پروتکل متدهای متفاوتی برای دسترسی به اطلاعات هستند<br />
+برخی از این متدها به ترتیب زیر هستند:</p>
+<ul>
+<li>GET: اطلاعات را به صورت ساده و رمزنگاری نشده برای سرور ارسال می کند.</li>
+<li>HEAD: همانند متد <code>GET</code> عمل کرده اما بدون پاسخ در بدنه.</li>
+<li>POST: برای ارسال اطلاعات فرم <code>HTML</code>ای برای سرور استفاده می شود. اطلاعاتی که از این طریق ارسال می شوند توسط سرور کش نمی شوند.</li>
+<li>PUT: تمامی منابع هدف ارائه شده را با محتوای بارگزاری شده جابجا می کند.</li>
+<li>DELETE: تمامی منابع هدف را با آدرس url داده شده حذف می کند.</li>
+</ul>
+<p>به طور پیش فرض پاسخ هایش را در قالب درخواست از نوع <code>GET</code> هدایت می کند. هر چند که این هدایت می تواند توسط آرگومانهای متد <code>route()</code> تغییر کند.</p>
+<p>برای نمونه استفاده از متد <code>POST</code> مثال زیر را مشاهده کنید:
+ ابتدا یک فرم لاگین در قالب <code>HTML</code>ایجاد کرده:</p>
+<pre class="codehilite"><code> &lt;html&gt;
+   &lt;body&gt;
+      &lt;form action = &quot;http://localhost:5000/login&quot; method = &quot;post&quot;&gt;
+         &lt;p&gt;Enter Name:&lt;/p&gt;
+         &lt;p&gt;&lt;input type = &quot;text&quot; name = &quot;nm&quot; /&gt;&lt;/p&gt;
+         &lt;p&gt;&lt;input type = &quot;submit&quot; value = &quot;submit&quot; /&gt;&lt;/p&gt;
+      &lt;/form&gt;
+   &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+
+<p>اکنون اسکریپت کنترل آن در پایتون:</p>
+<pre class="codehilite"><code>from flask import Flask, redirect, url_for, request
+app = Flask(__name__)
+
+@app.route('/success/&lt;name&gt;')
+def success(name):
+   return 'welcome %s' % name
+
+@app.route('/login',methods = ['POST', 'GET'])
+def login():
+   if request.method == 'POST':
+      user = request.form['nm']
+      return redirect(url_for('success',name = user))
+   else:
+      user = request.args.get('nm')
+      return redirect(url_for('success',name = user))
+
+if __name__ == '__main__':
+   app.run(debug = True)</code></pre>
+
+
+<p>آدرس <code>http://localhost/login</code> به متد <code>login()</code> مپ شده. زمانی که سرور داده ها را از طریق متد پست دریافت کرد دسترسی به پارامتر <code>nm</code> به صورت زیر امکان پذیر است:</p>
+<pre class="codehilite"><code>user = request.form['nm']</code></pre>
+
+
+<p>در قطعه کد بالا <code>form</code> یک نوع دیکشنری هست که پارامترهای فرم ارسال شده را به صورت کلید مقدار شامل می شود. اگر اطلاعات فرم با متد <code>GET‍</code> ارسال شوند، این متغییر <code>args</code> می شوند و از توع دیکشنری می باشد.</p>
       </section>
       <div>
         برچسب ها:
@@ -125,10 +173,6 @@
       
         <a href="/tag/flask.html">
             <span class="label label-default" itemprop="about">flask</span>
-        </a>
-      
-        <a href="/tag/linux.html">
-            <span class="label label-default" itemprop="about">linux</span>
         </a>
       
         <a href="/tag/programming.html">
@@ -186,15 +230,15 @@
               <strong>پیشنهادی های</strong>
               <ul>
                 
-                    <li><a href="https://virgool.io/@shgninc">Virgool</a></li>
-                
                     <li><a href="https://github.com/shgninc">GitHub</a></li>
                 
                     <li><a href="http://vasni.ir/">Vasni</a></li>
                 
-                    <li><a href="https://www.instagram.com/shgninc/">Instagram</a></li>
-                
                     <li><a href="https://twitter.com/shahcheraghian">Twiteer</a></li>
+                
+                    <li><a href="https://virgool.io/@shgninc">Virgool</a></li>
+                
+                    <li><a href="https://www.instagram.com/shgninc/">Instagram</a></li>
                 
               </ul>
               
