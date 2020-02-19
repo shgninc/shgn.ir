@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fae2fc57-b788-4ee3-87fa-f6132cf27de3" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/_blog/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/_blog/templates/base.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/output/2012-11-28/create_mysql_stored_procedures1.html" beforeDir="false" afterPath="$PROJECT_DIR$/output/2012-11-28/create_mysql_stored_procedures1.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/output/2012-11-30/create_mysql_stored_procedures2.html" beforeDir="false" afterPath="$PROJECT_DIR$/output/2012-11-30/create_mysql_stored_procedures2.html" afterDir="false" />
@@ -152,8 +150,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/_blog/templates/base.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="332">
-              <caret line="108" column="41" selection-start-line="108" selection-start-column="41" selection-end-line="108" selection-end-column="41" />
+            <state relative-caret-position="607">
+              <caret line="134" column="137" selection-start-line="134" selection-start-column="137" selection-end-line="134" selection-end-column="137" />
             </state>
           </provider>
         </entry>
@@ -196,6 +194,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -218,7 +217,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -352,8 +350,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/_blog/templates/base.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="332">
-          <caret line="108" column="41" selection-start-line="108" selection-start-column="41" selection-end-line="108" selection-end-column="41" />
+        <state relative-caret-position="607">
+          <caret line="134" column="137" selection-start-line="134" selection-start-column="137" selection-end-line="134" selection-end-column="137" />
         </state>
       </provider>
     </entry>
