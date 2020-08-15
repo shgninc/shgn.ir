@@ -10,7 +10,6 @@
         "briefing": "این وبلاگ پیرامون تجربیات، دانسته ها، اینجاب درباره linux, database, mysql, mariadb, datamart, galera cluster,apache می باشد.",
         "links": {
           "دیتابیس": "http://shgn.ir/tag/database.html",
-          "معرفی Yii2":"http://shgn.ir/yii2/",
           "لینوکس":"http://shgn.ir/tag/linux.html",
           "لینک های مفید": "/links.html",
           "درباره ما": "/about.html",
@@ -21,7 +20,8 @@
           "Instagram": "https://www.instagram.com/shgninc/",
           "Vasni": "http://vasni.ir/",
           "Virgool": "https://virgool.io/@shgninc",
-          "Twiteer": "https://twitter.com/shahcheraghian"
+          "Twiteer": "https://twitter.com/shahcheraghian",
+          "معرفی Yii2":"http://shgn.ir/yii2/"
         }
     },
     "date_format": "%Y-%m-%d %H:%M",
