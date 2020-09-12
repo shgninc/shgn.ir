@@ -3,7 +3,7 @@
     "template_dir": "_blog/templates",
     "pages_dir": "_blog/pages",
     "site": {
-        "url": "shgn.ir",
+        "url": "http://shgn.ir",
         "lang": "fa",
         "title": "دست نوشته های یک تازه کار",
         "author": "سید سجاد شاهچراغیان",
