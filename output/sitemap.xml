@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+
+
+<url>
+  <loc>http://shgn.ir/</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/about.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/contacus.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/links.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/tag/database.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/tag/linux.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/2020-08-15/installing_docker_on_debian.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/tag/docker.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/tag/container.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/tag/virtualization.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/2019-07-08/Cgroup-linux-kernel.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/tag/kenel.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/2018-10-06/mysql-recovery-ibd.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/tag/mariadb.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/tag/mysql.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/tag/recovery.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/2018-09-30/Flask-tutorial-03.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/tag/python.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/tag/flask.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/tag/programming.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/tag/tutorial.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/2018-09-24/Flask-tutorial-02.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/2018-09-09/Flask-tutorial-01.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/2018-09-05/Mysql-JSON-DataType.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/tag/json.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/tag/sql.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/tag/noSql.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/2018-07-23/ssh_automatic_login.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/tag/ssh.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/page1.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/page2.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/2017-08-16/galera_cluster.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/yii2/</loc>
+  <lastmod>2019-07-07T12:39:54+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/tags.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/2018-07-18/migrate_from_mariadb_instace_to_galera_cluster.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/tag/galera.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/tag/galera_cluster.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/2018-05-05/Configuring-MySQL-Memory-Usage.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/tag/optimization.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/2013-01-06/using_PDO_in_PHP.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/tag/php.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/tag/pdo.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/2012-11-30/create_mysql_stored_procedures2.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/tag/stored_procedure.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/2012-11-28/create_mysql_stored_procedures1.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/2018-04-15/linux_fonts.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/tag/fonts.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/tag/persian.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/tag/debian.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/tag/cluster.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/2013-04-03/live_remove_linux_kernel.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/tag/kernel.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/tag/live.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/tag/ubuntu.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/tag/linux/page1.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/2013-03-29/php_mail.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/tag/email.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/2013-03-23/update_ubuntu_offline.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/tag/apt.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/2013-03-19/mount_iso.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/tag/image.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/tag/iso.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/tag/mount.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/tag/shell.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/page0.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/2013-03-02/downloadManager_for_ubuntu.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/tag/terminal.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/tag/opensource.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/tag/gtk.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/tag/download.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/2013-01-20/HyperTem_linux_alternative.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/tag/microsoft.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/tag/windows.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/2013-01-15/install_marlin_ubunto.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/tag/nautilus.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/2012-12-31/Desktop_capture_in_ubuntu.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/tag/gnome.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/tag/KDE.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/tag/GNU.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/2012-12-02/download_MMS_Files_ubuntu.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/tag/video.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://shgn.ir/tag/linux/page0.html</loc>
+  <lastmod>2020-09-12T14:52:39+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+
+
+</urlset>
