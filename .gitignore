@@ -1,3 +1,4 @@
 .idea/*
 output/tmp/*.*
-output/media/*.*
+*.ts
+*.m3u8
