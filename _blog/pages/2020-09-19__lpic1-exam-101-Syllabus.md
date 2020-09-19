@@ -15,7 +15,7 @@ type: post
 
 در این دوره ویدیو های آموزشی دوره LPIC1 مربوط به موسسه [لینوکس آکادمی][acadmy] می باشد.
 
-درقسمت [قبل][last] با آزمون استاندارد LPIC آشنا شد. در این قسمت معرفی مختصری ار آزمون ارائه خواهد شد:
+درقسمت [قبل][last] با آزمون استاندارد LPIC آشنا شد. در این قسمت معرفی سرفصل هایی که در این استانداردوجود دارند، ارائه خواهد شد:
 
 
 <link href="https://unpkg.com/video.js/dist/video-js.css" rel="stylesheet">
@@ -23,7 +23,7 @@ type: post
   <script src="https://unpkg.com/videojs-contrib-hls/dist/videojs-contrib-hls.js"></script>
 <div >
 <video id="my_video_1" class="video-js vjs-fluid vjs-default-skin" controls preload="auto" data-setup='{}'>
-    <source src="http://shgn.ir/media/learn/videos/lpic1/LPIC-1-System-Administrator-Exam_101-2-Introduction-to-the-Linux+-and-LPIC-1-Exam/playlist.m3u8" type="application/x-mpegURL">
+    <source src="http://shgn.ir/media/learn/videos/lpic1/LPIC-1-System-Administrator-Exam_101_4-Syllabus/playlist.m3u8" type="application/x-mpegURL">
   </video>
 </div>
 <script>
