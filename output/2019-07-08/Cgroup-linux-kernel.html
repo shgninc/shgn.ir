@@ -9,6 +9,7 @@
       gtag('js', new Date());
 
       gtag('config', 'UA-124515881-2');
+
     </script>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -66,9 +67,27 @@
     }
     .navbar-default .navbar-nav > li > a {
         color: #ffffff;
+        font-size:initial;
     }
     .navbar-default .navbar-nav > li > a:hover{
-        color: #0055aa;
+        color: #00ffd9;
+    }
+    .navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:focus, .navbar-default .navbar-nav > .open > a:hover{
+        color: #4608ad;
+    }
+
+    .dropdown-menu{
+        background-color: #4608ad;
+        color:#ffffff;
+        font-size:initial;
+    }
+    .dropdown-menu > li > a{
+        color:#ffffff;
+        font-size:initial;
+    }
+    .dropdown-menu > li > a:hover{
+        color: #00ffd9;
+        background-color:#4608ad;
     }
 
     #back2Top {
@@ -96,6 +115,7 @@
         color: #000;
     }
 
+
     </style>
 </head>
 <body>
@@ -120,6 +140,13 @@
             
             <li><a href="http://shgn.ir/tag/linux.html" title="لینوکس">لینوکس</a></li>
             
+            <li class="dropdown">
+                <a href="http://shgn.ir/tag/learn.html" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                   aria-expanded="false">آموزش <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="http://shgn.ir/tag/lpic1.html">دوره LPIC1</a></li>
+                </ul>
+            </li>
             
         </ul>
     </div>
@@ -373,12 +400,16 @@ jQ_3_5_1("body").prognroll({
   color:"#f54905"
 });
 
+
 </script>
 
 <!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"
+        integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ"
+        crossorigin="anonymous"></script>
 <script>
 var $x = jQuery.noConflict();
+
 </script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
         integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
