@@ -15,11 +15,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title> پستهای تگ شده با  'linux' - دست نوشته های یک تازه کار </title>
+    <title> پرش با SSH - دست نوشته های یک تازه کار </title>
     <meta name="description"
-          content="این وبلاگ پیرامون تجربیات، دانسته ها، اینجاب درباره linux, database, mysql, mariadb, datamart, galera cluster,apache می باشد."/>
+          content="یک راهکار جایگزین برای ssh tunneling."/>
     <meta name="keywords"
-          content="لینوکس،لینوکس مشهد،آموزش,پایتون,پایتون مشهد,آموزش لینوکس,دیتابیس,آموزش دیتابیس,برنامه نویسی,linux,database,mysql,mariadb,datamart,galera cluster,apache,big data,dataware house,cluster,galera,percona,python,php,tutorial,debian,ubuntu,centos,arch linux,mashhad linux,iran linux,debian mashhad,"/>
+          content="لینوکس،لینوکس مشهد،آموزش,پایتون,پایتون مشهد,آموزش لینوکس,دیتابیس,آموزش دیتابیس,برنامه نویسی,linux,database,mysql,mariadb,datamart,galera cluster,apache,big data,dataware house,cluster,galera,percona,python,php,tutorial,debian,ubuntu,centos,arch linux,mashhad linux,iran linux,debian mashhad, ssh, linux"/>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
@@ -156,80 +156,110 @@
     <div class="row">
         <div class="col-md-9">
             
+    <div itemscope itemtype="http://schema.org/NewsArticle">
+    <meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="http://http://shgn.ir/2020-09-26/ssh-jumping-hosts.html"/>
     <div class="page-header">
-      <h2>پستهای تگ شده با  'linux'</h2>
-      <p class="lead"></p>
+      <h3 itemprop="name">پرش با SSH</h3>
+      
+      
+        <small>
+          <p class="text-right">
+            ارسال شده <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+                توسط <span itemprop="name">سید سجاد شاهچراغیان</span>
+              </span>
+              در تاریخ <span itemprop="datePublished">2020-09-26</span>
+          </p>
+        </small>
+      
     </div>
+      <section itemprop="articleBody">
+        <p>برای مدیریت و دسترسی از راه دور به سرورهای لینوکسی، یک راهکار قدرتمند و بسیار ساده به نام <code>ssh</code> وجود دارد. این مطلب با فرض آشنایی شما با <code>ssh</code> و <code>ssh tunneling</code> نوشته شده است.</p>
+<p>ابتدا باید این توضیح داده شود که، به دلیل ایجاد امنیت هر چه بیشتر برای سرورها در یک شبکه، معمولا آن ها را در شبکه پشت یک <code>gateway</code> قرار می دهند تا دسترسی از بیرون(اینترنت) و مستقیم برای هر کسی ممکن نباشد. اما برای مدیریت و کنترل آن سرورها، معمولا راهی را از طریق گیتوی یاد شده ایجاد می کنند. کاربران برای ارتباط با آن سرورها می توانند با <code>ssh</code> زدن به گیتوی و سپس از آنجا <code>ssh</code> به سرور هدف، به آن وصل شوند. به نوعی این کار، جایگزین <code>ssh tunneling</code> هم می تواند باشد.  </p>
+<p>ایده اصلی این راه، استفاده از <code>ProxyCommand</code> برای اجرا خودکار دستور <code>ssh</code> روی سرور هدف با استفاده از هاست واسط و انتقال کل ترافیک آن از این طریق می باشد.</p>
+<p><img alt="Image  SSH jump host" src="/2020-09-26/SSH-Jump-Host.png" /> </p>
+<h1>پیشنیاز ها</h1>
+<ul>
+<li>دسترسی <code>ssh</code> به هاست گیتوی و شبکه داخلی آن</li>
+<li>نصب بودن بسته <code>Netcat</code> روی هاست گیتوی</li>
+</ul>
+<h1>پرش داینامیک ssh</h1>
+<p>برای پرش از طریق هاست گیتوی باید از گزینه <code>-J</code> به ترتیب زیر استفاده نمود:</p>
+<pre class="codehilite"><code>user $ssh -J host1 host2</code></pre>
+
+
+<p>اگر نام کاربری یا شماره پورت روی ماشین هدف تفاوت دارد می توانید به این ترتیب آن ها را تعیین کنید:</p>
+<pre class="codehilite"><code>user $ssh -J user1@host1:port1 user2@host2:port2</code></pre>
+
+
+<h3>چندین پرش</h3>
+<p>با دستوری شبیه به دستورات قبلی، نیز می توان برای پرش از چندین هاست تا سرور هدف استفاده نمود:</p>
+<pre class="codehilite"><code>user $ssh -J user1@host1:port1,user2@host2:port2 user3@host3</code></pre>
+
+
+<p># پرش استاتیک ssh</p>
+<p>در این روش شما تنظیمات را درون فایل تنظیمات <code>ssh</code> انجام می دهید. برای این مهم لازم هست تا اطلاعات مربوط به هاست یا هاست های واسط تا سرور هدف را داشته باشید. سپس می توانید مسیریابی استاتیک برای پرش را در فایل تنظیمات <code>ssh</code> انجام دهید. تفاوت این روش با روش داینامیک در این است که، نیازی به ایجاد فایل تنظیمات <code>.ssh</code> روی هاست های واسط و سرور هدف نیست.  </p>
+<p>### نحوه تنظیم </p>
+<p>در فایل به مسیر <code>~/.ssh/config</code> تنظیمات زیر را اعمال می کنید:</p>
+<pre class="codehilite"><code>### First jumphost. Directly reachable
+Host betajump
+    HostName jumphost1.example.org
+
+### Host to jump to via jumphost1.example.org
+Host behindbeta
+    HostName behindbeta.example.org
+    ProxyJump  betajump</code></pre>
+
+
+<p>### نحوه استفاده </p>
+<p>نحوه استفاده به سادگی زیر می باشد:</p>
+<pre class="codehilite"><code>user $ssh behindalpha</code></pre>
+
+
+<p>اگر نام کاربری روی هاست ها متفاوت بود، کافی هست تا آن را در خط مربوط به <code>ProxyJump</code> در فایل <code>~/.ssh/config</code> تعیین نمایید:</p>
+<pre class="codehilite"><code> ProxyJump  otheruser@behindalpha</code></pre>
+
+
+<p>### چندین پرش </p>
+<p>برای استفاده از چندین هاست واسط و پرش ازآنها شبیه به تنظیمات قبل، می توان در مسیر فایل <code>~/.ssh/config</code> تنظیم نمود:</p>
+<pre class="codehilite"><code>### First jumphost. Directly reachable
+Host alphajump
+    HostName jumphost1.example.org
+
+### Second jumphost. Only reachable via jumphost1.example.org
+Host betajump
+  HostName jumphost2.example.org
+  ProxyJump alphajump
+
+### Host only reachable via alphajump and betajump
+Host behindalphabeta
+  HostName behindalphabeta.example.org
+  ProxyJump betajump</code></pre>
+
+
+<p>همچنین برای استفاده نیز همانند قبل دستور زیر کافی می باشد:</p>
+<pre class="codehilite"><code>user $ssh behindalphabeta</code></pre>
+
+
+<h1>منابع:</h1>
+<ul>
+<li><a href="https://wiki.gentoo.org/wiki/SSH_jump_host"> SSH jump host </a></li>
+<li><a href="https://glandium.org/blog/?p=308">Following up on SSH through jump hosts</a></li>
+<li><a href="https://www.tecmint.com/access-linux-server-using-a-jump-host/">How to Access a Remote Server Using a Jump Host</a></li>
+</ul>
+      </section>
+      <div>
+        برچسب ها:
       
-        <h3><a href="/2013-01-15/install_marlin_ubunto.html" title="نصب نرم افزار Marlin در اوبونتو">نصب نرم افزار Marlin در اوبونتو</a></h3>
-            
-                <a href="/tag/ubuntu.html">
-                    <span class="label label-default">ubuntu</span></a>
-            
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
-            
-                <a href="/tag/nautilus.html">
-                    <span class="label label-default">nautilus</span></a>
-            
-        <p>marlinبرنامه مدیریت و مرور فایلها و شاخه ها که به عنوان جایگزین برنامه  Nautilus در دسکتاپ گنوم می توان نصب نمود.</p>
-        <hr />
+        <a href="/tag/ssh.html">
+            <span class="label label-default" itemprop="about">ssh</span>
+        </a>
       
-        <h3><a href="/2012-12-31/Desktop_capture_in_ubuntu.html" title="بهترین نرم افزارها برای ضبط صفحه در اوبونتو">بهترین نرم افزارها برای ضبط صفحه در اوبونتو</a></h3>
-            
-                <a href="/tag/gnome.html">
-                    <span class="label label-default">gnome</span></a>
-            
-                <a href="/tag/KDE.html">
-                    <span class="label label-default">KDE</span></a>
-            
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
-            
-                <a href="/tag/ubuntu.html">
-                    <span class="label label-default">ubuntu</span></a>
-            
-                <a href="/tag/GNU.html">
-                    <span class="label label-default">GNU</span></a>
-            
-        <p>سیستم عامل اوبونتو دارای نرم افزارهای ضبط صفحه زیادی برای تصویر برداری از صفحه دسکتاپ دارد. بعضی از محبوبترین های آنها عبارتند از: xvidcap, Tibesti, RecordMyDesktop, Kazam و... . از این نرم افزارها جهت ایجاد مطالب آموزشی استفاده می گردد، پس ضبط این گونه تصاویر نباید به کندی و با اعوجاج و البته در حالت با کیفیت تصویر بالا HD صورت پذیرد.</p>
-        <hr />
+        <a href="/tag/linux.html">
+            <span class="label label-default" itemprop="about">linux</span>
+        </a>
       
-        <h3><a href="/2012-12-02/download_MMS_Files_ubuntu.html" title="نحوه دانلود فایل با پروتکل mms در ubuntu">نحوه دانلود فایل با پروتکل mms در ubuntu</a></h3>
-            
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
-            
-                <a href="/tag/ubuntu.html">
-                    <span class="label label-default">ubuntu</span></a>
-            
-                <a href="/tag/video.html">
-                    <span class="label label-default">video</span></a>
-            
-        <p>در سایت ها نوعی پروتکل به نام `MMS` وجود دارد که عمدتا فایلهای چند رسانه ای فیلم را ارائه می کنند. برای دانلود این نوع فایل ها، به جای تماشای آن فیلمها به صورت `on-line`، باید از طریق نرم افزارها یا ابزار خاصی استفاده شود تا بتوان این فیلمها را به صورت `off-line` و در سیستم خانگی خود تماشا نمود.</p>
-        <hr />
-      
-      
-              <ul class="pagination">
-                
-                    
-                        
-                            <li><a href="/tag/linux/page0.html">0</a></li>
-                        
-                    
-                
-                    
-                        
-                            <li><a href="/tag/linux/page1.html">1</a></li>
-                        
-                    
-                
-                    
-                        <li class="active"><a href="#">2 <span class="sr-only">(current)</span></a></li>
-                    
-                
-              </ul>
-      
+    </div>
+    </div>
 
         </div>
         <div class="col-md-3">
@@ -304,12 +334,6 @@
                         </div>
                         <div class="panel-body">
                             <ul>
-                                
-                                <li><a href="/2013-01-15/install_marlin_ubunto.html" title="نصب نرم افزار Marlin در اوبونتو">نصب نرم افزار Marlin در اوبونتو</a></li>
-                                
-                                <li><a href="/2012-12-31/Desktop_capture_in_ubuntu.html" title="بهترین نرم افزارها برای ضبط صفحه در اوبونتو">بهترین نرم افزارها برای ضبط صفحه در اوبونتو</a></li>
-                                
-                                <li><a href="/2012-12-02/download_MMS_Files_ubuntu.html" title="نحوه دانلود فایل با پروتکل mms در ubuntu">نحوه دانلود فایل با پروتکل mms در ubuntu</a></li>
                                 
                             </ul>
 
