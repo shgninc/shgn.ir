@@ -3,7 +3,7 @@
     "template_dir": "_blog/templates",
     "pages_dir": "_blog/pages",
     "site": {
-        "url": "http://shgn.ir",
+        "url": "https://shgn.ir",
         "lang": "fa",
         "title": "دست نوشته های یک تازه کار",
         "author": "سید سجاد شاهچراغیان",
@@ -12,8 +12,8 @@
           "درباره ما": "/about.html",
           "ارتباط با ما": "/contacus.html",
           "لینک های مفید": "/links.html",
-          "دیتابیس": "http://shgn.ir/tag/database.html",
-          "لینوکس":"http://shgn.ir/tag/linux.html"
+          "دیتابیس": "/tag/database.html",
+          "لینوکس":"/tag/linux.html"
         },
         "footer_links": {
           "GitHub": "https://github.com/shgninc",
@@ -21,7 +21,7 @@
           "Vasni": "http://vasni.ir/",
           "Virgool": "https://virgool.io/@shgninc",
           "Twiteer": "https://twitter.com/shahcheraghian",
-          "معرفی Yii2":"http://shgn.ir/yii2/"
+          "معرفی Yii2":"https://shgn.ir/yii2/"
         }
     },
     "date_format": "%Y-%m-%d %H:%M",
