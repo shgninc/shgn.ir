@@ -9,11 +9,11 @@
         "author": "سید سجاد شاهچراغیان",
         "briefing": "این وبلاگ پیرامون تجربیات، دانسته ها، اینجاب درباره linux, database, mysql, mariadb, datamart, galera cluster,apache می باشد.",
         "links": {
-          "درباره ما": "/about.html",
-          "ارتباط با ما": "/contacus.html",
-          "لینک های مفید": "/links.html",
-          "دیتابیس": "/tag/database.html",
-          "لینوکس":"/tag/linux.html"
+          "درباره ما": "https://shgn.ir/about.html",
+          "ارتباط با ما": "https://shgn.ir/contacus.html",
+          "لینک های مفید": "https://shgn.ir/links.html",
+          "دیتابیس": "https://shgn.ir/tag/database.html",
+          "لینوکس":"https://shgn.ir/tag/linux.html"
         },
         "footer_links": {
           "GitHub": "https://github.com/shgninc",
