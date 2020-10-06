@@ -1,7 +1,7 @@
 title: دوره LPIC1 آزمون 101-4
 briefing:قسمت چهارم ویدیو های آموزشی دوره LPIC1 موسسه لینوکس آکادمی.
 date_time: 2020-10-06 17:18
-slug: lpic1-exam-101-5-Shell-Environment
+slug: lpic1-exam-101-5-Hardware-Settings
 tags: linux, learn, lpic1, video
 type: post
 
