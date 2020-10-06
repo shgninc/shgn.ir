@@ -22,7 +22,7 @@ type: post
   <script src="https://unpkg.com/videojs-contrib-hls/dist/videojs-contrib-hls.js"></script>
 <div >
 <video id="my_video_1" class="video-js vjs-fluid vjs-default-skin" controls preload="auto" data-setup='{}'>
-    <source src="http://shgn.ir/media/learn/videos/lpic1/LPIC-1-System-Administrator-Exam_101-2-Introduction-to-the-Linux+-and-LPIC-1-Exam/playlist.m3u8" type="application/x-mpegURL">
+    <source src="https://shgn.ir/media/learn/videos/lpic1/LPIC-1-System-Administrator-Exam_101-2-Introduction-to-the-Linux+-and-LPIC-1-Exam/playlist.m3u8" type="application/x-mpegURL">
   </video>
 </div>
 <script>
