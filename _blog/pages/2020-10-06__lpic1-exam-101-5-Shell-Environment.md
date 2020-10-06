@@ -14,7 +14,7 @@ type: post
 
 در این دوره ویدیو های آموزشی دوره LPIC1 مربوط به موسسه [لینوکس آکادمی][acadmy] می باشد.
 
-درقسمت [قبل][last] با سرفصل های این استاندارد آشنا شد. در این قسمت به توضیح Shell-Environment پرداخته خواهد شد:
+درقسمت [قبل][last] با سرفصل های این استاندارد آشنا شد. در این قسمت به توضیح `Determine and Configure Hardware Settings` پرداخته خواهد شد:
 
 
 <link href="https://unpkg.com/video.js/dist/video-js.css" rel="stylesheet">
@@ -22,7 +22,7 @@ type: post
   <script src="https://unpkg.com/videojs-contrib-hls/dist/videojs-contrib-hls.js"></script>
 <div >
 <video id="my_video_1" class="video-js vjs-fluid vjs-default-skin" controls preload="auto" data-setup='{}'>
-    <source src="https://shgn.ir/media/learn/videos/lpic1/LPIC-1-System-Administrator-Exam_101-5-Shell-Environment/playlist.m3u8" type="application/x-mpegURL">
+    <source src="https://shgn.ir/media/learn/videos/lpic1/LPIC-1-System-Administrator-Exam_101-5-Hardware-Settings/playlist.m3u8" type="application/x-mpegURL">
   </video>
 </div>
 <script>
