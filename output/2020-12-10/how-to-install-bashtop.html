@@ -15,11 +15,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title> پستهای تگ شده با  'linux' - دست نوشته های یک تازه کار </title>
+    <title> آشنایی با برنامه کابردی Bashtop - دست نوشته های یک تازه کار </title>
     <meta name="description"
-          content="این وبلاگ پیرامون تجربیات، دانسته ها، اینجاب درباره linux, database, mysql, mariadb, datamart, galera cluster,apache می باشد."/>
+          content="برنامه ای برای مانیتورینگ منابع در لینوکس."/>
     <meta name="keywords"
-          content="لینوکس،لینوکس مشهد،آموزش,پایتون,پایتون مشهد,آموزش لینوکس,دیتابیس,آموزش دیتابیس,برنامه نویسی,linux,database,mysql,mariadb,datamart,galera cluster,apache,big data,dataware house,cluster,galera,percona,python,php,tutorial,debian,ubuntu,centos,arch linux,mashhad linux,iran linux,debian mashhad,"/>
+          content="لینوکس،لینوکس مشهد،آموزش,پایتون,پایتون مشهد,آموزش لینوکس,دیتابیس,آموزش دیتابیس,برنامه نویسی,linux,database,mysql,mariadb,datamart,galera cluster,apache,big data,dataware house,cluster,galera,percona,python,php,tutorial,debian,ubuntu,centos,arch linux,mashhad linux,iran linux,debian mashhad, linux, monitoring, utility"/>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
@@ -156,140 +156,68 @@
     <div class="row">
         <div class="col-md-9">
             
+    <div itemscope itemtype="http://schema.org/NewsArticle">
+    <meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="http://https://shgn.ir/2020-12-10/how-to-install-bashtop.html"/>
     <div class="page-header">
-      <h2>پستهای تگ شده با  'linux'</h2>
-      <p class="lead"></p>
+      <h3 itemprop="name">آشنایی با برنامه کابردی Bashtop</h3>
+      
+      
+        <small>
+          <p class="text-right">
+            ارسال شده <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+                توسط <span itemprop="name">سید سجاد شاهچراغیان</span>
+              </span>
+              در تاریخ <span itemprop="datePublished">2020-12-10</span>
+          </p>
+        </small>
+      
     </div>
+      <section itemprop="articleBody">
+        <p>برنامه <a href="https://github.com/aristocratos/bashtop"><code>Bashtop</code></a> یکی از جدیدترین و جالب ترین برنامه های مانیتورینگ و مشاهده وضعیت منابع در محیط ترمینال لینوکس می باشد.</p>
+<p>این برنامه می توان روی <a href="https://shgn.ir/tag/linux.html">لینوکس</a>، مک و حتی <code>free BSD</code> نیز نصب نمود.</p>
+<p>از قابلیت های این برنامه، امکان متوقف کردن پردازش ها هست. از این دست برنامه ها می توان به برنامه های <a href="https://fa.wikipedia.org/wiki/Top"><code>top</code></a> و <a href="https://fa.wikipedia.org/wiki/%D8%A7%DA%86%E2%80%8C%D8%AA%D8%A7%D9%BE2"><code>htop</code></a> اشاره نمود، اما تفاوت قابل ملاحظه این برنامه، با آنها در نمایش وضعیت پهنای باند شبکه به همراه وضعیت پردازش ها، <code>CPU</code> و <code>RAM</code> می باشد</p>
+<h2>پیشنیازهای نصب</h2>
+<ul>
+<li>برنامه <code>Bash 4.4</code> یا بالاتر</li>
+<li>برنامه <a href="https://fa.wikipedia.org/wiki/%DA%AF%DB%8C%D8%AA_(%D9%86%D8%B1%D9%85%E2%80%8C%D8%A7%D9%81%D8%B2%D8%A7%D8%B1)"><code>Git</code></a></li>
+<li>برنامه های <code>sed</code>, <code>awk</code>, <code>grep</code> و ابزار <code>ps command-line</code></li>
+<li>برنامه <code>Lm-sensor</code> (به صورت دلخواه)</li>
+</ul>
+<p>## نحوه نصب</p>
+<p>نصب این برنامه بسیار ساده و راحت هست. برای نصب کافی هست تا دستورات زیر را اجرا کنید:</p>
+<pre class="codehilite"><code>$ git clone https://github.com/aristocratos/bashtop.git
+$ cd bashtop
+$ sudo make install</code></pre>
+
+
+<p>بعد از نصب با اجرای دستور زیر این برنامه اجرا می شود:</p>
+<pre class="codehilite"><code>$ bashtop</code></pre>
+
+
+<h2>تصاویر برنامه</h2>
+<p><img alt="bashtop-Linux-Resource-Monitoring-Tool" src="bashtop-Linux-Resource-Monitoring-Tool.png" /></p>
+<p>منوی برنامه</p>
+<p><img alt="Bashtop-menu" src="Bashtop-menu.png" /></p>
+<p>کلیدهای میانبر</p>
+<p><img alt="Bashtop-Options" src="Bashtop-Options.png" /></p>
+      </section>
+      <div>
+        برچسب ها:
       
-        <h3><a href="/2013-03-19/mount_iso.html" title="بار گذاری یک فایل iso در لینوکس">بار گذاری یک فایل iso در لینوکس</a></h3>
-            
-                <a href="/tag/image.html">
-                    <span class="label label-default">image</span></a>
-            
-                <a href="/tag/iso.html">
-                    <span class="label label-default">iso</span></a>
-            
-                <a href="/tag/mount.html">
-                    <span class="label label-default">mount</span></a>
-            
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
-            
-                <a href="/tag/shell.html">
-                    <span class="label label-default">shell</span></a>
-            
-        <p>فایلهای `iso.` نوعی فایل فشرده هستند که معمولا اطلاعات داخل یک `cd` یا `dvd` را به این صورت تبدیل می کنند تا بتوانند آن را با حفظ ساختار `cd` یا `dvd` اش با استفاده از حافظه های جانبی یا درون شبکه منتقل و از آن اطلاعات استفاده کنند.</p>
-        <hr />
+        <a href="/tag/linux.html">
+            <span class="label label-default" itemprop="about">linux</span>
+        </a>
       
-        <h3><a href="/2013-03-02/downloadManager_for_ubuntu.html" title="معرفی برنامه مدیریت دانلود برای اوبونتو">معرفی برنامه مدیریت دانلود برای اوبونتو</a></h3>
-            
-                <a href="/tag/terminal.html">
-                    <span class="label label-default">terminal</span></a>
-            
-                <a href="/tag/opensource.html">
-                    <span class="label label-default">opensource</span></a>
-            
-                <a href="/tag/gtk.html">
-                    <span class="label label-default">gtk</span></a>
-            
-                <a href="/tag/download.html">
-                    <span class="label label-default">download</span></a>
-            
-                <a href="/tag/ubuntu.html">
-                    <span class="label label-default">ubuntu</span></a>
-            
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
-            
-        <p>یک برنامه ساده مدیریت دانلود براساس GTK+ در گنوم به نام steadyflow می باشد..</p>
-        <hr />
+        <a href="/tag/monitoring.html">
+            <span class="label label-default" itemprop="about">monitoring</span>
+        </a>
       
-        <h3><a href="/2013-01-20/HyperTem_linux_alternative.html" title="نرم افزاری معادل Microsoft HyperTerminal در linux">نرم افزاری معادل Microsoft HyperTerminal در linux</a></h3>
-            
-                <a href="/tag/microsoft.html">
-                    <span class="label label-default">microsoft</span></a>
-            
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
-            
-                <a href="/tag/windows.html">
-                    <span class="label label-default">windows</span></a>
-            
-                <a href="/tag/terminal.html">
-                    <span class="label label-default">terminal</span></a>
-            
-        <p>از جمله نرم افزارهایی که در اوبونتو می تواند به جای برنامه `Microsoft HyperTerminal` برای کا با پورتهای سریال به کار رود نرم افزار `GTKTerm` می باشد.</p>
-        <hr />
+        <a href="/tag/utility.html">
+            <span class="label label-default" itemprop="about">utility</span>
+        </a>
       
-        <h3><a href="/2013-01-15/install_marlin_ubunto.html" title="نصب نرم افزار Marlin در اوبونتو">نصب نرم افزار Marlin در اوبونتو</a></h3>
-            
-                <a href="/tag/ubuntu.html">
-                    <span class="label label-default">ubuntu</span></a>
-            
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
-            
-                <a href="/tag/nautilus.html">
-                    <span class="label label-default">nautilus</span></a>
-            
-        <p>marlinبرنامه مدیریت و مرور فایلها و شاخه ها که به عنوان جایگزین برنامه  Nautilus در دسکتاپ گنوم می توان نصب نمود.</p>
-        <hr />
-      
-        <h3><a href="/2012-12-31/Desktop_capture_in_ubuntu.html" title="بهترین نرم افزارها برای ضبط صفحه در اوبونتو">بهترین نرم افزارها برای ضبط صفحه در اوبونتو</a></h3>
-            
-                <a href="/tag/gnome.html">
-                    <span class="label label-default">gnome</span></a>
-            
-                <a href="/tag/KDE.html">
-                    <span class="label label-default">KDE</span></a>
-            
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
-            
-                <a href="/tag/ubuntu.html">
-                    <span class="label label-default">ubuntu</span></a>
-            
-                <a href="/tag/GNU.html">
-                    <span class="label label-default">GNU</span></a>
-            
-        <p>سیستم عامل اوبونتو دارای نرم افزارهای ضبط صفحه زیادی برای تصویر برداری از صفحه دسکتاپ دارد. بعضی از محبوبترین های آنها عبارتند از: xvidcap, Tibesti, RecordMyDesktop, Kazam و... . از این نرم افزارها جهت ایجاد مطالب آموزشی استفاده می گردد، پس ضبط این گونه تصاویر نباید به کندی و با اعوجاج و البته در حالت با کیفیت تصویر بالا HD صورت پذیرد.</p>
-        <hr />
-      
-        <h3><a href="/2012-12-02/download_MMS_Files_ubuntu.html" title="نحوه دانلود فایل با پروتکل mms در ubuntu">نحوه دانلود فایل با پروتکل mms در ubuntu</a></h3>
-            
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
-            
-                <a href="/tag/ubuntu.html">
-                    <span class="label label-default">ubuntu</span></a>
-            
-                <a href="/tag/video.html">
-                    <span class="label label-default">video</span></a>
-            
-        <p>در سایت ها نوعی پروتکل به نام `MMS` وجود دارد که عمدتا فایلهای چند رسانه ای فیلم را ارائه می کنند. برای دانلود این نوع فایل ها، به جای تماشای آن فیلمها به صورت `on-line`، باید از طریق نرم افزارها یا ابزار خاصی استفاده شود تا بتوان این فیلمها را به صورت `off-line` و در سیستم خانگی خود تماشا نمود.</p>
-        <hr />
-      
-      
-              <ul class="pagination">
-                
-                    
-                        
-                            <li><a href="/tag/linux/page0.html">0</a></li>
-                        
-                    
-                
-                    
-                        
-                            <li><a href="/tag/linux/page1.html">1</a></li>
-                        
-                    
-                
-                    
-                        <li class="active"><a href="#">2 <span class="sr-only">(current)</span></a></li>
-                    
-                
-              </ul>
-      
+    </div>
+    </div>
 
         </div>
         <div class="col-md-3">
@@ -364,18 +292,6 @@
                         </div>
                         <div class="panel-body">
                             <ul>
-                                
-                                <li><a href="/2013-03-19/mount_iso.html" title="بار گذاری یک فایل iso در لینوکس">بار گذاری یک فایل iso در لینوکس</a></li>
-                                
-                                <li><a href="/2013-03-02/downloadManager_for_ubuntu.html" title="معرفی برنامه مدیریت دانلود برای اوبونتو">معرفی برنامه مدیریت دانلود برای اوبونتو</a></li>
-                                
-                                <li><a href="/2013-01-20/HyperTem_linux_alternative.html" title="نرم افزاری معادل Microsoft HyperTerminal در linux">نرم افزاری معادل Microsoft HyperTerminal در linux</a></li>
-                                
-                                <li><a href="/2013-01-15/install_marlin_ubunto.html" title="نصب نرم افزار Marlin در اوبونتو">نصب نرم افزار Marlin در اوبونتو</a></li>
-                                
-                                <li><a href="/2012-12-31/Desktop_capture_in_ubuntu.html" title="بهترین نرم افزارها برای ضبط صفحه در اوبونتو">بهترین نرم افزارها برای ضبط صفحه در اوبونتو</a></li>
-                                
-                                <li><a href="/2012-12-02/download_MMS_Files_ubuntu.html" title="نحوه دانلود فایل با پروتکل mms در ubuntu">نحوه دانلود فایل با پروتکل mms در ubuntu</a></li>
                                 
                             </ul>
 
