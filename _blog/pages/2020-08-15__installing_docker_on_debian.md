@@ -39,7 +39,7 @@ type: post
     $ sudo add-apt-repository \
        "deb [arch=amd64] https://download.docker.com/linux/debian \
        $(lsb_release -cs) \
-       buster"
+       stable"
 
 و درنهایت کافی هست تا برای نصب خود `docker` نیز از دستور زیر استفاده نمود:
 
