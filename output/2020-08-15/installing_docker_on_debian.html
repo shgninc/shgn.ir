@@ -209,16 +209,70 @@ $ sudo apt-get install docker-ce docker-ce-cli containerd.io</code></pre>
 
 
 <h4>اطمینان از نصب</h4>
-<p>در پایان برای اطمنان از نصب صحیح داکر، می توان یک ایمیج مرسوم و معروف آن را اجرا کرد:</p>
+<p>برای اطمنان از نصب صحیح داکر، می توان یک ایمیج مرسوم و معروف آن را اجرا کرد:</p>
 <pre class="codehilite"><code>$ sudo docker run hello-world</code></pre>
 
 
 <p>اگر این ایمیج به درستی دانلود و اجرا شود یک سری اطلاعات را چاپ و خارج می شود. در این حالت یعنی <code>Docker Engine</code> به درستی نصب شده است.</p>
 <p>امیدوارم که این مطلب مفید و کاربردی بوده باشد.</p>
+<h2>نصب docker-compose</h2>
+<p>در پایان یکی از ابزارهای مفی و به شدت کاربردی برای داکر با عنوان <code>docker-compose</code> را معرفی می کنیم. از این ابزار به نوعی می توان به جای <code>docker run</code> استفاده نمود به طوری که پارامترهای آن به صورت مستند و پایدار می ماند. از طرفی به عنوان یک <code>orchestrator</code> ساده نیز شناخته می شود. روش عملکرد آن به این صورت هست که یک فایل ساده با نام <code>docker-compose.yml</code> را در پوشه ای (ترجیحا بانام سرویس مورد نظر) ایجاد کرده و تمامی پارامترهای اجرایی یک یا چند کانتینر به هم مرتبط را داخل فایل قرارداده و در نهایت با اجرای <code>docker-compose</code> تمامی سرویس های آن اجرا خواهند شد.</p>
+<h4>نصب</h4>
+<pre class="codehilite"><code>sudo curl -L &quot;https://github.com/docker/compose/releases/download/1.28.2/docker-compose-$(uname -s)-$(uname -m)&quot; -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose</code></pre>
+
+
+<p>و در پایان برای اطمینان می توان دستور زیر را اجرا نمود:</p>
+<pre class="codehilite"><code>$ docker-compose --version
+docker-compose version 1.28.2, build 1110ad01</code></pre>
+
+
+<h4>ایجاد فایل docker-compose</h4>
+<p>برای ایجاد یک سرویس با <code>docker-compose</code> مراحل زیر را اجرا می کنیم:</p>
+<pre class="codehilite"><code>mkdir composetest
+cd composetest</code></pre>
+
+
+<p>سپس یک فایل با نام <code>docker-compose.yml</code> ایجاد کرده و محتویات زیر را داخل قرار می دهیم:</p>
+<pre class="codehilite"><code>version: &quot;3.9&quot;
+services:
+  web:
+    build: .
+    ports:
+      - &quot;5000:5000&quot;
+  redis:
+    image: &quot;redis:alpine&quot;</code></pre>
+
+
+<p>همانطور که مشاهده می کنید دو سرویس <code>web</code> و <code>redis</code> در این فایل ایجاد می شوند. در نهایت برای ایجاد و اجرا کافی هست تا فقط دستور زیر را اجرا کنید:</p>
+<pre class="codehilite"><code>$ docker-compose up
+
+Creating network &quot;composetest_default&quot; with the default driver
+Creating composetest_web_1 ...
+Creating composetest_redis_1 ...
+Creating composetest_web_1
+Creating composetest_redis_1 ... done
+Attaching to composetest_web_1, composetest_redis_1
+web_1    |  * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
+redis_1  | 1:C 17 Aug 22:11:10.480 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+redis_1  | 1:C 17 Aug 22:11:10.480 # Redis version=4.0.1, bits=64, commit=00000000, modified=0, pid=1, just started
+redis_1  | 1:C 17 Aug 22:11:10.480 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
+web_1    |  * Restarting with stat
+redis_1  | 1:M 17 Aug 22:11:10.483 * Running mode=standalone, port=6379.
+redis_1  | 1:M 17 Aug 22:11:10.483 # WARNING: The TCP backlog setting of 511 cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128.
+web_1    |  * Debugger is active!
+redis_1  | 1:M 17 Aug 22:11:10.483 # Server initialized
+redis_1  | 1:M 17 Aug 22:11:10.483 # WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command 'echo never &gt; /sys/kernel/mm/transparent_hugepage/enabled' as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled.
+web_1    |  * Debugger PIN: 330-787-903
+redis_1  | 1:M 17 Aug 22:11:10.483 * Ready to accept connections</code></pre>
+
+
+<p>در پایان سرویس همانطور که در فایل تنظیم شده است از طریق آدرس <code>http://MACHINE_VM_IP:5000</code> در دسترس می باشد.</p>
 <h4>منابع:</h4>
 <ul>
 <li><a href="https://docs.docker.com/engine/install/debian/#install-using-the-repository">Install Docker Engine on Debian</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Docker_(software)">Docker (software)</a></li>
+<li><a href="https://docs.docker.com/compose/install/">Install docker-compose</a></li>
 </ul>
       </section>
       <div>
