@@ -177,7 +177,7 @@
  <a href="http://shgn.ir/2019-07-08/Cgroup-linux-kernel.html">آشنایی با ویژگی Cgroup در کرنل لینوکس</a>
   با مفاهیم <code>Cgroup</code> و <code>namespace</code> و در نهایت با <code>container</code> ها آشنا شدیم.<br />
 اکنون قصد داریم تا با یکی از بهترین برنامه ها مدیریت و کنترل <code>container</code>ها آشنا و آن را نصب کنیم.</p>
-<h2>داکر - Docker</h2>
+<h1>داکر - Docker</h1>
 <p>داکر مجموعه ای محصولات ارائه زیرساخت به عنوان سرویس <a href="https://en.wikipedia.org/wiki/Platform_as_a_service">PaaS</a> بوده که از مجازی سازی سطح سیستم عامل برای اجرای برنامه ها در قالب کانتینرها استفاده می کند. کانتینرها برای برنامه، کتابخانه ها و تنظیمات مخصوص آن، تهیه و دسته بندی و از یکدیگر جداسازی می شوند. آن ها از طریق کانال های تعریف شده و استاندارد می توانند با یکدیگر ارتباط داشته باشند. تمامی کانتینرها فقط با استفاده از یک کرنل مشترک سیستم عامل هاست، و منابع به مراتب کمتر از یک ماشین مجازی اجرا می شوند. </p>
 <p>داکر دو حالت رایگان و شامل هزینه داشته. برنامه ای که کانتینرها را میزبانی کرده را <code>Docker Engine</code> می نامند.  </p>
 <h2>نصب داکر</h2>
@@ -215,9 +215,9 @@ $ sudo apt-get install docker-ce docker-ce-cli containerd.io</code></pre>
 
 <p>اگر این ایمیج به درستی دانلود و اجرا شود یک سری اطلاعات را چاپ و خارج می شود. در این حالت یعنی <code>Docker Engine</code> به درستی نصب شده است.</p>
 <p>امیدوارم که این مطلب مفید و کاربردی بوده باشد.</p>
-<h2>نصب docker-compose</h2>
+<h1>نصب docker-compose</h1>
 <p>در پایان یکی از ابزارهای مفی و به شدت کاربردی برای داکر با عنوان <code>docker-compose</code> را معرفی می کنیم. از این ابزار به نوعی می توان به جای <code>docker run</code> استفاده نمود به طوری که پارامترهای آن به صورت مستند و پایدار می ماند. از طرفی به عنوان یک <code>orchestrator</code> ساده نیز شناخته می شود. روش عملکرد آن به این صورت هست که یک فایل ساده با نام <code>docker-compose.yml</code> را در پوشه ای (ترجیحا بانام سرویس مورد نظر) ایجاد کرده و تمامی پارامترهای اجرایی یک یا چند کانتینر به هم مرتبط را داخل فایل قرارداده و در نهایت با اجرای <code>docker-compose</code> تمامی سرویس های آن اجرا خواهند شد.</p>
-<h4>نصب</h4>
+<h3>نصب</h3>
 <pre class="codehilite"><code>sudo curl -L &quot;https://github.com/docker/compose/releases/download/1.28.2/docker-compose-$(uname -s)-$(uname -m)&quot; -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose</code></pre>
 
@@ -227,7 +227,7 @@ sudo chmod +x /usr/local/bin/docker-compose</code></pre>
 docker-compose version 1.28.2, build 1110ad01</code></pre>
 
 
-<h4>ایجاد فایل docker-compose</h4>
+<h3>ایجاد فایل docker-compose</h3>
 <p>برای ایجاد یک سرویس با <code>docker-compose</code> مراحل زیر را اجرا می کنیم:</p>
 <pre class="codehilite"><code>mkdir composetest
 cd composetest</code></pre>
