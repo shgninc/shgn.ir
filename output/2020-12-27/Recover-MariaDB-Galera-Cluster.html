@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!— Global site tag (gtag.js) - Google Analytics —>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-124515881-2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-124515881-2');
+
+    </script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title> چطور گلرا کلاستر خراب شده کامل یا ناقص را بازگردانی کنیم - دست نوشته های یک تازه کار </title>
+    <meta name="description"
+          content="مشکل خرابی کلاستر گلرا در دیتابیس، مشکلی مرسوم و متداول می باشد، در این مطلب خیلی ساده روش های بازگرداندن کلاسترینگ را بیان خواهیم کرد."/>
+    <meta name="keywords"
+          content="لینوکس،لینوکس مشهد،آموزش,پایتون,پایتون مشهد,آموزش لینوکس,دیتابیس,آموزش دیتابیس,برنامه نویسی,linux,database,mysql,mariadb,datamart,galera cluster,apache,big data,dataware house,cluster,galera,percona,python,php,tutorial,debian,ubuntu,centos,arch linux,mashhad linux,iran linux,debian mashhad, linux, database, galera, galera_cluster, mariadb, cluster"/>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+          integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+    <!--    <link href="https://rawgit.com/richleland/pygments-css/master/github.css" rel="stylesheet" crossorigin="anonymous">-->
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <style>
+    body {
+      direction: rtl;
+    }
+    p {
+        font-size: 1.3em;
+        line-height: 1.5em;
+        text-align: justify;
+      }
+    pre {
+        direction: ltr;
+        border-left: 5px solid #6ce26c;
+      }
+    .panel-body ul li{
+        margin: 10px 0;
+    }
+    a {
+        color: #4608ad;
+      }
+    .panel-group .panel {
+        margin-bottom: 5px;
+    }
+    .panel-primary > .panel-heading {
+        background-color: #4608ad;
+    }
+    .navbar-default {
+        background-color: #4608ad;
+    }
+    .navbar-default .navbar-brand {
+        color: #ffffff;
+    }
+    .navbar-default .navbar-nav > li > a {
+        color: #ffffff;
+        font-size:initial;
+    }
+    .navbar-default .navbar-nav > li > a:hover{
+        color: #00ffd9;
+    }
+    .navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:focus, .navbar-default .navbar-nav > .open > a:hover{
+        color: #4608ad;
+    }
+
+    .dropdown-menu{
+        background-color: #4608ad;
+        color:#ffffff;
+        font-size:initial;
+    }
+    .dropdown-menu > li > a{
+        color:#ffffff;
+        font-size:initial;
+    }
+    .dropdown-menu > li > a:hover{
+        color: #00ffd9;
+        background-color:#4608ad;
+    }
+
+    #back2Top {
+    width: 40px;
+    line-height: 40px;
+    overflow: hidden;
+    z-index: 999;
+    display: none;
+    cursor: pointer;
+    -moz-transform: rotate(270deg);
+    -webkit-transform: rotate(270deg);
+    -o-transform: rotate(270deg);
+    -ms-transform: rotate(270deg);
+    transform: rotate(270deg);
+    position: fixed;
+    bottom: 50px;
+    right: 0;
+    background-color: #DDD;
+    text-align: center;
+    font-size: 30px;
+    text-decoration: none;
+    }
+    #back2Top:hover {
+        background-color: #DDF;
+        color: #000;
+    }
+
+
+    </style>
+</head>
+<body>
+
+<a id="top"></a>
+<div id="scroollto1"></div>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header navbar-right">
+            <a class="navbar-brand" href="/">دست نوشته های یک تازه کار</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            
+            
+            <li><a href="https://shgn.ir/about.html" title="درباره ما">درباره ما</a></li>
+            
+            <li><a href="https://shgn.ir/contacus.html" title="ارتباط با ما">ارتباط با ما</a></li>
+            
+            <li><a href="https://shgn.ir/links.html" title="لینک های مفید">لینک های مفید</a></li>
+            
+            <li><a href="https://shgn.ir/tag/database.html" title="دیتابیس">دیتابیس</a></li>
+            
+            <li><a href="https://shgn.ir/tag/linux.html" title="لینوکس">لینوکس</a></li>
+            
+            <li class="dropdown">
+                <a href="https://shgn.ir/tag/learn.html" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                   aria-expanded="false">آموزش <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="https://shgn.ir/tag/lpic1.html">دوره LPIC1</a></li>
+                </ul>
+            </li>
+            
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-9">
+            
+    <div itemscope itemtype="http://schema.org/NewsArticle">
+    <meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="http://https://shgn.ir/2020-12-27/Recover-MariaDB-Galera-Cluster.html"/>
+    <div class="page-header">
+      <h3 itemprop="name">چطور گلرا کلاستر خراب شده کامل یا ناقص را بازگردانی کنیم</h3>
+      
+      
+        <small>
+          <p class="text-right">
+            ارسال شده <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+                توسط <span itemprop="name">سید سجاد شاهچراغیان</span>
+              </span>
+              در تاریخ <span itemprop="datePublished">2020-12-27</span>
+          </p>
+        </small>
+      
+    </div>
+      <section itemprop="articleBody">
+        <h2>گلرا کلاستر</h2>
+<p>گلرا یک کلاسترینگ <strong>همزمان و چند مستره</strong> برای <code>MariaDB</code>، <code>Mysql</code> و <code>Percona-DB</code> می باشد.</p>
+<p>معمولا در کلاسترینگ گلرا، با خرابی یا مشکل در یک نود، کلاسترینگ می تواند به کار خود ادامه دهد، اما با خرابی چند نود، کلاسترینگ نیز دچار مشکل شده و نمی توان به صحت عملکردش اعتماد کرد. دلایل ایجاد مشکل برای ارتباط بین نودهای کلاستر محدود به سخت افزار، شبکه، مشکلات نرم افزاری یا اشتباهات کاربری نمی باشد. اما خبر امیدوار کننده این است که در نهایت مشکل کلاستر، حداقل یک نود پایدار و در حال کار می ماند و این استمرار سرویس کلاستر می باشد. معمولا اتفاقی که بعد از خرابی یک نود می افتد این است که آن نود نمی تواند خود را مجددا به کلاستر متصل کند. </p>
+<h3>سناریوهای خرابی کلاستر</h3>
+<p>براساس تعداد نود مشکل خورده در کلاسترینگ، خرابی های کلاسترینگ گلرا را می توان به سناریوهای زیر دسته بندی کرد:</p>
+<ul>
+<li>خرابی یک نود</li>
+<li>خرابی چند نود</li>
+<li>خرابی کامل کلاسترینگ</li>
+</ul>
+<p>جدای از این سه سناریو، خرابی کلاستر موجب خرابی کامل ارتباط دیتابیس ها می گردد. در حالت نرمال، نودها برای به روز رسانی و نگهداری های متداول نیازمند ریست می باشند. زمانی که یک نود موفق ریست شود، خیلی ساده خود را به کلاستر متصل و اطلاعتش را با دیگر نودها همسان سازی می کند.</p>
+<h3>بررسی سلامت کلاستر</h3>
+<p>برای شروع لازم است تا نحوه بررسی و چک کردن گلرا کلاستر را بدانیم. برای این مهم به ترتیب زیر عمل می کنیم:</p>
+<pre class="codehilite"><code>MariaDB [(none)]&gt; show status like 'wsrep_incoming_addresses';
++--------------------------+----------------------------------------------+
+| Variable_name | Value |
++--------------------------+----------------------------------------------+
+| wsrep_incoming_addresses | 171.20.0.151:3306,171.20.0.152:3306,171.20.0.153:3306 |
++--------------------------+----------------------------------------------+
+1 row in set (0.01 sec)</code></pre>
+
+
+<p>بررسی تعداد نودهای موجود در کلاسترینگ:</p>
+<pre class="codehilite"><code>MariaDB [(none)]&gt; show status like 'wsrep_cluster_size';
++--------------------+-------+
+| Variable_name | Value |
++--------------------+-------+
+| wsrep_cluster_size | 3 |
++--------------------+-------+
+1 row in set (0.01 sec)</code></pre>
+
+
+<p>بررسی <code>UUID</code> وضعیت کلاسترینگ:</p>
+<pre class="codehilite"><code>MariaDB [(none)]&gt; show status like 'wsrep_cluster_state_uuid';
++--------------------------+-----------------------------------------+
+| Variable_name | Value |
++--------------------------+-----------------------------------------+
+| wsrep_cluster_state_uuid | 345098abd2-291a-9893-acbd3-30923abcdef9 |
++--------------------------+-----------------------------------------+
+1 row in set (0.01 sec)</code></pre>
+
+
+<p>نحوه بررسی همسان بودن نود در کلاستر:</p>
+<pre class="codehilite"><code>MariaDB [(none)]&gt; show status like 'wsrep_local_state_comment';
++---------------------------+--------+
+| Variable_name | Value |
++---------------------------+--------+
+| wsrep_local_state_comment | Synced |
++---------------------------+--------+
+1 row in set (0.01 sec)</code></pre>
+
+
+<h4>بازگرداندن سناریو یک نود</h4>
+<p>در این سناریو، فقط یک نود در کلاستر با مشکل مواجه شده است. هیچ اطلاعاتی از دست نرفته و هیچ ارتباطی بین دیتابیس ها مشکل نخورده است. طبق این سناریو، وضعیت به این صورت خواهد بود:</p>
+<pre class="codehilite"><code>MariaDB [(none)]&gt; show status like 'wsrep_incoming_addresses';
++--------------------------+-------------------------------+
+| Variable_name | Value |
++--------------------------+-------------------------------+
+| wsrep_incoming_addresses | 171.20.0.151:3306,171.20.0.152:3306 |
++--------------------------+-------------------------------+
+1 row in set (0.01 sec)
+
+MariaDB [(none)]&gt; show status like 'wsrep_cluster_size';
++--------------------+-------+
+| Variable_name | Value |
++--------------------+-------+
+| wsrep_cluster_size | 2 |
++--------------------+-------+
+1 row in set (0.01 sec)</code></pre>
+
+
+<p>بعد از ریست نود خراب شده، وضعیت آن را برای متصل شدن متصل شدن دوباره به کلاستر بررسی کنید. اگر به دلایلی وصل نشد خیلی ساده خود سرویس <code>MariaDB</code> را ریست کنید:</p>
+<pre class="codehilite"><code>$ systemctl restart mariadb</code></pre>
+
+
+<h3>سناریو مشکل چند نود در کلاستر</h3>
+<p>در این سناریو، تمامی نودها به غیر از یکی مشکل خورده اند که موجب از دست رفتن <code>quorum</code> می شود. در این نقطه، گلرا کلاستر درخواست های <code>SQL</code> را پاسخ نمی دهد. اما از آنجایی که هنوز یک نود بالا بوده و درحال اجرا می باشد، اطلاعاتی از دست نرفته است. در این حالت اگر نودهای مشکل خورده برای آنلاین شدن و اتصال به کلاستر تلاش کنند، نمی توانند موفق شوند چرا که کلاستر از دست رفته است:</p>
+<pre class="codehilite"><code>MariaDB [(none)]&gt; show status like 'wsrep_cluster_size';
++--------------------+-------+
+| Variable_name | Value |
++--------------------+-------+
+| wsrep_cluster_size | 1 |
++--------------------+-------+
+1 row in set (0.01 sec)
+
+MariaDB [(none)]&gt; show status like 'wsrep_cluster_status';
++----------------------+---------+
+| Variable_name | Value |
++----------------------+---------+
+| wsrep_cluster_status | Primary |
++----------------------+---------+
+1 row in set (0.01 sec)</code></pre>
+
+
+<p>در موارد نادر، ممکن است وضعیت کلاستر را <code>non-Primary</code> نشان دهد. اگر این اتفاق افتاد، علت خطا حتما از دست رفتن <code>quorum</code> نخواهد بود، بله احتمال بر قراری ارتباط شبکه می تواند باشد. توجه داشته باشید که قبل از بازسازی <code>quorum</code> حتما وضعیت نود به <code>Primary</code> تغییر کند. </p>
+<p>قبل از بازسازی <code>quorum</code> باید از آخرین <code>commit</code> را به دست بیاریم. برای این مهم دو راه وجود دارد:</p>
+<h4>Bootstrap خودکار</h4>
+<p>ساده ترین روش برای راه اندازی مجدد <code>quorum</code> استفاده از <code>bootstrap</code> خودکار است. به وسیله فرمان زیر می توان <code>bootstrap</code> خودکار را در نود فعال کرد:</p>
+<pre class="codehilite"><code>MariaDB [(none)]&gt; set global wsrep_provider_options='pc.bootstrap=YES';</code></pre>
+
+
+<p>این فرمان موجب می شود تا نود جاری، به اصلی ترین نود خود راه انداز، تبدیل شده تا دیگر نودهای مشکل خورده بتوانند با اتصال به آن، خود را تصحیح کنند.</p>
+<h4>Bootstrap دستی</h4>
+<p>با اجرای دستورات زیر نود جاری به صورت دستی، تبدیل به خود راه انداز، خواهد شد:</p>
+<pre class="codehilite"><code>$ systemctl stop mariadb
+$ galera_new_cluster
+$ systemctl restart mariadb</code></pre>
+
+
+<p>بعد از این که این نود به عنوان نود اصلی راه اندازی و اجرا شد، کافی است تا سرویس <code>MaraiDB</code> روی دیگر نودها را یکی یکی ریست کرد.</p>
+<h2>بازگرداندن کامل کلاستر</h2>
+<p>در این سناریو، تمامی نودها مشکل خورده یا به درستی خاموش نشده اند. کل اجزاء <code>quorum</code> از دست رفته و کلاستر دیگر هیچ درخواست <code>SQL</code> ای را پاسخگو نیست. در چنین حالتی، حتی اگر تمامی نودها آنلاین شوند سرویس <code>MariaDB</code> قادر به اجرا نیست. و این به علت خاموش شدن نادرست نودها بوده که هیچ کدام امکان اجرای آخرین کامیت را ندارند. براساس انواع خرابی هایی که به صورت کامل برای گلرا کلاستر اتفاق می افتد راهکارهای متفاوتی نیز وجود دارد.</p>
+<h3>بازسازی براساس بیشترین مقدار seqno</h3>
+<p>این روش زمانی کاربردی هست که یک حداقل یک نود به صورت درست و کامل در حین خرابی خاموش شده باشد. نودی با داشتن آخرین دیتا دارای بیشترین مقدار <code>seqno</code> در بین تمامی نودهای خراب می باشد. این موضوع در فایل <code>/var/lib/mysql/grastate.dat</code> قابل مشاهده هست. بسته به این که کدام نود دچار خرابی کامل شده مقدار <code>seqno</code> یا منفی بوده و یا یکی از نودها حاوی بیشتر مقدار <code>seqno</code> می باشد. </p>
+<p>در ادامه محتویات فایل <code>grastate.dat</code> در ۳ نود را می توانید مشاهده کنید. معمولا حالت نشان داده شده به هنگام پردازش زبان تعریف داده <code>(DDL)</code> رخ می دهد:</p>
+<pre class="codehilite"><code>$ cat /var/lib/mysql/grastate.dat
+# GALERA saved state
+version: 2.1
+uuid: 00000000-0000-0000-0000-000000000000
+seqno: -1
+safe_to_bootstrap: 0</code></pre>
+      </section>
+      <div>
+        برچسب ها:
+      
+        <a href="/tag/linux.html">
+            <span class="label label-default" itemprop="about">linux</span>
+        </a>
+      
+        <a href="/tag/database.html">
+            <span class="label label-default" itemprop="about">database</span>
+        </a>
+      
+        <a href="/tag/galera.html">
+            <span class="label label-default" itemprop="about">galera</span>
+        </a>
+      
+        <a href="/tag/galera_cluster.html">
+            <span class="label label-default" itemprop="about">galera_cluster</span>
+        </a>
+      
+        <a href="/tag/mariadb.html">
+            <span class="label label-default" itemprop="about">mariadb</span>
+        </a>
+      
+        <a href="/tag/cluster.html">
+            <span class="label label-default" itemprop="about">cluster</span>
+        </a>
+      
+    </div>
+    </div>
+
+        </div>
+        <div class="col-md-3">
+            <div class="panel-group">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        من در stackexchange.com
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-md-3 col-md-offset-9">
+                            <a href="https://stackexchange.com/users/887576" target="_blank">
+                                <img src="https://stackexchange.com/users/flair/887576.png" width="208" height="58"
+                                     alt="profile for shgnInc on Stack Exchange, a network of free, community-driven Q&A sites"
+                                     title="profile for shgnInc on Stack Exchange, a network of free, community-driven Q&A sites">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="panel-group">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            مطالب مهم
+                        </div>
+                        <div class="panel-body">
+                            <ul>
+                                <li><a href="https://shgn.ir/2020-08-15/installing_docker_on_debian.html"
+                                       title="نصب Docker روی Debian 10">نصب Docker روی Debian 10</a></li>
+                                <li><a href="https://shgn.ir/2018-09-05/Mysql-JSON-DataType.html"
+                                       title="معرفی نوع داده JSON در دیتابیس Mysql-Mariadb">معرفی نوع داده JSON در
+                                    دیتابیس Mysql-Mariadb</a></li>
+                                <li><a href="https://shgn.ir/2018-07-23/ssh_automatic_login.html"
+                                       title="لاگین خودکار با SSH">لاگین خودکار با SSH</a></li>
+                                <li><a href="https://shgn.ir/2017-08-16/galera_cluster.html"
+                                       title="نصب Galer Cluster بر روی debian8">نصب Galer Cluster بر روی debian8</a>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-group">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            Linux ISO Images
+                        </div>
+                        <div class="panel-body">
+                            <ul>
+                                <li><a href="https://shgn.ir/images/gparted-live-1.1.0-1-amd64.iso"
+                                       title="gparted-live-1.1.0-1-amd64">GParted Live CD/USB/HD/PXE Bootable Image</a></li>
+                                <li><a href="https://shgn.ir/images/debian-10.3.0-amd64-xfce-CD-1.iso"
+                                       title="debian-10.3.0-amd64-xfce-CD-1">Debian-10-amd64-xfce-CD</a></li>
+                                <li><a href="https://shgn.ir/images/debian-9.13.0-amd64-xfce-CD-1.iso"
+                                       title="debian-9.13.0-amd64-xfce-CD-1">debian-9-amd64-xfce-CD</a></li>
+                                <li><a href="https://shgn.ir/images/ubuntu-18.04.4-desktop-amd64.iso"
+                                       title="ubuntu-18.04.4-desktop-amd64">Ubuntu Desktop</a></li>
+                                <li><a href="https://shgn.ir/images/ubuntu-18.04.4-live-server-amd64.iso"
+                                       title="ubuntu-18.04.4-live-server-amd64">Ubuntu Server</a></li>
+                                <li><a href="https://shgn.ir/images/CentOS-7-aarch64-Minimal-1908.iso"
+                                       title="CentOS-7-aarch64-Minimal-1908">CentOS-7-aarch64-Minimal-1908</a></li>
+                                <li><a href="https://shgn.ir/images/CentOS-8.2.2004-x86_64-minimal.iso"
+                                       title="CentOS-8.2.2004-x86_64-minimal">CentOS-8.2.2004-x86_64-minimal</a></li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-group">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            تازه ترین مطالب
+                        </div>
+                        <div class="panel-body">
+                            <ul>
+                                
+                            </ul>
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr/>
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                
+                <strong>پیشنهادی های</strong>
+                <ul>
+                    
+                    <li><a href="https://github.com/shgninc">GitHub</a></li>
+                    
+                    <li><a href="https://www.instagram.com/shgninc/">Instagram</a></li>
+                    
+                    <li><a href="http://vasni.ir/">Vasni</a></li>
+                    
+                    <li><a href="https://virgool.io/@shgninc">Virgool</a></li>
+                    
+                    <li><a href="https://twitter.com/shahcheraghian">Twiteer</a></li>
+                    
+                    <li><a href="https://shgn.ir/yii2/">معرفی Yii2</a></li>
+                    
+                </ul>
+                
+            </div>
+            <div class="col-md-6">
+                <strong>دسترسی های ساده</strong>
+                <ul>
+                    <li><a href="/">تمامی پست ها</a></li>
+                    <li><a href="/tags.html">فهرست تگ ها</a></li>
+                    <li><a href="/tag/video.html">ویدیوها</a></li>
+                </ul>
+            </div>
+            <div class="col-md-12">
+                <p class="text-center"><small>https://shgn.ir &copy; 2020</small></p>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://shgn.ir/static/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://shgn.ir/static/ProngnRoll/prognroll.min.js"></script>
+<script>
+var jQ_3_5_1 = $.noConflict(true);
+
+    /*Scroll to top when arrow up clicked BEGIN*/
+jQ_3_5_1(window).scroll(function() {
+    var height = jQ_3_5_1(window).scrollTop();
+    if (height > 100) {
+        jQ_3_5_1('#back2Top').fadeIn();
+    } else {
+        jQ_3_5_1('#back2Top').fadeOut();
+    }
+});
+jQ_3_5_1(document).ready(function() {
+    jQ_3_5_1("#back2Top").click(function(event) {
+        event.preventDefault();
+        jQ_3_5_1("html, body").animate({ scrollTop: 0 }, "slow");
+        return false;
+    });
+});
+ /*Scroll to top when arrow up clicked END*/
+
+/* https://www.jqueryscript.net/other/jQuery-Scroll-Progress-Indicator-For-Any-Containers-ProngnRoll.html */
+
+jQ_3_5_1("body").prognroll({
+  position:"bottom",
+  height:5,
+  color:"#f54905"
+});
+
+
+</script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"
+        integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ"
+        crossorigin="anonymous"></script>
+<script>
+var $x = jQuery.noConflict();
+
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+        integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+        crossorigin="anonymous"></script>
+
+<a id="back2Top" title="Back to top" href="#">&#10148;</a>
+
+</body>
+</html>
