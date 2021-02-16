@@ -146,3 +146,97 @@ type: post
     seqno: -1
     safe_to_bootstrap: 0
     
+در ادامه محتویات فایل `grastate.dat` در نود ۲ قابل مشاهده می باشد. این نود در حین پرداز ترنس اکشن با `seqno` منفی اما با `group ID` کرش کرده است:
+
+    $ cat /var/lib/mysql/grastate.dat
+    # GALERA saved state
+    version: 2.1
+    uuid: 886dd8da-3d07-11e8-a109-8a3c80cebab4
+    seqno: -1
+    safe_to_bootstrap: 0
+
+همچنین در ادامه محتویات فایل `grastate.dat` در نود ۱ با بالاترین `seqno` قابل رویت هست:
+
+    $ cat /var/lib/mysql/grastate.dat
+    # GALERA saved state
+    version: 2.1
+    uuid: 886dd8da-3d07-11e8-a109-8a3c80cebab4
+    seqno: 31929
+    safe_to_bootstrap: 1
+
+ این نکته را فراموش نکنیم که فقط نودی که به درستی خاموش شده باشد دارای **بالاترین مقدار `seqno` مثبت** خواهد بود. این نود، همیشه اولین نودی هست که بازیابی از آن شروع می شود.
+ 
+ اگر در تمامی نودها مقدار `seqno` -1 باشد و `safe_to_bootstrap` برابر 0 باشد، این نشانه آن است که **خرابی کامل کلاستر** رخ داده است. در این نقطه، فقط باید کلاستر را با دستور زیر مجددا راه اندازی نمود. اما این کار تا زمانی که مشخص نشود که هر نود دارای کپی مشخصی از دیتای دیتابیس دارد، به هیچ عنوان توصیه نمی شود.
+ 
+   $ galera_new_cluster
+ 
+ قبل از راه اندازی مجدد نود 1 باید در فایل تنظیمات کلاستر `/etc/my.cnf.d/server.cnf` برای تعیین آدرس IP نودها تغییری ایجاد کنیم:
+ 
+    [galera]
+    # Mandatory settings
+    wsrep_on=ON
+    wsrep_provider=/usr/lib64/galera/libgalera_smm.so
+    wsrep_cluster_address="gcomm://10.0.0.51,10.0.0.52,10.0.0.53"
+    wsrep_cluster_name='galeraCluster01'
+    wsrep_node_address='10.0.0.51'
+    wsrep_node_name='galera-01'
+    wsrep_sst_method=rsync
+    binlog_format=row
+    default_storage_engine=InnoDB
+    innodb_autoinc_lock_mode=2  
+ 
+نکته این که  `wsrep_cluster_address` نشان دهنده آدرس IP تمامی نودهای کلاستر می باشد که باید به صروت زیر تغییر کند:
+
+    wsrep_cluster_address="gcomm://"
+
+هم اکنون می توان سرویس ماریا دی بی این نود را ریست نمود:
+
+    $ systemctl restart mariadb
+
+تنهای زمانی می توانیم مبادرت به راه اندازی مجدد دیگر نودها نمود که بعد از ریست این نود از راه اندازی سالم آن اطمینان حاصل کنیم. بعد از راه اندازی کامل و سالم تمامی نودهای دیگر، تنظیمات روی نود 1 را با اضافه نمودن آدرس IP دیگر اعضا و ریست مجدد ادامه می دهیم.
+ 
+    wsrep_cluster_address="gcomm://10.8.8.53,10.8.8.54,10.8.8.55"
+
+هم اکنون گلرا کلاستر باید اجرا شده و تمامی نودها باید خود را با نود اولیه یا اصلی همسان کنند.
+
+## بازیابی بر اساس آخرین Commit
+
+بدترین حالت ممکن در خرابی گلرا کلاستر این هست که در تمامی نودها `seqno` مقدار 1- گرفته و تماما خراب شده باشند. همانطور که پیشتر هم ذکر شده بود، اجرای دستور `galera_new_cluster` روی یک نود و اتصال مجدد دیگر نودها قبل از تعیین آخرین `commit` ی که روی کدام نود خورده وسوسه انگیز است. زمانی که دستور `galera_new_cluster` را اجرا کنید، یک کلاستر جدید ایجاد کرده و دیگر نودها به آن متصل و خود را با آن همسان می کنند.
+
+برای این که تعیین کنیم کدام نود آخرین `commit ` را دارد باید مقدار 'wsrep_last_commit' را روی هر نود جداگانه بررسی کنیم. تنها نودی معتبر است که آخرین مقدار آن بالاترین مقدار باشد. سپس از آن نود راه اندازی مجدد کلاستر را آغاز و دیگر نودها به آن متصل می شوند. برای این موضوع به ترتیب زیر عمل می کنیم:
+
+    $ systemctl stop mariadb
+
+مقدار `wsrep_cluster_address` را در فایل `/etc/my.cnf.d/server.cnf` باید تغییر دهیم.
+
+    wsrep_cluster_address="gcomm://"  
+
+سپس:
+
+    $ systemctl start mariadb
+
+سپس از داخل دیتابیس مقدار را چک می کنیم:
+
+    MariaDB [(none)]> show status like 'wsrep_last_committed';
+    +----------------------+---------+
+    | Variable_name | Value |
+    +----------------------+---------+
+    | wsrep_last_committed | 319589 |
+    +----------------------+---------+
+    1 row in set (0.01 sec)
+    
+این عمل را برای به دست آوردن آخرین `commit` روی تمامی نودها انجام دهید. سپس با اجرای دستور زیر روی نودی که بالاترین مقدار روی آخرین `commit` کلاسترینگ را مجددا راه اندازی می کنیم.
+
+    $ galera_new_cluster  
+
+سپس مقدار `wsrep_cluster_address` را روی دیگر نودها با آدرس IP های نودها تغییر داده و سرویس `mariadb` را روی آن ها ریست کنید.
+
+در نهایت، بعد از گذشت مدتی،  آخرین مقدار `commit` را روی نودهای مجددا بررسی کنید تا از صحت کلاسترینگ اطمینان حاصل کنید.
+
+# منابع
+
+ * [how to recover mariadb galera cluster after partial or full crash][galera]
+
+
+
+ [galera]: https://www.symmcom.com/docs/how-tos/databases/how-to-recover-mariadb-galera-cluster-after-partial-or-full-crash
