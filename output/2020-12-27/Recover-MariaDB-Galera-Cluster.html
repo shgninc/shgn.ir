@@ -174,10 +174,10 @@
     </div>
       <section itemprop="articleBody">
         <h2>گلرا کلاستر</h2>
-<p>گلرا یک کلاسترینگ <strong>همزمان و چند مستره</strong> برای <code>MariaDB</code>، <code>Mysql</code> و <code>Percona-DB</code> می باشد.</p>
-<p>معمولا در کلاسترینگ گلرا، با خرابی یا مشکل در یک نود، کلاسترینگ می تواند به کار خود ادامه دهد، اما با خرابی چند نود، کلاسترینگ نیز دچار مشکل شده و نمی توان به صحت عملکردش اعتماد کرد. دلایل ایجاد مشکل برای ارتباط بین نودهای کلاستر محدود به سخت افزار، شبکه، مشکلات نرم افزاری یا اشتباهات کاربری نمی باشد. اما خبر امیدوار کننده این است که در نهایت مشکل کلاستر، حداقل یک نود پایدار و در حال کار می ماند و این استمرار سرویس کلاستر می باشد. معمولا اتفاقی که بعد از خرابی یک نود می افتد این است که آن نود نمی تواند خود را مجددا به کلاستر متصل کند. </p>
+<p>گلرا، یک کلاسترینگ <strong>همزمان و چند مستره</strong> برای <code>[MariaDB][mariadb]</code>، <code>[Mysql][mysql]</code> و <code>[Percona-DB][database]</code> می باشد.</p>
+<p>معمولا در کلاسترینگ گلرا، با خرابی یا مشکل در یک نود، کلاسترینگ می تواند به کار خود ادامه دهد، اما با خرابی چند نود، کلاسترینگ نیز دچار مشکل شده و نمی توان به صحت عملکردش اعتماد کرد. دلایل ایجاد مشکل برای ارتباط بین نودهای کلاستر محدود به سخت افزار، شبکه، مشکلات نرم افزاری یا اشتباهات کاربری نمی باشد. اما خبر امیدوار کننده این است که در نهایت مشکل کلاستر، حداقل با یک نود پایدار و در حال کار می ماند و این استمرار سرویس کلاسترینگ می باشد. معمولا اتفاقی که بعد از خرابی یک نود می افتد این است که آن نود نمی تواند خود را مجددا به کلاستر متصل کند. </p>
 <h3>سناریوهای خرابی کلاستر</h3>
-<p>براساس تعداد نود مشکل خورده در کلاسترینگ، خرابی های کلاسترینگ گلرا را می توان به سناریوهای زیر دسته بندی کرد:</p>
+<p>براساس تعداد نود مشکل خورده در کلاسترینگ، خرابی های <a href="https://shgn.ir/tag/galera_cluster.html">galera-cluster</a>[Galera Cluster] را می توان به سناریوهای زیر دسته بندی کرد:</p>
 <ul>
 <li>خرابی یک نود</li>
 <li>خرابی چند نود</li>
@@ -244,7 +244,7 @@ MariaDB [(none)]&gt; show status like 'wsrep_cluster_size';
 1 row in set (0.01 sec)</code></pre>
 
 
-<p>بعد از ریست نود خراب شده، وضعیت آن را برای متصل شدن متصل شدن دوباره به کلاستر بررسی کنید. اگر به دلایلی وصل نشد خیلی ساده خود سرویس <code>MariaDB</code> را ریست کنید:</p>
+<p>بعد از ریست نود خراب شده، وضعیت آن را برای متصل شدن متصل شدن دوباره به کلاستر بررسی کنید. اگر به دلایلی وصل نشد خیلی ساده خود سرویس <code>[MariaDB][mariadb-site]</code> را ریست کنید:</p>
 <pre class="codehilite"><code>$ systemctl restart mariadb</code></pre>
 
 
@@ -267,10 +267,10 @@ MariaDB [(none)]&gt; show status like 'wsrep_cluster_status';
 1 row in set (0.01 sec)</code></pre>
 
 
-<p>در موارد نادر، ممکن است وضعیت کلاستر را <code>non-Primary</code> نشان دهد. اگر این اتفاق افتاد، علت خطا حتما از دست رفتن <code>quorum</code> نخواهد بود، بله احتمال بر قراری ارتباط شبکه می تواند باشد. توجه داشته باشید که قبل از بازسازی <code>quorum</code> حتما وضعیت نود به <code>Primary</code> تغییر کند. </p>
+<p>در موارد نادر، ممکن است وضعیت کلاستر را <code>non-Primary</code> نشان دهد. اگر این اتفاق افتاد، علت خطا حتما از دست رفتن <code>quorum</code> نخواهد بود، بله احتمال بر قراری ارتباط شبکه می تواند باشد. توجه داشته باشید که قبل از بازسازی <code>[quorum][quorum]</code> حتما وضعیت نود به <code>Primary</code> تغییر کند. </p>
 <p>قبل از بازسازی <code>quorum</code> باید از آخرین <code>commit</code> را به دست بیاریم. برای این مهم دو راه وجود دارد:</p>
 <h4>Bootstrap خودکار</h4>
-<p>ساده ترین روش برای راه اندازی مجدد <code>quorum</code> استفاده از <code>bootstrap</code> خودکار است. به وسیله فرمان زیر می توان <code>bootstrap</code> خودکار را در نود فعال کرد:</p>
+<p>ساده ترین روش برای راه اندازی مجدد <code>quorum</code> استفاده از <code>bootstrap</code> خودکار است. به وسیله فرمان زیر می توان <code>[bootstrap][bootstrap]</code> خودکار را در نود فعال کرد:</p>
 <pre class="codehilite"><code>MariaDB [(none)]&gt; set global wsrep_provider_options='pc.bootstrap=YES';</code></pre>
 
 
@@ -378,6 +378,7 @@ innodb_autoinc_lock_mode=2</code></pre>
 <h1>منابع</h1>
 <ul>
 <li><a href="https://www.symmcom.com/docs/how-tos/databases/how-to-recover-mariadb-galera-cluster-after-partial-or-full-crash">how to recover mariadb galera cluster after partial or full crash</a></li>
+<li><a href="https://mariadb.com/kb/en/galera-cluster-recovery/">Galera Cluster Recovery</a></li>
 </ul>
       </section>
       <div>
