@@ -294,6 +294,91 @@ version: 2.1
 uuid: 00000000-0000-0000-0000-000000000000
 seqno: -1
 safe_to_bootstrap: 0</code></pre>
+
+
+<p>در ادامه محتویات فایل <code>grastate.dat</code> در نود ۲ قابل مشاهده می باشد. این نود در حین پرداز ترنس اکشن با <code>seqno</code> منفی اما با <code>group ID</code> کرش کرده است:</p>
+<pre class="codehilite"><code>$ cat /var/lib/mysql/grastate.dat
+# GALERA saved state
+version: 2.1
+uuid: 886dd8da-3d07-11e8-a109-8a3c80cebab4
+seqno: -1
+safe_to_bootstrap: 0</code></pre>
+
+
+<p>همچنین در ادامه محتویات فایل <code>grastate.dat</code> در نود ۱ با بالاترین <code>seqno</code> قابل رویت هست:</p>
+<pre class="codehilite"><code>$ cat /var/lib/mysql/grastate.dat
+# GALERA saved state
+version: 2.1
+uuid: 886dd8da-3d07-11e8-a109-8a3c80cebab4
+seqno: 31929
+safe_to_bootstrap: 1</code></pre>
+
+
+<p>این نکته را فراموش نکنیم که فقط نودی که به درستی خاموش شده باشد دارای <strong>بالاترین مقدار <code>seqno</code> مثبت</strong> خواهد بود. این نود، همیشه اولین نودی هست که بازیابی از آن شروع می شود.</p>
+<p>اگر در تمامی نودها مقدار <code>seqno</code> -1 باشد و <code>safe_to_bootstrap</code> برابر 0 باشد، این نشانه آن است که <strong>خرابی کامل کلاستر</strong> رخ داده است. در این نقطه، فقط باید کلاستر را با دستور زیر مجددا راه اندازی نمود. اما این کار تا زمانی که مشخص نشود که هر نود دارای کپی مشخصی از دیتای دیتابیس دارد، به هیچ عنوان توصیه نمی شود.</p>
+<p>$ galera_new_cluster</p>
+<p>قبل از راه اندازی مجدد نود 1 باید در فایل تنظیمات کلاستر <code>/etc/my.cnf.d/server.cnf</code> برای تعیین آدرس IP نودها تغییری ایجاد کنیم:</p>
+<pre class="codehilite"><code>[galera]
+# Mandatory settings
+wsrep_on=ON
+wsrep_provider=/usr/lib64/galera/libgalera_smm.so
+wsrep_cluster_address=&quot;gcomm://10.0.0.51,10.0.0.52,10.0.0.53&quot;
+wsrep_cluster_name='galeraCluster01'
+wsrep_node_address='10.0.0.51'
+wsrep_node_name='galera-01'
+wsrep_sst_method=rsync
+binlog_format=row
+default_storage_engine=InnoDB
+innodb_autoinc_lock_mode=2</code></pre>
+
+
+<p>نکته این که  <code>wsrep_cluster_address</code> نشان دهنده آدرس IP تمامی نودهای کلاستر می باشد که باید به صروت زیر تغییر کند:</p>
+<pre class="codehilite"><code>wsrep_cluster_address=&quot;gcomm://&quot;</code></pre>
+
+
+<p>هم اکنون می توان سرویس ماریا دی بی این نود را ریست نمود:</p>
+<pre class="codehilite"><code>$ systemctl restart mariadb</code></pre>
+
+
+<p>تنهای زمانی می توانیم مبادرت به راه اندازی مجدد دیگر نودها نمود که بعد از ریست این نود از راه اندازی سالم آن اطمینان حاصل کنیم. بعد از راه اندازی کامل و سالم تمامی نودهای دیگر، تنظیمات روی نود 1 را با اضافه نمودن آدرس IP دیگر اعضا و ریست مجدد ادامه می دهیم.</p>
+<pre class="codehilite"><code>wsrep_cluster_address=&quot;gcomm://10.8.8.53,10.8.8.54,10.8.8.55&quot;</code></pre>
+
+
+<p>هم اکنون گلرا کلاستر باید اجرا شده و تمامی نودها باید خود را با نود اولیه یا اصلی همسان کنند.</p>
+<h2>بازیابی بر اساس آخرین Commit</h2>
+<p>بدترین حالت ممکن در خرابی گلرا کلاستر این هست که در تمامی نودها <code>seqno</code> مقدار 1- گرفته و تماما خراب شده باشند. همانطور که پیشتر هم ذکر شده بود، اجرای دستور <code>galera_new_cluster</code> روی یک نود و اتصال مجدد دیگر نودها قبل از تعیین آخرین <code>commit</code> ی که روی کدام نود خورده وسوسه انگیز است. زمانی که دستور <code>galera_new_cluster</code> را اجرا کنید، یک کلاستر جدید ایجاد کرده و دیگر نودها به آن متصل و خود را با آن همسان می کنند.</p>
+<p>برای این که تعیین کنیم کدام نود آخرین <code>commit</code> را دارد باید مقدار 'wsrep_last_commit' را روی هر نود جداگانه بررسی کنیم. تنها نودی معتبر است که آخرین مقدار آن بالاترین مقدار باشد. سپس از آن نود راه اندازی مجدد کلاستر را آغاز و دیگر نودها به آن متصل می شوند. برای این موضوع به ترتیب زیر عمل می کنیم:</p>
+<pre class="codehilite"><code>$ systemctl stop mariadb</code></pre>
+
+
+<p>مقدار <code>wsrep_cluster_address</code> را در فایل <code>/etc/my.cnf.d/server.cnf</code> باید تغییر دهیم.</p>
+<pre class="codehilite"><code>wsrep_cluster_address=&quot;gcomm://&quot;</code></pre>
+
+
+<p>سپس:</p>
+<pre class="codehilite"><code>$ systemctl start mariadb</code></pre>
+
+
+<p>سپس از داخل دیتابیس مقدار را چک می کنیم:</p>
+<pre class="codehilite"><code>MariaDB [(none)]&gt; show status like 'wsrep_last_committed';
++----------------------+---------+
+| Variable_name | Value |
++----------------------+---------+
+| wsrep_last_committed | 319589 |
++----------------------+---------+
+1 row in set (0.01 sec)</code></pre>
+
+
+<p>این عمل را برای به دست آوردن آخرین <code>commit</code> روی تمامی نودها انجام دهید. سپس با اجرای دستور زیر روی نودی که بالاترین مقدار روی آخرین <code>commit</code> کلاسترینگ را مجددا راه اندازی می کنیم.</p>
+<pre class="codehilite"><code>$ galera_new_cluster</code></pre>
+
+
+<p>سپس مقدار <code>wsrep_cluster_address</code> را روی دیگر نودها با آدرس IP های نودها تغییر داده و سرویس <code>mariadb</code> را روی آن ها ریست کنید.</p>
+<p>در نهایت، بعد از گذشت مدتی،  آخرین مقدار <code>commit</code> را روی نودهای مجددا بررسی کنید تا از صحت کلاسترینگ اطمینان حاصل کنید.</p>
+<h1>منابع</h1>
+<ul>
+<li><a href="https://www.symmcom.com/docs/how-tos/databases/how-to-recover-mariadb-galera-cluster-after-partial-or-full-crash">how to recover mariadb galera cluster after partial or full crash</a></li>
+</ul>
       </section>
       <div>
         برچسب ها:
