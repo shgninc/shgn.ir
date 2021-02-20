@@ -1,5 +1,5 @@
 title: دوره LPIC1 آزمون 101-6
-briefing:قسمت پنجم ویدیو های آموزشی دوره LPIC1 موسسه لینوکس آکادمی با سرفصل '125-1096-3 - 101.2 - Boot Process - sysvinit - Power On to System Prompt.
+briefing:قسمت ششم ویدیو های آموزشی دوره LPIC1 موسسه لینوکس آکادمی با سرفصل '125-1096-3 - 101.2 - Boot Process - sysvinit - Power On to System Prompt.
 date_time: 2021-02-20 15:24
 slug: lpic1-exam-101-7-Boot-Process-sysvinit
 tags: linux, learn, lpic1, video
