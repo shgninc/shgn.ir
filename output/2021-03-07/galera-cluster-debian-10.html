@@ -15,11 +15,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title> پستهای تگ شده با  'galera' - دست نوشته های یک تازه کار </title>
+    <title> نصب Galer Cluster بر روی debian 10 - دست نوشته های یک تازه کار </title>
     <meta name="description"
-          content="این وبلاگ پیرامون تجربیات، دانسته ها، اینجاب درباره linux, database, mysql, mariadb, datamart, galera cluster,apache می باشد."/>
+          content="یک برنامه کلاستر همزمان چند سرور Master-Master برمبنای replication همزمان می باشد."/>
     <meta name="keywords"
-          content="لینوکس،لینوکس مشهد،آموزش,پایتون,پایتون مشهد,آموزش لینوکس,دیتابیس,آموزش دیتابیس,برنامه نویسی,linux,database,mysql,mariadb,datamart,galera cluster,apache,big data,dataware house,cluster,galera,percona,python,php,tutorial,debian,ubuntu,centos,arch linux,mashhad linux,iran linux,debian mashhad,"/>
+          content="لینوکس،لینوکس مشهد،آموزش,پایتون,پایتون مشهد,آموزش لینوکس,دیتابیس,آموزش دیتابیس,برنامه نویسی,linux,database,mysql,mariadb,datamart,galera cluster,apache,big data,dataware house,cluster,galera,percona,python,php,tutorial,debian,ubuntu,centos,arch linux,mashhad linux,iran linux,debian mashhad, linux, debian, galera, mariadb, cluster"/>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
@@ -156,100 +156,184 @@
     <div class="row">
         <div class="col-md-9">
             
+    <div itemscope itemtype="http://schema.org/NewsArticle">
+    <meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="http://https://shgn.ir/2021-03-07/galera-cluster-debian-10.html"/>
     <div class="page-header">
-      <h2>پستهای تگ شده با  'galera'</h2>
-      <p class="lead"></p>
+      <h3 itemprop="name">نصب Galer Cluster بر روی debian 10</h3>
+      
+      
+        <small>
+          <p class="text-right">
+            ارسال شده <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+                توسط <span itemprop="name">سید سجاد شاهچراغیان</span>
+              </span>
+              در تاریخ <span itemprop="datePublished">2021-03-07</span>
+          </p>
+        </small>
+      
     </div>
+      <section itemprop="articleBody">
+        <p>برنامه <a href="https://shgn.ir/tag/galera_cluster.html"><code>Galera Cluster</code></a> یک برنامه متن باز و رایگان <code>clustering</code> چند سرور <a href="https://shgn.ir/tag/database.html">دیتابیس</a>  به صورت <code>Master-Master</code> با <code>replication</code> 
+همزمان بر روی آنها در بستر <code>MariDB</code> می باشد. این نوع از کلاسترینگ فقط بر روی لینوکس قابل پیاده سازی بوده و فقط از موتور ذخیره سازی 
+دیتابیس <code>XtraDB</code> یا <code>InnoDB</code> حمایت می کند. کار کردن با <code>MariaDB</code> نسخه 10.1 به بالا، به طور پیش فرض <code>wsrep API</code> این کلاسترینگ 
+در <a href="https://shgn.ir/tag/mariadb.html"><code>MariaDB</code></a> درون سازی شده است.</p>
+<p>البته قبلا هم آموزش <a href="https://shgn.ir/2017-08-16/galera_cluster.html">نصب Galer Cluster بر روی debian8</a> ارائه شده بود.در این مطلب نصب همان سرویس روی سیستم 
+عامل <a href="https://en.wikipedia.org/wiki/Debian"><code>debian 10</code></a> را ارائه خواهیم کرد. </p>
+<p>برای نصب <code>Galera Cluster</code>، نیاز به دریافت و نصب آن به صورت جداگانه نمی باشد. در نسخه های جدید، این برنامه به همراه 
+برنامه <code>mariadb-server</code> نصب می شود. باید دقت شود که فلسفه کاری <a href="https://shgn.ir/tag/galera_cluster.html"><code>Galera Cluster</code></a> بر مبنای تعداد نود های فرد می باشد، بنابراین، در 
+این نوشته برای ۳ نود توضیحات ارائه شده، و در هرجا که کدها به صورت تکی بود، باید بر روی هر سه نود به طور همسان و مجزا اجرا شوند.</p>
+<h3>مراحل نصب</h3>
+<p>مراحل نصب بر روی دبیان ۱۰:</p>
+<pre class="codehilite"><code>$ sudo apt-get install software-properties-common
+$ sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
+$ sudo add-apt-repository 'deb [arch=amd64,i386] http://mirror.mephi.ru/mariadb/repo/10.5/debian buster main'
+$ apt-get update
+
+$ sudo apt-get install mariadb-server rsync</code></pre>
+
+
+<p>پس از نصب بسته ها لازم است تا فایل تنظیمات مربوط به راه اندازی کلاسترینگ ایجاد شود:</p>
+<pre class="codehilite"><code>$ sudo vi /etc/mysql/conf.d/galera.cnf</code></pre>
+
+
+<p>در فایل ایجاد شده باید پارامترهای زیر برای سرور <strong>اول</strong> اضافه و ذخیره شوند:</p>
+<pre class="codehilite"><code>[mysqld]
+#mysql settings
+binlog_format=ROW
+default-storage-engine=innodb
+innodb_autoinc_lock_mode=2
+query_cache_size=0
+query_cache_type=0
+innodb_flush_log_at_trx_commit=2
+innodb_buffer_pool_size=3G
+bind-address=192.168.205.32
+
+#Galera settings
+wsrep_provider=&quot;/usr/lib/galera/libgalera_smm.so&quot;
+wsrep_cluster_name=&quot;shgn_cluster&quot;
+wsrep_cluster_address=&quot;gcomm://192.168.205.32,192.168.205.31,192.168.205.33&quot;
+wsrep_sst_method=rsync
+wsrep_on=ON
+wsrep_node_address=&quot;192.168.205.32&quot;
+wsrep_node_name=&quot;db12&quot;
+&lt;/code&gt;</code></pre>
+
+
+<p>در فایل ایجاد شده باید پارامترهای زیر برای سرور <strong>دوم</strong> اضافه و ذخیره شوند:</p>
+<pre class="codehilite"><code>[mysqld]
+#mysql settings
+binlog_format=ROW
+default-storage-engine=innodb
+innodb_autoinc_lock_mode=2
+query_cache_size=0
+query_cache_type=0
+innodb_flush_log_at_trx_commit=2
+innodb_buffer_pool_size=3G
+bind-address=192.168.205.33
+
+#Galera settings
+wsrep_provider=&quot;/usr/lib/galera/libgalera_smm.so&quot;
+wsrep_cluster_name=&quot;shgn_cluster&quot;
+wsrep_cluster_address=&quot;gcomm://192.168.205.32,192.168.205.31,192.168.205.33&quot;
+wsrep_sst_method=rsync
+wsrep_on=ON
+wsrep_node_address=&quot;192.168.205.33&quot;
+wsrep_node_name=&quot;db22&quot;</code></pre>
+
+
+<p>در فایل ایجاد شده باید پارامترهای زیر برای سرور <strong>سوم</strong> اضافه و ذخیره شوند:</p>
+<pre class="codehilite"><code>[mysqld]
+#mysql settings
+binlog_format=ROW
+default-storage-engine=innodb
+innodb_autoinc_lock_mode=2
+query_cache_size=0
+query_cache_type=0
+innodb_flush_log_at_trx_commit=2
+innodb_buffer_pool_size=3G
+bind-address=192.168.205.31
+
+#Galera settings
+wsrep_provider=&quot;/usr/lib/galera/libgalera_smm.so&quot;
+wsrep_cluster_name=&quot;shgn_cluster&quot;
+wsrep_cluster_address=&quot;gcomm://192.168.205.32,192.168.205.31,192.168.205.33&quot;
+wsrep_sst_method=rsync
+wsrep_on=ON
+wsrep_node_address=&quot;192.168.205.31&quot;
+wsrep_node_name=&quot;db32&quot;</code></pre>
+
+
+<h3>راه اندازی گلرا کلاستر</h3>
+<p><strong>برای راه اندزای گلرا کلاستر برای اول مرتبه باید به ترتیب زیر عمل نمود.</strong></p>
+<p><em>1</em> قبل از هر کاری بر روی هر <strong>سه</strong> سرور باید سرویس <a href="https://shgn.ir/tag/mysql.html"><code>Mysql</code></a> متوقف شود:</p>
+<pre class="codehilite"><code>$ sudo service mysql stop</code></pre>
+
+
+<p><em>2</em> سپس سروری که قرار است <strong>اولین</strong> نود تعیین شود به این صورت راه اندازی می شود:</p>
+<pre class="codehilite"><code>$ sudo galera_new_cluster</code></pre>
+
+
+<p>یا</p>
+<pre class="codehilite"><code>$ sudo /usr/bin/galera_new_cluster</code></pre>
+
+
+<p><em>3</em> جهت اطمینان از اجرای کلاسترینگ بر روی اولین نود:</p>
+<pre class="codehilite"><code>$ sudo ps aux | grep mysql</code></pre>
+
+
+<p>که باید نتیجه زیر مشاهده شود:</p>
+<pre class="codehilite"><code>mysql 10587 14.0 15.5 1266120 155268 ? Ssl 01:50 0:00 /usr/sbin/mysqld --wsrep-new-cluster --wsrep_start_position=00000000-0000-0000-0000-000000000000:-1
+root 20822 0.0 0.0 12948 980 pts/0 S+ 01:22 0:00 grep --color=auto mysql&lt;/code&gt;</code></pre>
+
+
+<p><em>4</em> جهت الحاق نود های دوم و سوم به کلاسترینگ و فقط کافی است تا سرویس آن راه اندازی شود:</p>
+<pre class="codehilite"><code>$ sudo service mysql start</code></pre>
+
+
+<p>در این زمان هر سه نود گلرا کلاسترینگ راه اندازی و در حال اجرا می باشند. برای اطمینان از این موضوع می توان دستور زیر را بر روی هر سه 
+نود گلرا اجرا و نتیجه را مشاهده نمود:</p>
+<pre class="codehilite"><code>$ mysql -u root -p -e &quot;SHOW STATUS LIKE 'wsrep_cluster_size';&quot;
+Enter password:
++--------------------+-------+
+| Variable_name      | Value |
++--------------------+-------+
+| wsrep_cluster_size | 3     |
++--------------------+-------+</code></pre>
+
+
+<h3>منابع</h3>
+<ul>
+<li><a href="https://www.cyberciti.biz/faq/howto-install-configure-mariadb-galera-master-cluster-ubuntulinux/">howto-install-configure-mariadb-galera-master-cluster-ubuntulinux</a></li>
+<li><a href="http://galeracluster.com/documentation-webpages/mysqlwsrepoptions.html">MySQL wsrep Options</a></li>
+<li><a href="https://mariadb.com/kb/en/mariadb/galera-cluster-system-variables/">Galera Cluster System Variables</a></li>
+<li><a href="https://shgn.ir/2017-08-16/galera_cluster.html">نصب Galer Cluster بر روی debian8</a></li>
+</ul>
+      </section>
+      <div>
+        برچسب ها:
       
-        <h3><a href="/2021-03-07/galera-cluster-debian-10.html" title="نصب Galer Cluster بر روی debian 10">نصب Galer Cluster بر روی debian 10</a></h3>
-            
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
-            
-                <a href="/tag/debian.html">
-                    <span class="label label-default">debian</span></a>
-            
-                <a href="/tag/galera.html">
-                    <span class="label label-default">galera</span></a>
-            
-                <a href="/tag/mariadb.html">
-                    <span class="label label-default">mariadb</span></a>
-            
-                <a href="/tag/cluster.html">
-                    <span class="label label-default">cluster</span></a>
-            
-        <p>یک برنامه کلاستر همزمان چند سرور Master-Master برمبنای replication همزمان می باشد.</p>
-        <hr />
+        <a href="/tag/linux.html">
+            <span class="label label-default" itemprop="about">linux</span>
+        </a>
       
-        <h3><a href="/2020-12-27/Recover-MariaDB-Galera-Cluster.html" title="چطور گلرا کلاستر خراب شده کامل یا ناقص را بازگردانی کنیم">چطور گلرا کلاستر خراب شده کامل یا ناقص را بازگردانی کنیم</a></h3>
-            
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
-            
-                <a href="/tag/database.html">
-                    <span class="label label-default">database</span></a>
-            
-                <a href="/tag/galera.html">
-                    <span class="label label-default">galera</span></a>
-            
-                <a href="/tag/galera_cluster.html">
-                    <span class="label label-default">galera_cluster</span></a>
-            
-                <a href="/tag/mariadb.html">
-                    <span class="label label-default">mariadb</span></a>
-            
-                <a href="/tag/cluster.html">
-                    <span class="label label-default">cluster</span></a>
-            
-        <p>مشکل خرابی کلاستر گلرا در دیتابیس، مشکلی مرسوم و متداول می باشد، در این مطلب خیلی ساده روش های بازگرداندن کلاسترینگ را بیان خواهیم کرد.</p>
-        <hr />
+        <a href="/tag/debian.html">
+            <span class="label label-default" itemprop="about">debian</span>
+        </a>
       
-        <h3><a href="/2018-07-18/migrate_from_mariadb_instace_to_galera_cluster.html" title="مهاجرت از دیتابیس mariadb به galera cluster">مهاجرت از دیتابیس mariadb به galera cluster</a></h3>
-            
-                <a href="/tag/galera.html">
-                    <span class="label label-default">galera</span></a>
-            
-                <a href="/tag/galera_cluster.html">
-                    <span class="label label-default">galera_cluster</span></a>
-            
-                <a href="/tag/mariadb.html">
-                    <span class="label label-default">mariadb</span></a>
-            
-                <a href="/tag/database.html">
-                    <span class="label label-default">database</span></a>
-            
-        <p>در این نوشتار، مراحل مهاجرت از یک دیتابیس mariadb که حاوی اطلاعات می باشد، به کلاسترینگ galera بدون نیاز به ایجاد تغییرات زیاد، بیان شده است.</p>
-        <hr />
+        <a href="/tag/galera.html">
+            <span class="label label-default" itemprop="about">galera</span>
+        </a>
       
-        <h3><a href="/2017-08-16/galera_cluster.html" title="نصب Galer Cluster بر روی debian8">نصب Galer Cluster بر روی debian8</a></h3>
-            
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
-            
-                <a href="/tag/debian.html">
-                    <span class="label label-default">debian</span></a>
-            
-                <a href="/tag/galera.html">
-                    <span class="label label-default">galera</span></a>
-            
-                <a href="/tag/mariadb.html">
-                    <span class="label label-default">mariadb</span></a>
-            
-                <a href="/tag/cluster.html">
-                    <span class="label label-default">cluster</span></a>
-            
-        <p>یک برنامه کلاستر همزمان چند سرور Master-Master برمبنای replication همزمان می باشد.</p>
-        <hr />
+        <a href="/tag/mariadb.html">
+            <span class="label label-default" itemprop="about">mariadb</span>
+        </a>
       
+        <a href="/tag/cluster.html">
+            <span class="label label-default" itemprop="about">cluster</span>
+        </a>
       
-              <ul class="pagination">
-                
-                    
-                        <li class="active"><a href="#">0 <span class="sr-only">(current)</span></a></li>
-                    
-                
-              </ul>
-      
+    </div>
+    </div>
 
         </div>
         <div class="col-md-3">
@@ -327,14 +411,6 @@
                         </div>
                         <div class="panel-body">
                             <ul>
-                                
-                                <li><a href="/2021-03-07/galera-cluster-debian-10.html" title="نصب Galer Cluster بر روی debian 10">نصب Galer Cluster بر روی debian 10</a></li>
-                                
-                                <li><a href="/2020-12-27/Recover-MariaDB-Galera-Cluster.html" title="چطور گلرا کلاستر خراب شده کامل یا ناقص را بازگردانی کنیم">چطور گلرا کلاستر خراب شده کامل یا ناقص را بازگردانی کنیم</a></li>
-                                
-                                <li><a href="/2018-07-18/migrate_from_mariadb_instace_to_galera_cluster.html" title="مهاجرت از دیتابیس mariadb به galera cluster">مهاجرت از دیتابیس mariadb به galera cluster</a></li>
-                                
-                                <li><a href="/2017-08-16/galera_cluster.html" title="نصب Galer Cluster بر روی debian8">نصب Galer Cluster بر روی debian8</a></li>
                                 
                             </ul>
 
