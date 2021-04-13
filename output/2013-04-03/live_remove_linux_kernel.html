@@ -179,35 +179,35 @@
 <h3>مراحل حذف کرنل</h3>
 <p>از آن جایی که هیچ نوع دسترسی به سیستم عامل نداشتم مجبور شدم تا از دیسک زنده اوبونتو برای رفع مشکل استفاده کنم.</p>
 <p>بعد از بالا آمدن سیستم با دیسک زنده داخل برنامه ترمینال شدم و با استفاده از دستور زیر تونستم پارتیشنی را که لینوکس لوکال روی آن نصب است را پیدا کنم:</p>
-<pre class="codehilite"><code>sudo fdisk -l</code></pre>
-
+<pre class="codehilite"><code>sudo fdisk -l
+</code></pre>
 
 <p>سپس برای استفاده از و اعمال تغییرات باید آن پارتیشن را به صورت زیر <code>mount</code> می کردم:</p>
 <pre class="codehilite"><code>sudo mount /dev/sda1 /media
 sodu mount --bind /media/dev /dev
 sudo mount --bind /media/sys /sys
-sudo mount --bind /media/proc /proc</code></pre>
-
+sudo mount --bind /media/proc /proc
+</code></pre>
 
 <p>حال لازم بود تا فهرست بسته های کرنلی را که بر روی سیستم نصب شده بودند را جهت حذف، مشاهده کنم، برای همین باید برای سیستم مسیر پارتیشن <code>mount</code> شده را به عنوان <code>root</code> مشخص می کردم:</p>
-<pre class="codehilite"><code>sudo chroot /media</code></pre>
-
+<pre class="codehilite"><code>sudo chroot /media
+</code></pre>
 
 <p>در غیر این صورت فهرست بسته های دیسک زنده را نمایش می دهد.</p>
 <pre class="codehilite"><code>dpkg --get-selections | grep linux-image
 ...
 dpkg --get-selections | grep linux-headers
-...</code></pre>
-
+...
+</code></pre>
 
 <p>با اجرای دستورات فوق لیست بسته های کرنل را به همراه وضعیت نصب آنها می توانید مشاهده کنید. اکنون طبق دستورات زیر و با استفاده نام کامل بسته کرنلی که می خواهدی حذف کنید، اقدام کنید. در اینجا فرض می کنیم که نسخه کرنل ما ۳.۸.۵ می باشد:</p>
 <pre class="codehilite"><code>sudo apt-get purge linux-image-3.8.5-generic linux-image-extra-3.8.5-generic
-sudo apt-get purge linux-headers-3.8.5 linux-headers-3.8.5-generic-pae</code></pre>
-
+sudo apt-get purge linux-headers-3.8.5 linux-headers-3.8.5-generic-pae
+</code></pre>
 
 <p>و در نهایت هم لازم است تا گراب را به روز رسانی کنید:</p>
-<pre class="codehilite"><code>sudo update-grub</code></pre>
-
+<pre class="codehilite"><code>sudo update-grub
+</code></pre>
 
 <p>اکنون کرنل مشکل ساز حذف و سیستم با کرنل قبلی خودش بالا خواهد آمد، فقط کافی است نا سیستم را دوباره راه اندازی کنیم.</p>
       </section>

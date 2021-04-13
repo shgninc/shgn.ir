@@ -1,4 +1,4 @@
-title: نصب Galer Cluster بر روی debian 10
+title: نصب Galera Cluster بر روی debian 10
 briefing: یک برنامه کلاستر همزمان چند سرور Master-Master برمبنای replication همزمان می باشد.
 date_time: 2021-03-07 18:52
 slug: galera-cluster-debian-10

@@ -188,12 +188,12 @@
 * PDO_ODBC (ODBC v3(IBM DB2, unixODBC and win32 ODBC))
 * PDO_PGSQL (PostgreSQL)
 * PDO_SQLITE (SQLite 3 and SQLite 2)
-* PDO_4D (4D)</code></pre>
-
+* PDO_4D (4D)
+</code></pre>
 
 <p>لزوما تمامی درایورهای فوق الذکر روی سیستم شما نصب نیستند؛ برای اطلاع از لیست درایورهای نصب شده می توانید به صورت زیر عمل نمایید:</p>
-<pre class="codehilite"><code>print_r(PDO::getAvailableDrivers());</code></pre>
-
+<pre class="codehilite"><code>print_r(PDO::getAvailableDrivers());
+</code></pre>
 
 <h3>برقراری ارتباط با پایگاه داده</h3>
 <p>دیتابیس های مختلف متدهای برقراری ارتباط متفاوت دارند. در زیر برخی از این متدها برای ارتباط با دیتابیس های محبوب قرار دارد. قابل ذکر است که سه تای اول یکسان هستند، و مابقی برای هر پایگاه داده، کد خاص به خود را دارند.</p>
@@ -208,21 +208,21 @@ $DBH = new PDO(&quot;sqlite:my/database/path/database.db&quot;);
 }
 catch(PDOException $e) {
 echo $e-&gt;getMessage();
-}</code></pre>
-
+}
+</code></pre>
 
 <p>در مورد بلاک <a href="http://www.w3schools.com/php/php_exception.asp" title="php_exception">try catch</a> دقت کنید، بهتر است که اعمال <code>PDO</code> را درون این بلاک قرار داده و از مکانیزم <code>exception</code> بهره گیرید. اساسا در اینجا فقط یک ارتباط ساده ایجاد نمودید. متغییر <code>$DBH</code> مخفف <code>'database handle'</code> بوده و از آن در این نوشته استفاده خواهد شد. با <code>null</code> قرار دادن مقدار <code>$DBH</code> (یا هر متغییری که کانکشن <code>PDO</code> را نگهداری می کند) می توانید آن ارتباط را قطع نمایید.</p>
 <pre class="codehilite"><code># close the connection
-$DBH = null;</code></pre>
-
+$DBH = null;
+</code></pre>
 
 <p>برای اطلاع یافتن از تنظیمات بیشتر یا <code>connection string</code> برای دیتابیس های مختلف به سایت <a href="http://php.net/manual/en/refs.database.php" title="انواع پایگاه داده هایی که PHP پشتیبانی می کند">php.net</a> سری بزنید.</p>
 <h3>استثناها و PDO</h3>
 <p><code>PDO</code> برای مدیریت خطاهایش می تواند این امکان را به برنامه نویس می دهد که از استثناهای خودش در استفاده کند، برای انجام این امر لازم است کدهای برنامه <code>PDO</code>، درون یک بلاک <code>try/catch</code> قرار داده شوند. در <code>PDO</code> سه حالت خطا در نظر گرفته شده است که می توان یکی از آنها را به هنگام ایجاد ارتباط با دیتابیس یا همان ایجاد نمونه از شئ <code>PDO</code> در قسمت خصوصیات آن شئ، همان طور که در پایین هم قابل مشاهده می باشد، تعیین نمود:</p>
 <pre class="codehilite"><code>$DBH-&gt;setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_SILENT );
 $DBH-&gt;setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING );
-$DBH-&gt;setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );</code></pre>
-
+$DBH-&gt;setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+</code></pre>
 
 <p>مهم نیست که شما چه حالتی از اخطار خطاها را بر می گزینید، یک خطا همیشه یک استثنا تولید می کند، به منظور جلوگیری از این گونه خطاها و نمایش آن برای کاربران، ایجاد برقراری ارتباط با پایگاه داده لازم است تا درون یک بلاک <code>try/catch</code> صورت پذیرد.</p>
 <h5>PDO::ERRMODE_SILENT</h5>
@@ -241,16 +241,16 @@ $DBH-&gt;prepare('DELECT name FROM people');
 catch(PDOException $e) {
 echo &quot;I'm sorry, Dave. I'm afraid I can't do that.&quot;;
 file_put_contents('PDOErrors.txt', $e-&gt;getMessage(), FILE_APPEND);
-}</code></pre>
-
+}
+</code></pre>
 
 <p>در اینجا شما یک خطای عمدی را در دستور select مشاهده می کنید. استثنا تولید شده جزئیات مربوط به خطا را به یک فایل لاگ می فرستد، و یک پیام دوستانه به کاربر نمایش می دهد.</p>
 <h3>دستورات insert و update</h3>
 <p>درج داده های جدید، یا ویرایش اطلاعات موجود یکی از رایج ترین اعمال هر پایگاه داده ای می باشد. در استفاده از <code>PDO</code>، این دو دستور یک پروسه دو مرحله ای دارد. هر مطلبی که در این بخش بیان می شود برای اعمال <a href="http://en.wikipedia.org/wiki/INSERT" title="INSERT">INSERT</a> و <a href="http://en.wikipedia.org/wiki/UPDATE" title="UPDATE">UPDATE</a> یکسان است. یک مثال از یک <code>insert</code> ساده در دیتابیس:</p>
 <pre class="codehilite"><code># STH means &quot;Statement Handle&quot;
 $STH = $DBH-&gt;prepare(&quot;INSERT INTO folks ( first_name ) values ( 'Cathy' )&quot;);
-$STH-&gt;execute();</code></pre>
-
+$STH-&gt;execute();
+</code></pre>
 
 <p>همچنین می توان با متد <code>exec()</code>، با یک فراخوانی کمتر، این عمل را  نیز انجام داد. در بیشتر حالات، با در نظر گرفتن مزیت استفاده از دستور <code>prepared</code> بهتر است تا از آن استفاده شود. حتی اگر بخواهید از آن یک مرتبه استفاده کنید، زیرا دستور <code>prepared</code> شما را در مقابل حملات <code>SQL Injection</code> کمک می کند.</p>
 <h3>دستورات Prepared</h3>
@@ -260,8 +260,8 @@ $STH = $DBH-&gt;(&quot;INSERT INTO folks (name, addr, city) values ($name, $addr
 # unnamed placeholders
 $STH = $DBH-&gt;(&quot;INSERT INTO folks (name, addr, city) values (?, ?, ?);
 # named placeholders
-$STH = $DBH-&gt;(&quot;INSERT INTO folks (name, addr, city) value (:name, :addr, :city)&quot;);</code></pre>
-
+$STH = $DBH-&gt;(&quot;INSERT INTO folks (name, addr, city) value (:name, :addr, :city)&quot;);
+</code></pre>
 
 <p>این کدها فقط برای مقایسه با هم آورده شده اند. انتخاب استفاده از پارامترهای با نام و بی نام بستگی به نحوه مقدار دهی شما برای دستورات مربوطه دارد.</p>
 <h3>پارامترهای بی نام</h3>
@@ -278,31 +278,31 @@ $STH-&gt;execute();
 $name = &quot;Steve&quot;
 $addr = &quot;5 Circle Drive&quot;;
 $city = &quot;Schaumburg&quot;;
-$STH-&gt;execute();</code></pre>
-
+$STH-&gt;execute();
+</code></pre>
 
 <p>در اینجا دو مرحله داریم. اول، وصل نمودن پارامترها به متغییر ها. بعد مقادیر را به آن متغییرها تخصیص داده و سپس دستورات را اجرا می نماییم. برای یک مجموعه اعمال جدید روی داده ها، فقط کافی است مقادیر آن متغییرها را تغییر داده و مجدد دستور را اجرا کنیم. <code>($STH-&gt;execute();)</code> البته یک راه ساده تر هم وجود دارد و آن هم قرار دادن مقادیر درون یک آرایه است:</p>
 <pre class="codehilite"><code># the data we want to insert
 $data = array('Cathy', '9 Dark and Twisty Road', 'Cardiff');
 $STH = $DBH-&gt;(&quot;INSERT INTO folks (name, addr, city) values (?, ?, ?);
-$STH-&gt;execute($data);</code></pre>
-
+$STH-&gt;execute($data);
+</code></pre>
 
 <p>به همین سادگی!<br /> داده های درون آرایه به ترتیب به پارامترها اختصاص داده می شوند. <code>$data[0]</code> برای اولین پارامتر، <code>$data[1]</code> برای دومین پارامتر و الی آخر. اما اگر آرایه مورد نظر ایندکس های مرتبی نداشته باشد، این روش به درستی عمل نمی کند.</p>
 <h3>متغییرهای نامدار</h3>
 <p>یک مثال برای این روش:</p>
 <pre class="codehilite"><code># the first argument is the named placeholder name - notice named
 # placeholders always start with a colon.
-$STH-&gt;bindParam(':name', $name);</code></pre>
-
+$STH-&gt;bindParam(':name', $name);
+</code></pre>
 
 <p>برای راحتی بیشتر می توان ازآرایه ها با ایندکس های مشخص استفاده کرد. برای مثال:</p>
 <pre class="codehilite"><code># the data we want to insert
 $data = array( 'name' =&gt; 'Cathy', 'addr' =&gt; '9 Dark and Twisty', 'city' =&gt; 'Cardiff' );
 # the shortcut!
 $STH = $DBH-&gt;(&quot;INSERT INTO folks (name, addr, city) value (:name, :addr, :city)&quot;);
-$STH-&gt;execute($data);</code></pre>
-
+$STH-&gt;execute($data);
+</code></pre>
 
 <p>کلیدهای آرایه برای شروع نیاز به یکسان سازی نداشته، اما لازم است که با نام پارامترها یکسان باشد. اگر هم آرایه ای از آرایه ها داشته باشید می توانید به راحتی هر کدام را به طور جداگانه تکرار و به ازای هر کدام آنها دستور را اجرا نمایید.<br /> دیگر ویژگی عالی این روش، با فرض اینکه متغییرها با نام فیلدهای همخوانی دارند، امکان درج اشیاء مستقیما درون پایگاه داده شما نیز وجود دارد. یک مثال برای این موضوع:</p>
 <pre class="codehilite"><code># a simple object
@@ -320,8 +320,8 @@ $this-&gt;city = $c;
 $cathy = new person('Cathy','9 Dark and Twisty','Cardiff');
 # here's the fun part:
 $STH = $DBH-&gt;(&quot;INSERT INTO folks (name, addr, city) value (:name, :addr, :city)&quot;);
-$STH-&gt;execute((array)$cathy);</code></pre>
-
+$STH-&gt;execute((array)$cathy);
+</code></pre>
 
 <p>بوسیله تبدیل یک شئ به آرایه در زمان اجرا، پراپرتیهای شئ به عنوان کلیدهای آرایه در نظر گرفته می شوند.</p>
 <h3>انتخاب و واکاوی اطلاعات</h3>
@@ -332,8 +332,8 @@ $STH-&gt;execute((array)$cathy);</code></pre>
 <p>یک آرایه که شاخص هایش نامگذاری شده اند با نام فیلدهای واکاوی شده و هم با عدد شاخص گذاری شده است. (پیش فرض)</p>
 <h4>PDO::FETCH_BOUND:</h4>
 <p>مقادیر واکاوی شده فیلدها را به متغییرهایی که با متد <code>()bindColumn&amp;lt;-</code> مشخص شده اند، تخصیص می دهد.</p>
-<pre class="codehilite"><code>()bindColumnsetFetchMode(PDO::FETCH_ASSOC);</code></pre>
-
+<pre class="codehilite"><code>()bindColumnsetFetchMode(PDO::FETCH_ASSOC);
+</code></pre>
 
 <p>همچنین می توان حالت مورد نظر را مستقیما از طریق خود متد <code>fetch</code> تعیین نمود.</p>
 <h4>FETCH_ASSOC</h4>
@@ -347,8 +347,8 @@ while($row = $STH-&gt;fetch()) {
 echo $row['name'] . &quot;\n&quot;;
 echo $row['addr'] . &quot;\n&quot;;
 echo $row['city'] . &quot;\n&quot;;
-}</code></pre>
-
+}
+</code></pre>
 
 <p>این حلقه تا زمانی که یکی یکی رکوردها خوانده شوند اجرا می شود.</p>
 <h4>FETCH_OBJ</h4>
@@ -362,8 +362,8 @@ while($row = $STH-&gt;fetch()) {
 echo $row-&gt;name . &quot;\n&quot;;
 echo $row-&gt;addr . &quot;\n&quot;;
 echo $row-&gt;city . &quot;\n&quot;;
-}</code></pre>
-
+}
+</code></pre>
 
 <h4>FETCH_CLASS</h4>
 <p>این حالت واکاوی، داده های بدست آمده را مستقیما درون یک کلاس انتخاب شده می ریزد. زمانی که از این حالت بهره می گیرید، پراپرتی های کلاس قبل از این که متد <a href="http://en.wikipedia.org/wiki/Constructor_%28object-oriented_programming%29#PHP" title="سازنده ها در شئ گرایی">constructor</a> فراخوانی شود، مقدار می گیرند. اگر پراپرتی ای برای مقادیر در کلاس نباشد، آن پراپرتی خاص برای آن مقدار به طور خودکار ایجاد می شود. این به این معنی است که اگر اطلاعات واکاوی شده نیاز به هرگونه تغییری داشته باشند، می توان به طور خودکار آن تغییرات را بر روی آن شئ تولید شده انجام داد. برای مثال، فرض کنید می خواهید فیلد آدرس را برای هر رکورد مخفی نمایید. پس این کار را بر روی پراپرتی مربوطه در شئ تولید شده انجام می دهید:</p>
@@ -376,39 +376,39 @@ function __construct($other = '') {
 $this-&gt;address = preg_replace('/[a-z]/', 'x', $this-&gt;address);
 $this-&gt;other_data = $other;
 }
-}&lt;/pre&gt;</code></pre>
-
+}&lt;/pre&gt;
+</code></pre>
 
 <p>به محض اینکه اطلاعات درون کلاس واکاوی می شوند، حروف کوچک درون فیلد آدرس با حرف x جابجا می شوند. حالا در یک مثال استفاده از این کلاس را مشاهده نمایید:</p>
 <pre class="codehilite"><code>$STH = $DBH-&gt;query('SELECT name, addr, city from folks');
 $STH-&gt;setFetchMode(PDO::FETCH_CLASS, 'secret_person');
 while($obj = $STH-&gt;fetch()) {
 echo $obj-&gt;addr;
-}</code></pre>
-
+}
+</code></pre>
 
 <p>اگر مقدار فیلد آدرس برابر با '5 Rosebud' باشد، شما مقدار ’5 Rxxxxxx’ را در خروجی مشاهده می نمایید. اگر بخواهید قبل از تخصیص اطلاعات به پراپرتی ها، اول متد constructor کلاس اجرا شود، باید به ترتیب زیر عمل نمایید:</p>
-<pre class="codehilite"><code>$STH-&gt;setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'secret_person');</code></pre>
-
+<pre class="codehilite"><code>$STH-&gt;setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'secret_person');
+</code></pre>
 
 <p>اکنون اگر دستور قبلی را با این حالت <code>(PDO::FETCH_PROPS_LATE)</code> اجرا نمایید، فیلد آدرس دیگر تا زمانی که متد <code>constructor</code> فراخوانی و مقدار دهی نشود، مخفی نمی ماند.</p>
 <h4>برخی متدهای مفید PDO</h4>
 <p>از آنجایی که همه چیز در <code>PDO</code> تابه اینجا بیان نشده، نیاز به متدهایی برای انجام یک سری از کارهای ابتدایی است، اما کاربردی برای واکاوی و کار با پایگاه داده می باشد.</p>
-<pre class="codehilite"><code>$DBH-&gt;lastInsertId();</code></pre>
-
+<pre class="codehilite"><code>$DBH-&gt;lastInsertId();
+</code></pre>
 
 <p>این متد همیشه با شئ دیتابیس <code>PDO</code> قابل فراخوانی است نه با شئ دستورات <code>PDO</code> و آخرین id ای که به صورت افزایشی خودکار بوده، که در جدول <code>insert</code> شده را بر می گرداند.</p>
 <pre class="codehilite"><code>$DBH-&gt;exec('DELETE FROM folks WHERE 1');
-$DBH-&gt;exec(&quot;SET time_zone = '-8:00'&quot;);</code></pre>
-
+$DBH-&gt;exec(&quot;SET time_zone = '-8:00'&quot;);
+</code></pre>
 
 <p>متد <code>()exec</code> برای دستورات <code>SQL</code> ای که مقداری را باز نمی گردانند قابل استفاده است. در بالا ۲ مثال از نحوه استفاده از این متد را مشاهده می نمایید.</p>
-<pre class="codehilite"><code>$safe = $DBH-&gt;quote($unsafe);</code></pre>
-
+<pre class="codehilite"><code>$safe = $DBH-&gt;quote($unsafe);
+</code></pre>
 
 <p>متد <code>()quote</code> رشته هایی را که در کوئری ها واکاوی می شوند را برای افزایش امنیت درون علامت کوتیشن قرار می دهد. در صورتی که از دستورات <code>prepared</code> شده استفاده نمی کنید، این متد در افزایش امنیت مؤثر است.</p>
-<pre class="codehilite"><code>$rows_affected = $STH-&gt;rowCount();</code></pre>
-
+<pre class="codehilite"><code>$rows_affected = $STH-&gt;rowCount();
+</code></pre>
 
 <p>متد <code>()rowCount</code> تعداد رکوردهایی که توسط یک عملیات متأثر شده را باز می گرداند. این متد با دستور <code>select</code> کار نمی کند. در پایان باید گفت که با توجه به مزیت های قابل حمل بود و از همه مهمتر امکان جابجایی راحت بین پایگاه داده های مختلف و البته آن هم به صورت شئ گرایی، دلایل خوبی برای مهاجرت از روش های قدیمی کار با بانک های اطلاعاتی به این روش می باشند. امیدوارم که این مطلب مفید واقع شده باشد. اشکالات و نقایص را لطفا کامنت کنید.</p>
 <p>منبع: <a href="http://net.tutsplus.com/tutorials/php/why-you-should-be-using-phps-pdo-for-database-access/" title="سایت آموزشی طراحی وب">net.tutsplus</a></p>

@@ -190,30 +190,30 @@
 گام بعدی ایجاد ساختار جدول می باشد. برای دستیابی به آن باید از فایل <code>.frm</code> استفاده نمود. با استفاده از دستور <code>mysqlfrm</code> می توان این ساختار را به دست آورد.
 همچنین می توانید از سایت <a href="https://recovery.twindb.com/">twindb.com</a> به ساختار جداول رسید. در گام بعدی لازم است تا این ساختار را در دیتابیس خود ایجاد نمایید.</p>
 <p>در این مرحله، بعدی از ایجاد جدول دو فایل <code>.frm</code> و <code>.idb</code> برای آن ایجاد شده است. اکنون باید ارتباط ساختار(frm) از دیتا(ibd) را جدا کنیم:</p>
-<pre class="codehilite"><code>ALTER TABLE mage_core_resource DISCARD TABLESPACE;</code></pre>
-
+<pre class="codehilite"><code>ALTER TABLE mage_core_resource DISCARD TABLESPACE;
+</code></pre>
 
 <p>در مرحله بعدی دو تنظیم مهم باید در تنظیمات دیتابیس <a href="http://shgn.ir/tag/mysql.html"><code>Mysql</code></a> اضافه کنید:</p>
 <pre class="codehilite"><code>[mysqld]
 innodb_file_per_table = 1
-innodb_force_recovery = 1</code></pre>
-
+innodb_force_recovery = 1
+</code></pre>
 
 <p>اکنون برای اعمال تنظیمات و انجام تغییرات،‌باید سرویس <a href="http://shgn.ir/tag/mysql.html"><code>Mysql</code></a> را متوقف کنیم:</p>
-<pre class="codehilite"><code>sudo service mysql stop</code></pre>
-
+<pre class="codehilite"><code>sudo service mysql stop
+</code></pre>
 
 <p>به طور همزمان فایل <code>.idb</code> حاوی اطلاعات را به با فایل <code>.idb</code> ای که <a href="http://shgn.ir/tag/mysql.html"><code>Mysql</code></a> برای جدول جدید ایجاد کرده جایگزین می کنیم. اکنون سرویس <a href="http://shgn.ir/tag/mysql.html"><code>Mysql</code></a> را اجرا می کنیم:</p>
-<pre class="codehilite"><code>sudo service mysql start</code></pre>
-
+<pre class="codehilite"><code>sudo service mysql start
+</code></pre>
 
 <p>همانطور که مشاهده می کنید همچنان آن جدول فاقد اطلاعات می باشد که به دلیل جدا کردن دیتا از ساختار جدول در مراحل قبلی بود. اکنون باید این ارتباط را با دیتای جدید برقرار کنیم:</p>
-<pre class="codehilite"><code>ALTER TABLE mage_core_resource IMPORT TABLESPACE;</code></pre>
-
+<pre class="codehilite"><code>ALTER TABLE mage_core_resource IMPORT TABLESPACE;
+</code></pre>
 
 <p>ممکن است در حین اجرا با خطای زیر مواجه شدید، از راهکار اول استفاده کرده و از داشتن فضای کافی برای ذخیره اطلاعات مطمئن شوید:</p>
-<pre class="codehilite"><code>ERROR 1030 (HY000): Got error -1 from storage engine</code></pre>
-
+<pre class="codehilite"><code>ERROR 1030 (HY000): Got error -1 from storage engine
+</code></pre>
 
 <h2>خاتمه</h2>
 <p>در پایان در صورتی که اطلاعات مهمی بر روی دیتابیس خود ندارید، راهکار اول، مطمئن تر بوده، اما در صوتری که دیتابیس سرور شما حاوی اطلاعات هست، راهکار دوم پیشنهاد می شود.</p>

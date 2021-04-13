@@ -187,8 +187,8 @@
   visitor varchar(255), 
   properties json, 
   browser json
-);</code></pre>
-
+);
+</code></pre>
 
 <h5>نکته حائز اهمیت این است که فیلد با نوع داده JSON نمی تواند مقدار پیش فرض داشته باشد. همچنین به طور مستقیم نمی توان بر روی آن نوع داده index زده شود. در عوض می توان از index بر روی <a href="http://www.mysqltutorial.org/mysql-generated-columns/">generated column</a> که حاوی مقادیری که از نوع داده JSON حاصل شده استفاده نمود.</h5>
 <h3>درج داده در فیلد JSON</h3>
@@ -228,14 +228,14 @@ VALUES (
   '4',
   '{ &quot;amount&quot;: 500 }',
   '{ &quot;name&quot;: &quot;Chrome&quot;, &quot;os&quot;: &quot;Windows&quot;, &quot;resolution&quot;: { &quot;x&quot;: 1680, &quot;y&quot;: 1050 } }'
-);</code></pre>
-
+);
+</code></pre>
 
 <h3>جسجتو در نوع JSON</h3>
 <p>همچنین همانند کد زیر می توان در نوع داده JSON جستجو نمود:</p>
 <pre class="codehilite"><code>SELECT id, browser-&gt;'$.name' browser
-FROM events;</code></pre>
-
+FROM events;
+</code></pre>
 
 <p>که نتیجه آن به این صورت خواهد بود:</p>
 <pre class="codehilite"><code>+----+-----------+
@@ -248,8 +248,8 @@ FROM events;</code></pre>
 |  5 | &quot;Firefox&quot; |
 |  6 | &quot;Chrome&quot;  |
 +----+-----------+
-6 rows in set (0.00 sec)</code></pre>
-
+6 rows in set (0.00 sec)
+</code></pre>
 
 <p>همچنین نمونه هایی بیشتر از انواع جسجتوها:</p>
 <pre class="codehilite"><code>SELECT browser-&gt;&gt;'$.name' browser, 
@@ -264,8 +264,8 @@ GROUP BY browser-&gt;&gt;'$.name';
 | Firefox |              3 |
 | Chrome  |              1 |
 +---------+----------------+
-3 rows in set (0.02 sec)</code></pre>
-
+3 rows in set (0.02 sec)
+</code></pre>
 
 <p>یا </p>
 <pre class="codehilite"><code>SELECT visitor, SUM(properties-&gt;&gt;'$.amount') revenue
@@ -279,8 +279,8 @@ GROUP BY visitor;
 | 3       |     200 |
 | 4       |     650 |
 +---------+---------+
-2 rows in set (0.00 sec)</code></pre>
-
+2 rows in set (0.00 sec)
+</code></pre>
 
 <h2>خاتمه</h2>
 <p>در این نوشته سعی شده تا آشنای اولیه ای به نوع داده <code>JSNO</code> در دیتابیس <code>MySql</code> / <code>Mariadb</code>  حاصل شود.انشاءالله در فرصت های بعدی عمیق تر با این نوع داده آشنا می شویم.</p>

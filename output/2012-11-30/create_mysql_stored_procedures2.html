@@ -179,15 +179,15 @@
 <p>برای کار با بانک اطلاعاتی روش های متداول و مرسوم زیادی وجود دارد. اما یک روشی که خیلی مورد پسند بنده واقع شده، روشی است که در آن با استفاده از استور پروسیجرها کار هایم با دیتابیس را انجام می دهم. استور پروسیجر ها امکانی است که برخی نرم افزارهای مدیریت پایگاه داده ها آن را حمایت کرده و برخی خیر. از جلمه این پایگاه داده ها می توان از <code>MySQL</code>، <code>MSSQL</code> و... نام برد.در این نوشته نحوه ایجاد و کار با این امکان در نرم افزار مدیریت پایگاه داده های <code>MySQL</code> را بیان می کنم.در  <a href="../2012-11-28/create_mysql_stored_procedures1.html">بخش اول</a>  سعی شد تعریفی مختصر و طریقه ایجاد، فراخوانی، تعریف پارامترها و متغییرها را عنوان کرده و ادامه آن را در این قسمت خدمت دوستان ارائه می کنم.</p>
 <h3>گام ۴ : متغییرها</h3>
 <p>در این گام نحوه تعریف متغییرها و ذخیره دادها در استور پروسیجر را با هم می آموزیم. تعریف متغییرها دقیقا در ابتدای بلاک <code>BEGIN</code> و <code>END</code> به همراه تعیین نوع آنها انجام می گیرد.تعریف متغییر به صورت زیر می باشد:</p>
-<pre class="codehilite"><code>DECLARE varname DATA-TYPE DEFAULT defaultvalue;</code></pre>
-
+<pre class="codehilite"><code>DECLARE varname DATA-TYPE DEFAULT defaultvalue;
+</code></pre>
 
 <h5>مثالهایی از تعریف انواع متغییرها:</h5>
 <pre class="codehilite"><code>DECLARE a, b INT DEFAULT 5;
 DECLARE str VARCHAR(50);
 DECLARE today TIMESTAMP DEFAULT CURRENT_DATE;
-DECLARE v1, v2, v3 TINYINT;</code></pre>
-
+DECLARE v1, v2, v3 TINYINT;
+</code></pre>
 
 <h5>کار کردن با متغییرها</h5>
 <p>به منظور تخصیص مقدار به متغییرهای تعریف شده کافی است از دستورات <code>SET</code> یا <code>SELECT</code> استفاده نمایید:</p>
@@ -200,9 +200,9 @@ BEGIN
   DECLARE v1, v2, v3 TINYINT;
   INSERT INTO table1 VALUES (a);
   SET str = ’I am a string’;
-  SELECT CONCAT(str,paramstr), today FROM table2 WHERE b &gt;=5;
-END //</code></pre>
-
+  SELECT CONCAT(str,paramstr), today FROM table2 WHERE b &amp;gt;=5;
+END //
+</code></pre>
 
 <h5>گام ۵ : کنترل روند اجرا برنامه در استور پروسیجرها</h5>
 <p>نرم افزار <code>MySQL</code> از ساختارهای کنترل روند اجرا <code>IF</code>, <code>CASE</code>, <code>ITERATE</code>, <code>LEAVE LOOP</code>, <code>WHILE</code> و <code>REPEAT</code> پشتیبانی می کند در این نوشته سعی می شود تا درباره ساختار هایی که بیشتر مرسوم و مورد استفاده هستند از قبیل <code>IF</code>, <code>CASE</code> و <code>WHILE</code> صحبت کنیم.</p>
@@ -219,10 +219,10 @@ BEGIN
    IF param1 = 0 THEN
   SELECT 'Parameter value = 0';
    ELSE
-  SELECT 'Parameter value &lt;&gt; 0';
+  SELECT 'Parameter value &amp;lt;&amp;gt; 0';
    END IF;
-END //</code></pre>
-
+END //
+</code></pre>
 
 <h5>ساختار <code>CASE</code></h5>
 <p>این ساختار نیز برای کنترل شروط در برنامه می باشد. اما نمی توان از آن دقیقا به جا ساختار<code>IF</code> استفاده کرد. دو راه برای استفاده از این ساختار وجود دارد. راه اول:</p>
@@ -239,8 +239,8 @@ BEGIN
         ELSE
           INSERT INTO table1 VALUES (99);
   END CASE;
-END //</code></pre>
-
+END //
+</code></pre>
 
 <h6>راه دوم:</h6>
 <pre class="codehilite"><code>DELIMITER //
@@ -256,8 +256,8 @@ BEGIN
      ELSE
        INSERT INTO table1 VALUES (99);
   END CASE;
-END //</code></pre>
-
+END //
+</code></pre>
 
 <h5>ساختار <code>WHILE</code></h5>
 <p>در اصل سه نوع ساختار حلقه وجود دارد. حلقه <code>WHILE</code>، حلقه <code>LOOP</code> و حلقه <code>REPEAT</code>. و اختیار با شما است که از کدام نوع ساختار در برنامه استفاده کنید. در اینجا فقط حلقه <code>WHILE</code>گفته می شود:</p>
@@ -266,13 +266,13 @@ CREATE PROCEDURE `proc_WHILE` (IN param1 INT)
 BEGIN
   DECLARE variable1, variable2 INT;
   SET variable1 = 0;
-  WHILE variable1 &lt; param1 DO
+  WHILE variable1 &amp;lt; param1 DO
       INSERT INTO table1 VALUES (param1);
       SELECT COUNT(*) INTO variable2 FROM table1;
       SET variable1 = variable1 + 1;
   END WHILE;
-END //</code></pre>
-
+END //
+</code></pre>
 
 <h4>گام ۶ : اشاره گرها یا Cursors</h4>
 <p>از این امکان جهت واکاوی و پردازش هر سطر، در میان چند سطر از یک کوئری برگردانده شده را فراهم می کند.این امکان نیز در <code>MySQL</code> هم برای استفاده در استور پروسیجرها ایجاد شده است. یک مثال ساده برای ایجاد و استفاده از یک اشاره گر:</p>
@@ -280,8 +280,8 @@ END //</code></pre>
 DECLARE  CONTINUE HANDLER FOR NOT FOUND          /*Specify what to do when no more records found*/
 OPEN cursor-name;                                /*Open cursor for use*/
 FETCH cursor-name INTO variable [, variable];    /*Assign variables with the current column values*/
-CLOSE cursor-name;                               /*Close cursor after use*/</code></pre>
-
+CLOSE cursor-name;                               /*Close cursor after use*/
+</code></pre>
 
 <p>و حالا مثالی اشاره گر استفاده شده در پروسیجر:</p>
 <pre class="codehilite"><code>DELIMITER //
@@ -301,8 +301,8 @@ BEGIN
   END WHILE;
   CLOSE cur1;
   SET param1 = c;
-END //</code></pre>
-
+END //
+</code></pre>
 
 <p>اشاره گرها دارای سه ویژگی هستند که برای استفاده از آنها باید با این ویژگی ها آشنا باشید:</p>
 <ul>

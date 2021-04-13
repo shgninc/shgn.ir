@@ -181,14 +181,14 @@
 از متد <code>route()</code> برای تخصیص یک آدرس به یک تابع استفاده می شود:</p>
 <pre class="codehilite"><code>@app.route(‘/hello’)
 def hello_world():
-    return ‘hello world’</code></pre>
-
+    return ‘hello world’
+</code></pre>
 
 <p>همچنین برای همین منظور می توان از متد <code>add_url_rule()</code> استفاده کرد. این متد نیز همانند متد <code>route()</code> یک آدرس را به یک تابع تخصیص می دهد:</p>
 <pre class="codehilite"><code>def hello_world():
    return ‘hello world’
-app.add_url_rule(‘/’, ‘hello’, hello_world)</code></pre>
-
+app.add_url_rule(‘/’, ‘hello’, hello_world)
+</code></pre>
 
 <h2>آدرس های پویا</h2>
 <p>از دیگز امکانات ارائه شده در <code>Flask</code>، استفاده از آدرس های پویا با بهره گیری از متغییرها می باشد. این مهم به این صورت قابل انجام است که، در آدرس یک <code>&lt;variable-name&gt;</code> نیز ارسال شده که در متد<code>route()</code>ی
@@ -201,12 +201,12 @@ def hello_name(name):
    return 'Hello %s!' % name
 
 if __name__ == '__main__':
-   app.run(debug = True)</code></pre>
-
+   app.run(debug = True)
+</code></pre>
 
 <p>اگر آدرس درخواست شده به صورت زیر باشد، برنامه آن نام را بر می گرداند:</p>
-<pre class="codehilite"><code>http://localhost:5000/hello/user.</code></pre>
-
+<pre class="codehilite"><code>http://localhost:5000/hello/user.
+</code></pre>
 
 <p>از دیگر امکانات فلسک، تعیین نوع متغییر دریافت شده از آدرس می باشد. این نوع به صورت پیش فرض <code>String</code> هست، با این وجود از انواع زیر نیز می توان استفاده کرد:
 <code>int</code>, <code>float</code>, <code>path</code></p>
@@ -223,8 +223,8 @@ def revision(revNo):
    return 'Revision Number %f' % revNo
 
 if __name__ == '__main__':
-   app.run()</code></pre>
-
+   app.run()
+</code></pre>
 
 <h2>تولید آدرس</h2>
 <p>جهت تولید آدرس پویا برای یک تابع مشخص می توان از متد <code>url_for()</code> استفاده کرد.این متد، به عنوان اولین پارامتر، نام تابع و پارامترهای بعدی به عنوان پارامترهای قابل دریافت آن تابع را دریافت می کند. برای مثال:</p>
@@ -247,8 +247,8 @@ def hello_user(name):
       return redirect(url_for('hello_guest',guest = name))
 
 if __name__ == '__main__':
-   app.run(debug = True)</code></pre>
-
+   app.run(debug = True)
+</code></pre>
 
 <h2>در پایان</h2>
 <p>همانطور که مشاهده کردید، مسیریابی نیز در این فریمورک بسیار ساده و کاربردی بوده و برخلاف دیگر فریمورک ها پیچیدگی ندارد. انشاء الله در مطالب بعدی درباره انواع متدهای

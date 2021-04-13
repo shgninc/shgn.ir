@@ -174,8 +174,8 @@
     </div>
       <section itemprop="articleBody">
         <p>یکی از قابلیت ها و امکانات زبان برنامه نویسی <code>PHP</code>، امکان ارسال رایانامه به راحتی با آن است. در <code>PHP</code> تابعی برای این کار وجود دارد با چند پارامتر که این کار را می کند.</p>
-<pre class="codehilite"><code>mail(to,subject,message,headers,parameters)</code></pre>
-
+<pre class="codehilite"><code>mail(to,subject,message,headers,parameters)
+</code></pre>
 
 <p>در این تابع پارامترهایی وجود دارند که وظیف هر کدام به اسن ترتیب می باشد:</p>
 <ul>
@@ -218,8 +218,8 @@ else
 ?&gt;
 
 &lt;/body&gt;
-&lt;/html&gt;</code></pre>
-
+&lt;/html&gt;
+</code></pre>
 
 <ul>
 <li>در این کد ابتدا بررسی می شود که بخش مربوط به ارسال رایانامه پر شده است.</li>
@@ -239,8 +239,8 @@ $headers = 'From: webmaster@example.com' . &quot;\r\n&quot; .
     'X-Mailer: PHP/' . phpversion();
 
 mail($to, $subject, $message, $headers);
-?&gt;</code></pre>
-
+?&gt;
+</code></pre>
 
 <h4>ارسال رایانامه با قالب HTML</h4>
 <pre class="codehilite"><code>&lt;?php
@@ -286,7 +286,8 @@ $headers .= 'Bcc: birthdaycheck@example.com' . &quot;\r\n&quot;;
 
 // Mail it
 mail($to, $subject, $message, $headers);
-?&gt;</code></pre>
+?&gt;
+</code></pre>
       </section>
       <div>
         برچسب ها:

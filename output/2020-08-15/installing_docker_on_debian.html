@@ -189,29 +189,29 @@ $ sudo apt-get install \
         ca-certificates \
         curl \
         gnupg-agent \
-        software-properties-common</code></pre>
-
+        software-properties-common
+</code></pre>
 
 <p>بعد لازم هست تا کلید <code>gpg</code> سورس لیست داکر را به سیستم اضافه کرد:</p>
-<pre class="codehilite"><code>$ curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -</code></pre>
-
+<pre class="codehilite"><code>$ curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
+</code></pre>
 
 <p>و بعد باید آدرس سورس لیست نصب آن را به سورس لیست های سیستم عامل اضافه نمود:</p>
 <pre class="codehilite"><code>$ sudo add-apt-repository \
    &quot;deb [arch=amd64] https://download.docker.com/linux/debian \
    $(lsb_release -cs) \
-   stable&quot;</code></pre>
-
+   stable&quot;
+</code></pre>
 
 <p>و درنهایت کافی هست تا برای نصب خود <code>docker</code> نیز از دستور زیر استفاده نمود:</p>
 <pre class="codehilite"><code>$ sudo apt-get update
-$ sudo apt-get install docker-ce docker-ce-cli containerd.io</code></pre>
-
+$ sudo apt-get install docker-ce docker-ce-cli containerd.io
+</code></pre>
 
 <h4>اطمینان از نصب</h4>
 <p>برای اطمنان از نصب صحیح داکر، می توان یک ایمیج مرسوم و معروف آن را اجرا کرد:</p>
-<pre class="codehilite"><code>$ sudo docker run hello-world</code></pre>
-
+<pre class="codehilite"><code>$ sudo docker run hello-world
+</code></pre>
 
 <p>اگر این ایمیج به درستی دانلود و اجرا شود یک سری اطلاعات را چاپ و خارج می شود. در این حالت یعنی <code>Docker Engine</code> به درستی نصب شده است.</p>
 <p>امیدوارم که این مطلب مفید و کاربردی بوده باشد.</p>
@@ -219,19 +219,19 @@ $ sudo apt-get install docker-ce docker-ce-cli containerd.io</code></pre>
 <p>در پایان یکی از ابزارهای مفی و به شدت کاربردی برای داکر با عنوان <code>docker-compose</code> را معرفی می کنیم. از این ابزار به نوعی می توان به جای <code>docker run</code> استفاده نمود به طوری که پارامترهای آن به صورت مستند و پایدار می ماند. از طرفی به عنوان یک <code>orchestrator</code> ساده نیز شناخته می شود. روش عملکرد آن به این صورت هست که یک فایل ساده با نام <code>docker-compose.yml</code> را در پوشه ای (ترجیحا بانام سرویس مورد نظر) ایجاد کرده و تمامی پارامترهای اجرایی یک یا چند کانتینر به هم مرتبط را داخل فایل قرارداده و در نهایت با اجرای <code>docker-compose</code> تمامی سرویس های آن اجرا خواهند شد.</p>
 <h3>نصب</h3>
 <pre class="codehilite"><code>sudo curl -L &quot;https://github.com/docker/compose/releases/download/1.28.2/docker-compose-$(uname -s)-$(uname -m)&quot; -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose</code></pre>
-
+sudo chmod +x /usr/local/bin/docker-compose
+</code></pre>
 
 <p>و در پایان برای اطمینان می توان دستور زیر را اجرا نمود:</p>
 <pre class="codehilite"><code>$ docker-compose --version
-docker-compose version 1.28.2, build 1110ad01</code></pre>
-
+docker-compose version 1.28.2, build 1110ad01
+</code></pre>
 
 <h3>ایجاد فایل docker-compose</h3>
 <p>برای ایجاد یک سرویس با <code>docker-compose</code> مراحل زیر را اجرا می کنیم:</p>
 <pre class="codehilite"><code>mkdir composetest
-cd composetest</code></pre>
-
+cd composetest
+</code></pre>
 
 <p>سپس یک فایل با نام <code>docker-compose.yml</code> ایجاد کرده و محتویات زیر را داخل قرار می دهیم:</p>
 <pre class="codehilite"><code>version: &quot;3.9&quot;
@@ -241,8 +241,8 @@ services:
     ports:
       - &quot;5000:5000&quot;
   redis:
-    image: &quot;redis:alpine&quot;</code></pre>
-
+    image: &quot;redis:alpine&quot;
+</code></pre>
 
 <p>همانطور که مشاهده می کنید دو سرویس <code>web</code> و <code>redis</code> در این فایل ایجاد می شوند. در نهایت برای ایجاد و اجرا کافی هست تا فقط دستور زیر را اجرا کنید:</p>
 <pre class="codehilite"><code>$ docker-compose up
@@ -264,8 +264,8 @@ web_1    |  * Debugger is active!
 redis_1  | 1:M 17 Aug 22:11:10.483 # Server initialized
 redis_1  | 1:M 17 Aug 22:11:10.483 # WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command 'echo never &gt; /sys/kernel/mm/transparent_hugepage/enabled' as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled.
 web_1    |  * Debugger PIN: 330-787-903
-redis_1  | 1:M 17 Aug 22:11:10.483 * Ready to accept connections</code></pre>
-
+redis_1  | 1:M 17 Aug 22:11:10.483 * Ready to accept connections
+</code></pre>
 
 <p>در پایان سرویس همانطور که در فایل تنظیم شده است از طریق آدرس <code>http://MACHINE_VM_IP:5000</code> در دسترس می باشد.</p>
 <h4>منابع:</h4>

@@ -193,8 +193,8 @@
          &lt;p&gt;&lt;input type = &quot;submit&quot; value = &quot;submit&quot; /&gt;&lt;/p&gt;
       &lt;/form&gt;
    &lt;/body&gt;
-&lt;/html&gt;</code></pre>
-
+&lt;/html&gt;
+</code></pre>
 
 <p>اکنون اسکریپت کنترل آن در پایتون:</p>
 <pre class="codehilite"><code>from flask import Flask, redirect, url_for, request
@@ -214,12 +214,12 @@ def login():
       return redirect(url_for('success',name = user))
 
 if __name__ == '__main__':
-   app.run(debug = True)</code></pre>
-
+   app.run(debug = True)
+</code></pre>
 
 <p>آدرس <code>http://localhost/login</code> به متد <code>login()</code> مپ شده. زمانی که سرور داده ها را از طریق متد پست دریافت کرد دسترسی به پارامتر <code>nm</code> به صورت زیر امکان پذیر است:</p>
-<pre class="codehilite"><code>user = request.form['nm']</code></pre>
-
+<pre class="codehilite"><code>user = request.form['nm']
+</code></pre>
 
 <p>در قطعه کد بالا <code>form</code> یک نوع دیکشنری هست که پارامترهای فرم ارسال شده را به صورت کلید مقدار شامل می شود. اگر اطلاعات فرم با متد <code>GET‍</code> ارسال شوند، این متغییر <code>args</code> می شوند و از توع دیکشنری می باشد.</p>
       </section>

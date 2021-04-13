@@ -194,8 +194,8 @@ CREATE PROCEDURE `p2` ()
   COMMENT 'A procedure'
   BEGIN
     SELECT 'Hello World !';
-END//</code></pre>
-
+END//
+</code></pre>
 
 <p>بخش اول دستورات پروسیجر را ایجاد نموده. بخش بعدی کدهایی هستند که ویژگی های پروسیجر را تعریف می نمایند. و در نهایت نام و بدنه پروسیجر را داریم.</p>
 <p>تعریف نام استور پروسیجرها به کوچک یا بزرگ بودن حروف حساس نبوده، و پروسیجر های همنام نیز نمی توان تعریف کرد. در قسمت بدنه پروسیجر نمی توان از دستورات ویرایشی دیتابیس استفاده کرد.</p>
@@ -209,14 +209,14 @@ END//</code></pre>
 <h4>فراخوانی یک استور پروسیجر</h4>
 <p>برای این منظور فقط نیاز است تا از کلمه کلیدی <code>CALL</code> به همراه نام استور پروسیجر و پرانتزهای آن مشتمل بر تمام پارامترهای تعریف شده استفاده کرد. پرانتزها الزامی هستند.</p>
 <pre class="codehilite"><code>CALL stored_procedure_name (param1, param2, ....)
-CALL procedure1(10 , 'string parameter' , @parameter_var);</code></pre>
-
+CALL procedure1(10 , 'string parameter' , @parameter_var);
+</code></pre>
 
 <h4>تغییر یک استور پروسیجر</h4>
 <p>برای این منظور <code>MySQL</code> دستور <code>ALTER PROCEDURE</code> را دارد، اما قط امکان تغییر ویژگی های مشخصی را می دهد. برای تغییر بدنه یا پارامترها باید پروسیجر را حذف و مجدد ایجاد نمایید.</p>
 <h4>حذف یک استور پروسیجر</h4>
-<pre class="codehilite"><code>DROP PROCEDURE IF EXISTS p2;</code></pre>
-
+<pre class="codehilite"><code>DROP PROCEDURE IF EXISTS p2;
+</code></pre>
 
 <p>این یک فرمان خیلی ساده است. قسمت <code>IF EXIST</code> از وقع خطا در صورتی که پروسیجر وجود نداشته باشد جلوگیری می کند.</p>
 <h3>گام ۳: پارامترها</h3>
@@ -232,24 +232,24 @@ CALL procedure1(10 , 'string parameter' , @parameter_var);</code></pre>
 CREATE PROCEDURE `proc_IN` (IN var1 INT)
 BEGIN
   SELECT var1 + 2 AS result;
-END//&lt;/pre&gt;</code></pre>
-
+END//&lt;/pre&gt;
+</code></pre>
 
 <p>مثال برای پارامتر خروجی:</p>
 <pre class="codehilite"><code>DELIMITER //
 CREATE PROCEDURE `proc_OUT` (OUT var1 VARCHAR(100))
 BEGIN
   SET var1 = 'This is a test';
-END //&lt;/pre&gt;</code></pre>
-
+END //&lt;/pre&gt;
+</code></pre>
 
 <p>مثال برای پارامتر ورودی/خروجی:</p>
 <pre class="codehilite"><code>DELIMITER //
 CREATE PROCEDURE `proc_INOUT` (INOUT var1 INT)
 BEGIN
   SET var1 = var1 * 2;
-END //&lt;/pre&gt;</code></pre>
-
+END //&lt;/pre&gt;
+</code></pre>
 
 <p>در این نوشته با بخشی از <code>Stored Procedure</code>ها در <code>MySQL</code> آشنا شدید. ادامه این مطلب را در <a href="../2012-11-30/create_mysql_stored_procedures2.html">بخش دوم</a> از این نوشته می توانید دنبال کنید</p>
       </section>

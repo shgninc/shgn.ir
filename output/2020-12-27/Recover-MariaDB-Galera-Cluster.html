@@ -192,8 +192,8 @@
 +--------------------------+----------------------------------------------+
 | wsrep_incoming_addresses | 171.20.0.151:3306,171.20.0.152:3306,171.20.0.153:3306 |
 +--------------------------+----------------------------------------------+
-1 row in set (0.01 sec)</code></pre>
-
+1 row in set (0.01 sec)
+</code></pre>
 
 <p>بررسی تعداد نودهای موجود در کلاسترینگ:</p>
 <pre class="codehilite"><code>MariaDB [(none)]&gt; show status like 'wsrep_cluster_size';
@@ -202,8 +202,8 @@
 +--------------------+-------+
 | wsrep_cluster_size | 3 |
 +--------------------+-------+
-1 row in set (0.01 sec)</code></pre>
-
+1 row in set (0.01 sec)
+</code></pre>
 
 <p>بررسی <code>UUID</code> وضعیت کلاسترینگ:</p>
 <pre class="codehilite"><code>MariaDB [(none)]&gt; show status like 'wsrep_cluster_state_uuid';
@@ -212,8 +212,8 @@
 +--------------------------+-----------------------------------------+
 | wsrep_cluster_state_uuid | 345098abd2-291a-9893-acbd3-30923abcdef9 |
 +--------------------------+-----------------------------------------+
-1 row in set (0.01 sec)</code></pre>
-
+1 row in set (0.01 sec)
+</code></pre>
 
 <p>نحوه بررسی همسان بودن نود در کلاستر:</p>
 <pre class="codehilite"><code>MariaDB [(none)]&gt; show status like 'wsrep_local_state_comment';
@@ -222,8 +222,8 @@
 +---------------------------+--------+
 | wsrep_local_state_comment | Synced |
 +---------------------------+--------+
-1 row in set (0.01 sec)</code></pre>
-
+1 row in set (0.01 sec)
+</code></pre>
 
 <h4>بازگرداندن سناریو یک نود</h4>
 <p>در این سناریو، فقط یک نود در کلاستر با مشکل مواجه شده است. هیچ اطلاعاتی از دست نرفته و هیچ ارتباطی بین دیتابیس ها مشکل نخورده است. طبق این سناریو، وضعیت به این صورت خواهد بود:</p>
@@ -241,12 +241,12 @@ MariaDB [(none)]&gt; show status like 'wsrep_cluster_size';
 +--------------------+-------+
 | wsrep_cluster_size | 2 |
 +--------------------+-------+
-1 row in set (0.01 sec)</code></pre>
-
+1 row in set (0.01 sec)
+</code></pre>
 
 <p>بعد از ریست نود خراب شده، وضعیت آن را برای متصل شدن متصل شدن دوباره به کلاستر بررسی کنید. اگر به دلایلی وصل نشد خیلی ساده خود سرویس <a href="https://mariadb.com"><code>MariaDB</code></a> را ریست کنید:</p>
-<pre class="codehilite"><code>$ systemctl restart mariadb</code></pre>
-
+<pre class="codehilite"><code>$ systemctl restart mariadb
+</code></pre>
 
 <h3>سناریو مشکل چند نود در کلاستر</h3>
 <p>در این سناریو، تمامی نودها به غیر از یکی مشکل خورده اند که موجب از دست رفتن <code>quorum</code> می شود. در این نقطه، گلرا کلاستر درخواست های <code>SQL</code> را پاسخ نمی دهد. اما از آنجایی که هنوز یک نود بالا بوده و درحال اجرا می باشد، اطلاعاتی از دست نرفته است. در این حالت اگر نودهای مشکل خورده برای آنلاین شدن و اتصال به کلاستر تلاش کنند، نمی توانند موفق شوند چرا که کلاستر از دست رفته است:</p>
@@ -264,23 +264,23 @@ MariaDB [(none)]&gt; show status like 'wsrep_cluster_status';
 +----------------------+---------+
 | wsrep_cluster_status | Primary |
 +----------------------+---------+
-1 row in set (0.01 sec)</code></pre>
-
+1 row in set (0.01 sec)
+</code></pre>
 
 <p>در موارد نادر، ممکن است وضعیت کلاستر را <code>non-Primary</code> نشان دهد. اگر این اتفاق افتاد، علت خطا حتما از دست رفتن <code>quorum</code> نخواهد بود، بله احتمال بر قراری ارتباط شبکه می تواند باشد. توجه داشته باشید که قبل از بازسازی <a href="https://en.wikipedia.org/wiki/Quorum_(distributed_computing)"><code>quorum</code></a> حتما وضعیت نود به <code>Primary</code> تغییر کند. </p>
 <p>قبل از بازسازی <code>quorum</code> باید از آخرین <code>commit</code> را به دست بیاریم. برای این مهم دو راه وجود دارد:</p>
 <h4>Bootstrap خودکار</h4>
 <p>ساده ترین روش برای راه اندازی مجدد <code>quorum</code> استفاده از <code>bootstrap</code> خودکار است. به وسیله فرمان زیر می توان <a href="https://galeracluster.com/library/documentation/quorum-reset.html"><code>bootstrap</code></a> خودکار را در نود فعال کرد:</p>
-<pre class="codehilite"><code>MariaDB [(none)]&gt; set global wsrep_provider_options='pc.bootstrap=YES';</code></pre>
-
+<pre class="codehilite"><code>MariaDB [(none)]&gt; set global wsrep_provider_options='pc.bootstrap=YES';
+</code></pre>
 
 <p>این فرمان موجب می شود تا نود جاری، به اصلی ترین نود خود راه انداز، تبدیل شده تا دیگر نودهای مشکل خورده بتوانند با اتصال به آن، خود را تصحیح کنند.</p>
 <h4>Bootstrap دستی</h4>
 <p>با اجرای دستورات زیر نود جاری به صورت دستی، تبدیل به خود راه انداز، خواهد شد:</p>
 <pre class="codehilite"><code>$ systemctl stop mariadb
 $ galera_new_cluster
-$ systemctl restart mariadb</code></pre>
-
+$ systemctl restart mariadb
+</code></pre>
 
 <p>بعد از این که این نود به عنوان نود اصلی راه اندازی و اجرا شد، کافی است تا سرویس <code>MaraiDB</code> روی دیگر نودها را یکی یکی ریست کرد.</p>
 <h2>بازگرداندن کامل کلاستر</h2>
@@ -293,8 +293,8 @@ $ systemctl restart mariadb</code></pre>
 version: 2.1
 uuid: 00000000-0000-0000-0000-000000000000
 seqno: -1
-safe_to_bootstrap: 0</code></pre>
-
+safe_to_bootstrap: 0
+</code></pre>
 
 <p>در ادامه محتویات فایل <code>grastate.dat</code> در نود ۲ قابل مشاهده می باشد. این نود در حین پرداز ترنس اکشن با <code>seqno</code> منفی اما با <code>group ID</code> کرش کرده است:</p>
 <pre class="codehilite"><code>$ cat /var/lib/mysql/grastate.dat
@@ -302,8 +302,8 @@ safe_to_bootstrap: 0</code></pre>
 version: 2.1
 uuid: 886dd8da-3d07-11e8-a109-8a3c80cebab4
 seqno: -1
-safe_to_bootstrap: 0</code></pre>
-
+safe_to_bootstrap: 0
+</code></pre>
 
 <p>همچنین در ادامه محتویات فایل <code>grastate.dat</code> در نود ۱ با بالاترین <code>seqno</code> قابل رویت هست:</p>
 <pre class="codehilite"><code>$ cat /var/lib/mysql/grastate.dat
@@ -311,8 +311,8 @@ safe_to_bootstrap: 0</code></pre>
 version: 2.1
 uuid: 886dd8da-3d07-11e8-a109-8a3c80cebab4
 seqno: 31929
-safe_to_bootstrap: 1</code></pre>
-
+safe_to_bootstrap: 1
+</code></pre>
 
 <p>این نکته را فراموش نکنیم که فقط نودی که به درستی خاموش شده باشد دارای <strong>بالاترین مقدار <code>seqno</code> مثبت</strong> خواهد بود. این نود، همیشه اولین نودی هست که بازیابی از آن شروع می شود.</p>
 <p>اگر در تمامی نودها مقدار <code>seqno</code> -1 باشد و <code>safe_to_bootstrap</code> برابر 0 باشد، این نشانه آن است که <strong>خرابی کامل کلاستر</strong> رخ داده است. در این نقطه، فقط باید کلاستر را با دستور زیر مجددا راه اندازی نمود. اما این کار تا زمانی که مشخص نشود که هر نود دارای کپی مشخصی از دیتای دیتابیس دارد، به هیچ عنوان توصیه نمی شود.</p>
@@ -329,35 +329,35 @@ wsrep_node_name='galera-01'
 wsrep_sst_method=rsync
 binlog_format=row
 default_storage_engine=InnoDB
-innodb_autoinc_lock_mode=2</code></pre>
-
+innodb_autoinc_lock_mode=2
+</code></pre>
 
 <p>نکته این که  <code>wsrep_cluster_address</code> نشان دهنده آدرس IP تمامی نودهای کلاستر می باشد که باید به صروت زیر تغییر کند:</p>
-<pre class="codehilite"><code>wsrep_cluster_address=&quot;gcomm://&quot;</code></pre>
-
+<pre class="codehilite"><code>wsrep_cluster_address=&quot;gcomm://&quot;
+</code></pre>
 
 <p>هم اکنون می توان سرویس ماریا دی بی این نود را ریست نمود:</p>
-<pre class="codehilite"><code>$ systemctl restart mariadb</code></pre>
-
+<pre class="codehilite"><code>$ systemctl restart mariadb
+</code></pre>
 
 <p>تنهای زمانی می توانیم مبادرت به راه اندازی مجدد دیگر نودها نمود که بعد از ریست این نود از راه اندازی سالم آن اطمینان حاصل کنیم. بعد از راه اندازی کامل و سالم تمامی نودهای دیگر، تنظیمات روی نود 1 را با اضافه نمودن آدرس IP دیگر اعضا و ریست مجدد ادامه می دهیم.</p>
-<pre class="codehilite"><code>wsrep_cluster_address=&quot;gcomm://10.8.8.53,10.8.8.54,10.8.8.55&quot;</code></pre>
-
+<pre class="codehilite"><code>wsrep_cluster_address=&quot;gcomm://10.8.8.53,10.8.8.54,10.8.8.55&quot;
+</code></pre>
 
 <p>هم اکنون گلرا کلاستر باید اجرا شده و تمامی نودها باید خود را با نود اولیه یا اصلی همسان کنند.</p>
 <h2>بازیابی بر اساس آخرین Commit</h2>
 <p>بدترین حالت ممکن در خرابی گلرا کلاستر این هست که در تمامی نودها <code>seqno</code> مقدار 1- گرفته و تماما خراب شده باشند. همانطور که پیشتر هم ذکر شده بود، اجرای دستور <code>galera_new_cluster</code> روی یک نود و اتصال مجدد دیگر نودها قبل از تعیین آخرین <code>commit</code> ی که روی کدام نود خورده وسوسه انگیز است. زمانی که دستور <code>galera_new_cluster</code> را اجرا کنید، یک کلاستر جدید ایجاد کرده و دیگر نودها به آن متصل و خود را با آن همسان می کنند.</p>
 <p>برای این که تعیین کنیم کدام نود آخرین <code>commit</code> را دارد باید مقدار 'wsrep_last_commit' را روی هر نود جداگانه بررسی کنیم. تنها نودی معتبر است که آخرین مقدار آن بالاترین مقدار باشد. سپس از آن نود راه اندازی مجدد کلاستر را آغاز و دیگر نودها به آن متصل می شوند. برای این موضوع به ترتیب زیر عمل می کنیم:</p>
-<pre class="codehilite"><code>$ systemctl stop mariadb</code></pre>
-
+<pre class="codehilite"><code>$ systemctl stop mariadb
+</code></pre>
 
 <p>مقدار <code>wsrep_cluster_address</code> را در فایل <code>/etc/my.cnf.d/server.cnf</code> باید تغییر دهیم.</p>
-<pre class="codehilite"><code>wsrep_cluster_address=&quot;gcomm://&quot;</code></pre>
-
+<pre class="codehilite"><code>wsrep_cluster_address=&quot;gcomm://&quot;
+</code></pre>
 
 <p>سپس:</p>
-<pre class="codehilite"><code>$ systemctl start mariadb</code></pre>
-
+<pre class="codehilite"><code>$ systemctl start mariadb
+</code></pre>
 
 <p>سپس از داخل دیتابیس مقدار را چک می کنیم:</p>
 <pre class="codehilite"><code>MariaDB [(none)]&gt; show status like 'wsrep_last_committed';
@@ -366,12 +366,12 @@ innodb_autoinc_lock_mode=2</code></pre>
 +----------------------+---------+
 | wsrep_last_committed | 319589 |
 +----------------------+---------+
-1 row in set (0.01 sec)</code></pre>
-
+1 row in set (0.01 sec)
+</code></pre>
 
 <p>این عمل را برای به دست آوردن آخرین <code>commit</code> روی تمامی نودها انجام دهید. سپس با اجرای دستور زیر روی نودی که بالاترین مقدار روی آخرین <code>commit</code> کلاسترینگ را مجددا راه اندازی می کنیم.</p>
-<pre class="codehilite"><code>$ galera_new_cluster</code></pre>
-
+<pre class="codehilite"><code>$ galera_new_cluster
+</code></pre>
 
 <p>سپس مقدار <code>wsrep_cluster_address</code> را روی دیگر نودها با آدرس IP های نودها تغییر داده و سرویس <code>mariadb</code> را روی آن ها ریست کنید.</p>
 <p>در نهایت، بعد از گذشت مدتی،  آخرین مقدار <code>commit</code> را روی نودهای مجددا بررسی کنید تا از صحت کلاسترینگ اطمینان حاصل کنید.</p>
