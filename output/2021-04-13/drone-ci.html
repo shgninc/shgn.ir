@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!— Global site tag (gtag.js) - Google Analytics —>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-124515881-2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-124515881-2');
+
+    </script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title> نصب و راه اندازی Drone CI. - دست نوشته های یک تازه کار </title>
+    <meta name="description"
+          content="نصب و راه اندازی Drone CI."/>
+    <meta name="keywords"
+          content="لینوکس،لینوکس مشهد،آموزش,پایتون,پایتون مشهد,آموزش لینوکس,دیتابیس,آموزش دیتابیس,برنامه نویسی,linux,database,mysql,mariadb,datamart,galera cluster,apache,big data,dataware house,cluster,galera,percona,python,php,tutorial,debian,ubuntu,centos,arch linux,mashhad linux,iran linux,debian mashhad, linux, devops, ci/cd, drone, tutorial, docker"/>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+          integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+    <!--    <link href="https://rawgit.com/richleland/pygments-css/master/github.css" rel="stylesheet" crossorigin="anonymous">-->
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <style>
+    body {
+      direction: rtl;
+    }
+    p {
+        font-size: 1.3em;
+        line-height: 1.5em;
+        text-align: justify;
+      }
+    pre {
+        direction: ltr;
+        border-left: 5px solid #6ce26c;
+      }
+    .panel-body ul li{
+        margin: 10px 0;
+    }
+    a {
+        color: #4608ad;
+      }
+    .panel-group .panel {
+        margin-bottom: 5px;
+    }
+    .panel-primary > .panel-heading {
+        background-color: #4608ad;
+    }
+    .navbar-default {
+        background-color: #4608ad;
+    }
+    .navbar-default .navbar-brand {
+        color: #ffffff;
+    }
+    .navbar-default .navbar-nav > li > a {
+        color: #ffffff;
+        font-size:initial;
+    }
+    .navbar-default .navbar-nav > li > a:hover{
+        color: #00ffd9;
+    }
+    .navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:focus, .navbar-default .navbar-nav > .open > a:hover{
+        color: #4608ad;
+    }
+
+    .dropdown-menu{
+        background-color: #4608ad;
+        color:#ffffff;
+        font-size:initial;
+    }
+    .dropdown-menu > li > a{
+        color:#ffffff;
+        font-size:initial;
+    }
+    .dropdown-menu > li > a:hover{
+        color: #00ffd9;
+        background-color:#4608ad;
+    }
+
+    #back2Top {
+    width: 40px;
+    line-height: 40px;
+    overflow: hidden;
+    z-index: 999;
+    display: none;
+    cursor: pointer;
+    -moz-transform: rotate(270deg);
+    -webkit-transform: rotate(270deg);
+    -o-transform: rotate(270deg);
+    -ms-transform: rotate(270deg);
+    transform: rotate(270deg);
+    position: fixed;
+    bottom: 50px;
+    right: 0;
+    background-color: #DDD;
+    text-align: center;
+    font-size: 30px;
+    text-decoration: none;
+    }
+    #back2Top:hover {
+        background-color: #DDF;
+        color: #000;
+    }
+
+
+    </style>
+</head>
+<body>
+
+<a id="top"></a>
+<div id="scroollto1"></div>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header navbar-right">
+            <a class="navbar-brand" href="/">دست نوشته های یک تازه کار</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            
+            
+            <li><a href="https://shgn.ir/about.html" title="درباره ما">درباره ما</a></li>
+            
+            <li><a href="https://shgn.ir/contacus.html" title="ارتباط با ما">ارتباط با ما</a></li>
+            
+            <li><a href="https://shgn.ir/links.html" title="لینک های مفید">لینک های مفید</a></li>
+            
+            <li><a href="https://shgn.ir/tag/database.html" title="دیتابیس">دیتابیس</a></li>
+            
+            <li><a href="https://shgn.ir/tag/linux.html" title="لینوکس">لینوکس</a></li>
+            
+            <li class="dropdown">
+                <a href="https://shgn.ir/tag/learn.html" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                   aria-expanded="false">آموزش <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="https://shgn.ir/tag/lpic1.html">دوره LPIC1</a></li>
+                </ul>
+            </li>
+            
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-9">
+            
+    <div itemscope itemtype="http://schema.org/NewsArticle">
+    <meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="http://https://shgn.ir/2021-04-13/drone-ci.html"/>
+    <div class="page-header">
+      <h3 itemprop="name">نصب و راه اندازی Drone CI.</h3>
+      
+      
+        <small>
+          <p class="text-right">
+            ارسال شده <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+                توسط <span itemprop="name">سید سجاد شاهچراغیان</span>
+              </span>
+              در تاریخ <span itemprop="datePublished">2021-04-13</span>
+          </p>
+        </small>
+      
+    </div>
+      <section itemprop="articleBody">
+        <h2>مقدمه</h2>
+<p>بعید می دونم که کسی به عنوان یک <code>sysadmin</code> یا <code>devops</code> مشغول به کار باشد و با واژه <code>CI/CD</code> و مفهوم آن آشنایی نداشته باشد.
+در واقع مفاهیمی که در دل <code>devops</code> زاده شده اند برای توسعه و راه اندازی هرچه بهتر و سریعتر برنامه ها در بوده اند.</p>
+<p>برای درک بهتر سرویس <code>drone</code> لازم است تا با مفاهیمی آشنا باشیم. پس با این مفاهیم شروع می کنیم</p>
+<h3>واژگان</h3>
+<h4>git</h4>
+<p>برنامه ای کاربردی و پر استفاده برای کنترل و مدیریت کدهای برنامه بین اعضاء یک تیم برنامه نویسی است.</p>
+<h4>CI/CD</h4>
+<p>به فرایندی که با هماهنگی بین توسعه دهنده برنامه و مدیر سیستمی که قرار است برنامه روی ان اجرا شود، پیاده سازی می گردد.
+این فرایند کاملا سیستمی و <em>بدون دخالت انسان</em> انجام می شود.</p>
+<ul>
+<li>CI: continuous integration</li>
+<li>CD: continuous delivery/deployment</li>
+</ul>
+<p>معمولا این فرایند به گونه ای دیده می شود که گام های تصویر زیر را انجام دهد:</p>
+<h4>ابزار CI/CD</h4>
+<p>ابزارهای 'CI/CD' برای کمک به تیم توسعه و تیم زیرساخت برای طی فرایند توسعه برنامه، انتقا و اجرای نهایی آن در بستر مورد نظر می باشد.
+از جمله این ابزارها می توان موارد زیر را نام برد:</p>
+<ul>
+<li>jenkins</li>
+<li>drone</li>
+<li>gitlab-ci</li>
+<li>circle-ci</li>
+<li>travis ci</li>
+</ul>
+<h2>چرا Drone CI</h2>
+<p>در بین ابزارهایی که در بالا ذکر شدند، در این نوشته قصد داریم تا درباره <code>Drone CI</code> صحبت کنیم.
+یکی از ویژگی های این ابزار، انجام مراحل <code>Ci</code> در قالب ایمیج های داکر می باشد. به طور مثال، ممکن برنامه شما
+از روند گیت مشخصی پیروی کنه که در آن زمانی پروژه باید به اجرای نهایی یا تجاری رود که توسعه دهنده روی برنچ مستر پوش و یک تگ یا نسخه بزند، در مرحله بعد باید
+کدهای برنامه <code>build</code> شوند، سپس تست های مد نظر و لازم روی آن کدها اجرا شوند، در صورتی که مشکلی نبود آن نسخه
+نهایی روی سرور های نهایی یا تجاری ارسال، جایگزین نسخه قبلی و اجرا شوند.</p>
+<p>پس همانطور که بیان شد، تمامی مراحل بالا در قالب یک یا چند کانتینر در داکر (خود <code>drone</code> آن کانتینر ها را ایجاد، مدیریت می کند)
+اجرا خواهند شد</p>
+<h3>نصب سرور</h3>
+<p>نصب <code>drone</code> کار بسیار راحت و ساده ای می باشد. برای انجام آن کافی هست تا کانتینر آن را اجرا کنید. برای اجرا 
+کافی هست فقط روی سروری که روی آن سرویس <code>docker-engin</code> وجود داشته باشد، یک فایل <code>docker-compose.yml</code> ایجاد 
+و آن را اجرا نماید:</p>
+<pre class="codehilite"><code>version: &quot;3.5&quot;
+services:
+  drone-server:
+    image: hub.gap.im/ops/drone:1
+    container_name: drone-server
+    ports:
+      - 8081:80
+    environment:
+      DRONE_SERVER_HOST: drone.ci
+      DRONE_SERVER_PROTO: http
+      DRONE_RPC_SECRET: 7cd19b43db8d8b9ffg55048c57ecf9fc
+      DRONE_GITLAB_CLIENT_SECRET: ${GITLAB_CLIENT_SECRET}
+      DRONE_GITLAB_CLIENT_ID: ${GITLAB_CLIENT_ID}
+      DRONE_GITLAB_SERVER: ${GITLAB_SERVER}
+      DRONE_DATABASE_DRIVER: &quot;mysql&quot;
+      DRONE_DATABASE_DATASOURCE: &quot;usr_drone:123456321@tcp(127.0.0.1:3306)/drone?parseTime=true&quot;
+    volumes:
+      - ./db/dronesrv:/data
+    depends_on:
+      - mysql_db
+
+  mysql_db:
+    image: mariadb:10.3
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: p@ssw0rd
+      MYSQL_DATABASE: drone
+      MYSQL_USER: usr_drone
+      MYSQL_PASSWORD: 123456321
+    volumes:
+      - ./db/dronesrv:/var/lib/mysql
+</code></pre>
+
+<p>نکته این که در این سناریو از دیتابیس <code>mariadb</code> برای نگهداری اطلاعات <code>drone</code> استفاده می شود. در نهایت با دستور
+زیر اجرا می شود:</p>
+<pre class="codehilite"><code>docker-compose up -d
+</code></pre>
+
+<h4>دسترسی به سرور</h4>
+<p>زمانی که سرور را راه اندازی می کنید، یک پنل  در آدرس تنظیم شده، برای استفاده مهیا می گردد که از طریق آدرس 
+تنظیمی در پارامترهای سرور قابل دسترس بوده و ریپوهایی که کاربر شما در گیت لب به آن ها دسترسی دارد، نمایش 
+داده و یک سری امکانات مدیریت برای <code>drone ci</code> را در اختیار شما قرار می دهد.</p>
+<p><img alt="drone-panle" src="drone-panel.png" /></p>
+<h3>نصب agent</h3>
+<p>این سرویس صرفا از سرور به طور مستمر در حال سوال پرسیدن هست تا کارهای قابل انجام، را روی خودش دریافت و شروع
+به انجام آنها کند.  <code>agent</code> یا <code>runner</code> دارای انواع مختلفی به ترتیب زیر، در <code>drone</code> هستند:</p>
+<ul>
+<li>Docker</li>
+<li>Kubernetes</li>
+<li>Exec</li>
+<li>SSH</li>
+<li>Digital Ocean</li>
+<li>Macstadium</li>
+</ul>
+<p>در این سناریو ما از <code>Docker runner</code> استفاده می کنیم. برای این مهم در یک فایل <code>docker-compose.yml</code>موارد 
+زیر را ذخیره و اجرا می کنیم.</p>
+<pre class="codehilite"><code>version: &quot;3.5&quot;
+services:
+     drone-agent:
+     image: hub.gap.im/ops/drone-runner-docker:1
+     container_name: dron-agent
+     depends_on:
+       - drone-server
+     volumes:
+       - /var/run/docker.sock:/var/run/docker.sock
+       - ./dockerconfig.json:/root/.docker/config.json:ro
+
+     ports:
+       - 3000:3000
+     environment:
+       DRONE_RPC_PROTO: drone.ci
+       DRONE_RPC_HOST: http
+       DRONE_RPC_SECRET: 7cd19b43db8d8b9ffg55048c57ecf9fc
+       DRONE_RUNNER_CAPACITY: 5
+       DRONE_RUNNER_NAME: runn-drone
+</code></pre>
+
+<h2>نتیجه گیری</h2>
+<p>تا اینجا با هم یک سری مفاهیم اولیه <code>CI/CD</code> و <code>DevOps</code> آشنا شدیم و بعد از آن سرور <code>drone</code> را در بستر 
+<code>Docker</code> برای <code>Gitlab</code> راه اندازی کردیم و سپس اجرا کننده آن را نیز با <code>Docker</code> و روی <code>Docker</code> راه اندازی شد.</p>
+<p>در گام بعدی </p>
+      </section>
+      <div>
+        برچسب ها:
+      
+        <a href="/tag/linux.html">
+            <span class="label label-default" itemprop="about">linux</span>
+        </a>
+      
+        <a href="/tag/devops.html">
+            <span class="label label-default" itemprop="about">devops</span>
+        </a>
+      
+        <a href="/tag/ci/cd.html">
+            <span class="label label-default" itemprop="about">ci/cd</span>
+        </a>
+      
+        <a href="/tag/drone.html">
+            <span class="label label-default" itemprop="about">drone</span>
+        </a>
+      
+        <a href="/tag/tutorial.html">
+            <span class="label label-default" itemprop="about">tutorial</span>
+        </a>
+      
+        <a href="/tag/docker.html">
+            <span class="label label-default" itemprop="about">docker</span>
+        </a>
+      
+    </div>
+    </div>
+
+        </div>
+        <div class="col-md-3">
+            <div class="panel-group">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        من در stackexchange.com
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-md-3 col-md-offset-9">
+                            <a href="https://stackexchange.com/users/887576" target="_blank">
+                                <img src="https://stackexchange.com/users/flair/887576.png" width="208" height="58"
+                                     alt="profile for shgnInc on Stack Exchange, a network of free, community-driven Q&A sites"
+                                     title="profile for shgnInc on Stack Exchange, a network of free, community-driven Q&A sites">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="panel-group">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            مطالب مهم
+                        </div>
+                        <div class="panel-body">
+                            <ul>
+                                <li><a href="https://shgn.ir/2021-03-07/galera-cluster-debian-10.html"
+                                       title="نصب Galer Cluster بر روی debian 10">نصب Galer Cluster بر روی debian 10</a>
+                                </li>
+                                <li><a href="https://shgn.ir/2020-08-15/installing_docker_on_debian.html"
+                                       title="نصب Docker روی Debian 10">نصب Docker روی Debian 10</a></li>
+                                <li><a href="https://shgn.ir/2018-09-05/Mysql-JSON-DataType.html"
+                                       title="معرفی نوع داده JSON در دیتابیس Mysql-Mariadb">معرفی نوع داده JSON در
+                                    دیتابیس Mysql-Mariadb</a></li>
+                                <li><a href="https://shgn.ir/2018-07-23/ssh_automatic_login.html"
+                                       title="لاگین خودکار با SSH">لاگین خودکار با SSH</a></li>
+                                <li><a href="https://shgn.ir/2017-08-16/galera_cluster.html"
+                                       title="نصب Galer Cluster بر روی debian8">نصب Galer Cluster بر روی debian8</a>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-group">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            Linux ISO Images
+                        </div>
+                        <div class="panel-body">
+                            <ul>
+                                <li><a href="https://shgn.ir/images/gparted-live-1.1.0-1-amd64.iso"
+                                       title="gparted-live-1.1.0-1-amd64">GParted Live CD/USB/HD/PXE Bootable Image</a></li>
+                                <li><a href="https://shgn.ir/images/debian-10.3.0-amd64-xfce-CD-1.iso"
+                                       title="debian-10.3.0-amd64-xfce-CD-1">Debian-10-amd64-xfce-CD</a></li>
+                                <li><a href="https://shgn.ir/images/debian-9.13.0-amd64-xfce-CD-1.iso"
+                                       title="debian-9.13.0-amd64-xfce-CD-1">debian-9-amd64-xfce-CD</a></li>
+                                <li><a href="https://shgn.ir/images/ubuntu-18.04.4-desktop-amd64.iso"
+                                       title="ubuntu-18.04.4-desktop-amd64">Ubuntu Desktop</a></li>
+                                <li><a href="https://shgn.ir/images/ubuntu-18.04.4-live-server-amd64.iso"
+                                       title="ubuntu-18.04.4-live-server-amd64">Ubuntu Server</a></li>
+                                <li><a href="https://shgn.ir/images/CentOS-7-aarch64-Minimal-1908.iso"
+                                       title="CentOS-7-aarch64-Minimal-1908">CentOS-7-aarch64-Minimal-1908</a></li>
+                                <li><a href="https://shgn.ir/images/CentOS-8.2.2004-x86_64-minimal.iso"
+                                       title="CentOS-8.2.2004-x86_64-minimal">CentOS-8.2.2004-x86_64-minimal</a></li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-group">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            تازه ترین مطالب
+                        </div>
+                        <div class="panel-body">
+                            <ul>
+                                
+                            </ul>
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr/>
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                
+                <strong>پیشنهادی های</strong>
+                <ul>
+                    
+                    <li><a href="https://github.com/shgninc">GitHub</a></li>
+                    
+                    <li><a href="https://www.instagram.com/shgninc/">Instagram</a></li>
+                    
+                    <li><a href="http://vasni.ir/">Vasni</a></li>
+                    
+                    <li><a href="https://virgool.io/@shgninc">Virgool</a></li>
+                    
+                    <li><a href="https://twitter.com/shahcheraghian">Twiteer</a></li>
+                    
+                    <li><a href="https://shgn.ir/yii2/">معرفی Yii2</a></li>
+                    
+                </ul>
+                
+            </div>
+            <div class="col-md-6">
+                <strong>دسترسی های ساده</strong>
+                <ul>
+                    <li><a href="/">تمامی پست ها</a></li>
+                    <li><a href="/tags.html">فهرست تگ ها</a></li>
+                    <li><a href="/tag/video.html">ویدیوها</a></li>
+                </ul>
+            </div>
+            <div class="col-md-12">
+                <p class="text-center"><small>https://shgn.ir &copy; 2021</small></p>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://shgn.ir/static/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://shgn.ir/static/ProngnRoll/prognroll.min.js"></script>
+<script>
+var jQ_3_5_1 = $.noConflict(true);
+
+    /*Scroll to top when arrow up clicked BEGIN*/
+jQ_3_5_1(window).scroll(function() {
+    var height = jQ_3_5_1(window).scrollTop();
+    if (height > 100) {
+        jQ_3_5_1('#back2Top').fadeIn();
+    } else {
+        jQ_3_5_1('#back2Top').fadeOut();
+    }
+});
+jQ_3_5_1(document).ready(function() {
+    jQ_3_5_1("#back2Top").click(function(event) {
+        event.preventDefault();
+        jQ_3_5_1("html, body").animate({ scrollTop: 0 }, "slow");
+        return false;
+    });
+});
+ /*Scroll to top when arrow up clicked END*/
+
+/* https://www.jqueryscript.net/other/jQuery-Scroll-Progress-Indicator-For-Any-Containers-ProngnRoll.html */
+
+jQ_3_5_1("body").prognroll({
+  position:"bottom",
+  height:5,
+  color:"#f54905"
+});
+
+
+</script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"
+        integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ"
+        crossorigin="anonymous"></script>
+<script>
+var $x = jQuery.noConflict();
+
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+        integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+        crossorigin="anonymous"></script>
+
+<a id="back2Top" title="Back to top" href="#">&#10148;</a>
+
+</body>
+</html>

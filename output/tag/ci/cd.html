@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!— Global site tag (gtag.js) - Google Analytics —>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-124515881-2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-124515881-2');
+
+    </script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title> پستهای تگ شده با  'ci/cd' - دست نوشته های یک تازه کار </title>
+    <meta name="description"
+          content="این وبلاگ پیرامون تجربیات، دانسته ها، اینجاب درباره linux, database, mysql, mariadb, datamart, galera cluster,apache می باشد."/>
+    <meta name="keywords"
+          content="لینوکس،لینوکس مشهد،آموزش,پایتون,پایتون مشهد,آموزش لینوکس,دیتابیس,آموزش دیتابیس,برنامه نویسی,linux,database,mysql,mariadb,datamart,galera cluster,apache,big data,dataware house,cluster,galera,percona,python,php,tutorial,debian,ubuntu,centos,arch linux,mashhad linux,iran linux,debian mashhad,"/>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+          integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+    <!--    <link href="https://rawgit.com/richleland/pygments-css/master/github.css" rel="stylesheet" crossorigin="anonymous">-->
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <style>
+    body {
+      direction: rtl;
+    }
+    p {
+        font-size: 1.3em;
+        line-height: 1.5em;
+        text-align: justify;
+      }
+    pre {
+        direction: ltr;
+        border-left: 5px solid #6ce26c;
+      }
+    .panel-body ul li{
+        margin: 10px 0;
+    }
+    a {
+        color: #4608ad;
+      }
+    .panel-group .panel {
+        margin-bottom: 5px;
+    }
+    .panel-primary > .panel-heading {
+        background-color: #4608ad;
+    }
+    .navbar-default {
+        background-color: #4608ad;
+    }
+    .navbar-default .navbar-brand {
+        color: #ffffff;
+    }
+    .navbar-default .navbar-nav > li > a {
+        color: #ffffff;
+        font-size:initial;
+    }
+    .navbar-default .navbar-nav > li > a:hover{
+        color: #00ffd9;
+    }
+    .navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:focus, .navbar-default .navbar-nav > .open > a:hover{
+        color: #4608ad;
+    }
+
+    .dropdown-menu{
+        background-color: #4608ad;
+        color:#ffffff;
+        font-size:initial;
+    }
+    .dropdown-menu > li > a{
+        color:#ffffff;
+        font-size:initial;
+    }
+    .dropdown-menu > li > a:hover{
+        color: #00ffd9;
+        background-color:#4608ad;
+    }
+
+    #back2Top {
+    width: 40px;
+    line-height: 40px;
+    overflow: hidden;
+    z-index: 999;
+    display: none;
+    cursor: pointer;
+    -moz-transform: rotate(270deg);
+    -webkit-transform: rotate(270deg);
+    -o-transform: rotate(270deg);
+    -ms-transform: rotate(270deg);
+    transform: rotate(270deg);
+    position: fixed;
+    bottom: 50px;
+    right: 0;
+    background-color: #DDD;
+    text-align: center;
+    font-size: 30px;
+    text-decoration: none;
+    }
+    #back2Top:hover {
+        background-color: #DDF;
+        color: #000;
+    }
+
+
+    </style>
+</head>
+<body>
+
+<a id="top"></a>
+<div id="scroollto1"></div>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header navbar-right">
+            <a class="navbar-brand" href="/">دست نوشته های یک تازه کار</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            
+            
+            <li><a href="https://shgn.ir/about.html" title="درباره ما">درباره ما</a></li>
+            
+            <li><a href="https://shgn.ir/contacus.html" title="ارتباط با ما">ارتباط با ما</a></li>
+            
+            <li><a href="https://shgn.ir/links.html" title="لینک های مفید">لینک های مفید</a></li>
+            
+            <li><a href="https://shgn.ir/tag/database.html" title="دیتابیس">دیتابیس</a></li>
+            
+            <li><a href="https://shgn.ir/tag/linux.html" title="لینوکس">لینوکس</a></li>
+            
+            <li class="dropdown">
+                <a href="https://shgn.ir/tag/learn.html" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                   aria-expanded="false">آموزش <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="https://shgn.ir/tag/lpic1.html">دوره LPIC1</a></li>
+                </ul>
+            </li>
+            
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-9">
+            
+    <div class="page-header">
+      <h2>پستهای تگ شده با  'ci/cd'</h2>
+      <p class="lead"></p>
+    </div>
+      
+        <h3><a href="/2021-04-13/drone-ci.html" title="نصب و راه اندازی Drone CI.">نصب و راه اندازی Drone CI.</a></h3>
+            
+                <a href="/tag/linux.html">
+                    <span class="label label-default">linux</span></a>
+            
+                <a href="/tag/devops.html">
+                    <span class="label label-default">devops</span></a>
+            
+                <a href="/tag/ci/cd.html">
+                    <span class="label label-default">ci/cd</span></a>
+            
+                <a href="/tag/drone.html">
+                    <span class="label label-default">drone</span></a>
+            
+                <a href="/tag/tutorial.html">
+                    <span class="label label-default">tutorial</span></a>
+            
+                <a href="/tag/docker.html">
+                    <span class="label label-default">docker</span></a>
+            
+        <p>نصب و راه اندازی Drone CI.</p>
+        <hr />
+      
+      
+              <ul class="pagination">
+                
+                    
+                        <li class="active"><a href="#">0 <span class="sr-only">(current)</span></a></li>
+                    
+                
+              </ul>
+      
+
+        </div>
+        <div class="col-md-3">
+            <div class="panel-group">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        من در stackexchange.com
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-md-3 col-md-offset-9">
+                            <a href="https://stackexchange.com/users/887576" target="_blank">
+                                <img src="https://stackexchange.com/users/flair/887576.png" width="208" height="58"
+                                     alt="profile for shgnInc on Stack Exchange, a network of free, community-driven Q&A sites"
+                                     title="profile for shgnInc on Stack Exchange, a network of free, community-driven Q&A sites">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="panel-group">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            مطالب مهم
+                        </div>
+                        <div class="panel-body">
+                            <ul>
+                                <li><a href="https://shgn.ir/2021-03-07/galera-cluster-debian-10.html"
+                                       title="نصب Galer Cluster بر روی debian 10">نصب Galer Cluster بر روی debian 10</a>
+                                </li>
+                                <li><a href="https://shgn.ir/2020-08-15/installing_docker_on_debian.html"
+                                       title="نصب Docker روی Debian 10">نصب Docker روی Debian 10</a></li>
+                                <li><a href="https://shgn.ir/2018-09-05/Mysql-JSON-DataType.html"
+                                       title="معرفی نوع داده JSON در دیتابیس Mysql-Mariadb">معرفی نوع داده JSON در
+                                    دیتابیس Mysql-Mariadb</a></li>
+                                <li><a href="https://shgn.ir/2018-07-23/ssh_automatic_login.html"
+                                       title="لاگین خودکار با SSH">لاگین خودکار با SSH</a></li>
+                                <li><a href="https://shgn.ir/2017-08-16/galera_cluster.html"
+                                       title="نصب Galer Cluster بر روی debian8">نصب Galer Cluster بر روی debian8</a>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-group">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            Linux ISO Images
+                        </div>
+                        <div class="panel-body">
+                            <ul>
+                                <li><a href="https://shgn.ir/images/gparted-live-1.1.0-1-amd64.iso"
+                                       title="gparted-live-1.1.0-1-amd64">GParted Live CD/USB/HD/PXE Bootable Image</a></li>
+                                <li><a href="https://shgn.ir/images/debian-10.3.0-amd64-xfce-CD-1.iso"
+                                       title="debian-10.3.0-amd64-xfce-CD-1">Debian-10-amd64-xfce-CD</a></li>
+                                <li><a href="https://shgn.ir/images/debian-9.13.0-amd64-xfce-CD-1.iso"
+                                       title="debian-9.13.0-amd64-xfce-CD-1">debian-9-amd64-xfce-CD</a></li>
+                                <li><a href="https://shgn.ir/images/ubuntu-18.04.4-desktop-amd64.iso"
+                                       title="ubuntu-18.04.4-desktop-amd64">Ubuntu Desktop</a></li>
+                                <li><a href="https://shgn.ir/images/ubuntu-18.04.4-live-server-amd64.iso"
+                                       title="ubuntu-18.04.4-live-server-amd64">Ubuntu Server</a></li>
+                                <li><a href="https://shgn.ir/images/CentOS-7-aarch64-Minimal-1908.iso"
+                                       title="CentOS-7-aarch64-Minimal-1908">CentOS-7-aarch64-Minimal-1908</a></li>
+                                <li><a href="https://shgn.ir/images/CentOS-8.2.2004-x86_64-minimal.iso"
+                                       title="CentOS-8.2.2004-x86_64-minimal">CentOS-8.2.2004-x86_64-minimal</a></li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-group">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            تازه ترین مطالب
+                        </div>
+                        <div class="panel-body">
+                            <ul>
+                                
+                                <li><a href="/2021-04-13/drone-ci.html" title="نصب و راه اندازی Drone CI.">نصب و راه اندازی Drone CI.</a></li>
+                                
+                            </ul>
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr/>
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                
+                <strong>پیشنهادی های</strong>
+                <ul>
+                    
+                    <li><a href="https://github.com/shgninc">GitHub</a></li>
+                    
+                    <li><a href="https://www.instagram.com/shgninc/">Instagram</a></li>
+                    
+                    <li><a href="http://vasni.ir/">Vasni</a></li>
+                    
+                    <li><a href="https://virgool.io/@shgninc">Virgool</a></li>
+                    
+                    <li><a href="https://twitter.com/shahcheraghian">Twiteer</a></li>
+                    
+                    <li><a href="https://shgn.ir/yii2/">معرفی Yii2</a></li>
+                    
+                </ul>
+                
+            </div>
+            <div class="col-md-6">
+                <strong>دسترسی های ساده</strong>
+                <ul>
+                    <li><a href="/">تمامی پست ها</a></li>
+                    <li><a href="/tags.html">فهرست تگ ها</a></li>
+                    <li><a href="/tag/video.html">ویدیوها</a></li>
+                </ul>
+            </div>
+            <div class="col-md-12">
+                <p class="text-center"><small>https://shgn.ir &copy; 2021</small></p>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://shgn.ir/static/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://shgn.ir/static/ProngnRoll/prognroll.min.js"></script>
+<script>
+var jQ_3_5_1 = $.noConflict(true);
+
+    /*Scroll to top when arrow up clicked BEGIN*/
+jQ_3_5_1(window).scroll(function() {
+    var height = jQ_3_5_1(window).scrollTop();
+    if (height > 100) {
+        jQ_3_5_1('#back2Top').fadeIn();
+    } else {
+        jQ_3_5_1('#back2Top').fadeOut();
+    }
+});
+jQ_3_5_1(document).ready(function() {
+    jQ_3_5_1("#back2Top").click(function(event) {
+        event.preventDefault();
+        jQ_3_5_1("html, body").animate({ scrollTop: 0 }, "slow");
+        return false;
+    });
+});
+ /*Scroll to top when arrow up clicked END*/
+
+/* https://www.jqueryscript.net/other/jQuery-Scroll-Progress-Indicator-For-Any-Containers-ProngnRoll.html */
+
+jQ_3_5_1("body").prognroll({
+  position:"bottom",
+  height:5,
+  color:"#f54905"
+});
+
+
+</script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"
+        integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ"
+        crossorigin="anonymous"></script>
+<script>
+var $x = jQuery.noConflict();
+
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+        integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+        crossorigin="anonymous"></script>
+
+<a id="back2Top" title="Back to top" href="#">&#10148;</a>
+
+</body>
+</html>
