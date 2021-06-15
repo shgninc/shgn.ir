@@ -213,7 +213,7 @@
 <pre class="codehilite"><code>version: &quot;3.5&quot;
 services:
   drone-server:
-    image: hub.gap.im/ops/drone:1
+    image: drone:1
     container_name: drone-server
     ports:
       - 8081:80
@@ -271,7 +271,7 @@ services:
 <pre class="codehilite"><code>version: &quot;3.5&quot;
 services:
      drone-agent:
-     image: hub.gap.im/ops/drone-runner-docker:1
+     image: drone-runner-docker:1
      container_name: dron-agent
      depends_on:
        - drone-server
@@ -292,7 +292,7 @@ services:
 <h2>نتیجه گیری</h2>
 <p>تا اینجا با هم یک سری مفاهیم اولیه <code>CI/CD</code> و <code>DevOps</code> آشنا شدیم و بعد از آن سرور <code>drone</code> را در بستر 
 <code>Docker</code> برای <code>Gitlab</code> راه اندازی کردیم و سپس اجرا کننده آن را نیز با <code>Docker</code> و روی <code>Docker</code> راه اندازی شد.</p>
-<p>در گام بعدی </p>
+<p>در گام بعدی قصد داریم تا به توضیح فایل کنترل کننده <code>CI/CD</code> برای <code>drone</code> بپردازیم</p>
       </section>
       <div>
         برچسب ها:
