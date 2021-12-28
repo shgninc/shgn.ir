@@ -15,11 +15,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title> فهرست تگ ها - دست نوشته های یک تازه کار </title>
+    <title> آموزش برنامه نویسی Flask - فصل۴ - دست نوشته های یک تازه کار </title>
     <meta name="description"
-          content="این وبلاگ پیرامون تجربیات، دانسته ها، اینجاب درباره linux, database, mysql, mariadb, datamart, galera cluster,apache می باشد."/>
+          content="یکی از امکانات `Flask` اتصال خروجی یک تابع به یک آدرس در قالب `HTML` می باشد."/>
     <meta name="keywords"
-          content="لینوکس،لینوکس مشهد،آموزش,پایتون,پایتون مشهد,آموزش لینوکس,دیتابیس,آموزش دیتابیس,برنامه نویسی,linux,database,mysql,mariadb,datamart,galera cluster,apache,big data,dataware house,cluster,galera,percona,python,php,tutorial,debian,ubuntu,centos,arch linux,mashhad linux,iran linux,debian mashhad,"/>
+          content="لینوکس،لینوکس مشهد،آموزش,پایتون,پایتون مشهد,آموزش لینوکس,دیتابیس,آموزش دیتابیس,برنامه نویسی,linux,database,mysql,mariadb,datamart,galera cluster,apache,big data,dataware house,cluster,galera,percona,python,php,tutorial,debian,ubuntu,centos,arch linux,mashhad linux,iran linux,debian mashhad, python, flask, programming, tutorial"/>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
@@ -156,122 +156,179 @@
     <div class="row">
         <div class="col-md-9">
             
-
+    <div itemscope itemtype="http://schema.org/NewsArticle">
+    <meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="http://https://shgn.ir/2021-12-27/Flask-tutorial-04.html"/>
     <div class="page-header">
-      <h1>فهرست تگ ها</h1>
-      <p class="lead"></p>
+      <h3 itemprop="name">آموزش برنامه نویسی Flask - فصل۴</h3>
+      
+      
+        <small>
+          <p class="text-right">
+            ارسال شده <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+                توسط <span itemprop="name">سید سجاد شاهچراغیان</span>
+              </span>
+              در تاریخ <span itemprop="datePublished">2021-12-27</span>
+          </p>
+        </small>
+      
     </div>
-      <ul>
+      <section itemprop="articleBody">
+        <p>قبل شروع باید بابت ایجاد تأخیر تولید این قسمت نسبت به <a href="https://shgn.ir/2018-09-30/Flask-tutorial-03.html">قمست۳</a> 
+پوزش بخوام، درگیری و مشلغه کاری خیلی اجازه تولید این قسمت را نمی داد.</p>
+<p>همچنین بقیه آموزها را می تونید از <a href="http://localhost:8000/tag/flask.html">از اینجا</a> مشاهده کنید.</p>
+<p>یکی از امکانات <code>Flask</code> اتصال خروجی یک تابع به یک آدرس در قالب <code>HTML</code> می باشد. برای نمونه، در کد پیش رو، تابع  <code>hello()</code> مقدار <code>Hello World</code> را به همراه تگ های <code>Html</code> قابل نمایش می کند.</p>
+<pre class="codehilite"><code>from flask import Flask
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    return '&lt;html&gt;&lt;body&gt;&lt;h1&gt;Hello World&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;'
+
+if __name__ == '__main__':
+    app.run(debug = True)
+</code></pre>
+
+<p>هر چند، تولید محتوای <code>HTML</code> با پایتون، به ویژه زمانی که نیازمند مقادیر متغییرها، و المان های موجود در زبان پایتون، از قبیل چرخه ها، یا شروط، مایه زحمت است.</p>
+<p>اینجا، جایی است که می توان از قابلیت های موتور قالب <code>Jinja2</code> بهره برد. به جای استفاده از کدهای <code>HTML</code>، می توان با استفاده از تابع <code>render_template()</code> و یک فایل <code>HTML</code> جداگانه این موضوع را انجام داد.</p>
+<pre class="codehilite"><code>from flask import Flask
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    return render_template(‘hello.html’)
+
+if __name__ == '__main__':
+    app.run(debug = True)
+</code></pre>
+
+<p>در این حالت،<code>Flask</code> سعی دارد تا فایل HTML را در مسیر فایل قالب، در مسیری که اسکریپت جاری اجرا شده است را پیدا و اجرا نماید. </p>
+<pre class="codehilite"><code>Application folder
+----Hello.py
+----templates
+    ----hello.html
+</code></pre>
+
+<p>اصطلاح <code>سیستم قالب وب</code> اشاره دارد به طراحی و تولید یک اسکریپت <code>HTML</code> که در آن مقادیر متغییرها می توانند به صورت پویا جانمایی شوند. یک سیستم قالب وب، شامل یک موتور تولید قالب، برخی منابع داده و یک پردازشگر قالب می باشد.</p>
+<p>برنامه <code>Flask</code> از <code>Jinja2</code> به عنوان یک موتور قالب استفاده می کند. یک قالب وب شامل مکان هایی نگهداری برای متغییرها و عبارات در لابلای تگ های <code>HTML</code>، جایی که مقادیر آنها زمانی که صفحه قالب نمایش داده می شود، جایگزاری می شوند.</p>
+<p>برای نمونه:</p>
+<pre class="codehilite"><code>&lt;!doctype html&gt;
+&lt;html&gt;
+    &lt;body&gt;
+
+        &lt;h1&gt;Hello {{ name }}!&lt;/h1&gt;
+
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<p>سپس، اسکریپت زیر را در پایتون اجرا کنید:</p>
+<pre class="codehilite"><code>from flask import Flask, render_template
+app = Flask(__name__)
+
+@app.route('/hello/&lt;user&gt;')
+def hello_name(user):
+    return render_template('hello.html', name = user)
+
+if __name__ == '__main__':
+    app.run(debug = True)
+</code></pre>
+
+<p>زمانی که سرور شروع به اجرا کرد، مرورگر را اجرا و آدرس 
+<code>http://localhost:5000/hello/mvl</code>
+را پیمایش کنید.</p>
+<p>قسمت متغییر <code>{{ name }}</code> در آدرس در کد جایگزایری خواهد شد.</p>
+<p><img alt="web_template" src="web_templating_system_example.jpg" /></p>
+<p>موتور قالب <code>Jinja2</code> از جداکننده های زیر برای تمایز از <code>HTML</code> استفاده می کند:</p>
+<ul>
+<li>{% ... %} برای دستورات</li>
+<li>{{ ... }} برای عبارات تا در قالب چاپ شوند</li>
+<li>{# ... #} برای کامنت ها و در خروجی تأثیر ندارند</li>
+<li># ... ## برای دستورات یک خطی </li>
+</ul>
+<p>در مثال پیش رو، انحوه استفاده از عبارات شرطی در قالب نمایش داده شده است. آدرسی که به تابع hello() اشاره دارد مقادیر عددی قبول می کند. در فایل <code>hello.html</code> مقدار عددی متغیر <code>mark</code> دریافت شده، مقایسه شده (بیشتر یا کمتر از ۵۰) و <code>HTML</code> متناسب نمایش داده می شود.</p>
+<p>اسکریپت مربوطه به پایتون به صورت زیر است:</p>
+<pre class="codehilite"><code>from flask import Flask, render_template
+app = Flask(__name__)
+
+@app.route('/hello/&lt;int:score&gt;')
+def hello_name(score):
+    return render_template('hello.html', marks = score)
+
+if __name__ == '__main__':
+    app.run(debug = True)
+</code></pre>
+
+<p>کد مربوط به <code>HTML</code> به صورت زیر است:</p>
+<pre class="codehilite"><code>&lt;!doctype html&gt;
+&lt;html&gt;
+    &lt;body&gt;
+        {% if marks&gt;50 %}
+            &lt;h1&gt; Your result is pass!&lt;/h1&gt;
+        {% else %}
+            &lt;h1&gt;Your result is fail&lt;/h1&gt;
+        {% endif %}
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<p>همچنین می توان از چرخه های پایتون در قالب استفاده نمود. در اسکریپت پیش رو، تابع result() زمانی که آدرس http://localhost:5000/result فراخوانی شود، یک شئ <code>dictionary</code> به قالب result.html ارسال کرده </p>
+<p>در فایل result.html یک حلقه for جهت نمایش مقادیر در قالب <code>HTML</code> به صورت کلید مقدار استفاده شده است. </p>
+<p>کد پایتون:</p>
+<pre class="codehilite"><code>from flask import Flask, render_template
+app = Flask(__name__)
+
+@app.route('/result')
+def result():
+    dict = {'phy':50,'che':60,'maths':70}
+    return render_template('result.html', result = dict)
+
+if __name__ == '__main__':
+    app.run(debug = True)
+</code></pre>
+
+<p>و کد <code>HTML</code></p>
+<pre class="codehilite"><code>&lt;!doctype html&gt;
+&lt;html&gt;
+    &lt;body&gt;
+        &lt;table border = 1&gt;
+            {% for key, value in result.items() %}
+            &lt;tr&gt;
+                &lt;th&gt; {{ key }} &lt;/th&gt;
+                &lt;td&gt; {{ value }} &lt;/td&gt;
+            &lt;/tr&gt;
+            {% endfor %}
+        &lt;/table&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<p>سپس برنامه را اجرا و آدرس 
+http://localhost:5000/result 
+را در مرورگر برای مشاهده نتیجه باز کنید.</p>
+<p><img alt="for_loop_jinja" src="table_template_example.jpg" /></p>
+<p>پس در نتیجه، تا حدی با نحوه استفاده از موتور قالب <code>Jinja2</code> آشنا شدیم. البته این موتور قالب ویژگی های خیلی بیشترو کاربردی دارد.</p>
+      </section>
+      <div>
+        برچسب ها:
       
-        <li><a href="/tag/linux.html">linux</a> - 26</li>
+        <a href="/tag/python.html">
+            <span class="label label-default" itemprop="about">python</span>
+        </a>
       
-        <li><a href="/tag/database.html">database</a> - 8</li>
+        <a href="/tag/flask.html">
+            <span class="label label-default" itemprop="about">flask</span>
+        </a>
       
-        <li><a href="/tag/video.html">video</a> - 7</li>
+        <a href="/tag/programming.html">
+            <span class="label label-default" itemprop="about">programming</span>
+        </a>
       
-        <li><a href="/tag/ubuntu.html">ubuntu</a> - 6</li>
+        <a href="/tag/tutorial.html">
+            <span class="label label-default" itemprop="about">tutorial</span>
+        </a>
       
-        <li><a href="/tag/mariadb.html">mariadb</a> - 6</li>
-      
-        <li><a href="/tag/learn.html">learn</a> - 6</li>
-      
-        <li><a href="/tag/lpic1.html">lpic1</a> - 6</li>
-      
-        <li><a href="/tag/mysql.html">mysql</a> - 5</li>
-      
-        <li><a href="/tag/tutorial.html">tutorial</a> - 5</li>
-      
-        <li><a href="/tag/galera.html">galera</a> - 4</li>
-      
-        <li><a href="/tag/python.html">python</a> - 4</li>
-      
-        <li><a href="/tag/flask.html">flask</a> - 4</li>
-      
-        <li><a href="/tag/programming.html">programming</a> - 4</li>
-      
-        <li><a href="/tag/sql.html">sql</a> - 3</li>
-      
-        <li><a href="/tag/cluster.html">cluster</a> - 3</li>
-      
-        <li><a href="/tag/terminal.html">terminal</a> - 2</li>
-      
-        <li><a href="/tag/debian.html">debian</a> - 2</li>
-      
-        <li><a href="/tag/ssh.html">ssh</a> - 2</li>
-      
-        <li><a href="/tag/galera_cluster.html">galera_cluster</a> - 2</li>
-      
-        <li><a href="/tag/docker.html">docker</a> - 2</li>
-      
-        <li><a href="/tag/php.html">php</a> - 2</li>
-      
-        <li><a href="/tag/stored_procedure.html">stored_procedure</a> - 2</li>
-      
-        <li><a href="/tag/container.html">container</a> - 2</li>
-      
-        <li><a href="/tag/virtualization.html">virtualization</a> - 2</li>
-      
-        <li><a href="/tag/apt.html">apt</a> - 1</li>
-      
-        <li><a href="/tag/kernel.html">kernel</a> - 1</li>
-      
-        <li><a href="/tag/live.html">live</a> - 1</li>
-      
-        <li><a href="/tag/json.html">json</a> - 1</li>
-      
-        <li><a href="/tag/noSql.html">noSql</a> - 1</li>
-      
-        <li><a href="/tag/microsoft.html">microsoft</a> - 1</li>
-      
-        <li><a href="/tag/windows.html">windows</a> - 1</li>
-      
-        <li><a href="/tag/recovery.html">recovery</a> - 1</li>
-      
-        <li><a href="/tag/fonts.html">fonts</a> - 1</li>
-      
-        <li><a href="/tag/persian.html">persian</a> - 1</li>
-      
-        <li><a href="/tag/devops.html">devops</a> - 1</li>
-      
-        <li><a href="/tag/ci/cd.html">ci/cd</a> - 1</li>
-      
-        <li><a href="/tag/drone.html">drone</a> - 1</li>
-      
-        <li><a href="/tag/nautilus.html">nautilus</a> - 1</li>
-      
-        <li><a href="/tag/gnome.html">gnome</a> - 1</li>
-      
-        <li><a href="/tag/KDE.html">KDE</a> - 1</li>
-      
-        <li><a href="/tag/GNU.html">GNU</a> - 1</li>
-      
-        <li><a href="/tag/opensource.html">opensource</a> - 1</li>
-      
-        <li><a href="/tag/gtk.html">gtk</a> - 1</li>
-      
-        <li><a href="/tag/download.html">download</a> - 1</li>
-      
-        <li><a href="/tag/email.html">email</a> - 1</li>
-      
-        <li><a href="/tag/monitoring.html">monitoring</a> - 1</li>
-      
-        <li><a href="/tag/utility.html">utility</a> - 1</li>
-      
-        <li><a href="/tag/optimization.html">optimization</a> - 1</li>
-      
-        <li><a href="/tag/pdo.html">pdo</a> - 1</li>
-      
-        <li><a href="/tag/image.html">image</a> - 1</li>
-      
-        <li><a href="/tag/iso.html">iso</a> - 1</li>
-      
-        <li><a href="/tag/mount.html">mount</a> - 1</li>
-      
-        <li><a href="/tag/shell.html">shell</a> - 1</li>
-      
-        <li><a href="/tag/kenel.html">kenel</a> - 1</li>
-      
-      </ul>
+    </div>
+    </div>
 
         </div>
         <div class="col-md-3">
@@ -352,114 +409,6 @@
                         </div>
                         <div class="panel-body">
                             <ul>
-                                
-                                <li><a href="//tag/linux.html" title="linux">linux</a></li>
-                                
-                                <li><a href="//tag/database.html" title="database">database</a></li>
-                                
-                                <li><a href="//tag/video.html" title="video">video</a></li>
-                                
-                                <li><a href="//tag/ubuntu.html" title="ubuntu">ubuntu</a></li>
-                                
-                                <li><a href="//tag/mariadb.html" title="mariadb">mariadb</a></li>
-                                
-                                <li><a href="//tag/learn.html" title="learn">learn</a></li>
-                                
-                                <li><a href="//tag/lpic1.html" title="lpic1">lpic1</a></li>
-                                
-                                <li><a href="//tag/mysql.html" title="mysql">mysql</a></li>
-                                
-                                <li><a href="//tag/tutorial.html" title="tutorial">tutorial</a></li>
-                                
-                                <li><a href="//tag/galera.html" title="galera">galera</a></li>
-                                
-                                <li><a href="//tag/python.html" title="python">python</a></li>
-                                
-                                <li><a href="//tag/flask.html" title="flask">flask</a></li>
-                                
-                                <li><a href="//tag/programming.html" title="programming">programming</a></li>
-                                
-                                <li><a href="//tag/sql.html" title="sql">sql</a></li>
-                                
-                                <li><a href="//tag/cluster.html" title="cluster">cluster</a></li>
-                                
-                                <li><a href="//tag/terminal.html" title="terminal">terminal</a></li>
-                                
-                                <li><a href="//tag/debian.html" title="debian">debian</a></li>
-                                
-                                <li><a href="//tag/ssh.html" title="ssh">ssh</a></li>
-                                
-                                <li><a href="//tag/galera_cluster.html" title="galera_cluster">galera_cluster</a></li>
-                                
-                                <li><a href="//tag/docker.html" title="docker">docker</a></li>
-                                
-                                <li><a href="//tag/php.html" title="php">php</a></li>
-                                
-                                <li><a href="//tag/stored_procedure.html" title="stored_procedure">stored_procedure</a></li>
-                                
-                                <li><a href="//tag/container.html" title="container">container</a></li>
-                                
-                                <li><a href="//tag/virtualization.html" title="virtualization">virtualization</a></li>
-                                
-                                <li><a href="//tag/apt.html" title="apt">apt</a></li>
-                                
-                                <li><a href="//tag/kernel.html" title="kernel">kernel</a></li>
-                                
-                                <li><a href="//tag/live.html" title="live">live</a></li>
-                                
-                                <li><a href="//tag/json.html" title="json">json</a></li>
-                                
-                                <li><a href="//tag/noSql.html" title="noSql">noSql</a></li>
-                                
-                                <li><a href="//tag/microsoft.html" title="microsoft">microsoft</a></li>
-                                
-                                <li><a href="//tag/windows.html" title="windows">windows</a></li>
-                                
-                                <li><a href="//tag/recovery.html" title="recovery">recovery</a></li>
-                                
-                                <li><a href="//tag/fonts.html" title="fonts">fonts</a></li>
-                                
-                                <li><a href="//tag/persian.html" title="persian">persian</a></li>
-                                
-                                <li><a href="//tag/devops.html" title="devops">devops</a></li>
-                                
-                                <li><a href="//tag/ci/cd.html" title="ci/cd">ci/cd</a></li>
-                                
-                                <li><a href="//tag/drone.html" title="drone">drone</a></li>
-                                
-                                <li><a href="//tag/nautilus.html" title="nautilus">nautilus</a></li>
-                                
-                                <li><a href="//tag/gnome.html" title="gnome">gnome</a></li>
-                                
-                                <li><a href="//tag/KDE.html" title="KDE">KDE</a></li>
-                                
-                                <li><a href="//tag/GNU.html" title="GNU">GNU</a></li>
-                                
-                                <li><a href="//tag/opensource.html" title="opensource">opensource</a></li>
-                                
-                                <li><a href="//tag/gtk.html" title="gtk">gtk</a></li>
-                                
-                                <li><a href="//tag/download.html" title="download">download</a></li>
-                                
-                                <li><a href="//tag/email.html" title="email">email</a></li>
-                                
-                                <li><a href="//tag/monitoring.html" title="monitoring">monitoring</a></li>
-                                
-                                <li><a href="//tag/utility.html" title="utility">utility</a></li>
-                                
-                                <li><a href="//tag/optimization.html" title="optimization">optimization</a></li>
-                                
-                                <li><a href="//tag/pdo.html" title="pdo">pdo</a></li>
-                                
-                                <li><a href="//tag/image.html" title="image">image</a></li>
-                                
-                                <li><a href="//tag/iso.html" title="iso">iso</a></li>
-                                
-                                <li><a href="//tag/mount.html" title="mount">mount</a></li>
-                                
-                                <li><a href="//tag/shell.html" title="shell">shell</a></li>
-                                
-                                <li><a href="//tag/kenel.html" title="kenel">kenel</a></li>
                                 
                             </ul>
 
