@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!— Global site tag (gtag.js) - Google Analytics —>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-124515881-2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-124515881-2');
+
+    </script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title> Configure IPsec/L2TP VPN Clients - دست نوشته های یک تازه کار </title>
+    <meta name="description"
+          content="Get your computer or device to use the VPN."/>
+    <meta name="keywords"
+          content="لینوکس،لینوکس مشهد،آموزش,پایتون,پایتون مشهد,آموزش لینوکس,دیتابیس,آموزش دیتابیس,برنامه نویسی,linux,database,mysql,mariadb,datamart,galera cluster,apache,big data,dataware house,cluster,galera,percona,python,php,tutorial,debian,ubuntu,centos,arch linux,mashhad linux,iran linux,debian mashhad, vpn, linux, l2tp"/>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+          integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+    <!--    <link href="https://rawgit.com/richleland/pygments-css/master/github.css" rel="stylesheet" crossorigin="anonymous">-->
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <style>
+    body {
+      direction: ltr;
+    }
+    p {
+        font-size: 1.3em;
+        line-height: 1.5em;
+        text-align: justify;
+      }
+    pre {
+        direction: ltr;
+        border-left: 5px solid #6ce26c;
+      }
+    .panel-body ul li{
+        margin: 10px 0;
+    }
+    a {
+        color: #4608ad;
+      }
+    .panel-group .panel {
+        margin-bottom: 5px;
+    }
+    .panel-primary > .panel-heading {
+        background-color: #4608ad;
+    }
+    .navbar-default {
+        background-color: #4608ad;
+    }
+    .navbar-default .navbar-brand {
+        color: #ffffff;
+    }
+    .navbar-default .navbar-nav > li > a {
+        color: #ffffff;
+        font-size:initial;
+    }
+    .navbar-default .navbar-nav > li > a:hover{
+        color: #00ffd9;
+    }
+    .navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:focus, .navbar-default .navbar-nav > .open > a:hover{
+        color: #4608ad;
+    }
+
+    .dropdown-menu{
+        background-color: #4608ad;
+        color:#ffffff;
+        font-size:initial;
+    }
+    .dropdown-menu > li > a{
+        color:#ffffff;
+        font-size:initial;
+    }
+    .dropdown-menu > li > a:hover{
+        color: #00ffd9;
+        background-color:#4608ad;
+    }
+
+    #back2Top {
+    width: 40px;
+    line-height: 40px;
+    overflow: hidden;
+    z-index: 999;
+    display: none;
+    cursor: pointer;
+    -moz-transform: rotate(270deg);
+    -webkit-transform: rotate(270deg);
+    -o-transform: rotate(270deg);
+    -ms-transform: rotate(270deg);
+    transform: rotate(270deg);
+    position: fixed;
+    bottom: 50px;
+    right: 0;
+    background-color: #DDD;
+    text-align: center;
+    font-size: 30px;
+    text-decoration: none;
+    }
+    #back2Top:hover {
+        background-color: #DDF;
+        color: #000;
+    }
+
+
+    </style>
+</head>
+<body>
+
+<a id="top"></a>
+<div id="scroollto1"></div>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header navbar-right">
+            <a class="navbar-brand" href="/">دست نوشته های یک تازه کار</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            
+            
+            <li><a href="https://shgn.ir/about.html" title="درباره ما">درباره ما</a></li>
+            
+            <li><a href="https://shgn.ir/contacus.html" title="ارتباط با ما">ارتباط با ما</a></li>
+            
+            <li><a href="https://shgn.ir/links.html" title="لینک های مفید">لینک های مفید</a></li>
+            
+            <li><a href="https://shgn.ir/tag/database.html" title="دیتابیس">دیتابیس</a></li>
+            
+            <li><a href="https://shgn.ir/tag/linux.html" title="لینوکس">لینوکس</a></li>
+            
+            <li class="dropdown">
+                <a href="https://shgn.ir/tag/learn.html" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                   aria-expanded="false">آموزش <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="https://shgn.ir/tag/lpic1.html">دوره LPIC1</a></li>
+                </ul>
+            </li>
+            
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-9">
+            
+    <div itemscope itemtype="http://schema.org/Article">
+    <meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="http://https://shgn.ir/vpnClient.html"/>
+    <div class="page-header">
+      <h1 itemprop="name">Configure IPsec/L2TP VPN Clients</h1>
+      
+    </div>
+      <section itemprop="articleBody">
+        <p>After setting up your own VPN server, follow these steps to configure your devices. IPsec/L2TP is natively supported by Android, iOS, OS X, and Windows. There is no additional software to install. Setup should only take a few minutes. In case you are unable to connect, first check to make sure the VPN credentials were entered correctly.</p>
+<hr />
+<ul>
+<li>Platforms</li>
+<li><a href="#windows">Windows</a></li>
+<li><a href="#os-x">OS X (macOS)</a></li>
+<li><a href="#android">Android</a></li>
+<li><a href="#ios">iOS (iPhone/iPad)</a></li>
+<li><a href="#chromebook">Chromebook</a></li>
+<li><a href="#linux">Linux</a></li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+</ul>
+<h2>Windows</h2>
+<blockquote>
+<p>:information_source: You may also connect using IKEv2 mode (recommended).</p>
+</blockquote>
+<h3>Windows 11</h3>
+<ol>
+<li>Right-click on the wireless/network icon in your system tray.</li>
+<li>Select <strong>Network and Internet settings</strong>, then on the page that opens, click <strong>VPN</strong>.</li>
+<li>Click the <strong>Add VPN</strong> button.</li>
+<li>Select <strong>Windows (built-in)</strong> in the <strong>VPN provider</strong> drop-down menu.</li>
+<li>Enter anything you like in the <strong>Connection name</strong> field.</li>
+<li>Enter <code>Your VPN Server IP</code> in the <strong>Server name or address</strong> field.</li>
+<li>Select <strong>L2TP/IPsec with pre-shared key</strong> in the <strong>VPN type</strong> drop-down menu.</li>
+<li>Enter <code>Your VPN IPsec PSK</code> in the <strong>Pre-shared key</strong> field.</li>
+<li>Enter <code>Your VPN Username</code> in the <strong>User name</strong> field.</li>
+<li>Enter <code>Your VPN Password</code> in the <strong>Password</strong> field.</li>
+<li>Check the <strong>Remember my sign-in info</strong> checkbox.</li>
+<li>Click <strong>Save</strong> to save the VPN connection details.</li>
+</ol>
+<p><strong>Note:</strong> This <a href="#windows-error-809">one-time registry change</a> is required if the VPN server and/or client is behind NAT (e.g. home router).</p>
+<p>To connect to the VPN: Click the <strong>Connect</strong> button, or click on the wireless/network icon in your system tray, click <strong>VPN</strong>, then select the new VPN entry and click <strong>Connect</strong>. If prompted, enter <code>Your VPN Username</code> and <code>Password</code>, then click <strong>OK</strong>. You can verify that your traffic is being routed properly by <a href="https://www.google.com/search?q=my+ip">looking up your IP address on Google</a>. It should say "Your public IP address is <code>Your VPN Server IP</code>".</p>
+<p>If you get an error when trying to connect, see <a href="#troubleshooting">Troubleshooting</a>.</p>
+<h3>Windows 10 and 8</h3>
+<ol>
+<li>Right-click on the wireless/network icon in your system tray.</li>
+<li>Select <strong>Open Network &amp; Internet settings</strong>, then on the page that opens, click <strong>Network and Sharing Center</strong>.</li>
+<li>Click <strong>Set up a new connection or network</strong>.</li>
+<li>Select <strong>Connect to a workplace</strong> and click <strong>Next</strong>.</li>
+<li>Click <strong>Use my Internet connection (VPN)</strong>.</li>
+<li>Enter <code>Your VPN Server IP</code> in the <strong>Internet address</strong> field.</li>
+<li>Enter anything you like in the <strong>Destination name</strong> field, and then click <strong>Create</strong>.</li>
+<li>Return to <strong>Network and Sharing Center</strong>. On the left, click <strong>Change adapter settings</strong>.</li>
+<li>Right-click on the new VPN entry and choose <strong>Properties</strong>.</li>
+<li>Click the <strong>Security</strong> tab. Select "Layer 2 Tunneling Protocol with IPsec (L2TP/IPSec)" for the <strong>Type of VPN</strong>.</li>
+<li>Click <strong>Allow these protocols</strong>. Check the "Challenge Handshake Authentication Protocol (CHAP)" and "Microsoft CHAP Version 2 (MS-CHAP v2)" checkboxes.</li>
+<li>Click the <strong>Advanced settings</strong> button.</li>
+<li>Select <strong>Use preshared key for authentication</strong> and enter <code>Your VPN IPsec PSK</code> for the <strong>Key</strong>.</li>
+<li>Click <strong>OK</strong> to close the <strong>Advanced settings</strong>.</li>
+<li>Click <strong>OK</strong> to save the VPN connection details.</li>
+</ol>
+<p><strong>Note:</strong> This <a href="#windows-error-809">one-time registry change</a> is required if the VPN server and/or client is behind NAT (e.g. home router).</p>
+<p>To connect to the VPN: Click on the wireless/network icon in your system tray, select the new VPN entry, and click <strong>Connect</strong>. If prompted, enter <code>Your VPN Username</code> and <code>Password</code>, then click <strong>OK</strong>. You can verify that your traffic is being routed properly by <a href="https://www.google.com/search?q=my+ip">looking up your IP address on Google</a>. It should say "Your public IP address is <code>Your VPN Server IP</code>".</p>
+<p>If you get an error when trying to connect, see <a href="#troubleshooting">Troubleshooting</a>.</p>
+<p>Alternatively, instead of following the steps above, you may create the VPN connection using these Windows PowerShell commands. Replace <code>Your VPN Server IP</code> and <code>Your VPN IPsec PSK</code> with your own values, enclosed in single quotes:</p>
+<p>```console</p>
+<h1>Disable persistent command history</h1>
+<p>Set-PSReadlineOption –HistorySaveStyle SaveNothing</p>
+<h1>Create VPN connection</h1>
+<p>Add-VpnConnection -Name 'My IPsec VPN' -ServerAddress 'Your VPN Server IP' -L2tpPsk 'Your VPN IPsec PSK' -TunnelType L2tp -EncryptionLevel Required -AuthenticationMethod Chap,MSChapv2 -Force -RememberCredential -PassThru</p>
+<h1>Ignore the data encryption warning (data is encrypted in the IPsec tunnel)</h1>
+<p>```</p>
+<h3>Windows 7, Vista and XP</h3>
+<ol>
+<li>Click on the Start Menu and go to the Control Panel.</li>
+<li>Go to the <strong>Network and Internet</strong> section.</li>
+<li>Click <strong>Network and Sharing Center</strong>.</li>
+<li>Click <strong>Set up a new connection or network</strong>.</li>
+<li>Select <strong>Connect to a workplace</strong> and click <strong>Next</strong>.</li>
+<li>Click <strong>Use my Internet connection (VPN)</strong>.</li>
+<li>Enter <code>Your VPN Server IP</code> in the <strong>Internet address</strong> field.</li>
+<li>Enter anything you like in the <strong>Destination name</strong> field.</li>
+<li>Check the <strong>Don't connect now; just set it up so I can connect later</strong> checkbox.</li>
+<li>Click <strong>Next</strong>.</li>
+<li>Enter <code>Your VPN Username</code> in the <strong>User name</strong> field.</li>
+<li>Enter <code>Your VPN Password</code> in the <strong>Password</strong> field.</li>
+<li>Check the <strong>Remember this password</strong> checkbox.</li>
+<li>Click <strong>Create</strong>, and then <strong>Close</strong>.</li>
+<li>Return to <strong>Network and Sharing Center</strong>. On the left, click <strong>Change adapter settings</strong>.</li>
+<li>Right-click on the new VPN entry and choose <strong>Properties</strong>.</li>
+<li>Click the <strong>Options</strong> tab and uncheck <strong>Include Windows logon domain</strong>.</li>
+<li>Click the <strong>Security</strong> tab. Select "Layer 2 Tunneling Protocol with IPsec (L2TP/IPSec)" for the <strong>Type of VPN</strong>.</li>
+<li>Click <strong>Allow these protocols</strong>. Check the "Challenge Handshake Authentication Protocol (CHAP)" and "Microsoft CHAP Version 2 (MS-CHAP v2)" checkboxes.</li>
+<li>Click the <strong>Advanced settings</strong> button.</li>
+<li>Select <strong>Use preshared key for authentication</strong> and enter <code>Your VPN IPsec PSK</code> for the <strong>Key</strong>.</li>
+<li>Click <strong>OK</strong> to close the <strong>Advanced settings</strong>.</li>
+<li>Click <strong>OK</strong> to save the VPN connection details.</li>
+</ol>
+<p><strong>Note:</strong> This <a href="#windows-error-809">one-time registry change</a> is required if the VPN server and/or client is behind NAT (e.g. home router).</p>
+<p>To connect to the VPN: Click on the wireless/network icon in your system tray, select the new VPN entry, and click <strong>Connect</strong>. If prompted, enter <code>Your VPN Username</code> and <code>Password</code>, then click <strong>OK</strong>. You can verify that your traffic is being routed properly by <a href="https://www.google.com/search?q=my+ip">looking up your IP address on Google</a>. It should say "Your public IP address is <code>Your VPN Server IP</code>".</p>
+<p>If you get an error when trying to connect, see <a href="#troubleshooting">Troubleshooting</a>.</p>
+<h2>OS X</h2>
+<blockquote>
+<p>:information_source: You may also connect using <a href="ikev2-howto.md">IKEv2</a> (recommended) or <a href="clients-xauth.md">IPsec/XAuth</a> mode.</p>
+</blockquote>
+<ol>
+<li>Open System Preferences and go to the Network section.</li>
+<li>Click the <strong>+</strong> button in the lower-left corner of the window.</li>
+<li>Select <strong>VPN</strong> from the <strong>Interface</strong> drop-down menu.</li>
+<li>Select <strong>L2TP over IPSec</strong> from the <strong>VPN Type</strong> drop-down menu.</li>
+<li>Enter anything you like for the <strong>Service Name</strong>.</li>
+<li>Click <strong>Create</strong>.</li>
+<li>Enter <code>Your VPN Server IP</code> for the <strong>Server Address</strong>.</li>
+<li>Enter <code>Your VPN Username</code> for the <strong>Account Name</strong>.</li>
+<li>Click the <strong>Authentication Settings</strong> button.</li>
+<li>In the <strong>User Authentication</strong> section, select the <strong>Password</strong> radio button and enter <code>Your VPN Password</code>.</li>
+<li>In the <strong>Machine Authentication</strong> section, select the <strong>Shared Secret</strong> radio button and enter <code>Your VPN IPsec PSK</code>.</li>
+<li>Click <strong>OK</strong>.</li>
+<li>Check the <strong>Show VPN status in menu bar</strong> checkbox.</li>
+<li><strong>(Important)</strong> Click the <strong>Advanced</strong> button and make sure the <strong>Send all traffic over VPN connection</strong> checkbox is checked.</li>
+<li><strong>(Important)</strong> Click the <strong>TCP/IP</strong> tab, and make sure <strong>Link-local only</strong> is selected in the <strong>Configure IPv6</strong> section.</li>
+<li>Click <strong>OK</strong> to close the Advanced settings, and then click <strong>Apply</strong> to save the VPN connection information.</li>
+</ol>
+<p>To connect to the VPN: Use the menu bar icon, or go to the Network section of System Preferences, select the VPN and choose <strong>Connect</strong>. You can verify that your traffic is being routed properly by <a href="https://www.google.com/search?q=my+ip">looking up your IP address on Google</a>. It should say "Your public IP address is <code>Your VPN Server IP</code>".</p>
+<p>If you get an error when trying to connect, see <a href="#troubleshooting">Troubleshooting</a>.</p>
+<h2>Android</h2>
+<blockquote>
+<p>:information_source: You may also connect using <a href="ikev2-howto.md">IKEv2</a> (recommended) or <a href="clients-xauth.md">IPsec/XAuth</a> mode. Android 12 only supports <a href="ikev2-howto.md">IKEv2</a> mode.</p>
+</blockquote>
+<ol>
+<li>Launch the <strong>Settings</strong> application.</li>
+<li>Tap "Network &amp; internet". Or, if using Android 7 or earlier, tap <strong>More...</strong> in the <strong>Wireless &amp; networks</strong> section.</li>
+<li>Tap <strong>VPN</strong>.</li>
+<li>Tap <strong>Add VPN Profile</strong> or the <strong>+</strong> icon at top-right of screen.</li>
+<li>Enter anything you like in the <strong>Name</strong> field.</li>
+<li>Select <strong>L2TP/IPSec PSK</strong> in the <strong>Type</strong> drop-down menu.</li>
+<li>Enter <code>Your VPN Server IP</code> in the <strong>Server address</strong> field.</li>
+<li>Leave the <strong>L2TP secret</strong> field blank.</li>
+<li>Leave the <strong>IPSec identifier</strong> field blank.</li>
+<li>Enter <code>Your VPN IPsec PSK</code> in the <strong>IPSec pre-shared key</strong> field.</li>
+<li>Tap <strong>Save</strong>.</li>
+<li>Tap the new VPN connection.</li>
+<li>Enter <code>Your VPN Username</code> in the <strong>Username</strong> field.</li>
+<li>Enter <code>Your VPN Password</code> in the <strong>Password</strong> field.</li>
+<li>Check the <strong>Save account information</strong> checkbox.</li>
+<li>Tap <strong>Connect</strong>.</li>
+</ol>
+<p>Once connected, you will see a VPN icon in the notification bar. You can verify that your traffic is being routed properly by <a href="https://www.google.com/search?q=my+ip">looking up your IP address on Google</a>. It should say "Your public IP address is <code>Your VPN Server IP</code>".</p>
+<p>If you get an error when trying to connect, see <a href="#troubleshooting">Troubleshooting</a>.</p>
+<h2>iOS</h2>
+<blockquote>
+<p>:information_source: You may also connect using <a href="ikev2-howto.md">IKEv2</a> (recommended) or <a href="clients-xauth.md">IPsec/XAuth</a> mode.</p>
+</blockquote>
+<ol>
+<li>Go to Settings -&gt; General -&gt; VPN.</li>
+<li>Tap <strong>Add VPN Configuration...</strong>.</li>
+<li>Tap <strong>Type</strong>. Select <strong>L2TP</strong> and go back.</li>
+<li>Tap <strong>Description</strong> and enter anything you like.</li>
+<li>Tap <strong>Server</strong> and enter <code>Your VPN Server IP</code>.</li>
+<li>Tap <strong>Account</strong> and enter <code>Your VPN Username</code>.</li>
+<li>Tap <strong>Password</strong> and enter <code>Your VPN Password</code>.</li>
+<li>Tap <strong>Secret</strong> and enter <code>Your VPN IPsec PSK</code>.</li>
+<li>Make sure the <strong>Send All Traffic</strong> switch is ON.</li>
+<li>Tap <strong>Done</strong>.</li>
+<li>Slide the <strong>VPN</strong> switch ON.</li>
+</ol>
+<p>Once connected, you will see a VPN icon in the status bar. You can verify that your traffic is being routed properly by <a href="https://www.google.com/search?q=my+ip">looking up your IP address on Google</a>. It should say "Your public IP address is <code>Your VPN Server IP</code>".</p>
+<p>If you get an error when trying to connect, see <a href="#troubleshooting">Troubleshooting</a>.</p>
+<h2>Chromebook</h2>
+<ol>
+<li>If you haven't already, sign in to your Chromebook.</li>
+<li>Click the status area, where your account picture appears.</li>
+<li>Click <strong>Settings</strong>.</li>
+<li>In the <strong>Internet connection</strong> section, click <strong>Add connection</strong>.</li>
+<li>Click <strong>Add OpenVPN / L2TP</strong>.</li>
+<li>Enter <code>Your VPN Server IP</code> for the <strong>Server hostname</strong>.</li>
+<li>Enter anything you like for the <strong>Service name</strong>.</li>
+<li>Make sure <strong>Provider type</strong> is <strong>L2TP/IPSec + pre-shared key</strong>.</li>
+<li>Enter <code>Your VPN IPsec PSK</code> for the <strong>Pre-shared key</strong>.</li>
+<li>Enter <code>Your VPN Username</code> for the <strong>Username</strong>.</li>
+<li>Enter <code>Your VPN Password</code> for the <strong>Password</strong>.</li>
+<li>Click <strong>Connect</strong>.</li>
+</ol>
+<p>Once connected, you will see a VPN icon overlay on the network status icon. You can verify that your traffic is being routed properly by <a href="https://www.google.com/search?q=my+ip">looking up your IP address on Google</a>. It should say "Your public IP address is <code>Your VPN Server IP</code>".</p>
+<p>If you get an error when trying to connect, see <a href="#troubleshooting">Troubleshooting</a>.</p>
+<h2>Linux</h2>
+<blockquote>
+<p>:information_source: You may also connect using <a href="ikev2-howto.md">IKEv2</a> mode (recommended).</p>
+</blockquote>
+<h3>Ubuntu Linux</h3>
+<p>Ubuntu 18.04 (and newer) users can install the <a href="https://packages.ubuntu.com/search?keywords=network-manager-l2tp-gnome">network-manager-l2tp-gnome</a> package using <code>apt</code>, then configure the IPsec/L2TP VPN client using the GUI.</p>
+<ol>
+<li>Go to Settings -&gt; Network -&gt; VPN. Click the <strong>+</strong> button.</li>
+<li>Select <strong>Layer 2 Tunneling Protocol (L2TP)</strong>.</li>
+<li>Enter anything you like in the <strong>Name</strong> field.</li>
+<li>Enter <code>Your VPN Server IP</code> for the <strong>Gateway</strong>.</li>
+<li>Enter <code>Your VPN Username</code> for the <strong>User name</strong>.</li>
+<li>Right-click the <strong>?</strong> in the <strong>Password</strong> field, select <strong>Store the password only for this user</strong>.</li>
+<li>Enter <code>Your VPN Password</code> for the <strong>Password</strong>.</li>
+<li>Leave the <strong>NT Domain</strong> field blank.</li>
+<li>Click the <strong>IPsec Settings...</strong> button.</li>
+<li>Check the <strong>Enable IPsec tunnel to L2TP host</strong> checkbox.</li>
+<li>Leave the <strong>Gateway ID</strong> field blank.</li>
+<li>Enter <code>Your VPN IPsec PSK</code> for the <strong>Pre-shared key</strong>.</li>
+<li>Expand the <strong>Advanced</strong> section.</li>
+<li>Enter <code>aes128-sha1-modp2048</code> for the <strong>Phase1 Algorithms</strong>.</li>
+<li>Enter <code>aes128-sha1</code> for the <strong>Phase2 Algorithms</strong>.</li>
+<li>Click <strong>OK</strong>, then click <strong>Add</strong> to save the VPN connection information.</li>
+<li>Turn the <strong>VPN</strong> switch ON.</li>
+</ol>
+<p>If you get an error when trying to connect, try this fix:</p>
+<h4>Unable to establish L2TP connection without UDP source port 1701</h4>
+<p>There are some L2TP/IPsec servers that will reject L2TP connections when an ephemeral source port is used (i.e. when UDP source port 1701 is not used), even though the use of an ephemeral port is considered acceptable in RFC3193, the L2TP/IPsec standard co-authored by Microsoft and Cisco.</p>
+<p>When NetworkManager-l2tp tries to start its own instance of xl2tpd or kl2tpd, if UDP port 1701 is not free (e.g. system xl2tpd is listening on UDP port 1701), an ephemeral source port will be used.</p>
+<p>The following netstat and ss command-lines can be used to check if there is system xl2tpd (or some other daemon) listening on UDP port 1701 :</p>
+<pre class="codehilite"><code>$ sudo netstat -unlp | grep 1701
+udp        0      0 0.0.0.0:1701            0.0.0.0:*                           4123/xl2tpd
+
+$ sudo ss -unlp | grep 1701
+UNCONN 0      0                               0.0.0.0:1701         0.0.0.0:*     users:((&quot;xl2tpd&quot;,pid=4123,fd=3))
+</code></pre>
+
+<p>Stopping the system xl2tpd service should free UDP port 1701 and on systemd based Linux distributions, the xl2tpd service can be stopped with the following:</p>
+<pre class="codehilite"><code>sudo systemctl stop xl2tpd.service
+</code></pre>
+
+<p>If stopping the xl2tpd service fixes your VPN connection issue, you can disable the xl2tpd service from starting at boot time with :</p>
+<pre class="codehilite"><code>sudo systemctl disable xl2tpd.service
+</code></pre>
+
+<p>There are some cases where disabling a service doesn't stop it from being started at boot time. You can check if the xl2tp service is still running with the following :</p>
+<pre class="codehilite"><code>systemctl disable xl2tpd.service
+</code></pre>
+
+<p>If it is still running, you can issue the following to ensure is isn't started at boot time:</p>
+<pre class="codehilite"><code>sudo systemctl mask xl2tpd.service
+</code></pre>
+
+<p>Once connected, you can verify that your traffic is being routed properly by <a href="https://www.google.com/search?q=my+ip">looking up your IP address on Google</a>. It should say "Your public IP address is <code>Your VPN Server IP</code>".</p>
+<h3>Fedora and CentOS</h3>
+<p>Fedora 28 (and newer) and CentOS 8/7 users can connect using <a href="clients-xauth.md">IPsec/XAuth</a> mode.</p>
+<h3>Other Linux</h3>
+<p>First check <a href="https://github.com/nm-l2tp/NetworkManager-l2tp/wiki/Prebuilt-Packages">here</a> to see if the <code>network-manager-l2tp</code> and <code>network-manager-l2tp-gnome</code> packages are available for your Linux distribution. If yes, install them (select strongSwan) and follow the instructions above. Alternatively, you may <a href="#configure-linux-vpn-clients-using-the-command-line">configure Linux VPN clients using the command line</a>.</p>
+<h2>Troubleshooting</h2>
+<ul>
+<li><a href="#windows-error-809">Windows error 809</a></li>
+<li><a href="#windows-error-789-or-691">Windows error 789 or 691</a></li>
+<li><a href="#windows-error-628-or-766">Windows error 628 or 766</a></li>
+<li><a href="#windows-10-connecting">Windows 10 connecting</a></li>
+<li><a href="#windows-10-upgrades">Windows 10 upgrades</a></li>
+<li><a href="#windows-dns-leaks-and-ipv6">Windows DNS leaks and IPv6</a></li>
+<li><a href="#android-mtumss-issues">Android MTU/MSS issues</a></li>
+<li><a href="#android-6-and-7">Android 6 and 7</a></li>
+<li><a href="#macos-send-traffic-over-vpn">macOS send traffic over VPN</a></li>
+<li><a href="#ios-13-and-macos-101511">iOS 13+ and macOS 10.15/11+</a></li>
+<li><a href="#iosandroid-sleep-mode">iOS/Android sleep mode</a></li>
+<li><a href="#debian-1110-kernel">Debian 11/10 kernel</a></li>
+<li><a href="#other-errors">Other errors</a></li>
+<li><a href="#check-logs-and-vpn-status">Check logs and VPN status</a></li>
+</ul>
+<h3>Windows error 809</h3>
+<blockquote>
+<p>Error 809: The network connection between your computer and the VPN server could not be established because the remote server is not responding. This could be because one of the network devices (e.g, firewalls, NAT, routers, etc) between your computer and the remote server is not configured to allow VPN connections. Please contact your Administrator or your service provider to determine which device may be causing the problem.</p>
+</blockquote>
+<p><strong>Note:</strong> The registry change below is only required if you use IPsec/L2TP mode to connect to the VPN. It is NOT required for the <a href="ikev2-howto.md">IKEv2</a> and <a href="clients-xauth.md">IPsec/XAuth</a> modes.</p>
+<p>To fix this error, a <a href="https://documentation.meraki.com/MX-Z/Client_VPN/Troubleshooting_Client_VPN#Windows_Error_809">one-time registry change</a> is required because the VPN server and/or client is behind NAT (e.g. home router). Download and import the <code>.reg</code> file below, or run the following from an <a href="http://www.winhelponline.com/blog/open-elevated-command-prompt-windows/">elevated command prompt</a>. <strong>You must reboot your PC when finished.</strong></p>
+<ul>
+<li>For Windows Vista, 7, 8, 10 and 11 (<a href="https://github.com/hwdsl2/vpn-extras/releases/download/v1.0.0/Fix_VPN_Error_809_Windows_Vista_7_8_10_Reboot_Required.reg">download .reg file</a>)</li>
+</ul>
+<p><code>console
+  REG ADD HKLM\SYSTEM\CurrentControlSet\Services\PolicyAgent /v AssumeUDPEncapsulationContextOnSendRule /t REG_DWORD /d 0x2 /f</code></p>
+<ul>
+<li>For Windows XP ONLY (<a href="https://github.com/hwdsl2/vpn-extras/releases/download/v1.0.0/Fix_VPN_Error_809_Windows_XP_ONLY_Reboot_Required.reg">download .reg file</a>)</li>
+</ul>
+<p><code>console
+  REG ADD HKLM\SYSTEM\CurrentControlSet\Services\IPSec /v AssumeUDPEncapsulationContextOnSendRule /t REG_DWORD /d 0x2 /f</code></p>
+<p>Although uncommon, some Windows systems disable IPsec encryption, causing the connection to fail. To re-enable it, run the following command and reboot your PC.</p>
+<ul>
+<li>For Windows XP, Vista, 7, 8, 10 and 11 (<a href="https://github.com/hwdsl2/vpn-extras/releases/download/v1.0.0/Fix_VPN_Error_809_Allow_IPsec_Reboot_Required.reg">download .reg file</a>)</li>
+</ul>
+<p><code>console
+  REG ADD HKLM\SYSTEM\CurrentControlSet\Services\RasMan\Parameters /v ProhibitIpSec /t REG_DWORD /d 0x0 /f</code></p>
+<h3>Windows error 789 or 691</h3>
+<blockquote>
+<p>Error 789: The L2TP connection attempt failed because the security layer encountered a processing error during initial negotiations with the remote computer.</p>
+<p>Error 691: The remote connection was denied because the user name and password combination you provided is not recognized, or the selected authentication protocol is not permitted on the remote access server.</p>
+</blockquote>
+<p>For error 789, click <a href="https://documentation.meraki.com/MX/Client_VPN/Troubleshooting_Client_VPN#Windows_Error_789">here</a> for troubleshooting information. For error 691, you may try removing and recreating the VPN connection, by following the instructions in this document. Make sure that the VPN credentials are entered correctly.</p>
+<h3>Windows error 628 or 766</h3>
+<blockquote>
+<p>Error 628: The connection was terminated by the remote computer before it could be completed.</p>
+<p>Error 766: A certificate could not be found. Connections that use the L2TP protocol over IPSec require the installation of a machine certificate, also known as a computer certificate.</p>
+</blockquote>
+<p>To fix these errors, please follow these steps:</p>
+<ol>
+<li>Right-click on the wireless/network icon in your system tray.</li>
+<li>Select <strong>Open Network and Sharing Center</strong>. Or, if using Windows 10 version 1709 or newer, select <strong>Open Network &amp; Internet settings</strong>, then on the page that opens, click <strong>Network and Sharing Center</strong>.</li>
+<li>On the left, click <strong>Change adapter settings</strong>. Right-click on the new VPN and choose <strong>Properties</strong>.</li>
+<li>Click the <strong>Security</strong> tab. Select "Layer 2 Tunneling Protocol with IPsec (L2TP/IPSec)" for <strong>Type of VPN</strong>.</li>
+<li>Click <strong>Allow these protocols</strong>. Check the "Challenge Handshake Authentication Protocol (CHAP)" and "Microsoft CHAP Version 2 (MS-CHAP v2)" checkboxes.</li>
+<li>Click the <strong>Advanced settings</strong> button.</li>
+<li>Select <strong>Use preshared key for authentication</strong> and enter <code>Your VPN IPsec PSK</code> for the <strong>Key</strong>.</li>
+<li>Click <strong>OK</strong> to close the <strong>Advanced settings</strong>.</li>
+<li>Click <strong>OK</strong> to save the VPN connection details.</li>
+</ol>
+<p>For reference, see <a href="images/vpn-properties.png">this screenshot</a> of the VPN connection properties dialog.</p>
+<h3>Windows 10 connecting</h3>
+<p>If using Windows 10 and the VPN is stuck on "connecting" for more than a few minutes, try these steps:</p>
+<ol>
+<li>Right-click on the wireless/network icon in your system tray.</li>
+<li>Select <strong>Open Network &amp; Internet settings</strong>, then on the page that opens, click <strong>VPN</strong> on the left.</li>
+<li>Select the new VPN entry, then click <strong>Connect</strong>. If prompted, enter <code>Your VPN Username</code> and <code>Password</code>, then click <strong>OK</strong>.</li>
+</ol>
+<h3>Windows 10 upgrades</h3>
+<p>After upgrading Windows 10 version (e.g. from 1709 to 1803), you may need to re-apply the fix above for <a href="#windows-error-809">Windows Error 809</a> and reboot.</p>
+<h3>Windows DNS leaks and IPv6</h3>
+<p>Windows 8, 10 and 11 use "smart multi-homed name resolution" by default, which may cause "DNS leaks" when using the native IPsec VPN client if your DNS servers on the Internet adapter are from the local network segment. To fix, you may either <a href="https://www.neowin.net/news/guide-prevent-dns-leakage-while-using-a-vpn-on-windows-10-and-windows-8/">disable smart multi-homed name resolution</a>, or configure your Internet adapter to use DNS servers outside your local network (e.g. 8.8.8.8 and 8.8.4.4). When finished, <a href="https://support.opendns.com/hc/en-us/articles/227988627-How-to-clear-the-DNS-Cache-">clear the DNS cache</a> and reboot your PC.</p>
+<p>In addition, if your computer has IPv6 enabled, all IPv6 traffic (including DNS queries) will bypass the VPN. Learn how to <a href="https://support.microsoft.com/en-us/help/929852/guidance-for-configuring-ipv6-in-windows-for-advanced-users">disable IPv6</a> in Windows. If you need a VPN with IPv6 support, you could instead try <a href="https://github.com/hwdsl2/openvpn-install">OpenVPN</a>.</p>
+<h3>Android MTU/MSS issues</h3>
+<p>Some Android devices have MTU/MSS issues, that they are able to connect to the VPN using IPsec/XAuth ("Cisco IPsec") mode, but cannot open websites. If you encounter this problem, try running the following commands on the VPN server. If successful, you may add these commands to <code>/etc/rc.local</code> to persist after reboot.</p>
+<pre class="codehilite"><code>iptables -t mangle -A FORWARD -m policy --pol ipsec --dir in \
+  -p tcp -m tcp --tcp-flags SYN,RST SYN -m tcpmss --mss 1361:1536 \
+  -j TCPMSS --set-mss 1360
+iptables -t mangle -A FORWARD -m policy --pol ipsec --dir out \
+  -p tcp -m tcp --tcp-flags SYN,RST SYN -m tcpmss --mss 1361:1536 \
+  -j TCPMSS --set-mss 1360
+
+echo 1 &gt; /proc/sys/net/ipv4/ip_no_pmtu_disc
+</code></pre>
+
+<p><strong>Docker users:</strong> Instead of running the commands above, you may apply this fix by adding <code>VPN_ANDROID_MTU_FIX=yes</code> to your env file, then re-create the Docker container.</p>
+<p>References: <a href="https://wiki.strongswan.org/projects/strongswan/wiki/ForwardingAndSplitTunneling#MTUMSS-issues">[1]</a> <a href="https://www.zeitgeist.se/2013/11/26/mtu-woes-in-ipsec-tunnels-how-to-fix/">[2]</a>.</p>
+<h3>Android 6 and 7</h3>
+<p>If your Android 6.x or 7.x device cannot connect, try these steps:</p>
+<ol>
+<li>Tap the "Settings" icon next to your VPN profile. Select "Show advanced options" and scroll down to the bottom. If the option "Backward compatible mode" exists (<a href="images/vpn-profile-Android.png">see screenshot</a>), enable it and reconnect the VPN. If not, try the next step.</li>
+<li>Edit <code>/etc/ipsec.conf</code> on the VPN server. Find the line <code>sha2-truncbug</code> and toggle its value. i.e. Replace <code>sha2-truncbug=no</code> with <code>sha2-truncbug=yes</code>, or replace <code>sha2-truncbug=yes</code> with <code>sha2-truncbug=no</code>. Save the file and run <code>service ipsec restart</code>. Then reconnect the VPN.</li>
+</ol>
+<p><strong>Docker users:</strong> You may set <code>sha2-truncbug=yes</code> (default is <code>no</code>) in <code>/etc/ipsec.conf</code> by adding <code>VPN_SHA2_TRUNCBUG=yes</code> to your env file, then re-create the Docker container.</p>
+<h3>macOS send traffic over VPN</h3>
+<p>OS X (macOS) users: If you can successfully connect using IPsec/L2TP mode, but your public IP does not show <code>Your VPN Server IP</code>, read the <a href="#os-x">OS X</a> section above and complete these steps. Save VPN configuration and re-connect.</p>
+<ol>
+<li>Click the <strong>Advanced</strong> button and make sure the <strong>Send all traffic over VPN connection</strong> checkbox is checked.</li>
+<li>Click the <strong>TCP/IP</strong> tab, and make sure <strong>Link-local only</strong> is selected in the <strong>Configure IPv6</strong> section.</li>
+</ol>
+<p>After trying the steps above, if your computer is still not sending traffic over the VPN, check the service order. From the main network preferences screen, select "set service order" in the cog drop down under the list of connections. Drag the VPN connection to the top.</p>
+<h3>iOS 13+ and macOS 10.15/11+</h3>
+<p>If your device running iOS 13+, macOS 10.15 (Catalina), macOS 11 (Big Sur) or above cannot connect, try these steps: Edit <code>/etc/ipsec.conf</code> on the VPN server. Find <code>sha2-truncbug=yes</code> and replace it with <code>sha2-truncbug=no</code>. Save the file and run <code>service ipsec restart</code>. Then reconnect the VPN.</p>
+<p>In addition, users running macOS Big Sur 11.0 should update to version 11.1 or newer, to fix some issues with VPN connections. To check your macOS version and update, refer to <a href="https://www.businessinsider.com/how-to-check-mac-os-version">this article</a>.</p>
+<h3>iOS/Android sleep mode</h3>
+<p>To save battery, iOS devices (iPhone/iPad) will automatically disconnect Wi-Fi shortly after the screen turns off (sleep mode). As a result, the IPsec VPN disconnects. This behavior is <a href="https://discussions.apple.com/thread/2333948">by design</a> and cannot be configured.</p>
+<p>If you need the VPN to auto-reconnect when the device wakes up, you may connect using <a href="ikev2-howto.md">IKEv2</a> mode (recommended) and enable the "VPN On Demand" feature. Alternatively, you may try OpenVPN instead, which <a href="https://openvpn.net/vpn-server-resources/faq-regarding-openvpn-connect-ios/">has support for options</a> such as "Reconnect on Wakeup" and "Seamless Tunnel".</p>
+<p><a name="debian-10-kernel"></a>
+Android devices will also disconnect Wi-Fi shortly after entering sleep mode, unless the option "Keep Wi-Fi on during sleep" is enabled. This option is no longer available in Android 8 (Oreo) and newer. Alternatively, you may try enabling the "Always-on VPN" option to stay connected. Learn more <a href="https://support.google.com/android/answer/9089766?hl=en">here</a>.</p>
+<h3>Debian 11/10 kernel</h3>
+<p>Debian 11 or 10 users: Run <code>uname -r</code> to check your server's Linux kernel version. If it contains the word "cloud", and <code>/dev/ppp</code> is missing, then the kernel lacks <code>ppp</code> support and cannot use IPsec/L2TP mode. The VPN setup scripts try to detect this and show a warning. In this case, you may instead use <a href="ikev2-howto.md">IKEv2</a> or <a href="clients-xauth.md">IPsec/XAuth</a> mode to connect to the VPN.</p>
+<p>To fix the issue with IPsec/L2TP mode, you may switch to the standard Linux kernel by installing e.g. the <code>linux-image-amd64</code> package. Then update the default kernel in GRUB and reboot your server.</p>
+<h3>Other errors</h3>
+<p>If you encounter other errors, refer to the links below:</p>
+<ul>
+<li>http://www.tp-link.com/en/faq-1029.html</li>
+<li>https://documentation.meraki.com/MX-Z/Client_VPN/Troubleshooting_Client_VPN#Common_Connection_Issues   </li>
+<li>https://stackoverflow.com/questions/25245854/windows-8-1-gets-error-720-on-connect-vpn</li>
+</ul>
+<h3>Check logs and VPN status</h3>
+<p>Commands below must be run as <code>root</code> (or using <code>sudo</code>).</p>
+<p>First, restart services on the VPN server:</p>
+<pre class="codehilite"><code>service ipsec restart
+service xl2tpd restart
+</code></pre>
+
+<p><strong>Docker users:</strong> Run <code>docker restart ipsec-vpn-server</code>.</p>
+<p>Then reboot your VPN client device, and retry the connection. If still unable to connect, try removing and recreating the VPN connection. Make sure that the VPN credentials are entered correctly.</p>
+<p>Check the Libreswan (IPsec) and xl2tpd logs for errors:</p>
+<pre class="codehilite"><code># Ubuntu &amp; Debian
+grep pluto /var/log/auth.log
+grep xl2tpd /var/log/syslog
+
+# CentOS/RHEL, Rocky Linux, AlmaLinux, Oracle Linux &amp; Amazon Linux 2
+grep pluto /var/log/secure
+grep xl2tpd /var/log/messages
+
+# Alpine Linux
+grep pluto /var/log/messages
+grep xl2tpd /var/log/messages
+</code></pre>
+
+<p>Check the status of the IPsec VPN server:</p>
+<pre class="codehilite"><code>ipsec status
+</code></pre>
+
+<p>Show currently established VPN connections:</p>
+<pre class="codehilite"><code>ipsec trafficstatus
+</code></pre>
+
+<h2>Configure Linux VPN clients using the command line</h2>
+<p>After setting up your own VPN server, follow these steps to configure Linux VPN clients using the command line. Alternatively, you may connect using <a href="ikev2-howto.md">IKEv2</a> mode (recommended), or <a href="#linux">configure using the GUI</a>. Instructions below are based on <a href="https://gist.github.com/psanford/42c550a1a6ad3cb70b13e4aaa94ddb1c">the work of Peter Sanford</a>. Commands must be run as <code>root</code> on your VPN client.</p>
+<p>To set up the VPN client, first install the following packages:</p>
+<pre class="codehilite"><code># Ubuntu and Debian
+apt-get update
+apt-get install strongswan xl2tpd net-tools
+
+# Fedora
+yum install strongswan xl2tpd net-tools
+
+# CentOS
+yum install epel-release
+yum --enablerepo=epel install strongswan xl2tpd net-tools
+</code></pre>
+
+<p>Create VPN variables (replace with actual values):</p>
+<pre class="codehilite"><code>VPN_SERVER_IP='your_vpn_server_ip'
+VPN_IPSEC_PSK='your_ipsec_pre_shared_key'
+VPN_USER='your_vpn_username'
+VPN_PASSWORD='your_vpn_password'
+</code></pre>
+
+<p>Configure strongSwan:</p>
+<pre class="codehilite"><code>cat &gt; /etc/ipsec.conf &lt;&lt;EOF
+# ipsec.conf - strongSwan IPsec configuration file
+
+conn myvpn
+  auto=add
+  keyexchange=ikev1
+  authby=secret
+  type=transport
+  left=%defaultroute
+  leftprotoport=17/1701
+  rightprotoport=17/1701
+  right=$VPN_SERVER_IP
+  ike=aes128-sha1-modp2048
+  esp=aes128-sha1
+EOF
+
+cat &gt; /etc/ipsec.secrets &lt;&lt;EOF
+: PSK &quot;$VPN_IPSEC_PSK&quot;
+EOF
+
+chmod 600 /etc/ipsec.secrets
+
+# For CentOS and Fedora ONLY
+mv /etc/strongswan/ipsec.conf /etc/strongswan/ipsec.conf.old 2&gt;/dev/null
+mv /etc/strongswan/ipsec.secrets /etc/strongswan/ipsec.secrets.old 2&gt;/dev/null
+ln -s /etc/ipsec.conf /etc/strongswan/ipsec.conf
+ln -s /etc/ipsec.secrets /etc/strongswan/ipsec.secrets
+</code></pre>
+
+<p>Configure xl2tpd:</p>
+<pre class="codehilite"><code>cat &gt; /etc/xl2tpd/xl2tpd.conf &lt;&lt;EOF
+[lac myvpn]
+lns = $VPN_SERVER_IP
+ppp debug = yes
+pppoptfile = /etc/ppp/options.l2tpd.client
+length bit = yes
+EOF
+
+cat &gt; /etc/ppp/options.l2tpd.client &lt;&lt;EOF
+ipcp-accept-local
+ipcp-accept-remote
+refuse-eap
+require-chap
+noccp
+noauth
+mtu 1280
+mru 1280
+noipdefault
+defaultroute
+usepeerdns
+connect-delay 5000
+name &quot;$VPN_USER&quot;
+password &quot;$VPN_PASSWORD&quot;
+EOF
+
+chmod 600 /etc/ppp/options.l2tpd.client
+</code></pre>
+
+<p>The VPN client setup is now complete. Follow the steps below to connect.</p>
+<p><strong>Note:</strong> You must repeat all steps below every time you try to connect to the VPN.</p>
+<p>Create xl2tpd control file:</p>
+<pre class="codehilite"><code>mkdir -p /var/run/xl2tpd
+touch /var/run/xl2tpd/l2tp-control
+</code></pre>
+
+<p>Restart services:</p>
+<pre class="codehilite"><code>service strongswan restart
+
+# For Ubuntu 20.04, if strongswan service not found
+ipsec restart
+
+service xl2tpd restart
+</code></pre>
+
+<p>Start the IPsec connection:</p>
+<pre class="codehilite"><code># Ubuntu and Debian
+ipsec up myvpn
+
+# CentOS and Fedora
+strongswan up myvpn
+</code></pre>
+
+<p>Start the L2TP connection:</p>
+<pre class="codehilite"><code>echo &quot;c myvpn&quot; &gt; /var/run/xl2tpd/l2tp-control
+</code></pre>
+
+<p>Run <code>ifconfig</code> and check the output. You should now see a new interface <code>ppp0</code>.</p>
+<p>Check your existing default route:</p>
+<pre class="codehilite"><code>ip route
+</code></pre>
+
+<p>Find this line in the output: <code>default via X.X.X.X ...</code>. Write down this gateway IP for use in the two commands below.</p>
+<p>Exclude your VPN server's public IP from the new default route (replace with actual value):</p>
+<pre class="codehilite"><code>route add YOUR_VPN_SERVER_PUBLIC_IP gw X.X.X.X
+</code></pre>
+
+<p>If your VPN client is a remote server, you must also exclude your Local PC's public IP from the new default route, to prevent your SSH session from being disconnected (replace with <a href="https://www.google.com/search?q=my+ip">actual value</a>):</p>
+<pre class="codehilite"><code>route add YOUR_LOCAL_PC_PUBLIC_IP gw X.X.X.X
+</code></pre>
+
+<p>Add a new default route to start routing traffic via the VPN server：</p>
+<pre class="codehilite"><code>route add default dev ppp0
+</code></pre>
+
+<p>The VPN connection is now complete. Verify that your traffic is being routed properly:</p>
+<p>wget -qO- http://ipv4.icanhazip.com; echo</p>
+<p>The above command should return <code>Your VPN Server IP</code>.</p>
+<p>To stop routing traffic via the VPN server:</p>
+<pre class="codehilite"><code>route del default dev ppp0
+</code></pre>
+
+<p>To disconnect:</p>
+<pre class="codehilite"><code># Ubuntu and Debian
+echo &quot;d myvpn&quot; &gt; /var/run/xl2tpd/l2tp-control
+ipsec down myvpn
+
+# CentOS and Fedora
+echo &quot;d myvpn&quot; &gt; /var/run/xl2tpd/l2tp-control
+strongswan down myvpn
+</code></pre>
+
+<p>This program is free software: you can redistribute it and/or modify it under the terms of the <a href="https://www.gnu.org/licenses/gpl.html">GNU General Public License</a> as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.</p>
+      </section>
+      <small>
+      
+        <a href="/tag/vpn.html">
+            <span class="label label-default" itemprop="about">vpn</span>
+        </a>
+      
+        <a href="/tag/linux.html">
+            <span class="label label-default" itemprop="about">linux</span>
+        </a>
+      
+        <a href="/tag/l2tp.html">
+            <span class="label label-default" itemprop="about">l2tp</span>
+        </a>
+      
+      </small>
+    </div>
+
+        </div>
+        <div class="col-md-3">
+            <div class="panel-group">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        من در stackexchange.com
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-md-3 col-md-offset-9">
+                            <a href="https://stackexchange.com/users/887576" target="_blank">
+                                <img src="https://stackexchange.com/users/flair/887576.png" width="208" height="58"
+                                     alt="profile for shgnInc on Stack Exchange, a network of free, community-driven Q&A sites"
+                                     title="profile for shgnInc on Stack Exchange, a network of free, community-driven Q&A sites">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="panel-group">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            مطالب مهم
+                        </div>
+                        <div class="panel-body">
+                            <ul>
+                                <li><a href="https://shgn.ir/2021-03-07/galera-cluster-debian-10.html"
+                                       title="نصب Galer Cluster بر روی debian 10">نصب Galer Cluster بر روی debian 10</a>
+                                </li>
+                                <li><a href="https://shgn.ir/2020-08-15/installing_docker_on_debian.html"
+                                       title="نصب Docker روی Debian 10">نصب Docker روی Debian 10</a></li>
+                                <li><a href="https://shgn.ir/2018-09-05/Mysql-JSON-DataType.html"
+                                       title="معرفی نوع داده JSON در دیتابیس Mysql-Mariadb">معرفی نوع داده JSON در
+                                    دیتابیس Mysql-Mariadb</a></li>
+                                <li><a href="https://shgn.ir/2018-07-23/ssh_automatic_login.html"
+                                       title="لاگین خودکار با SSH">لاگین خودکار با SSH</a></li>
+                                <li><a href="https://shgn.ir/2017-08-16/galera_cluster.html"
+                                       title="نصب Galer Cluster بر روی debian8">نصب Galer Cluster بر روی debian8</a>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-group">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            Linux ISO Images
+                        </div>
+                        <div class="panel-body">
+                            <ul>
+                                <li><a href="https://shgn.ir/images/gparted-live-1.1.0-1-amd64.iso"
+                                       title="gparted-live-1.1.0-1-amd64">GParted Live CD/USB/HD/PXE Bootable Image</a></li>
+                                <li><a href="https://shgn.ir/images/debian-10.3.0-amd64-xfce-CD-1.iso"
+                                       title="debian-10.3.0-amd64-xfce-CD-1">Debian-10-amd64-xfce-CD</a></li>
+                                <li><a href="https://shgn.ir/images/debian-9.13.0-amd64-xfce-CD-1.iso"
+                                       title="debian-9.13.0-amd64-xfce-CD-1">debian-9-amd64-xfce-CD</a></li>
+                                <li><a href="https://shgn.ir/images/ubuntu-18.04.4-desktop-amd64.iso"
+                                       title="ubuntu-18.04.4-desktop-amd64">Ubuntu Desktop</a></li>
+                                <li><a href="https://shgn.ir/images/ubuntu-18.04.4-live-server-amd64.iso"
+                                       title="ubuntu-18.04.4-live-server-amd64">Ubuntu Server</a></li>
+                                <li><a href="https://shgn.ir/images/CentOS-7-aarch64-Minimal-1908.iso"
+                                       title="CentOS-7-aarch64-Minimal-1908">CentOS-7-aarch64-Minimal-1908</a></li>
+                                <li><a href="https://shgn.ir/images/CentOS-8.2.2004-x86_64-minimal.iso"
+                                       title="CentOS-8.2.2004-x86_64-minimal">CentOS-8.2.2004-x86_64-minimal</a></li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-group">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            تازه ترین مطالب
+                        </div>
+                        <div class="panel-body">
+                            <ul>
+                                
+                            </ul>
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr/>
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                
+                <strong>پیشنهادی های</strong>
+                <ul>
+                    
+                    <li><a href="https://github.com/shgninc">GitHub</a></li>
+                    
+                    <li><a href="https://www.instagram.com/shgninc/">Instagram</a></li>
+                    
+                    <li><a href="http://vasni.ir/">Vasni</a></li>
+                    
+                    <li><a href="https://virgool.io/@shgninc">Virgool</a></li>
+                    
+                    <li><a href="https://twitter.com/shahcheraghian">Twiteer</a></li>
+                    
+                    <li><a href="https://shgn.ir/yii2/">معرفی Yii2</a></li>
+                    
+                </ul>
+                
+            </div>
+            <div class="col-md-6">
+                <strong>دسترسی های ساده</strong>
+                <ul>
+                    <li><a href="/">تمامی پست ها</a></li>
+                    <li><a href="/tags.html">فهرست تگ ها</a></li>
+                    <li><a href="/tag/video.html">ویدیوها</a></li>
+                </ul>
+            </div>
+            <div class="col-md-12">
+                <p class="text-center"><small>https://shgn.ir &copy; 2021</small></p>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://shgn.ir/static/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://shgn.ir/static/ProngnRoll/prognroll.min.js"></script>
+<script>
+var jQ_3_5_1 = $.noConflict(true);
+
+    /*Scroll to top when arrow up clicked BEGIN*/
+jQ_3_5_1(window).scroll(function() {
+    var height = jQ_3_5_1(window).scrollTop();
+    if (height > 100) {
+        jQ_3_5_1('#back2Top').fadeIn();
+    } else {
+        jQ_3_5_1('#back2Top').fadeOut();
+    }
+});
+jQ_3_5_1(document).ready(function() {
+    jQ_3_5_1("#back2Top").click(function(event) {
+        event.preventDefault();
+        jQ_3_5_1("html, body").animate({ scrollTop: 0 }, "slow");
+        return false;
+    });
+});
+ /*Scroll to top when arrow up clicked END*/
+
+/* https://www.jqueryscript.net/other/jQuery-Scroll-Progress-Indicator-For-Any-Containers-ProngnRoll.html */
+
+jQ_3_5_1("body").prognroll({
+  position:"bottom",
+  height:5,
+  color:"#f54905"
+});
+
+
+</script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"
+        integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ"
+        crossorigin="anonymous"></script>
+<script>
+var $x = jQuery.noConflict();
+
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+        integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+        crossorigin="anonymous"></script>
+
+<a id="back2Top" title="Back to top" href="#">&#10148;</a>
+
+</body>
+</html>
