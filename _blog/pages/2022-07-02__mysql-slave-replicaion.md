@@ -90,3 +90,7 @@ type: post
 در نهایت برای بررسی برقراری ارتباط پلیکیشن می توان دستور زیر را اجرا نمود:
 
     SHOW SLAVE STATUS G
+
+##منابع
+[MySQL Replication Setup without Downtime](https://linuxscriptshub.com/mysql-replication-setup-without-downtime/)
+[MariaDB Replication - Replicate only specific tables and views](https://dba.stackexchange.com/questions/268192/mariadb-replication-replicate-only-specific-tables-and-views)
