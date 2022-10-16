@@ -217,7 +217,7 @@ services:
 <pre class="codehilite"><code>docker exec -it gitlab gitlab-rake gitlab:storage:migrate_to_hashed
 </code></pre>
 
-<p>نکته مهمی که باید به آن دقت شود این است که با توج به تعداد پروژه ها و ضمایمی که روی مدل ذخیره سازی قدیم هستند، این دستور طول می کشد. برای مشاهده اجرا دستور از داخل پنل گیت لب از مسیر Admin Area&gt;Monitoring و قسمت Backgroud Jobs از بخش صف کارها hashed_storage:hashed_storage_project_migrate را مشاهده کنید.</p>
+<p>نکته مهمی که باید به آن دقت شود این است که با توج به تعداد پروژه ها و ضمایمی که روی مدل ذخیره سازی قدیم هستند، این دستور طول می کشد. برای مشاهده اجرا دستور از داخل پنل گیت لب از مسیر <code>Admin Area&gt;Monitoring</code> و قسمت <code>Backgroud Jobs</code> از بخش صف کارها <code>hashed_storage:hashed_storage_project_migrate</code> را مشاهده کنید.</p>
 <p>در انتها بعد از اتمام تبدیل می توانید ارتقاع را شروع کنید.</p>
 <h1>مراحل ارتقاع</h1>
 <p>ارتقاع گیت لب از نسخه های قدیم به جدیدتر مرحله به مرحله باید انجام شود و در هر مرحله باید حتما یک بکاپ از اطلاعات گرفته شده، و از صحت ارتقاع به نسخه جدید اطمینان حاصل نمود.</p>

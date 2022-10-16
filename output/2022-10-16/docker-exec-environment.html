@@ -15,11 +15,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title> پستهای تگ شده با  'docker' - دست نوشته های یک تازه کار </title>
+    <title> دسترسی به متغییرها با دستور docker exec - دست نوشته های یک تازه کار </title>
     <meta name="description"
-          content="این وبلاگ پیرامون تجربیات، دانسته ها، اینجاب درباره linux, database, mysql, mariadb, datamart, galera cluster,apache می باشد."/>
+          content="A brief description of post."/>
     <meta name="keywords"
-          content="لینوکس،لینوکس مشهد،آموزش,پایتون,پایتون مشهد,آموزش لینوکس,دیتابیس,آموزش دیتابیس,برنامه نویسی,linux,database,mysql,mariadb,datamart,galera cluster,apache,big data,dataware house,cluster,galera,percona,python,php,tutorial,debian,ubuntu,centos,arch linux,mashhad linux,iran linux,debian mashhad,"/>
+          content="لینوکس،لینوکس مشهد،آموزش,پایتون,پایتون مشهد,آموزش لینوکس,دیتابیس,آموزش دیتابیس,برنامه نویسی,linux,database,mysql,mariadb,datamart,galera cluster,apache,big data,dataware house,cluster,galera,percona,python,php,tutorial,debian,ubuntu,centos,arch linux,mashhad linux,iran linux,debian mashhad, docker, linux, env, environment"/>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
@@ -156,97 +156,62 @@
     <div class="row">
         <div class="col-md-9">
             
+    <div itemscope itemtype="http://schema.org/NewsArticle">
+    <meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="http://https://shgn.ir/2022-10-16/docker-exec-environment.html"/>
     <div class="page-header">
-      <h2>پستهای تگ شده با  'docker'</h2>
-      <p class="lead"></p>
+      <h3 itemprop="name">دسترسی به متغییرها با دستور docker exec</h3>
+      
+      
+        <small>
+          <p class="text-right">
+            ارسال شده <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+                توسط <span itemprop="name">سید سجاد شاهچراغیان</span>
+              </span>
+              در تاریخ <span itemprop="datePublished">2022-10-16</span>
+          </p>
+        </small>
+      
     </div>
+      <section itemprop="articleBody">
+        <p>استفاده از متغییر های محیطی همسان بین <code>container</code> و <code>host</code> در دستور <code>docker exec</code>، به عنوان یک چالش جالب مطرح هست.</p>
+<p>به عنوان مثال متغییر محیطی <code>$HOME</code> نمایانگر مسیر خانه کاربر جاری هست، چه در هاست و چه در کانتینر.</p>
+<p>برای نمونه:</p>
+<pre class="codehilite"><code>docker pull goyalmunish/devenv
+</code></pre>
+
+<p>نمونه ای که متغییر محیطی از هاست را فراخوانی می کند:</p>
+<pre class="codehilite"><code>docker exec -it devenv /bin/bash -c &quot;echo $HOME&quot;    # /home/ubuntu
+</code></pre>
+
+<p>نمونه ای که متغییر محیطی از داخل کانتینر را فراخوانی می کند، نکته در تفاوت استفاده از " "" هست:</p>
+<pre class="codehilite"><code>docker exec -it devenv /bin/bash -c 'echo $HOME'      # /root
+</code></pre>
+
+<p>این بود نکته ای مهم و کلیدی ولی خیلی ساده.</p>
+<h3>منابع</h3>
+<p><a href="https://medium.com/an-idea/passing-host-vs-container-environment-variables-to-docker-exec-5c1b18e6de8e">passing host vs container environment variables to docker exec</a></p>
+      </section>
+      <div>
+        برچسب ها:
       
-        <h3><a href="/2022-10-16/docker-exec-environment.html" title="دسترسی به متغییرها با دستور docker exec">دسترسی به متغییرها با دستور docker exec</a></h3>
-            
-                <a href="/tag/docker.html">
-                    <span class="label label-default">docker</span></a>
-            
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
-            
-                <a href="/tag/env.html">
-                    <span class="label label-default">env</span></a>
-            
-                <a href="/tag/environment.html">
-                    <span class="label label-default">environment</span></a>
-            
-        <p>A brief description of post.</p>
-        <hr />
+        <a href="/tag/docker.html">
+            <span class="label label-default" itemprop="about">docker</span>
+        </a>
       
-        <h3><a href="/2022-07-02/upgrade-gitlab-to-latest.html" title="آپدیت گیت لب از 13.11.3 به آخرین نسخه">آپدیت گیت لب از 13.11.3 به آخرین نسخه</a></h3>
-            
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
-            
-                <a href="/tag/git.html">
-                    <span class="label label-default">git</span></a>
-            
-                <a href="/tag/gitlab.html">
-                    <span class="label label-default">gitlab</span></a>
-            
-                <a href="/tag/upgrade.html">
-                    <span class="label label-default">upgrade</span></a>
-            
-                <a href="/tag/docker.html">
-                    <span class="label label-default">docker</span></a>
-            
-        <p>نسخه فعلی که استفاده می شود، gitlab-ce 13.11.3 می باشد. آخرین نسخه ارائه شده گیت gitlab-ce 15.0.2 هست، که ما قصد داریم به این نسخه مهاجرت کنیم.</p>
-        <hr />
+        <a href="/tag/linux.html">
+            <span class="label label-default" itemprop="about">linux</span>
+        </a>
       
-        <h3><a href="/2021-04-13/drone-ci.html" title="نصب و راه اندازی Drone CI.">نصب و راه اندازی Drone CI.</a></h3>
-            
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
-            
-                <a href="/tag/devops.html">
-                    <span class="label label-default">devops</span></a>
-            
-                <a href="/tag/ci/cd.html">
-                    <span class="label label-default">ci/cd</span></a>
-            
-                <a href="/tag/drone.html">
-                    <span class="label label-default">drone</span></a>
-            
-                <a href="/tag/tutorial.html">
-                    <span class="label label-default">tutorial</span></a>
-            
-                <a href="/tag/docker.html">
-                    <span class="label label-default">docker</span></a>
-            
-        <p>نصب و راه اندازی Drone CI.</p>
-        <hr />
+        <a href="/tag/env.html">
+            <span class="label label-default" itemprop="about">env</span>
+        </a>
       
-        <h3><a href="/2020-08-15/installing_docker_on_debian.html" title="نصب Docker روی Debian 10">نصب Docker روی Debian 10</a></h3>
-            
-                <a href="/tag/docker.html">
-                    <span class="label label-default">docker</span></a>
-            
-                <a href="/tag/container.html">
-                    <span class="label label-default">container</span></a>
-            
-                <a href="/tag/virtualization.html">
-                    <span class="label label-default">virtualization</span></a>
-            
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
-            
-        <p>نحوه نصب Docker بر روی سیستم عامل محبوب  Debian 10</p>
-        <hr />
+        <a href="/tag/environment.html">
+            <span class="label label-default" itemprop="about">environment</span>
+        </a>
       
-      
-              <ul class="pagination">
-                
-                    
-                        <li class="active"><a href="#">0 <span class="sr-only">(current)</span></a></li>
-                    
-                
-              </ul>
-      
+    </div>
+    </div>
 
         </div>
         <div class="col-md-3">
@@ -327,14 +292,6 @@
                         </div>
                         <div class="panel-body">
                             <ul>
-                                
-                                <li><a href="/2022-10-16/docker-exec-environment.html" title="دسترسی به متغییرها با دستور docker exec">دسترسی به متغییرها با دستور docker exec</a></li>
-                                
-                                <li><a href="/2022-07-02/upgrade-gitlab-to-latest.html" title="آپدیت گیت لب از 13.11.3 به آخرین نسخه">آپدیت گیت لب از 13.11.3 به آخرین نسخه</a></li>
-                                
-                                <li><a href="/2021-04-13/drone-ci.html" title="نصب و راه اندازی Drone CI.">نصب و راه اندازی Drone CI.</a></li>
-                                
-                                <li><a href="/2020-08-15/installing_docker_on_debian.html" title="نصب Docker روی Debian 10">نصب Docker روی Debian 10</a></li>
                                 
                             </ul>
 
