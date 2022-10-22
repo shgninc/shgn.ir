@@ -1,5 +1,5 @@
 title: دسترسی به متغییرها با دستور docker exec 
-briefing: A brief description of post.
+briefing: استفاده از متغییر های محیطی همسان بین `container` و `host` در دستور `docker exec`.
 date_time: 2022-10-16 17:07
 slug: docker-exec-environment
 tags: docker, linux, env, environment

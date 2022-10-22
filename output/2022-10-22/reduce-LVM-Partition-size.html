@@ -15,11 +15,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title> دست نوشته های یک تازه کار - دست نوشته های یک تازه کار </title>
+    <title> کاهش فضای دیسک LVM - دست نوشته های یک تازه کار </title>
     <meta name="description"
-          content="این وبلاگ پیرامون تجربیات، دانسته ها، اینجاب درباره linux, database, mysql, mariadb, datamart, galera cluster,apache می باشد."/>
+          content="در این نوشته تلاش می شود تا نحوه کاهش فضای دیسک `LVM` بیان شود.."/>
     <meta name="keywords"
-          content="لینوکس،لینوکس مشهد،آموزش,پایتون,پایتون مشهد,آموزش لینوکس,دیتابیس,آموزش دیتابیس,برنامه نویسی,linux,database,mysql,mariadb,datamart,galera cluster,apache,big data,dataware house,cluster,galera,percona,python,php,tutorial,debian,ubuntu,centos,arch linux,mashhad linux,iran linux,debian mashhad,"/>
+          content="لینوکس،لینوکس مشهد،آموزش,پایتون,پایتون مشهد,آموزش لینوکس,دیتابیس,آموزش دیتابیس,برنامه نویسی,linux,database,mysql,mariadb,datamart,galera cluster,apache,big data,dataware house,cluster,galera,percona,python,php,tutorial,debian,ubuntu,centos,arch linux,mashhad linux,iran linux,debian mashhad, lvm, linux, partition, disk"/>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
@@ -156,106 +156,115 @@
     <div class="row">
         <div class="col-md-9">
             
+    <div itemscope itemtype="http://schema.org/NewsArticle">
+    <meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="http://https://shgn.ir/2022-10-22/reduce-LVM-Partition-size.html"/>
     <div class="page-header">
-      <h2>دست نوشته های یک تازه کار</h2>
-      <p class="lead"></p>
+      <h3 itemprop="name">کاهش فضای دیسک LVM</h3>
+      
+      
+        <small>
+          <p class="text-right">
+            ارسال شده <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+                توسط <span itemprop="name">سید سجاد شاهچراغیان</span>
+              </span>
+              در تاریخ <span itemprop="datePublished">2022-10-22</span>
+          </p>
+        </small>
+      
     </div>
+      <section itemprop="articleBody">
+        <p>در این نوشته تلاش می شود تا نحوه کاهش فضای دیسک <code>LVM</code> بیان شود.</p>
+<p>بعضی وقت ها ممکن که با مشکل پر شدن فضای پارتیشن روی دیسک <code>LVM</code> مواجه شویم، و تصمیم داشته باشیم تا فضایی را به گروه آن با کاهش فضای برخی دیسک های دیگر با استفاده از دستور
+<a href="https://linux.die.net/man/8/lvreduce">lvreduce</a>
+انجام دهیم</p>
+<h2>هشدار</h2>
+<p>قبل از انجام کاهش فضا دیسک <code>LVM</code> موارد زیر را حتما مد نظر قرار بدید. انجام این کار امکان بروز پیامدهای برگشت ناپذیر دارد.</p>
+<p>۱- این نوشته فقط برای دیسک ها و پارتیشن هایی که با <code>LVM</code> پیاده سازی شده اند قابل انجام می باشد.</p>
+<p>۲- هنگام کاهش فضای دیسک، اگر دقت کافی و لازم را نداشته باشیم، احتمال از دست رفتن بخشی یا کل اطلاعات ذخیره شده روی دیسک وجود دارد.</p>
+<h2>فرضیات مقاله</h2>
+<p>برای انجام این نوشته فرض بر این است که قصد داریم تا فضای پارتیشن <code>/home</code> را ۲گیگ کاهش بدیم</p>
+<pre class="codehilite"><code>[root@cloud ~]# df -h /home/
+Filesystem            Size  Used Avail Use% Mounted on
+/dev/mapper/vg_cloud-LogVol00        12G   9.2G  1.9G  84%  /home
+</code></pre>
+
+<h2>گام ها</h2>
+<p>برای انجام این مهم به ترتیب کارهای زیر باید انجام شوند:</p>
+<h3>گام۱: unmount پارتیشن</h3>
+<p>ابتدا باید فایل سیستم را <code>unmount</code> تا در حین انجام کوچک سازی با مشکل خواندن/نوشتن دیسک مواجه نشویم:</p>
+<pre class="codehilite"><code>[root@cloud ~]# umount /home/
+</code></pre>
+
+<h3>گام ۲: بررسی اشکالات پارتیشن</h3>
+<p>با اجرا دستور <code>e2fsck</code> می توان اشکالات احتمالی دیسک را بررسی و بعضا رفع نمود. با استفاده از گزینه <code>-f</code> این دستور را اجبار به بررسی و رفع اشکالات می کنیم.</p>
+<pre class="codehilite"><code>[root@cloud ~]# e2fsck -f /dev/mapper/vg_cloud-LogVol00
+e2fsck 1.41.12 (17-May-2010)
+Pass 1: Checking inodes, blocks, and sizes
+Pass 2: Checking directory structure
+Pass 3: Checking directory connectivity
+Pass 4: Checking reference counts
+Pass 5: Checking group summary information
+/dev/mapper/vg_cloud-LogVol00: 12/770640 files (0.0% non-contiguous), 2446686/3084288 blocks
+</code></pre>
+
+<h3>گام ۳: کاهش اندازه پارتیشن</h3>
+<p>در این نوشته گفتیم که فضا دیسک از ۱۲ گیگ باید به ۱۰گیگ کاهش پیدا کنه، به عبارت دیگری باید ۲گیگ کاسته شود:</p>
+<pre class="codehilite"><code>[root@cloud ~]# resize2fs /dev/mapper/vg_cloud-LogVol00 10G
+resize2fs 1.41.12 (17-May-2010)
+Resizing the filesystem on /dev/mapper/vg_cloud-LogVol00 to 2621440 (4k) blocks.
+The filesystem on /dev/mapper/vg_cloud-LogVol00 is now 2621440 blocks long.
+</code></pre>
+
+<h3>گام ۴: کاهش فضا دیسک LVM</h3>
+<p>حالا نوبت اجرای دستور <code>lvreduce</code> هست:</p>
+<pre class="codehilite"><code>[root@cloud ~]# lvreduce -r -L 10G /dev/mapper/vg_cloud-LogVol00
+WARNING: Reducing active logical volume to 10.00 GiB
+THIS MAY DESTROY YOUR DATA (filesystem etc.)
+Do you really want to reduce LogVol00? [y/n]: y
+Reducing logical volume LogVol00 to 10.00 GiB
+Logical volume LogVol00 successfully resized
+</code></pre>
+
+<p>در این دستور با گزینه <code>-r</code> عملا یکبار دیگه دستور 
+<a href="https://linux.die.net/man/8/resize2fs">resize2fs</a>
+ را اجرا می کنیم، همچنین با گزینه <code>-L</code> میزان فضای جدید را تعیین می کنیم</p>
+<h3>گام ۵: mount مجدد پارتیشن ها</h3>
+<p>در پایان پارتیشن <code>/home</code> مجدد <code>mount</code> کرده و آن را چک می کنیم.</p>
+<pre class="codehilite"><code>[root@cloud ~]# mount /home/
+[root@cloud ~]# df -h /home/
+Filesystem            Size  Used Avail Use% Mounted on
+/dev/mapper/vg_cloud-LogVol00     9.9G  9.2G  208M  98% /home
+</code></pre>
+
+<p>اکنون باید به فضای خالی گروه ۲گیگ اضافه شده و قابل اضافه شدن به دیگر دیسک ها می باشد.</p>
+<h2>منابع</h2>
+<ul>
+<li><a href="https://www.linuxtechi.com/reduce-size-lvm-partition/">reduce size lvm partition</a></li>
+<li><a href="https://www.tecmint.com/extend-and-reduce-lvms-in-linux/">extend and reduce lvms in linux</a></li>
+<li></li>
+</ul>
+      </section>
+      <div>
+        برچسب ها:
       
-        <h3><a href="/2012-12-31/Desktop_capture_in_ubuntu.html" title="بهترین نرم افزارها برای ضبط صفحه در اوبونتو">بهترین نرم افزارها برای ضبط صفحه در اوبونتو</a></h3>
-            
-                <a href="/tag/gnome.html">
-                    <span class="label label-default">gnome</span></a>
-            
-                <a href="/tag/KDE.html">
-                    <span class="label label-default">KDE</span></a>
-            
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
-            
-                <a href="/tag/ubuntu.html">
-                    <span class="label label-default">ubuntu</span></a>
-            
-                <a href="/tag/GNU.html">
-                    <span class="label label-default">GNU</span></a>
-            
-        <p>سیستم عامل اوبونتو دارای نرم افزارهای ضبط صفحه زیادی برای تصویر برداری از صفحه دسکتاپ دارد. بعضی از محبوبترین های آنها عبارتند از: xvidcap, Tibesti, RecordMyDesktop, Kazam و... . از این نرم افزارها جهت ایجاد مطالب آموزشی استفاده می گردد، پس ضبط این گونه تصاویر نباید به کندی و با اعوجاج و البته در حالت با کیفیت تصویر بالا HD صورت پذیرد.</p>
-        <hr />
+        <a href="/tag/lvm.html">
+            <span class="label label-default" itemprop="about">lvm</span>
+        </a>
       
-        <h3><a href="/2012-12-02/download_MMS_Files_ubuntu.html" title="نحوه دانلود فایل با پروتکل mms در ubuntu">نحوه دانلود فایل با پروتکل mms در ubuntu</a></h3>
-            
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
-            
-                <a href="/tag/ubuntu.html">
-                    <span class="label label-default">ubuntu</span></a>
-            
-                <a href="/tag/video.html">
-                    <span class="label label-default">video</span></a>
-            
-        <p>در سایت ها نوعی پروتکل به نام `MMS` وجود دارد که عمدتا فایلهای چند رسانه ای فیلم را ارائه می کنند. برای دانلود این نوع فایل ها، به جای تماشای آن فیلمها به صورت `on-line`، باید از طریق نرم افزارها یا ابزار خاصی استفاده شود تا بتوان این فیلمها را به صورت `off-line` و در سیستم خانگی خود تماشا نمود.</p>
-        <hr />
+        <a href="/tag/linux.html">
+            <span class="label label-default" itemprop="about">linux</span>
+        </a>
       
-        <h3><a href="/2012-11-30/create_mysql_stored_procedures2.html" title="نحوه ایجاد یک Stored Procedures در MySQL5- بخش دوم">نحوه ایجاد یک Stored Procedures در MySQL5- بخش دوم</a></h3>
-            
-                <a href="/tag/database.html">
-                    <span class="label label-default">database</span></a>
-            
-                <a href="/tag/sql.html">
-                    <span class="label label-default">sql</span></a>
-            
-                <a href="/tag/mysql.html">
-                    <span class="label label-default">mysql</span></a>
-            
-                <a href="/tag/stored_procedure.html">
-                    <span class="label label-default">stored_procedure</span></a>
-            
-        <p>یک روشی که خیلی مورد پسند بنده واقع شده، روشی است که در آن با استفاده از استور پروسیجرها کار هایم با دیتابیس را انجام می دهم. استور پروسیجر ها امکانی است که برخی نرم افزارهای مدیریت پایگاه داده ها آن را حمایت کرده و برخی خیر. از جلمه این پایگاه داده ها می توان از `MySQL، MSSQL` و... نام برد.</p>
-        <hr />
+        <a href="/tag/partition.html">
+            <span class="label label-default" itemprop="about">partition</span>
+        </a>
       
-        <h3><a href="/2012-11-28/create_mysql_stored_procedures1.html" title="نحوه ایجاد یک Stored Procedures در MySQL5- بخش اول">نحوه ایجاد یک Stored Procedures در MySQL5- بخش اول</a></h3>
-            
-                <a href="/tag/database.html">
-                    <span class="label label-default">database</span></a>
-            
-                <a href="/tag/sql.html">
-                    <span class="label label-default">sql</span></a>
-            
-                <a href="/tag/mysql.html">
-                    <span class="label label-default">mysql</span></a>
-            
-                <a href="/tag/stored_procedure.html">
-                    <span class="label label-default">stored_procedure</span></a>
-            
-        <p>یک روشی که خیلی مورد پسند بنده واقع شده، روشی است که در آن با استفاده از استور پروسیجرها کار هایم با دیتابیس را انجام می دهم. استور پروسیجر ها امکانی است که برخی نرم افزارهای مدیریت پایگاه داده ها آن را حمایت کرده و برخی خیر. از جلمه این پایگاه داده ها می توان از `MySQL، MSSQL` و... نام برد.</p>
-        <hr />
+        <a href="/tag/disk.html">
+            <span class="label label-default" itemprop="about">disk</span>
+        </a>
       
-      
-              <ul class="pagination">
-                
-                    
-                        
-                            <li><a href="/page0.html">0</a></li>
-                        
-                    
-                
-                    
-                        
-                            <li><a href="/page1.html">1</a></li>
-                        
-                    
-                
-                    
-                        
-                            <li><a href="/page2.html">2</a></li>
-                        
-                    
-                
-                    
-                        <li class="active"><a href="#">3 <span class="sr-only">(current)</span></a></li>
-                    
-                
-              </ul>
-      
+    </div>
+    </div>
 
         </div>
         <div class="col-md-3">
@@ -336,14 +345,6 @@
                         </div>
                         <div class="panel-body">
                             <ul>
-                                
-                                <li><a href="/2012-12-31/Desktop_capture_in_ubuntu.html" title="بهترین نرم افزارها برای ضبط صفحه در اوبونتو">بهترین نرم افزارها برای ضبط صفحه در اوبونتو</a></li>
-                                
-                                <li><a href="/2012-12-02/download_MMS_Files_ubuntu.html" title="نحوه دانلود فایل با پروتکل mms در ubuntu">نحوه دانلود فایل با پروتکل mms در ubuntu</a></li>
-                                
-                                <li><a href="/2012-11-30/create_mysql_stored_procedures2.html" title="نحوه ایجاد یک Stored Procedures در MySQL5- بخش دوم">نحوه ایجاد یک Stored Procedures در MySQL5- بخش دوم</a></li>
-                                
-                                <li><a href="/2012-11-28/create_mysql_stored_procedures1.html" title="نحوه ایجاد یک Stored Procedures در MySQL5- بخش اول">نحوه ایجاد یک Stored Procedures در MySQL5- بخش اول</a></li>
                                 
                             </ul>
 
