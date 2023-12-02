@@ -174,8 +174,8 @@
     </div>
       <section itemprop="articleBody">
         <p>یکی از قابلیت ها و امکانات زبان برنامه نویسی <code>PHP</code>، امکان ارسال رایانامه به راحتی با آن است. در <code>PHP</code> تابعی برای این کار وجود دارد با چند پارامتر که این کار را می کند.</p>
-<pre class="codehilite"><code>mail(to,subject,message,headers,parameters)
-</code></pre>
+<div class="codehilite"><pre><span></span><code>mail(to,subject,message,headers,parameters)
+</code></pre></div>
 
 <p>در این تابع پارامترهایی وجود دارند که وظیف هر کدام به اسن ترتیب می باشد:</p>
 <ul>
@@ -188,38 +188,38 @@
 </li>
 </ul>
 <p>یک مثال ساده برای انجام این کار، در مسیر <code>webRoot</code> سیستم یک فایل با نام <code>mailform.php</code> ساخته و کد زیر را داخل آن قرار داده و ذخیره کنید:</p>
-<pre class="codehilite"><code>&lt;html&gt;
-&lt;body&gt;
+<div class="codehilite"><pre><span></span><code><span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;body&gt;</span>
 
- &lt;?php
-  if (isset($_REQUEST['email']))
-//if &quot;email&quot; is filled out, send email
-  {
-  //send email
-  $email = $_REQUEST['email'] ;
-  $subject = $_REQUEST['subject'] ;
-  $message = $_REQUEST['message'] ;
-  mail(&quot;someone@example.com&quot;, $subject,
-  $message, &quot;From:&quot; . $email);
-  echo &quot;Thank you for using our mail form&quot;;
-  }
-else
-//if &quot;email&quot; is not filled out, display the form
-  {
-  echo &quot;&lt;form method='post' action='mailform.php'&gt;
-  Email: &lt;input name='email' type='text'&gt;&lt;br&gt;
-  Subject: &lt;input name='subject' type='text'&gt;&lt;br&gt;
-  Message:&lt;br&gt;
-  &lt;textarea name='message' rows='15' cols='40'&gt;
-  &lt;/textarea&gt;&lt;br&gt;
-  &lt;input type='submit'&gt;
-  &lt;/form&gt;&quot;;
-  }
-?&gt;
+<span class="w"> </span><span class="cp">&lt;?php</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nb">isset</span><span class="p">(</span><span class="nv">$_REQUEST</span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">]))</span>
+<span class="c1">//if &quot;email&quot; is filled out, send email</span>
+  <span class="p">{</span>
+  <span class="c1">//send email</span>
+  <span class="nv">$email</span> <span class="o">=</span> <span class="nv">$_REQUEST</span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">]</span> <span class="p">;</span>
+  <span class="nv">$subject</span> <span class="o">=</span> <span class="nv">$_REQUEST</span><span class="p">[</span><span class="s1">&#39;subject&#39;</span><span class="p">]</span> <span class="p">;</span>
+  <span class="nv">$message</span> <span class="o">=</span> <span class="nv">$_REQUEST</span><span class="p">[</span><span class="s1">&#39;message&#39;</span><span class="p">]</span> <span class="p">;</span>
+  <span class="nb">mail</span><span class="p">(</span><span class="s2">&quot;someone@example.com&quot;</span><span class="p">,</span> <span class="nv">$subject</span><span class="p">,</span>
+  <span class="nv">$message</span><span class="p">,</span> <span class="s2">&quot;From:&quot;</span> <span class="o">.</span> <span class="nv">$email</span><span class="p">);</span>
+  <span class="k">echo</span> <span class="s2">&quot;Thank you for using our mail form&quot;</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="k">else</span>
+<span class="c1">//if &quot;email&quot; is not filled out, display the form</span>
+  <span class="p">{</span>
+  <span class="k">echo</span> <span class="s2">&quot;&lt;form method=&#39;post&#39; action=&#39;mailform.php&#39;&gt;</span>
+<span class="s2">  Email: &lt;input name=&#39;email&#39; type=&#39;text&#39;&gt;&lt;br&gt;</span>
+<span class="s2">  Subject: &lt;input name=&#39;subject&#39; type=&#39;text&#39;&gt;&lt;br&gt;</span>
+<span class="s2">  Message:&lt;br&gt;</span>
+<span class="s2">  &lt;textarea name=&#39;message&#39; rows=&#39;15&#39; cols=&#39;40&#39;&gt;</span>
+<span class="s2">  &lt;/textarea&gt;&lt;br&gt;</span>
+<span class="s2">  &lt;input type=&#39;submit&#39;&gt;</span>
+<span class="s2">  &lt;/form&gt;&quot;</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="cp">?&gt;</span>
 
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div>
 
 <ul>
 <li>در این کد ابتدا بررسی می شود که بخش مربوط به ارسال رایانامه پر شده است.</li>
@@ -230,64 +230,64 @@ else
 <p>نکته: اگر کد بالا در سیستم شما اجرا نشد، اشکال از کد یا وب سرور، یا سیستم شما نیست. دلیل این است که این تابع یک سری نیازمندی های اولیه دارد که معمولا در سرور ها وجود دارند و کامپیوترهای خانگی فاقد آنها می باشند.</p>
 <p>چند مثال کوچک برای آشنایی بیشتر با این تابع:</p>
 <p>ارسال رایانامه همراه با هدر اضافه</p>
-<pre class="codehilite"><code>&lt;?php
-$to      = 'nobody@example.com';
-$subject = 'the subject';
-$message = 'hello';
-$headers = 'From: webmaster@example.com' . &quot;\r\n&quot; .
-    'Reply-To: webmaster@example.com' . &quot;\r\n&quot; .
-    'X-Mailer: PHP/' . phpversion();
+<div class="codehilite"><pre><span></span><code><span class="cp">&lt;?php</span>
+<span class="nv">$to</span>      <span class="o">=</span> <span class="s1">&#39;nobody@example.com&#39;</span><span class="p">;</span>
+<span class="nv">$subject</span> <span class="o">=</span> <span class="s1">&#39;the subject&#39;</span><span class="p">;</span>
+<span class="nv">$message</span> <span class="o">=</span> <span class="s1">&#39;hello&#39;</span><span class="p">;</span>
+<span class="nv">$headers</span> <span class="o">=</span> <span class="s1">&#39;From: webmaster@example.com&#39;</span> <span class="o">.</span> <span class="s2">&quot;</span><span class="se">\r\n</span><span class="s2">&quot;</span> <span class="o">.</span>
+    <span class="s1">&#39;Reply-To: webmaster@example.com&#39;</span> <span class="o">.</span> <span class="s2">&quot;</span><span class="se">\r\n</span><span class="s2">&quot;</span> <span class="o">.</span>
+    <span class="s1">&#39;X-Mailer: PHP/&#39;</span> <span class="o">.</span> <span class="nb">phpversion</span><span class="p">();</span>
 
-mail($to, $subject, $message, $headers);
-?&gt;
-</code></pre>
+<span class="nb">mail</span><span class="p">(</span><span class="nv">$to</span><span class="p">,</span> <span class="nv">$subject</span><span class="p">,</span> <span class="nv">$message</span><span class="p">,</span> <span class="nv">$headers</span><span class="p">);</span>
+<span class="cp">?&gt;</span>
+</code></pre></div>
 
 <h4>ارسال رایانامه با قالب HTML</h4>
-<pre class="codehilite"><code>&lt;?php
-// multiple recipients
-$to  = 'aidan@example.com' . ', '; // note the comma
-$to .= 'wez@example.com';
+<div class="codehilite"><pre><span></span><code><span class="cp">&lt;?php</span>
+<span class="c1">// multiple recipients</span>
+<span class="nv">$to</span>  <span class="o">=</span> <span class="s1">&#39;aidan@example.com&#39;</span> <span class="o">.</span> <span class="s1">&#39;, &#39;</span><span class="p">;</span> <span class="c1">// note the comma</span>
+<span class="nv">$to</span> <span class="o">.=</span> <span class="s1">&#39;wez@example.com&#39;</span><span class="p">;</span>
 
-// subject
-$subject = 'Birthday Reminders for August';
+<span class="c1">// subject</span>
+<span class="nv">$subject</span> <span class="o">=</span> <span class="s1">&#39;Birthday Reminders for August&#39;</span><span class="p">;</span>
 
-// message
-$message = '
-&lt;html&gt;
-&lt;head&gt;
-  &lt;title&gt;Birthday Reminders for August&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-  &lt;p&gt;Here are the birthdays upcoming in August!&lt;/p&gt;
-  &lt;table&gt;
-    &lt;tr&gt;
-      &lt;th&gt;Person&lt;/th&gt;&lt;th&gt;Day&lt;/th&gt;&lt;th&gt;Month&lt;/th&gt;&lt;th&gt;Year&lt;/th&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Joe&lt;/td&gt;&lt;td&gt;3rd&lt;/td&gt;&lt;td&gt;August&lt;/td&gt;&lt;td&gt;1970&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;Sally&lt;/td&gt;&lt;td&gt;17th&lt;/td&gt;&lt;td&gt;August&lt;/td&gt;&lt;td&gt;1973&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/table&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-';
+<span class="c1">// message</span>
+<span class="nv">$message</span> <span class="o">=</span> <span class="s1">&#39;</span>
+<span class="s1">&lt;html&gt;</span>
+<span class="s1">&lt;head&gt;</span>
+<span class="s1">  &lt;title&gt;Birthday Reminders for August&lt;/title&gt;</span>
+<span class="s1">&lt;/head&gt;</span>
+<span class="s1">&lt;body&gt;</span>
+<span class="s1">  &lt;p&gt;Here are the birthdays upcoming in August!&lt;/p&gt;</span>
+<span class="s1">  &lt;table&gt;</span>
+<span class="s1">    &lt;tr&gt;</span>
+<span class="s1">      &lt;th&gt;Person&lt;/th&gt;&lt;th&gt;Day&lt;/th&gt;&lt;th&gt;Month&lt;/th&gt;&lt;th&gt;Year&lt;/th&gt;</span>
+<span class="s1">    &lt;/tr&gt;</span>
+<span class="s1">    &lt;tr&gt;</span>
+<span class="s1">      &lt;td&gt;Joe&lt;/td&gt;&lt;td&gt;3rd&lt;/td&gt;&lt;td&gt;August&lt;/td&gt;&lt;td&gt;1970&lt;/td&gt;</span>
+<span class="s1">    &lt;/tr&gt;</span>
+<span class="s1">    &lt;tr&gt;</span>
+<span class="s1">      &lt;td&gt;Sally&lt;/td&gt;&lt;td&gt;17th&lt;/td&gt;&lt;td&gt;August&lt;/td&gt;&lt;td&gt;1973&lt;/td&gt;</span>
+<span class="s1">    &lt;/tr&gt;</span>
+<span class="s1">  &lt;/table&gt;</span>
+<span class="s1">&lt;/body&gt;</span>
+<span class="s1">&lt;/html&gt;</span>
+<span class="s1">&#39;</span><span class="p">;</span>
 
-// To send HTML mail, the Content-type header must be set
-$headers  = 'MIME-Version: 1.0' . &quot;\r\n&quot;;
-$headers .= 'Content-type: text/html; charset=iso-8859-1' . &quot;\r\n&quot;;
+<span class="c1">// To send HTML mail, the Content-type header must be set</span>
+<span class="nv">$headers</span>  <span class="o">=</span> <span class="s1">&#39;MIME-Version: 1.0&#39;</span> <span class="o">.</span> <span class="s2">&quot;</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="p">;</span>
+<span class="nv">$headers</span> <span class="o">.=</span> <span class="s1">&#39;Content-type: text/html; charset=iso-8859-1&#39;</span> <span class="o">.</span> <span class="s2">&quot;</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="p">;</span>
 
-// Additional headers
-$headers .= 'To: Mary &lt;mary@example.com&gt;, Kelly &lt;kelly@example.com&gt;' . &quot;\r\n&quot;;
-$headers .= 'From: Birthday Reminder &lt;birthday@example.com&gt;' . &quot;\r\n&quot;;
-$headers .= 'Cc: birthdayarchive@example.com' . &quot;\r\n&quot;;
-$headers .= 'Bcc: birthdaycheck@example.com' . &quot;\r\n&quot;;
+<span class="c1">// Additional headers</span>
+<span class="nv">$headers</span> <span class="o">.=</span> <span class="s1">&#39;To: Mary &lt;mary@example.com&gt;, Kelly &lt;kelly@example.com&gt;&#39;</span> <span class="o">.</span> <span class="s2">&quot;</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="p">;</span>
+<span class="nv">$headers</span> <span class="o">.=</span> <span class="s1">&#39;From: Birthday Reminder &lt;birthday@example.com&gt;&#39;</span> <span class="o">.</span> <span class="s2">&quot;</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="p">;</span>
+<span class="nv">$headers</span> <span class="o">.=</span> <span class="s1">&#39;Cc: birthdayarchive@example.com&#39;</span> <span class="o">.</span> <span class="s2">&quot;</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="p">;</span>
+<span class="nv">$headers</span> <span class="o">.=</span> <span class="s1">&#39;Bcc: birthdaycheck@example.com&#39;</span> <span class="o">.</span> <span class="s2">&quot;</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="p">;</span>
 
-// Mail it
-mail($to, $subject, $message, $headers);
-?&gt;
-</code></pre>
+<span class="c1">// Mail it</span>
+<span class="nb">mail</span><span class="p">(</span><span class="nv">$to</span><span class="p">,</span> <span class="nv">$subject</span><span class="p">,</span> <span class="nv">$message</span><span class="p">,</span> <span class="nv">$headers</span><span class="p">);</span>
+<span class="cp">?&gt;</span>
+</code></pre></div>
       </section>
       <div>
         برچسب ها:
@@ -407,9 +407,9 @@ mail($to, $subject, $message, $headers);
                     
                     <li><a href="https://www.instagram.com/shgninc/">Instagram</a></li>
                     
-                    <li><a href="http://vasni.ir/">Vasni</a></li>
-                    
                     <li><a href="https://virgool.io/@shgninc">Virgool</a></li>
+                    
+                    <li><a href="https://www.linkedin.com/in/sajjad-shahcheraghean/">Linkedin</a></li>
                     
                     <li><a href="https://twitter.com/shahcheraghian">Twiteer</a></li>
                     

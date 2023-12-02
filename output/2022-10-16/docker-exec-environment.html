@@ -176,16 +176,16 @@
         <p>استفاده از متغییر های محیطی همسان بین <code>container</code> و <code>host</code> در دستور <code>docker exec</code>، به عنوان یک چالش جالب مطرح هست.</p>
 <p>به عنوان مثال متغییر محیطی <code>$HOME</code> نمایانگر مسیر خانه کاربر جاری هست، چه در هاست و چه در کانتینر.</p>
 <p>برای نمونه:</p>
-<pre class="codehilite"><code>docker pull goyalmunish/devenv
-</code></pre>
+<div class="codehilite"><pre><span></span><code>docker pull goyalmunish/devenv
+</code></pre></div>
 
 <p>نمونه ای که متغییر محیطی از هاست را فراخوانی می کند:</p>
-<pre class="codehilite"><code>docker exec -it devenv /bin/bash -c &quot;echo $HOME&quot;    # /home/ubuntu
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="nv">docker</span><span class="w"> </span><span class="k">exec</span><span class="w"> </span><span class="o">-</span><span class="nv">it</span><span class="w"> </span><span class="nv">devenv</span><span class="w"> </span><span class="o">/</span><span class="nv">bin</span><span class="o">/</span><span class="nv">bash</span><span class="w"> </span><span class="o">-</span><span class="nv">c</span><span class="w"> </span><span class="s2">&quot;echo $HOME&quot;</span><span class="w">    </span>#<span class="w"> </span><span class="o">/</span><span class="nv">home</span><span class="o">/</span><span class="nv">ubuntu</span>
+</code></pre></div>
 
 <p>نمونه ای که متغییر محیطی از داخل کانتینر را فراخوانی می کند، نکته در تفاوت استفاده از " "" هست:</p>
-<pre class="codehilite"><code>docker exec -it devenv /bin/bash -c 'echo $HOME'      # /root
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="nv">docker</span><span class="w"> </span><span class="k">exec</span><span class="w"> </span><span class="o">-</span><span class="nv">it</span><span class="w"> </span><span class="nv">devenv</span><span class="w"> </span><span class="o">/</span><span class="nv">bin</span><span class="o">/</span><span class="nv">bash</span><span class="w"> </span><span class="o">-</span><span class="nv">c</span><span class="w"> </span><span class="s1">&#39;echo $HOME&#39;</span><span class="w">      </span>#<span class="w"> </span><span class="o">/</span><span class="nv">root</span>
+</code></pre></div>
 
 <p>این بود نکته ای مهم و کلیدی ولی خیلی ساده.</p>
 <h3>منابع</h3>
@@ -317,9 +317,9 @@
                     
                     <li><a href="https://www.instagram.com/shgninc/">Instagram</a></li>
                     
-                    <li><a href="http://vasni.ir/">Vasni</a></li>
-                    
                     <li><a href="https://virgool.io/@shgninc">Virgool</a></li>
+                    
+                    <li><a href="https://www.linkedin.com/in/sajjad-shahcheraghean/">Linkedin</a></li>
                     
                     <li><a href="https://twitter.com/shahcheraghian">Twiteer</a></li>
                     

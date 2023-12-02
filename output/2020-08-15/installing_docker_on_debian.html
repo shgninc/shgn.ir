@@ -182,59 +182,59 @@
 <p>داکر دو حالت رایگان و شامل هزینه داشته. برنامه ای که کانتینرها را میزبانی کرده را <code>Docker Engine</code> می نامند.  </p>
 <h2>نصب داکر</h2>
 <p>برای نصب داکر روی <code>debian 10</code> حداقل پیشنیازها فقط داشتن سیستم دبیان۱۰ هست. سپس کافی است تا برنامه های زیر را نصب نمود:</p>
-<pre class="codehilite"><code>$ sudo apt-get update
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>sudo<span class="w"> </span>apt-get<span class="w"> </span>update
 
-$ sudo apt-get install \
-        apt-transport-https \
-        ca-certificates \
-        curl \
-        gnupg-agent \
-        software-properties-common
-</code></pre>
+$<span class="w"> </span>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span><span class="se">\</span>
+<span class="w">        </span>apt-transport-https<span class="w"> </span><span class="se">\</span>
+<span class="w">        </span>ca-certificates<span class="w"> </span><span class="se">\</span>
+<span class="w">        </span>curl<span class="w"> </span><span class="se">\</span>
+<span class="w">        </span>gnupg-agent<span class="w"> </span><span class="se">\</span>
+<span class="w">        </span>software-properties-common
+</code></pre></div>
 
 <p>بعد لازم هست تا کلید <code>gpg</code> سورس لیست داکر را به سیستم اضافه کرد:</p>
-<pre class="codehilite"><code>$ curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="o">$</span><span class="w"> </span><span class="n">curl</span><span class="w"> </span><span class="o">-</span><span class="n">fsSL</span><span class="w"> </span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">download</span><span class="o">.</span><span class="n">docker</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">linux</span><span class="o">/</span><span class="n">debian</span><span class="o">/</span><span class="n">gpg</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">sudo</span><span class="w"> </span><span class="n">apt</span><span class="o">-</span><span class="n">key</span><span class="w"> </span><span class="n">add</span><span class="w"> </span><span class="o">-</span>
+</code></pre></div>
 
 <p>و بعد باید آدرس سورس لیست نصب آن را به سورس لیست های سیستم عامل اضافه نمود:</p>
-<pre class="codehilite"><code>$ sudo add-apt-repository \
-   &quot;deb [arch=amd64] https://download.docker.com/linux/debian \
-   $(lsb_release -cs) \
-   stable&quot;
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="o">$</span><span class="w"> </span><span class="n">sudo</span><span class="w"> </span><span class="n">add</span><span class="o">-</span><span class="n">apt</span><span class="o">-</span><span class="n">repository</span><span class="w"> </span>\
+<span class="w">   </span><span class="s2">&quot;deb [arch=amd64] https://download.docker.com/linux/debian </span><span class="se">\</span>
+<span class="s2">   $(lsb_release -cs) </span><span class="se">\</span>
+<span class="s2">   stable&quot;</span>
+</code></pre></div>
 
 <p>و درنهایت کافی هست تا برای نصب خود <code>docker</code> نیز از دستور زیر استفاده نمود:</p>
-<pre class="codehilite"><code>$ sudo apt-get update
-$ sudo apt-get install docker-ce docker-ce-cli containerd.io
-</code></pre>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>sudo<span class="w"> </span>apt-get<span class="w"> </span>update
+$<span class="w"> </span>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>docker-ce<span class="w"> </span>docker-ce-cli<span class="w"> </span>containerd.io
+</code></pre></div>
 
 <h4>اطمینان از نصب</h4>
 <p>برای اطمنان از نصب صحیح داکر، می توان یک ایمیج مرسوم و معروف آن را اجرا کرد:</p>
-<pre class="codehilite"><code>$ sudo docker run hello-world
-</code></pre>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>sudo<span class="w"> </span>docker<span class="w"> </span>run<span class="w"> </span>hello-world
+</code></pre></div>
 
 <p>اگر این ایمیج به درستی دانلود و اجرا شود یک سری اطلاعات را چاپ و خارج می شود. در این حالت یعنی <code>Docker Engine</code> به درستی نصب شده است.</p>
 <p>امیدوارم که این مطلب مفید و کاربردی بوده باشد.</p>
 <h1>نصب docker-compose</h1>
 <p>در پایان یکی از ابزارهای مفی و به شدت کاربردی برای داکر با عنوان <code>docker-compose</code> را معرفی می کنیم. از این ابزار به نوعی می توان به جای <code>docker run</code> استفاده نمود به طوری که پارامترهای آن به صورت مستند و پایدار می ماند. از طرفی به عنوان یک <code>orchestrator</code> ساده نیز شناخته می شود. روش عملکرد آن به این صورت هست که یک فایل ساده با نام <code>docker-compose.yml</code> را در پوشه ای (ترجیحا بانام سرویس مورد نظر) ایجاد کرده و تمامی پارامترهای اجرایی یک یا چند کانتینر به هم مرتبط را داخل فایل قرارداده و در نهایت با اجرای <code>docker-compose</code> تمامی سرویس های آن اجرا خواهند شد.</p>
 <h3>نصب</h3>
-<pre class="codehilite"><code>sudo curl -L &quot;https://github.com/docker/compose/releases/download/1.28.2/docker-compose-$(uname -s)-$(uname -m)&quot; -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="n">sudo</span><span class="w"> </span><span class="n">curl</span><span class="w"> </span><span class="o">-</span><span class="n">L</span><span class="w"> </span><span class="s2">&quot;https://github.com/docker/compose/releases/download/1.28.2/docker-compose-$(uname -s)-$(uname -m)&quot;</span><span class="w"> </span><span class="o">-</span><span class="n">o</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">docker</span><span class="o">-</span><span class="n">compose</span>
+<span class="n">sudo</span><span class="w"> </span><span class="n">chmod</span><span class="w"> </span><span class="o">+</span><span class="n">x</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">docker</span><span class="o">-</span><span class="n">compose</span>
+</code></pre></div>
 
 <p>و در پایان برای اطمینان می توان دستور زیر را اجرا نمود:</p>
-<pre class="codehilite"><code>$ docker-compose --version
-docker-compose version 1.28.2, build 1110ad01
-</code></pre>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>docker-compose<span class="w"> </span>--version
+docker-compose<span class="w"> </span>version<span class="w"> </span><span class="m">1</span>.28.2,<span class="w"> </span>build<span class="w"> </span>1110ad01
+</code></pre></div>
 
 <h3>ایجاد فایل docker-compose</h3>
 <p>برای ایجاد یک سرویس با <code>docker-compose</code> مراحل زیر را اجرا می کنیم:</p>
-<pre class="codehilite"><code>mkdir composetest
+<div class="codehilite"><pre><span></span><code>mkdir composetest
 cd composetest
-</code></pre>
+</code></pre></div>
 
 <p>سپس یک فایل با نام <code>docker-compose.yml</code> ایجاد کرده و محتویات زیر را داخل قرار می دهیم:</p>
-<pre class="codehilite"><code>version: &quot;3.9&quot;
+<div class="codehilite"><pre><span></span><code>version: &quot;3.9&quot;
 services:
   web:
     build: .
@@ -242,30 +242,30 @@ services:
       - &quot;5000:5000&quot;
   redis:
     image: &quot;redis:alpine&quot;
-</code></pre>
+</code></pre></div>
 
 <p>همانطور که مشاهده می کنید دو سرویس <code>web</code> و <code>redis</code> در این فایل ایجاد می شوند. در نهایت برای ایجاد و اجرا کافی هست تا فقط دستور زیر را اجرا کنید:</p>
-<pre class="codehilite"><code>$ docker-compose up
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>docker-compose<span class="w"> </span>up
 
-Creating network &quot;composetest_default&quot; with the default driver
-Creating composetest_web_1 ...
-Creating composetest_redis_1 ...
-Creating composetest_web_1
-Creating composetest_redis_1 ... done
-Attaching to composetest_web_1, composetest_redis_1
-web_1    |  * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
-redis_1  | 1:C 17 Aug 22:11:10.480 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
-redis_1  | 1:C 17 Aug 22:11:10.480 # Redis version=4.0.1, bits=64, commit=00000000, modified=0, pid=1, just started
-redis_1  | 1:C 17 Aug 22:11:10.480 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
-web_1    |  * Restarting with stat
-redis_1  | 1:M 17 Aug 22:11:10.483 * Running mode=standalone, port=6379.
-redis_1  | 1:M 17 Aug 22:11:10.483 # WARNING: The TCP backlog setting of 511 cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128.
-web_1    |  * Debugger is active!
-redis_1  | 1:M 17 Aug 22:11:10.483 # Server initialized
-redis_1  | 1:M 17 Aug 22:11:10.483 # WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command 'echo never &gt; /sys/kernel/mm/transparent_hugepage/enabled' as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled.
-web_1    |  * Debugger PIN: 330-787-903
-redis_1  | 1:M 17 Aug 22:11:10.483 * Ready to accept connections
-</code></pre>
+Creating<span class="w"> </span>network<span class="w"> </span><span class="s2">&quot;composetest_default&quot;</span><span class="w"> </span>with<span class="w"> </span>the<span class="w"> </span>default<span class="w"> </span>driver
+Creating<span class="w"> </span>composetest_web_1<span class="w"> </span>...
+Creating<span class="w"> </span>composetest_redis_1<span class="w"> </span>...
+Creating<span class="w"> </span>composetest_web_1
+Creating<span class="w"> </span>composetest_redis_1<span class="w"> </span>...<span class="w"> </span><span class="k">done</span>
+Attaching<span class="w"> </span>to<span class="w"> </span>composetest_web_1,<span class="w"> </span>composetest_redis_1
+web_1<span class="w">    </span><span class="p">|</span><span class="w">  </span>*<span class="w"> </span>Running<span class="w"> </span>on<span class="w"> </span>http://0.0.0.0:5000/<span class="w"> </span><span class="o">(</span>Press<span class="w"> </span>CTRL+C<span class="w"> </span>to<span class="w"> </span>quit<span class="o">)</span>
+redis_1<span class="w">  </span><span class="p">|</span><span class="w"> </span><span class="m">1</span>:C<span class="w"> </span><span class="m">17</span><span class="w"> </span>Aug<span class="w"> </span><span class="m">22</span>:11:10.480<span class="w"> </span><span class="c1"># oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo</span>
+redis_1<span class="w">  </span><span class="p">|</span><span class="w"> </span><span class="m">1</span>:C<span class="w"> </span><span class="m">17</span><span class="w"> </span>Aug<span class="w"> </span><span class="m">22</span>:11:10.480<span class="w"> </span><span class="c1"># Redis version=4.0.1, bits=64, commit=00000000, modified=0, pid=1, just started</span>
+redis_1<span class="w">  </span><span class="p">|</span><span class="w"> </span><span class="m">1</span>:C<span class="w"> </span><span class="m">17</span><span class="w"> </span>Aug<span class="w"> </span><span class="m">22</span>:11:10.480<span class="w"> </span><span class="c1"># Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf</span>
+web_1<span class="w">    </span><span class="p">|</span><span class="w">  </span>*<span class="w"> </span>Restarting<span class="w"> </span>with<span class="w"> </span>stat
+redis_1<span class="w">  </span><span class="p">|</span><span class="w"> </span><span class="m">1</span>:M<span class="w"> </span><span class="m">17</span><span class="w"> </span>Aug<span class="w"> </span><span class="m">22</span>:11:10.483<span class="w"> </span>*<span class="w"> </span>Running<span class="w"> </span><span class="nv">mode</span><span class="o">=</span>standalone,<span class="w"> </span><span class="nv">port</span><span class="o">=</span><span class="m">6379</span>.
+redis_1<span class="w">  </span><span class="p">|</span><span class="w"> </span><span class="m">1</span>:M<span class="w"> </span><span class="m">17</span><span class="w"> </span>Aug<span class="w"> </span><span class="m">22</span>:11:10.483<span class="w"> </span><span class="c1"># WARNING: The TCP backlog setting of 511 cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128.</span>
+web_1<span class="w">    </span><span class="p">|</span><span class="w">  </span>*<span class="w"> </span>Debugger<span class="w"> </span>is<span class="w"> </span>active!
+redis_1<span class="w">  </span><span class="p">|</span><span class="w"> </span><span class="m">1</span>:M<span class="w"> </span><span class="m">17</span><span class="w"> </span>Aug<span class="w"> </span><span class="m">22</span>:11:10.483<span class="w"> </span><span class="c1"># Server initialized</span>
+redis_1<span class="w">  </span><span class="p">|</span><span class="w"> </span><span class="m">1</span>:M<span class="w"> </span><span class="m">17</span><span class="w"> </span>Aug<span class="w"> </span><span class="m">22</span>:11:10.483<span class="w"> </span><span class="c1"># WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command &#39;echo never &gt; /sys/kernel/mm/transparent_hugepage/enabled&#39; as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled.</span>
+web_1<span class="w">    </span><span class="p">|</span><span class="w">  </span>*<span class="w"> </span>Debugger<span class="w"> </span>PIN:<span class="w"> </span><span class="m">330</span>-787-903
+redis_1<span class="w">  </span><span class="p">|</span><span class="w"> </span><span class="m">1</span>:M<span class="w"> </span><span class="m">17</span><span class="w"> </span>Aug<span class="w"> </span><span class="m">22</span>:11:10.483<span class="w"> </span>*<span class="w"> </span>Ready<span class="w"> </span>to<span class="w"> </span>accept<span class="w"> </span>connections
+</code></pre></div>
 
 <p>در پایان سرویس همانطور که در فایل تنظیم شده است از طریق آدرس <code>http://MACHINE_VM_IP:5000</code> در دسترس می باشد.</p>
 <h4>منابع:</h4>
@@ -401,9 +401,9 @@ redis_1  | 1:M 17 Aug 22:11:10.483 * Ready to accept connections
                     
                     <li><a href="https://www.instagram.com/shgninc/">Instagram</a></li>
                     
-                    <li><a href="http://vasni.ir/">Vasni</a></li>
-                    
                     <li><a href="https://virgool.io/@shgninc">Virgool</a></li>
+                    
+                    <li><a href="https://www.linkedin.com/in/sajjad-shahcheraghean/">Linkedin</a></li>
                     
                     <li><a href="https://twitter.com/shahcheraghian">Twiteer</a></li>
                     

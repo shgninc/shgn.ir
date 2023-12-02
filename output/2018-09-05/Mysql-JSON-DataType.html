@@ -181,64 +181,64 @@
 <p>به همراه این نوع داده جدید، یک سری توابع SQL نیز ایجاد شده اند که امکان عملیات ایجاد، تغییرات و جستجو بر روی مقادیر JSON را می دهند، ارائه شده است. لیست این توابع از <a href="https://mariadb.com/kb/en/json-functions/">اینجا</a>  قابل مشاهده می باشند.</p>
 <h3>تعریف نوع JSON در جدول</h3>
 <p>برای تعریف نوع داده <code>JSON</code> در جدول به صورت زیر عمل می شود:</p>
-<pre class="codehilite"><code>CREATE TABLE events( 
-  id int auto_increment primary key, 
-  event_name varchar(255), 
-  visitor varchar(255), 
-  properties json, 
-  browser json
-);
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="n">CREATE</span><span class="w"> </span><span class="n">TABLE</span><span class="w"> </span><span class="n">events</span><span class="p">(</span><span class="w"> </span>
+<span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="w"> </span><span class="n">auto_increment</span><span class="w"> </span><span class="n">primary</span><span class="w"> </span><span class="n">key</span><span class="p">,</span><span class="w"> </span>
+<span class="w">  </span><span class="n">event_name</span><span class="w"> </span><span class="n">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span><span class="w"> </span>
+<span class="w">  </span><span class="n">visitor</span><span class="w"> </span><span class="n">varchar</span><span class="p">(</span><span class="mi">255</span><span class="p">),</span><span class="w"> </span>
+<span class="w">  </span><span class="n">properties</span><span class="w"> </span><span class="n">json</span><span class="p">,</span><span class="w"> </span>
+<span class="w">  </span><span class="n">browser</span><span class="w"> </span><span class="n">json</span>
+<span class="p">);</span>
+</code></pre></div>
 
 <h5>نکته حائز اهمیت این است که فیلد با نوع داده JSON نمی تواند مقدار پیش فرض داشته باشد. همچنین به طور مستقیم نمی توان بر روی آن نوع داده index زده شود. در عوض می توان از index بر روی <a href="http://www.mysqltutorial.org/mysql-generated-columns/">generated column</a> که حاوی مقادیری که از نوع داده JSON حاصل شده استفاده نمود.</h5>
 <h3>درج داده در فیلد JSON</h3>
 <p>نمونه ای از نحوه درج اطلاعات در فیلدهای JSON:</p>
-<pre class="codehilite"><code>INSERT INTO events(event_name, visitor,properties, browser) 
+<div class="codehilite"><pre><span></span><code>INSERT INTO events(event_name, visitor,properties, browser) 
 VALUES (
-  'pageview', 
-   '1',
-   '{ &quot;page&quot;: &quot;/&quot; }',
-   '{ &quot;name&quot;: &quot;Safari&quot;, &quot;os&quot;: &quot;Mac&quot;, &quot;resolution&quot;: { &quot;x&quot;: 1920, &quot;y&quot;: 1080 } }'
+  &#39;pageview&#39;, 
+   &#39;1&#39;,
+   &#39;{ &quot;page&quot;: &quot;/&quot; }&#39;,
+   &#39;{ &quot;name&quot;: &quot;Safari&quot;, &quot;os&quot;: &quot;Mac&quot;, &quot;resolution&quot;: { &quot;x&quot;: 1920, &quot;y&quot;: 1080 } }&#39;
 ),
-('pageview', 
-  '2',
-  '{ &quot;page&quot;: &quot;/contact&quot; }',
-  '{ &quot;name&quot;: &quot;Firefox&quot;, &quot;os&quot;: &quot;Windows&quot;, &quot;resolution&quot;: { &quot;x&quot;: 2560, &quot;y&quot;: 1600 } }'
-),
-(
-  'pageview', 
-  '1',
-  '{ &quot;page&quot;: &quot;/products&quot; }',
-  '{ &quot;name&quot;: &quot;Safari&quot;, &quot;os&quot;: &quot;Mac&quot;, &quot;resolution&quot;: { &quot;x&quot;: 1920, &quot;y&quot;: 1080 } }'
+(&#39;pageview&#39;, 
+  &#39;2&#39;,
+  &#39;{ &quot;page&quot;: &quot;/contact&quot; }&#39;,
+  &#39;{ &quot;name&quot;: &quot;Firefox&quot;, &quot;os&quot;: &quot;Windows&quot;, &quot;resolution&quot;: { &quot;x&quot;: 2560, &quot;y&quot;: 1600 } }&#39;
 ),
 (
-  'purchase', 
-   '3',
-  '{ &quot;amount&quot;: 200 }',
-  '{ &quot;name&quot;: &quot;Firefox&quot;, &quot;os&quot;: &quot;Windows&quot;, &quot;resolution&quot;: { &quot;x&quot;: 1600, &quot;y&quot;: 900 } }'
+  &#39;pageview&#39;, 
+  &#39;1&#39;,
+  &#39;{ &quot;page&quot;: &quot;/products&quot; }&#39;,
+  &#39;{ &quot;name&quot;: &quot;Safari&quot;, &quot;os&quot;: &quot;Mac&quot;, &quot;resolution&quot;: { &quot;x&quot;: 1920, &quot;y&quot;: 1080 } }&#39;
 ),
 (
-  'purchase', 
-   '4',
-  '{ &quot;amount&quot;: 150 }',
-  '{ &quot;name&quot;: &quot;Firefox&quot;, &quot;os&quot;: &quot;Windows&quot;, &quot;resolution&quot;: { &quot;x&quot;: 1280, &quot;y&quot;: 800 } }'
+  &#39;purchase&#39;, 
+   &#39;3&#39;,
+  &#39;{ &quot;amount&quot;: 200 }&#39;,
+  &#39;{ &quot;name&quot;: &quot;Firefox&quot;, &quot;os&quot;: &quot;Windows&quot;, &quot;resolution&quot;: { &quot;x&quot;: 1600, &quot;y&quot;: 900 } }&#39;
 ),
 (
-  'purchase', 
-  '4',
-  '{ &quot;amount&quot;: 500 }',
-  '{ &quot;name&quot;: &quot;Chrome&quot;, &quot;os&quot;: &quot;Windows&quot;, &quot;resolution&quot;: { &quot;x&quot;: 1680, &quot;y&quot;: 1050 } }'
+  &#39;purchase&#39;, 
+   &#39;4&#39;,
+  &#39;{ &quot;amount&quot;: 150 }&#39;,
+  &#39;{ &quot;name&quot;: &quot;Firefox&quot;, &quot;os&quot;: &quot;Windows&quot;, &quot;resolution&quot;: { &quot;x&quot;: 1280, &quot;y&quot;: 800 } }&#39;
+),
+(
+  &#39;purchase&#39;, 
+  &#39;4&#39;,
+  &#39;{ &quot;amount&quot;: 500 }&#39;,
+  &#39;{ &quot;name&quot;: &quot;Chrome&quot;, &quot;os&quot;: &quot;Windows&quot;, &quot;resolution&quot;: { &quot;x&quot;: 1680, &quot;y&quot;: 1050 } }&#39;
 );
-</code></pre>
+</code></pre></div>
 
 <h3>جسجتو در نوع JSON</h3>
 <p>همچنین همانند کد زیر می توان در نوع داده JSON جستجو نمود:</p>
-<pre class="codehilite"><code>SELECT id, browser-&gt;'$.name' browser
-FROM events;
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="n">SELECT</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">browser</span><span class="o">-&gt;</span><span class="s">&#39;$.name&#39;</span><span class="w"> </span><span class="n">browser</span>
+<span class="n">FROM</span><span class="w"> </span><span class="n">events</span><span class="p">;</span>
+</code></pre></div>
 
 <p>که نتیجه آن به این صورت خواهد بود:</p>
-<pre class="codehilite"><code>+----+-----------+
+<div class="codehilite"><pre><span></span><code>+----+-----------+
 | id | browser   |
 +----+-----------+
 |  1 | &quot;Safari&quot;  |
@@ -249,38 +249,38 @@ FROM events;
 |  6 | &quot;Chrome&quot;  |
 +----+-----------+
 6 rows in set (0.00 sec)
-</code></pre>
+</code></pre></div>
 
 <p>همچنین نمونه هایی بیشتر از انواع جسجتوها:</p>
-<pre class="codehilite"><code>SELECT browser-&gt;&gt;'$.name' browser, 
-      count(browser)
-FROM events
-GROUP BY browser-&gt;&gt;'$.name';
+<div class="codehilite"><pre><span></span><code><span class="c">SELECT browser</span><span class="nb">-</span><span class="nv">&gt;&gt;</span><span class="c">&#39;$</span><span class="nt">.</span><span class="c">name&#39; browser</span><span class="nt">,</span><span class="c"> </span>
+<span class="c">      count(browser)</span>
+<span class="c">FROM events</span>
+<span class="c">GROUP BY browser</span><span class="nb">-</span><span class="nv">&gt;&gt;</span><span class="c">&#39;$</span><span class="nt">.</span><span class="c">name&#39;;</span>
 
-+---------+----------------+
-| browser | count(browser) |
-+---------+----------------+
-| Safari  |              2 |
-| Firefox |              3 |
-| Chrome  |              1 |
-+---------+----------------+
-3 rows in set (0.02 sec)
-</code></pre>
+<span class="nb">+---------+----------------+</span>
+<span class="c">| browser | count(browser) |</span>
+<span class="nb">+---------+----------------+</span>
+<span class="c">| Safari  |              2 |</span>
+<span class="c">| Firefox |              3 |</span>
+<span class="c">| Chrome  |              1 |</span>
+<span class="nb">+---------+----------------+</span>
+<span class="c">3 rows in set (0</span><span class="nt">.</span><span class="c">02 sec)</span>
+</code></pre></div>
 
 <p>یا </p>
-<pre class="codehilite"><code>SELECT visitor, SUM(properties-&gt;&gt;'$.amount') revenue
-FROM events
-WHERE properties-&gt;&gt;'$.amount' &gt; 0
-GROUP BY visitor;
+<div class="codehilite"><pre><span></span><code><span class="n">SELECT</span><span class="w"> </span><span class="n">visitor</span><span class="p">,</span><span class="w"> </span><span class="nf">SUM</span><span class="p">(</span><span class="n">properties</span><span class="o">-&gt;&gt;</span><span class="s">&#39;$.amount&#39;</span><span class="p">)</span><span class="w"> </span><span class="n">revenue</span>
+<span class="n">FROM</span><span class="w"> </span><span class="n">events</span>
+<span class="n">WHERE</span><span class="w"> </span><span class="n">properties</span><span class="o">-&gt;&gt;</span><span class="s">&#39;$.amount&#39;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span>
+<span class="kr">GROUP</span><span class="w"> </span><span class="n">BY</span><span class="w"> </span><span class="n">visitor</span><span class="p">;</span>
 
----------+---------+
-| visitor | revenue |
-+---------+---------+
-| 3       |     200 |
-| 4       |     650 |
-+---------+---------+
-2 rows in set (0.00 sec)
-</code></pre>
+<span class="o">---------+---------+</span>
+<span class="o">|</span><span class="w"> </span><span class="n">visitor</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">revenue</span><span class="w"> </span><span class="o">|</span>
+<span class="o">+---------+---------+</span>
+<span class="o">|</span><span class="w"> </span><span class="mi">3</span><span class="w">       </span><span class="o">|</span><span class="w">     </span><span class="mi">200</span><span class="w"> </span><span class="o">|</span>
+<span class="o">|</span><span class="w"> </span><span class="mi">4</span><span class="w">       </span><span class="o">|</span><span class="w">     </span><span class="mi">650</span><span class="w"> </span><span class="o">|</span>
+<span class="o">+---------+---------+</span>
+<span class="mi">2</span><span class="w"> </span><span class="n">rows</span><span class="w"> </span><span class="kr">in</span><span class="w"> </span><span class="nf">set</span><span class="w"> </span><span class="p">(</span><span class="mf">0.00</span><span class="w"> </span><span class="n">sec</span><span class="p">)</span>
+</code></pre></div>
 
 <h2>خاتمه</h2>
 <p>در این نوشته سعی شده تا آشنای اولیه ای به نوع داده <code>JSNO</code> در دیتابیس <code>MySql</code> / <code>Mariadb</code>  حاصل شود.انشاءالله در فرصت های بعدی عمیق تر با این نوع داده آشنا می شویم.</p>
@@ -419,9 +419,9 @@ GROUP BY visitor;
                     
                     <li><a href="https://www.instagram.com/shgninc/">Instagram</a></li>
                     
-                    <li><a href="http://vasni.ir/">Vasni</a></li>
-                    
                     <li><a href="https://virgool.io/@shgninc">Virgool</a></li>
+                    
+                    <li><a href="https://www.linkedin.com/in/sajjad-shahcheraghean/">Linkedin</a></li>
                     
                     <li><a href="https://twitter.com/shahcheraghian">Twiteer</a></li>
                     

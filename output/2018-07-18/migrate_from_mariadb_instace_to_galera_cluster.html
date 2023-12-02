@@ -188,65 +188,65 @@
 <p>برای رفع این مشکل و استفاده از این راهکاری باید گام به گام و با دقت خیلی زیاد جلو می رفتیم و تا از مراحل قبلی مطمئن نمی شدیم نمی توانستیم به گام های بعدی برسیم.</p>
 <h4>گام اول: آماده سازی</h4>
 <p>در گام اول، ما دو ماشین مجازی دیگه نیز به عنوان نودهای دیگر کلاسترینگ گلرا نصب و آماده کردیم. در این مراحل <code>Debian 9</code> بر روی تمامی ماشین های مجازی نصب گردید. سپس، بعد از انجام تنظیمات شبکه ای و نصب برنامه اولیه برنامه های مورد نیاز به صورت زیر نصب شدند:</p>
-<pre class="codehilite"><code>sudo apt install software-properties-common
+<div class="codehilite"><pre><span></span><code>sudo apt install software-properties-common
 sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
-</code></pre>
+</code></pre></div>
 
 <p>| نکته ای که باید در نظر داشت در دبیان ۹ به بالا لازم است تا برنامه <code>dirmngr</code> نیز نصب شود.</p>
 <p>سپس مخزن نصب برنامه <code>Galera Cluster</code> به سیستم عامل اضافه گردید:</p>
-<pre class="codehilite"><code>sudo add-apt-repository 'deb [arch=amd64,i386,ppc64el] http://mirror.nodesdirect.com/mariadb/repo/10.2/debian stretch main'
+<div class="codehilite"><pre><span></span><code>sudo add-apt-repository &#39;deb [arch=amd64,i386,ppc64el] http://mirror.nodesdirect.com/mariadb/repo/10.2/debian stretch main&#39;
 sudo apt update
-</code></pre>
+</code></pre></div>
 
 <h4>گام دوم: نصب و راه اندازی</h4>
 <p>در این مرحله باید برنامه <code>Galera Cluster</code> را به سادگی هر چه تمام بر روی ماشین های مجازی نصب و تنظیمات لازم را انجام می دادیم:</p>
-<pre class="codehilite"><code>sudo apt install -y rsync mariadb-server
-</code></pre>
+<div class="codehilite"><pre><span></span><code>sudo apt install -y rsync mariadb-server
+</code></pre></div>
 
 <p>البته مراحل نصب و راه اندازی <code>Galera Cluster</code> در مطلبی به نام <a href="http://shgn.ir/2017-08-16/galera_cluster.html">نصب Galer Cluster بر روی debian8</a> که قبلا نوشته شده به سادگی انجام تنظیمات در آن توضیح داد شده است.</p>
 <h4>گام سوم: انتقال نود اول</h4>
 <p>در این مرحله لازم بود که اولین و مهمتریم نود دیتابیس که حاوی تمامی اطلاعات مورد بحث بود را به کلاسترینگ اضافه نماییم. برای انجام این مهم، مراحلی نیز باید انجام می شد:</p>
 <p>ابتدا لازم بود تا از متصل نشدن این نود به کلاسترینگ مطمئن شویم:</p>
-<pre class="codehilite"><code>sudo service mysql start --wsrep_on=OFF
-</code></pre>
+<div class="codehilite"><pre><span></span><code>sudo service mysql start --wsrep_on=OFF
+</code></pre></div>
 
 <p>سپس به منظور اطمینان از این که تمامی ساختار دیتابیس در قالب کلاسترینگ گلرا قرار می گیرد باید برنامه زیر اجرا می شد:</p>
-<pre class="codehilite"><code>sudo mysql_upgrade -u root -p
-</code></pre>
+<div class="codehilite"><pre><span></span><code>sudo mysql_upgrade -u root -p
+</code></pre></div>
 
 <p>احتمال این که اجرای این برنامه خطاهایی را تولید کند بود، که البته ضمن توجه به آنها می توان از آنها رد شد. بعد از اجرای این برنامه باید سرویس دیتابیس متوقف می شد:</p>
-<pre class="codehilite"><code>sudo service mysql stop
-</code></pre>
+<div class="codehilite"><pre><span></span><code>sudo service mysql stop
+</code></pre></div>
 
 <h4>گام چهارم: شروع کلاسترینگ</h4>
 <p>بعد از موفقیت در طی مراحل قبلی به آخرین مرحله که راه اندازی کلاسترینگ است می رسیم. در این مرحله و برای اطمینان از راه اندازی ابتدا با نود اول که حاوی اطاعلات است شروع می کنیم:</p>
-<pre class="codehilite"><code>sudo galera_new_cluster
-</code></pre>
+<div class="codehilite"><pre><span></span><code>sudo galera_new_cluster
+</code></pre></div>
 
 <p>بعد از اجرای این دستور و به منظور اطمینان از اجرای صحیح سرویس دیتابیس دستور زیر را اجرا شد:</p>
-<pre class="codehilite"><code>sudo ps aux | grep mysql
-</code></pre>
+<div class="codehilite"><pre><span></span><code>sudo ps aux | grep mysql
+</code></pre></div>
 
 <p>که انتظار خروجی زیر می رفت:</p>
-<pre class="codehilite"><code>mysql 1057 14.0 15.5 1225420 159668 ? Ssl 01:50 0:00 /usr/sbin/mysqld --wsrep-new-cluster --wsrep_start_position=00000000-0000-0000-0000-000000000000:-1
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="s s-Atom">mysql</span> <span class="mi">1057</span> <span class="mf">14.0</span> <span class="mf">15.5</span> <span class="mi">1225420</span> <span class="mi">159668</span> <span class="nb">?</span> <span class="nv">Ssl</span> <span class="mi">01</span><span class="o">:</span><span class="mi">50</span> <span class="mi">0</span><span class="o">:</span><span class="mi">00</span> <span class="o">/</span><span class="s s-Atom">usr</span><span class="o">/</span><span class="s s-Atom">sbin</span><span class="o">/</span><span class="s s-Atom">mysqld</span> <span class="s s-Atom">--wsrep</span><span class="o">-</span><span class="s s-Atom">new</span><span class="o">-</span><span class="s s-Atom">cluster</span> <span class="s s-Atom">--wsrep_start_position</span><span class="o">=</span><span class="mi">00000000</span><span class="o">-</span><span class="mi">0000</span><span class="o">-</span><span class="mi">0000</span><span class="o">-</span><span class="mi">0000</span><span class="o">-</span><span class="mi">000000000000</span><span class="o">:-</span><span class="mi">1</span>
+</code></pre></div>
 
 <h4>گام پنجم: راه اندازی کل کلاستر</h4>
 <p>اکنون پس از اطمیان از صحت اجرای نود اول کلاسترینگ، باید نودهای بعدی را نیز  یکی یکی به کلاسترینگ اضافه می شد،پس بر روی هر کدام از نود های دستور زیر اجرا شد:</p>
-<pre class="codehilite"><code>sudo service mysql start
-</code></pre>
+<div class="codehilite"><pre><span></span><code>sudo service mysql start
+</code></pre></div>
 
 <p>| نکته قابل توجه این است که با توجه به حجم دیتابیس در نود اول، معمولا راه اندازی دیگر نودهای گلرا مدتی طول می کشد باید صبور باشید. زیرا گلرا در حال همسان سازی دیگر نودها با نود اصلی می باشد.</p>
 <h4>گام ششم: اطمینان از کلاسترینگ</h4>
 <p>در این مرحله و برای اطمینان کامل از کلاستر شدن تمامی نودها می توان دستور زیر را اجرا نمود:</p>
-<pre class="codehilite"><code>mysql -u root -p -e &quot;SHOW STATUS LIKE 'wsrep_cluster_size';&quot;
-Enter password:
-+--------------------+-------+
-| Variable_name      | Value |
-+--------------------+-------+
-| wsrep_cluster_size | 3     |
-+--------------------+-------+
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="c">mysql </span><span class="nb">-</span><span class="c">u root </span><span class="nb">-</span><span class="c">p </span><span class="nb">-</span><span class="c">e &quot;SHOW STATUS LIKE &#39;wsrep_cluster_size&#39;;&quot;</span>
+<span class="c">Enter password:</span>
+<span class="nb">+--------------------+-------+</span>
+<span class="c">| Variable_name      | Value |</span>
+<span class="nb">+--------------------+-------+</span>
+<span class="c">| wsrep_cluster_size | 3     |</span>
+<span class="nb">+--------------------+-------+</span>
+</code></pre></div>
 
 <h3>در پایان</h3>
 <p>در پایان بعد از اطمینان از صحت عملکرد تمامی مراحل برنامه اطلاعات، متوجه شدیم که بعضی وقت ها مشکلات به ظاهر بزرگ با راهکارهایی ساده و دم دستی قابل حا هستند.</p>
@@ -384,9 +384,9 @@ Enter password:
                     
                     <li><a href="https://www.instagram.com/shgninc/">Instagram</a></li>
                     
-                    <li><a href="http://vasni.ir/">Vasni</a></li>
-                    
                     <li><a href="https://virgool.io/@shgninc">Virgool</a></li>
+                    
+                    <li><a href="https://www.linkedin.com/in/sajjad-shahcheraghean/">Linkedin</a></li>
                     
                     <li><a href="https://twitter.com/shahcheraghian">Twiteer</a></li>
                     

@@ -183,58 +183,58 @@
 <p>۲- هنگام کاهش فضای دیسک، اگر دقت کافی و لازم را نداشته باشیم، احتمال از دست رفتن بخشی یا کل اطلاعات ذخیره شده روی دیسک وجود دارد.</p>
 <h2>فرضیات مقاله</h2>
 <p>برای انجام این نوشته فرض بر این است که قصد داریم تا فضای پارتیشن <code>/home</code> را ۲گیگ کاهش بدیم</p>
-<pre class="codehilite"><code>[root@cloud ~]# df -h /home/
-Filesystem            Size  Used Avail Use% Mounted on
-/dev/mapper/vg_cloud-LogVol00        12G   9.2G  1.9G  84%  /home
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="o">[</span><span class="n">root@cloud ~</span><span class="o">]</span><span class="err">#</span><span class="w"> </span><span class="n">df</span><span class="w"> </span><span class="o">-</span><span class="n">h</span><span class="w"> </span><span class="o">/</span><span class="n">home</span><span class="o">/</span>
+<span class="n">Filesystem</span><span class="w">            </span><span class="k">Size</span><span class="w">  </span><span class="n">Used</span><span class="w"> </span><span class="n">Avail</span><span class="w"> </span><span class="k">Use</span><span class="o">%</span><span class="w"> </span><span class="n">Mounted</span><span class="w"> </span><span class="k">on</span>
+<span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">mapper</span><span class="o">/</span><span class="n">vg_cloud</span><span class="o">-</span><span class="n">LogVol00</span><span class="w">        </span><span class="mi">12</span><span class="n">G</span><span class="w">   </span><span class="mf">9.2</span><span class="n">G</span><span class="w">  </span><span class="mf">1.9</span><span class="n">G</span><span class="w">  </span><span class="mi">84</span><span class="o">%</span><span class="w">  </span><span class="o">/</span><span class="n">home</span>
+</code></pre></div>
 
 <h2>گام ها</h2>
 <p>برای انجام این مهم به ترتیب کارهای زیر باید انجام شوند:</p>
 <h3>گام۱: unmount پارتیشن</h3>
 <p>ابتدا باید فایل سیستم را <code>unmount</code> تا در حین انجام کوچک سازی با مشکل خواندن/نوشتن دیسک مواجه نشویم:</p>
-<pre class="codehilite"><code>[root@cloud ~]# umount /home/
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="o">[</span><span class="n">root@cloud ~</span><span class="o">]</span><span class="err">#</span><span class="w"> </span><span class="n">umount</span><span class="w"> </span><span class="o">/</span><span class="n">home</span><span class="o">/</span>
+</code></pre></div>
 
 <h3>گام ۲: بررسی اشکالات پارتیشن</h3>
 <p>با اجرا دستور <code>e2fsck</code> می توان اشکالات احتمالی دیسک را بررسی و بعضا رفع نمود. با استفاده از گزینه <code>-f</code> این دستور را اجبار به بررسی و رفع اشکالات می کنیم.</p>
-<pre class="codehilite"><code>[root@cloud ~]# e2fsck -f /dev/mapper/vg_cloud-LogVol00
-e2fsck 1.41.12 (17-May-2010)
-Pass 1: Checking inodes, blocks, and sizes
-Pass 2: Checking directory structure
-Pass 3: Checking directory connectivity
-Pass 4: Checking reference counts
-Pass 5: Checking group summary information
-/dev/mapper/vg_cloud-LogVol00: 12/770640 files (0.0% non-contiguous), 2446686/3084288 blocks
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="o">[</span><span class="n">root@cloud ~</span><span class="o">]</span><span class="err">#</span><span class="w"> </span><span class="n">e2fsck</span><span class="w"> </span><span class="o">-</span><span class="n">f</span><span class="w"> </span><span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">mapper</span><span class="o">/</span><span class="n">vg_cloud</span><span class="o">-</span><span class="n">LogVol00</span>
+<span class="n">e2fsck</span><span class="w"> </span><span class="mf">1.41.12</span><span class="w"> </span><span class="p">(</span><span class="mi">17</span><span class="o">-</span><span class="n">May</span><span class="o">-</span><span class="mi">2010</span><span class="p">)</span>
+<span class="n">Pass</span><span class="w"> </span><span class="mi">1</span><span class="err">:</span><span class="w"> </span><span class="n">Checking</span><span class="w"> </span><span class="n">inodes</span><span class="p">,</span><span class="w"> </span><span class="n">blocks</span><span class="p">,</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">sizes</span>
+<span class="n">Pass</span><span class="w"> </span><span class="mi">2</span><span class="err">:</span><span class="w"> </span><span class="n">Checking</span><span class="w"> </span><span class="n">directory</span><span class="w"> </span><span class="k">structure</span>
+<span class="n">Pass</span><span class="w"> </span><span class="mi">3</span><span class="err">:</span><span class="w"> </span><span class="n">Checking</span><span class="w"> </span><span class="n">directory</span><span class="w"> </span><span class="n">connectivity</span>
+<span class="n">Pass</span><span class="w"> </span><span class="mi">4</span><span class="err">:</span><span class="w"> </span><span class="n">Checking</span><span class="w"> </span><span class="n">reference</span><span class="w"> </span><span class="n">counts</span>
+<span class="n">Pass</span><span class="w"> </span><span class="mi">5</span><span class="err">:</span><span class="w"> </span><span class="n">Checking</span><span class="w"> </span><span class="k">group</span><span class="w"> </span><span class="n">summary</span><span class="w"> </span><span class="n">information</span>
+<span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">mapper</span><span class="o">/</span><span class="n">vg_cloud</span><span class="o">-</span><span class="nl">LogVol00</span><span class="p">:</span><span class="w"> </span><span class="mi">12</span><span class="o">/</span><span class="mi">770640</span><span class="w"> </span><span class="n">files</span><span class="w"> </span><span class="p">(</span><span class="mf">0.0</span><span class="o">%</span><span class="w"> </span><span class="n">non</span><span class="o">-</span><span class="n">contiguous</span><span class="p">),</span><span class="w"> </span><span class="mi">2446686</span><span class="o">/</span><span class="mi">3084288</span><span class="w"> </span><span class="n">blocks</span>
+</code></pre></div>
 
 <h3>گام ۳: کاهش اندازه پارتیشن</h3>
 <p>در این نوشته گفتیم که فضا دیسک از ۱۲ گیگ باید به ۱۰گیگ کاهش پیدا کنه، به عبارت دیگری باید ۲گیگ کاسته شود:</p>
-<pre class="codehilite"><code>[root@cloud ~]# resize2fs /dev/mapper/vg_cloud-LogVol00 10G
-resize2fs 1.41.12 (17-May-2010)
-Resizing the filesystem on /dev/mapper/vg_cloud-LogVol00 to 2621440 (4k) blocks.
-The filesystem on /dev/mapper/vg_cloud-LogVol00 is now 2621440 blocks long.
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="o">[</span><span class="n">root@cloud ~</span><span class="o">]</span><span class="err">#</span><span class="w"> </span><span class="n">resize2fs</span><span class="w"> </span><span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">mapper</span><span class="o">/</span><span class="n">vg_cloud</span><span class="o">-</span><span class="n">LogVol00</span><span class="w"> </span><span class="mi">10</span><span class="n">G</span>
+<span class="n">resize2fs</span><span class="w"> </span><span class="mf">1.41.12</span><span class="w"> </span><span class="p">(</span><span class="mi">17</span><span class="o">-</span><span class="n">May</span><span class="o">-</span><span class="mi">2010</span><span class="p">)</span>
+<span class="n">Resizing</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">filesystem</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">mapper</span><span class="o">/</span><span class="n">vg_cloud</span><span class="o">-</span><span class="n">LogVol00</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="mi">2621440</span><span class="w"> </span><span class="p">(</span><span class="mi">4</span><span class="n">k</span><span class="p">)</span><span class="w"> </span><span class="n">blocks</span><span class="p">.</span>
+<span class="n">The</span><span class="w"> </span><span class="n">filesystem</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">mapper</span><span class="o">/</span><span class="n">vg_cloud</span><span class="o">-</span><span class="n">LogVol00</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">now</span><span class="w"> </span><span class="mi">2621440</span><span class="w"> </span><span class="n">blocks</span><span class="w"> </span><span class="n">long</span><span class="p">.</span>
+</code></pre></div>
 
 <h3>گام ۴: کاهش فضا دیسک LVM</h3>
 <p>حالا نوبت اجرای دستور <code>lvreduce</code> هست:</p>
-<pre class="codehilite"><code>[root@cloud ~]# lvreduce -r -L 10G /dev/mapper/vg_cloud-LogVol00
-WARNING: Reducing active logical volume to 10.00 GiB
-THIS MAY DESTROY YOUR DATA (filesystem etc.)
-Do you really want to reduce LogVol00? [y/n]: y
-Reducing logical volume LogVol00 to 10.00 GiB
-Logical volume LogVol00 successfully resized
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="o">[</span><span class="n">root@cloud ~</span><span class="o">]</span><span class="err">#</span><span class="w"> </span><span class="n">lvreduce</span><span class="w"> </span><span class="o">-</span><span class="n">r</span><span class="w"> </span><span class="o">-</span><span class="n">L</span><span class="w"> </span><span class="mi">10</span><span class="n">G</span><span class="w"> </span><span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">mapper</span><span class="o">/</span><span class="n">vg_cloud</span><span class="o">-</span><span class="n">LogVol00</span>
+<span class="nl">WARNING</span><span class="p">:</span><span class="w"> </span><span class="n">Reducing</span><span class="w"> </span><span class="n">active</span><span class="w"> </span><span class="n">logical</span><span class="w"> </span><span class="n">volume</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="mf">10.00</span><span class="w"> </span><span class="n">GiB</span>
+<span class="n">THIS</span><span class="w"> </span><span class="n">MAY</span><span class="w"> </span><span class="k">DESTROY</span><span class="w"> </span><span class="n">YOUR</span><span class="w"> </span><span class="k">DATA</span><span class="w"> </span><span class="p">(</span><span class="n">filesystem</span><span class="w"> </span><span class="n">etc</span><span class="p">.)</span>
+<span class="n">Do</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="n">really</span><span class="w"> </span><span class="n">want</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">reduce</span><span class="w"> </span><span class="n">LogVol00</span><span class="vm">?</span><span class="w"> </span><span class="o">[</span><span class="n">y/n</span><span class="o">]</span><span class="err">:</span><span class="w"> </span><span class="n">y</span>
+<span class="n">Reducing</span><span class="w"> </span><span class="n">logical</span><span class="w"> </span><span class="n">volume</span><span class="w"> </span><span class="n">LogVol00</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="mf">10.00</span><span class="w"> </span><span class="n">GiB</span>
+<span class="n">Logical</span><span class="w"> </span><span class="n">volume</span><span class="w"> </span><span class="n">LogVol00</span><span class="w"> </span><span class="n">successfully</span><span class="w"> </span><span class="n">resized</span>
+</code></pre></div>
 
 <p>در این دستور با گزینه <code>-r</code> عملا یکبار دیگه دستور 
 <a href="https://linux.die.net/man/8/resize2fs">resize2fs</a>
  را اجرا می کنیم، همچنین با گزینه <code>-L</code> میزان فضای جدید را تعیین می کنیم</p>
 <h3>گام ۵: mount مجدد پارتیشن ها</h3>
 <p>در پایان پارتیشن <code>/home</code> مجدد <code>mount</code> کرده و آن را چک می کنیم.</p>
-<pre class="codehilite"><code>[root@cloud ~]# mount /home/
-[root@cloud ~]# df -h /home/
-Filesystem            Size  Used Avail Use% Mounted on
-/dev/mapper/vg_cloud-LogVol00     9.9G  9.2G  208M  98% /home
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="o">[</span><span class="n">root@cloud ~</span><span class="o">]</span><span class="err">#</span><span class="w"> </span><span class="n">mount</span><span class="w"> </span><span class="o">/</span><span class="n">home</span><span class="o">/</span>
+<span class="o">[</span><span class="n">root@cloud ~</span><span class="o">]</span><span class="err">#</span><span class="w"> </span><span class="n">df</span><span class="w"> </span><span class="o">-</span><span class="n">h</span><span class="w"> </span><span class="o">/</span><span class="n">home</span><span class="o">/</span>
+<span class="n">Filesystem</span><span class="w">            </span><span class="k">Size</span><span class="w">  </span><span class="n">Used</span><span class="w"> </span><span class="n">Avail</span><span class="w"> </span><span class="k">Use</span><span class="o">%</span><span class="w"> </span><span class="n">Mounted</span><span class="w"> </span><span class="k">on</span>
+<span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">mapper</span><span class="o">/</span><span class="n">vg_cloud</span><span class="o">-</span><span class="n">LogVol00</span><span class="w">     </span><span class="mf">9.9</span><span class="n">G</span><span class="w">  </span><span class="mf">9.2</span><span class="n">G</span><span class="w">  </span><span class="mi">208</span><span class="n">M</span><span class="w">  </span><span class="mi">98</span><span class="o">%</span><span class="w"> </span><span class="o">/</span><span class="n">home</span>
+</code></pre></div>
 
 <p>اکنون باید به فضای خالی گروه ۲گیگ اضافه شده و قابل اضافه شدن به دیگر دیسک ها می باشد.</p>
 <h2>منابع</h2>
@@ -370,9 +370,9 @@ Filesystem            Size  Used Avail Use% Mounted on
                     
                     <li><a href="https://www.instagram.com/shgninc/">Instagram</a></li>
                     
-                    <li><a href="http://vasni.ir/">Vasni</a></li>
-                    
                     <li><a href="https://virgool.io/@shgninc">Virgool</a></li>
+                    
+                    <li><a href="https://www.linkedin.com/in/sajjad-shahcheraghean/">Linkedin</a></li>
                     
                     <li><a href="https://twitter.com/shahcheraghian">Twiteer</a></li>
                     

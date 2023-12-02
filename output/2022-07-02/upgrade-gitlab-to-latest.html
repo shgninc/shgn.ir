@@ -183,138 +183,138 @@
 - که مدل lagecy از نسخه ۱۴ به بعد گیت لب پشتیبانی نمی شود، پس باید حتما قبل شروع تمامی ذخیره سازی ها را به مدل hashed تبدیل کرد.</p>
 <h1>پیش فرض ها</h1>
 <p>همانطورکه پیش تر بیان شد، گیت لب را با داکر راه اندزی کرده ایم، پس <code>docker-compose.yml</code> آن به این صورت می باشد:</p>
-<pre class="codehilite"><code>version: &quot;3&quot;
-services:
-    gitlab:
-        container_name: gitlab
-        image: gitlab/gitlab-ce:13.11.3-ce.0
-        hostname: 'code1.domain.com'
-        ports:
-           - 80:80
-           - 22:22
-        environment:
-           GITLAB_ROOT_PASSWORD: &quot;password&quot;
-           GITLAB_OMNIBUS_CONFIG: |
-             external_url &quot;http://code1.domain.com&quot; 
-        volumes:
-            - ./config:/etc/gitlab
-            - ./logs:/var/log/gitlab
-            - ./data:/var/opt/gitlab
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="n">version</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;3&quot;</span>
+<span class="n">services</span><span class="p">:</span>
+<span class="w">    </span><span class="n">gitlab</span><span class="p">:</span>
+<span class="w">        </span><span class="n">container_name</span><span class="p">:</span><span class="w"> </span><span class="n">gitlab</span>
+<span class="w">        </span><span class="n">image</span><span class="p">:</span><span class="w"> </span><span class="n">gitlab</span><span class="o">/</span><span class="n">gitlab</span><span class="o">-</span><span class="n">ce</span><span class="p">:</span><span class="mf">13.11</span><span class="o">.</span><span class="mi">3</span><span class="o">-</span><span class="n">ce</span><span class="o">.</span><span class="mi">0</span>
+<span class="w">        </span><span class="n">hostname</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;code1.domain.com&#39;</span>
+<span class="w">        </span><span class="n">ports</span><span class="p">:</span>
+<span class="w">           </span><span class="o">-</span><span class="w"> </span><span class="mi">80</span><span class="p">:</span><span class="mi">80</span>
+<span class="w">           </span><span class="o">-</span><span class="w"> </span><span class="mi">22</span><span class="p">:</span><span class="mi">22</span>
+<span class="w">        </span><span class="n">environment</span><span class="p">:</span>
+<span class="w">           </span><span class="n">GITLAB_ROOT_PASSWORD</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;password&quot;</span>
+<span class="w">           </span><span class="n">GITLAB_OMNIBUS_CONFIG</span><span class="p">:</span><span class="w"> </span><span class="o">|</span>
+<span class="w">             </span><span class="n">external_url</span><span class="w"> </span><span class="s2">&quot;http://code1.domain.com&quot;</span><span class="w"> </span>
+<span class="w">        </span><span class="n">volumes</span><span class="p">:</span>
+<span class="w">            </span><span class="o">-</span><span class="w"> </span><span class="o">./</span><span class="n">config</span><span class="p">:</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">gitlab</span>
+<span class="w">            </span><span class="o">-</span><span class="w"> </span><span class="o">./</span><span class="n">logs</span><span class="p">:</span><span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="nb">log</span><span class="o">/</span><span class="n">gitlab</span>
+<span class="w">            </span><span class="o">-</span><span class="w"> </span><span class="o">./</span><span class="n">data</span><span class="p">:</span><span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">gitlab</span>
+</code></pre></div>
 
 <h1>تبدیل ذخیره سازی</h1>
 <p>گقتیم قبل شروع ابتدا باید مدل ذخیره سازی را تبدیل کنیم تا بتوانیم نسخه را ارتقاع دهیم. برای این مهم باید دستورات زیر را اجرا کنیم.</p>
 <p>قبل از شروع به تبدیل حتما از اطلاعات تون بکاپ بگیرید.</p>
 <p>پروژه هایی که روی مدل ذخیره سازی قدیم هستند را نشان می دهد:</p>
-<pre class="codehilite"><code>docker exec -it gitlab gitlab-rake gitlab:storage:list_legacy_projects
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="nv">docker</span><span class="w"> </span><span class="k">exec</span><span class="w"> </span><span class="o">-</span><span class="nv">it</span><span class="w"> </span><span class="nv">gitlab</span><span class="w"> </span><span class="nv">gitlab</span><span class="o">-</span><span class="nv">rake</span><span class="w"> </span><span class="nv">gitlab</span>:<span class="nv">storage</span>:<span class="nv">list_legacy_projects</span>
+</code></pre></div>
 
 <p>ضمایمی که روی مدل ذخیره سازی قدیم هستند را نشان می دهد:</p>
-<pre class="codehilite"><code>docker exec -it gitlab gitlab-rake gitlab:storage:list_legacy_attachments
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="nv">docker</span><span class="w"> </span><span class="k">exec</span><span class="w"> </span><span class="o">-</span><span class="nv">it</span><span class="w"> </span><span class="nv">gitlab</span><span class="w"> </span><span class="nv">gitlab</span><span class="o">-</span><span class="nv">rake</span><span class="w"> </span><span class="nv">gitlab</span>:<span class="nv">storage</span>:<span class="nv">list_legacy_attachments</span>
+</code></pre></div>
 
 <p>در نهایت با اجرای دستور زیر می توان تبدیل را انجام داد:</p>
-<pre class="codehilite"><code>docker exec -it gitlab gitlab-rake gitlab:storage:migrate_to_hashed
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="nv">docker</span><span class="w"> </span><span class="k">exec</span><span class="w"> </span><span class="o">-</span><span class="nv">it</span><span class="w"> </span><span class="nv">gitlab</span><span class="w"> </span><span class="nv">gitlab</span><span class="o">-</span><span class="nv">rake</span><span class="w"> </span><span class="nv">gitlab</span>:<span class="nv">storage</span>:<span class="nv">migrate_to_hashed</span>
+</code></pre></div>
 
 <p>نکته مهمی که باید به آن دقت شود این است که با توج به تعداد پروژه ها و ضمایمی که روی مدل ذخیره سازی قدیم هستند، این دستور طول می کشد. برای مشاهده اجرا دستور از داخل پنل گیت لب از مسیر <code>Admin Area&gt;Monitoring</code> و قسمت <code>Backgroud Jobs</code> از بخش صف کارها <code>hashed_storage:hashed_storage_project_migrate</code> را مشاهده کنید.</p>
 <p>در انتها بعد از اتمام تبدیل می توانید ارتقاع را شروع کنید.</p>
 <h1>مراحل ارتقاع</h1>
 <p>ارتقاع گیت لب از نسخه های قدیم به جدیدتر مرحله به مرحله باید انجام شود و در هر مرحله باید حتما یک بکاپ از اطلاعات گرفته شده، و از صحت ارتقاع به نسخه جدید اطمینان حاصل نمود.</p>
 <p>در مستندات خود گینت لب مراحل ارتقاع را نسخه به نسخه به ترتیب زیر بیان کرده است:</p>
-<pre class="codehilite"><code>8.11.Z -&gt; 8.12.0 -&gt; 8.17.7 -&gt; 9.5.10 -&gt; 10.8.7 -&gt; 11.11.8 -&gt; 12.0.12 -&gt; 12.1.17 -&gt; 12.10.14 -&gt; 13.0.14 -&gt; 13.1.11 -&gt; 13.8.8 -&gt; 13.12.15 -&gt; 14.0.12 -&gt; 14.3.6 -&gt; 14.9.5 -&gt; 14.10.Z -&gt; 15.0.Z -&gt; latest 15.Y.Z
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="mf">8.11.</span><span class="n">Z</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="mf">8.12.0</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="mf">8.17.7</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="mf">9.5.10</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="mf">10.8.7</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="mf">11.11.8</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="mf">12.0.12</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="mf">12.1.17</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="mf">12.10.14</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="mf">13.0.14</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="mf">13.1.11</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="mf">13.8.8</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="mf">13.12.15</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="mf">14.0.12</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="mf">14.3.6</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="mf">14.9.5</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="mf">14.10.</span><span class="n">Z</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="mf">15.0.</span><span class="n">Z</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">latest</span><span class="w"> </span><span class="mf">15.</span><span class="n">Y</span><span class="mf">.</span><span class="n">Z</span>
+</code></pre></div>
 
 <p>مجددا تأکید می کنم که قبل از انجام هر مرحله آپدیت، از اطلاعات باید بکاپ گرفته شود.</p>
 <h1>بکاپ گیری</h1>
 <p>برای بکاپ گیری از گیت دستور زیر را اجرا کنید:</p>
-<pre class="codehilite"><code>docker exec gitlab gitlab-backup create GZIP_RSYNCABLE=yes STRATEGY=copy
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="nv">docker</span><span class="w"> </span><span class="k">exec</span><span class="w"> </span><span class="nv">gitlab</span><span class="w"> </span><span class="nv">gitlab</span><span class="o">-</span><span class="nv">backup</span><span class="w"> </span><span class="nv">create</span><span class="w"> </span><span class="nv">GZIP_RSYNCABLE</span><span class="o">=</span><span class="nv">yes</span><span class="w"> </span><span class="nv">STRATEGY</span><span class="o">=</span><span class="nv">copy</span>
+</code></pre></div>
 
 <h3>ارتقاع از ۱۳.۱۱.۳ به ۱۳.۱۲.۱۵</h3>
 <p>برای ارتقاع، داخل فایل <code>docker-compose.yml</code> بخش ایمیج را به <code>gitlab/gitlab-ce:13.12.15-ce.0</code> تغییر داده و دستور زیر را اجرا می کنیم:</p>
-<pre class="codehilite"><code>docker-compose -f /path/to/docker-compose/file up -d
-</code></pre>
+<div class="codehilite"><pre><span></span><code>docker-compose -f /path/to/docker-compose/file up -d
+</code></pre></div>
 
 <p>بعد از اجرای دستور فوق حدود ۵ دقیقه باید صبر کنیم، بعد دستور زیر را برای اطمینان از صحت ارتقاع اجرا می کنیم:</p>
-<pre class="codehilite"><code>docker-compose -f /path/to/docker-compose/file ps
-</code></pre>
+<div class="codehilite"><pre><span></span><code>docker-compose -f /path/to/docker-compose/file ps
+</code></pre></div>
 
 <p>اگر قسمت status برابر به healthy بود که ارتقاع به درستی انجام شوده و برای مشاهده شماره نسخه جدید از داخل پنل گیت لب قسمت admin area اقدام کنید.</p>
 <p>در نهایت برای اطمینان بیشتر، یکبار دستور زیر را اجرا میکنیم:</p>
-<pre class="codehilite"><code>docker-compose -f /path/to/docker-compose/file down
+<div class="codehilite"><pre><span></span><code>docker-compose -f /path/to/docker-compose/file down
 docker-compose -f /path/to/docker-compose/file up -d
-</code></pre>
+</code></pre></div>
 
 <h3>ارتقاع از ۱۳.۱۲.۱۵ به ۱۴.۰.۱۲</h3>
 <p>برای ارتقاع، داخل فایل <code>docker-compose.yml</code> بخش ایمیج را به gitlab/gitlab-ce:14.0.12-ce.0 تغییر داده و دستور زیر را اجرا می کنیم:</p>
-<pre class="codehilite"><code>docker-compose -f /path/to/docker-compose/file up -d
-</code></pre>
+<div class="codehilite"><pre><span></span><code>docker-compose -f /path/to/docker-compose/file up -d
+</code></pre></div>
 
 <p>بعد از اجرای دستور فوق حدود ۵ دقیقه باید صبر کنیم، بعد دستور زیر را برای اطمینان از صحت ارتقاع اجرا می کنیم:</p>
-<pre class="codehilite"><code>docker-compose -f /path/to/docker-compose/file ps
-</code></pre>
+<div class="codehilite"><pre><span></span><code>docker-compose -f /path/to/docker-compose/file ps
+</code></pre></div>
 
 <p>اگر قسمت status برابر به healthy بود که ارتقاع به درستی انجام شوده و برای مشاهده شماره نسخه جدید از داخل پنل گیت لب قسمت admin area اقدام کنید.</p>
-<pre class="codehilite"><code>docker-compose -f /path/to/docker-compose/file down
+<div class="codehilite"><pre><span></span><code>docker-compose -f /path/to/docker-compose/file down
 docker-compose -f /path/to/docker-compose/file up -d
-</code></pre>
+</code></pre></div>
 
 <h3>ارتقاع از ۱۴.۰.۱۲ به ۱۴.۳.۶</h3>
 <p>برای ارتقاع، داخل فایل <code>docker-compose.yml</code> بخش ایمیج را به gitlab/gitlab-ce:14.3.6-ce.0 تغییر داده و دستور زیر را اجرا می کنیم:</p>
-<pre class="codehilite"><code>docker-compose -f /path/to/docker-compose/file up -d
-</code></pre>
+<div class="codehilite"><pre><span></span><code>docker-compose -f /path/to/docker-compose/file up -d
+</code></pre></div>
 
 <p>بعد از اجرای دستور فوق حدود ۵ دقیقه باید صبر کنیم، بعد دستور زیر را برای اطمینان از صحت ارتقاع اجرا می کنیم:</p>
-<pre class="codehilite"><code>docker-compose -f /path/to/docker-compose/file ps
-</code></pre>
+<div class="codehilite"><pre><span></span><code>docker-compose -f /path/to/docker-compose/file ps
+</code></pre></div>
 
 <p>اگر قسمت status برابر به healthy بود که ارتقاع به درستی انجام شوده و برای مشاهده شماره نسخه جدید از داخل پنل گیت لب قسمت admin area اقدام کنید.</p>
-<pre class="codehilite"><code>docker-compose -f /path/to/docker-compose/file down
+<div class="codehilite"><pre><span></span><code>docker-compose -f /path/to/docker-compose/file down
 docker-compose -f /path/to/docker-compose/file up -d
-</code></pre>
+</code></pre></div>
 
 <h3>ارتقاع از ۱۴.۳.۶ به ۱۴.۹.۵</h3>
 <p>برای ارتقاع، داخل فایل <code>docker-compose.yml</code> بخش ایمیج را به gitlab/gitlab-ce:14.9.5-ce.0 تغییر داده و دستور زیر را اجرا می کنیم:</p>
-<pre class="codehilite"><code>docker-compose -f /path/to/docker-compose/file up -d
-</code></pre>
+<div class="codehilite"><pre><span></span><code>docker-compose -f /path/to/docker-compose/file up -d
+</code></pre></div>
 
 <p>بعد از اجرای دستور فوق حدود ۵ دقیقه باید صبر کنیم، بعد دستور زیر را برای اطمینان از صحت ارتقاع اجرا می کنیم:</p>
-<pre class="codehilite"><code>docker-compose -f /path/to/docker-compose/file ps
-</code></pre>
+<div class="codehilite"><pre><span></span><code>docker-compose -f /path/to/docker-compose/file ps
+</code></pre></div>
 
 <p>اگر قسمت status برابر به healthy بود که ارتقاع به درستی انجام شوده و برای مشاهده شماره نسخه جدید از داخل پنل گیت لب قسمت admin area اقدام کنید.</p>
-<pre class="codehilite"><code>docker-compose -f /path/to/docker-compose/file down
+<div class="codehilite"><pre><span></span><code>docker-compose -f /path/to/docker-compose/file down
 docker-compose -f /path/to/docker-compose/file up -d
-</code></pre>
+</code></pre></div>
 
 <h3>ارتقاع از ۱۴.۹.۵ به ۱۴.۱۰.۴</h3>
 <p>برای ارتقاع، داخل فایل <code>docker-compose.yml</code> بخش ایمیج را به gitlab/gitlab-ce:14.10.4-ce.0 تغییر داده و دستور زیر را اجرا می کنیم:</p>
-<pre class="codehilite"><code>docker-compose -f /path/to/docker-compose/file up -d
-</code></pre>
+<div class="codehilite"><pre><span></span><code>docker-compose -f /path/to/docker-compose/file up -d
+</code></pre></div>
 
 <p>بعد از اجرای دستور فوق حدود ۵ دقیقه باید صبر کنیم، بعد دستور زیر را برای اطمینان از صحت ارتقاع اجرا می کنیم:</p>
-<pre class="codehilite"><code>docker-compose -f /path/to/docker-compose/file ps
-</code></pre>
+<div class="codehilite"><pre><span></span><code>docker-compose -f /path/to/docker-compose/file ps
+</code></pre></div>
 
 <p>اگر قسمت status برابر به healthy بود که ارتقاع به درستی انجام شوده و برای مشاهده شماره نسخه جدید از داخل پنل گیت لب قسمت admin area اقدام کنید.</p>
-<pre class="codehilite"><code>docker-compose -f /path/to/docker-compose/file down
+<div class="codehilite"><pre><span></span><code>docker-compose -f /path/to/docker-compose/file down
 docker-compose -f /path/to/docker-compose/file up -d
-</code></pre>
+</code></pre></div>
 
 <h3>ارتقاع از ۱۴.۱۰.۴ به ۱۵.۰.۲</h3>
 <p>برای ارتقاع، داخل فایل <code>docker-compose.yml</code> بخش ایمیج را به gitlab/gitlab-ce:15.0.2-ce.0 تغییر داده و دستور زیر را اجرا می کنیم:</p>
-<pre class="codehilite"><code>docker-compose -f /path/to/docker-compose/file up -d
-</code></pre>
+<div class="codehilite"><pre><span></span><code>docker-compose -f /path/to/docker-compose/file up -d
+</code></pre></div>
 
 <p>بعد از اجرای دستور فوق حدود ۵ دقیقه باید صبر کنیم، بعد دستور زیر را برای اطمینان از صحت ارتقاع اجرا می کنیم:</p>
-<pre class="codehilite"><code>docker-compose -f /path/to/docker-compose/file ps
-</code></pre>
+<div class="codehilite"><pre><span></span><code>docker-compose -f /path/to/docker-compose/file ps
+</code></pre></div>
 
 <p>اگر قسمت status برابر به healthy بود که ارتقاع به درستی انجام شوده و برای مشاهده شماره نسخه جدید از داخل پنل گیت لب قسمت admin area اقدام کنید.</p>
-<pre class="codehilite"><code>docker-compose -f /path/to/docker-compose/file down
+<div class="codehilite"><pre><span></span><code>docker-compose -f /path/to/docker-compose/file down
 docker-compose -f /path/to/docker-compose/file up -d
-</code></pre>
+</code></pre></div>
 
 <p>در تاریخی که این مطلب را ارائه کردیم آخرین نسخه ارائه شده روی
 <a href="https://hub.docker.com">hub.docker.com</a>
@@ -457,9 +457,9 @@ docker-compose -f /path/to/docker-compose/file up -d
                     
                     <li><a href="https://www.instagram.com/shgninc/">Instagram</a></li>
                     
-                    <li><a href="http://vasni.ir/">Vasni</a></li>
-                    
                     <li><a href="https://virgool.io/@shgninc">Virgool</a></li>
+                    
+                    <li><a href="https://www.linkedin.com/in/sajjad-shahcheraghean/">Linkedin</a></li>
                     
                     <li><a href="https://twitter.com/shahcheraghian">Twiteer</a></li>
                     

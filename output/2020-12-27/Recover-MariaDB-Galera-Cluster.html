@@ -186,101 +186,101 @@
 <p>جدای از این سه سناریو، خرابی کلاستر موجب خرابی کامل ارتباط دیتابیس ها می گردد. در حالت نرمال، نودها برای به روز رسانی و نگهداری های متداول نیازمند ریست می باشند. زمانی که یک نود موفق ریست شود، خیلی ساده خود را به کلاستر متصل و اطلاعتش را با دیگر نودها همسان سازی می کند.</p>
 <h3>بررسی سلامت کلاستر</h3>
 <p>برای شروع لازم است تا نحوه بررسی و چک کردن گلرا کلاستر را بدانیم. برای این مهم به ترتیب زیر عمل می کنیم:</p>
-<pre class="codehilite"><code>MariaDB [(none)]&gt; show status like 'wsrep_incoming_addresses';
-+--------------------------+----------------------------------------------+
-| Variable_name | Value |
-+--------------------------+----------------------------------------------+
-| wsrep_incoming_addresses | 171.20.0.151:3306,171.20.0.152:3306,171.20.0.153:3306 |
-+--------------------------+----------------------------------------------+
-1 row in set (0.01 sec)
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="c">MariaDB </span><span class="k">[</span><span class="c">(none)</span><span class="k">]</span><span class="nv">&gt;</span><span class="c"> show status like &#39;wsrep_incoming_addresses&#39;;</span>
+<span class="nb">+--------------------------+----------------------------------------------+</span>
+<span class="c">| Variable_name | Value |</span>
+<span class="nb">+--------------------------+----------------------------------------------+</span>
+<span class="c">| wsrep_incoming_addresses | 171</span><span class="nt">.</span><span class="c">20</span><span class="nt">.</span><span class="c">0</span><span class="nt">.</span><span class="c">151:3306</span><span class="nt">,</span><span class="c">171</span><span class="nt">.</span><span class="c">20</span><span class="nt">.</span><span class="c">0</span><span class="nt">.</span><span class="c">152:3306</span><span class="nt">,</span><span class="c">171</span><span class="nt">.</span><span class="c">20</span><span class="nt">.</span><span class="c">0</span><span class="nt">.</span><span class="c">153:3306 |</span>
+<span class="nb">+--------------------------+----------------------------------------------+</span>
+<span class="c">1 row in set (0</span><span class="nt">.</span><span class="c">01 sec)</span>
+</code></pre></div>
 
 <p>بررسی تعداد نودهای موجود در کلاسترینگ:</p>
-<pre class="codehilite"><code>MariaDB [(none)]&gt; show status like 'wsrep_cluster_size';
-+--------------------+-------+
-| Variable_name | Value |
-+--------------------+-------+
-| wsrep_cluster_size | 3 |
-+--------------------+-------+
-1 row in set (0.01 sec)
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="c">MariaDB </span><span class="k">[</span><span class="c">(none)</span><span class="k">]</span><span class="nv">&gt;</span><span class="c"> show status like &#39;wsrep_cluster_size&#39;;</span>
+<span class="nb">+--------------------+-------+</span>
+<span class="c">| Variable_name | Value |</span>
+<span class="nb">+--------------------+-------+</span>
+<span class="c">| wsrep_cluster_size | 3 |</span>
+<span class="nb">+--------------------+-------+</span>
+<span class="c">1 row in set (0</span><span class="nt">.</span><span class="c">01 sec)</span>
+</code></pre></div>
 
 <p>بررسی <code>UUID</code> وضعیت کلاسترینگ:</p>
-<pre class="codehilite"><code>MariaDB [(none)]&gt; show status like 'wsrep_cluster_state_uuid';
-+--------------------------+-----------------------------------------+
-| Variable_name | Value |
-+--------------------------+-----------------------------------------+
-| wsrep_cluster_state_uuid | 345098abd2-291a-9893-acbd3-30923abcdef9 |
-+--------------------------+-----------------------------------------+
-1 row in set (0.01 sec)
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="c">MariaDB </span><span class="k">[</span><span class="c">(none)</span><span class="k">]</span><span class="nv">&gt;</span><span class="c"> show status like &#39;wsrep_cluster_state_uuid&#39;;</span>
+<span class="nb">+--------------------------+-----------------------------------------+</span>
+<span class="c">| Variable_name | Value |</span>
+<span class="nb">+--------------------------+-----------------------------------------+</span>
+<span class="c">| wsrep_cluster_state_uuid | 345098abd2</span><span class="nb">-</span><span class="c">291a</span><span class="nb">-</span><span class="c">9893</span><span class="nb">-</span><span class="c">acbd3</span><span class="nb">-</span><span class="c">30923abcdef9 |</span>
+<span class="nb">+--------------------------+-----------------------------------------+</span>
+<span class="c">1 row in set (0</span><span class="nt">.</span><span class="c">01 sec)</span>
+</code></pre></div>
 
 <p>نحوه بررسی همسان بودن نود در کلاستر:</p>
-<pre class="codehilite"><code>MariaDB [(none)]&gt; show status like 'wsrep_local_state_comment';
-+---------------------------+--------+
-| Variable_name | Value |
-+---------------------------+--------+
-| wsrep_local_state_comment | Synced |
-+---------------------------+--------+
-1 row in set (0.01 sec)
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="c">MariaDB </span><span class="k">[</span><span class="c">(none)</span><span class="k">]</span><span class="nv">&gt;</span><span class="c"> show status like &#39;wsrep_local_state_comment&#39;;</span>
+<span class="nb">+---------------------------+--------+</span>
+<span class="c">| Variable_name | Value |</span>
+<span class="nb">+---------------------------+--------+</span>
+<span class="c">| wsrep_local_state_comment | Synced |</span>
+<span class="nb">+---------------------------+--------+</span>
+<span class="c">1 row in set (0</span><span class="nt">.</span><span class="c">01 sec)</span>
+</code></pre></div>
 
 <h4>بازگرداندن سناریو یک نود</h4>
 <p>در این سناریو، فقط یک نود در کلاستر با مشکل مواجه شده است. هیچ اطلاعاتی از دست نرفته و هیچ ارتباطی بین دیتابیس ها مشکل نخورده است. طبق این سناریو، وضعیت به این صورت خواهد بود:</p>
-<pre class="codehilite"><code>MariaDB [(none)]&gt; show status like 'wsrep_incoming_addresses';
-+--------------------------+-------------------------------+
-| Variable_name | Value |
-+--------------------------+-------------------------------+
-| wsrep_incoming_addresses | 171.20.0.151:3306,171.20.0.152:3306 |
-+--------------------------+-------------------------------+
-1 row in set (0.01 sec)
+<div class="codehilite"><pre><span></span><code><span class="c">MariaDB </span><span class="k">[</span><span class="c">(none)</span><span class="k">]</span><span class="nv">&gt;</span><span class="c"> show status like &#39;wsrep_incoming_addresses&#39;;</span>
+<span class="nb">+--------------------------+-------------------------------+</span>
+<span class="c">| Variable_name | Value |</span>
+<span class="nb">+--------------------------+-------------------------------+</span>
+<span class="c">| wsrep_incoming_addresses | 171</span><span class="nt">.</span><span class="c">20</span><span class="nt">.</span><span class="c">0</span><span class="nt">.</span><span class="c">151:3306</span><span class="nt">,</span><span class="c">171</span><span class="nt">.</span><span class="c">20</span><span class="nt">.</span><span class="c">0</span><span class="nt">.</span><span class="c">152:3306 |</span>
+<span class="nb">+--------------------------+-------------------------------+</span>
+<span class="c">1 row in set (0</span><span class="nt">.</span><span class="c">01 sec)</span>
 
-MariaDB [(none)]&gt; show status like 'wsrep_cluster_size';
-+--------------------+-------+
-| Variable_name | Value |
-+--------------------+-------+
-| wsrep_cluster_size | 2 |
-+--------------------+-------+
-1 row in set (0.01 sec)
-</code></pre>
+<span class="c">MariaDB </span><span class="k">[</span><span class="c">(none)</span><span class="k">]</span><span class="nv">&gt;</span><span class="c"> show status like &#39;wsrep_cluster_size&#39;;</span>
+<span class="nb">+--------------------+-------+</span>
+<span class="c">| Variable_name | Value |</span>
+<span class="nb">+--------------------+-------+</span>
+<span class="c">| wsrep_cluster_size | 2 |</span>
+<span class="nb">+--------------------+-------+</span>
+<span class="c">1 row in set (0</span><span class="nt">.</span><span class="c">01 sec)</span>
+</code></pre></div>
 
 <p>بعد از ریست نود خراب شده، وضعیت آن را برای متصل شدن متصل شدن دوباره به کلاستر بررسی کنید. اگر به دلایلی وصل نشد خیلی ساده خود سرویس <a href="https://mariadb.com"><code>MariaDB</code></a> را ریست کنید:</p>
-<pre class="codehilite"><code>$ systemctl restart mariadb
-</code></pre>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>mariadb
+</code></pre></div>
 
 <h3>سناریو مشکل چند نود در کلاستر</h3>
 <p>در این سناریو، تمامی نودها به غیر از یکی مشکل خورده اند که موجب از دست رفتن <code>quorum</code> می شود. در این نقطه، گلرا کلاستر درخواست های <code>SQL</code> را پاسخ نمی دهد. اما از آنجایی که هنوز یک نود بالا بوده و درحال اجرا می باشد، اطلاعاتی از دست نرفته است. در این حالت اگر نودهای مشکل خورده برای آنلاین شدن و اتصال به کلاستر تلاش کنند، نمی توانند موفق شوند چرا که کلاستر از دست رفته است:</p>
-<pre class="codehilite"><code>MariaDB [(none)]&gt; show status like 'wsrep_cluster_size';
-+--------------------+-------+
-| Variable_name | Value |
-+--------------------+-------+
-| wsrep_cluster_size | 1 |
-+--------------------+-------+
-1 row in set (0.01 sec)
+<div class="codehilite"><pre><span></span><code><span class="c">MariaDB </span><span class="k">[</span><span class="c">(none)</span><span class="k">]</span><span class="nv">&gt;</span><span class="c"> show status like &#39;wsrep_cluster_size&#39;;</span>
+<span class="nb">+--------------------+-------+</span>
+<span class="c">| Variable_name | Value |</span>
+<span class="nb">+--------------------+-------+</span>
+<span class="c">| wsrep_cluster_size | 1 |</span>
+<span class="nb">+--------------------+-------+</span>
+<span class="c">1 row in set (0</span><span class="nt">.</span><span class="c">01 sec)</span>
 
-MariaDB [(none)]&gt; show status like 'wsrep_cluster_status';
-+----------------------+---------+
-| Variable_name | Value |
-+----------------------+---------+
-| wsrep_cluster_status | Primary |
-+----------------------+---------+
-1 row in set (0.01 sec)
-</code></pre>
+<span class="c">MariaDB </span><span class="k">[</span><span class="c">(none)</span><span class="k">]</span><span class="nv">&gt;</span><span class="c"> show status like &#39;wsrep_cluster_status&#39;;</span>
+<span class="nb">+----------------------+---------+</span>
+<span class="c">| Variable_name | Value |</span>
+<span class="nb">+----------------------+---------+</span>
+<span class="c">| wsrep_cluster_status | Primary |</span>
+<span class="nb">+----------------------+---------+</span>
+<span class="c">1 row in set (0</span><span class="nt">.</span><span class="c">01 sec)</span>
+</code></pre></div>
 
 <p>در موارد نادر، ممکن است وضعیت کلاستر را <code>non-Primary</code> نشان دهد. اگر این اتفاق افتاد، علت خطا حتما از دست رفتن <code>quorum</code> نخواهد بود، بله احتمال بر قراری ارتباط شبکه می تواند باشد. توجه داشته باشید که قبل از بازسازی <a href="https://en.wikipedia.org/wiki/Quorum_(distributed_computing)"><code>quorum</code></a> حتما وضعیت نود به <code>Primary</code> تغییر کند. </p>
 <p>قبل از بازسازی <code>quorum</code> باید از آخرین <code>commit</code> را به دست بیاریم. برای این مهم دو راه وجود دارد:</p>
 <h4>Bootstrap خودکار</h4>
 <p>ساده ترین روش برای راه اندازی مجدد <code>quorum</code> استفاده از <code>bootstrap</code> خودکار است. به وسیله فرمان زیر می توان <a href="https://galeracluster.com/library/documentation/quorum-reset.html"><code>bootstrap</code></a> خودکار را در نود فعال کرد:</p>
-<pre class="codehilite"><code>MariaDB [(none)]&gt; set global wsrep_provider_options='pc.bootstrap=YES';
-</code></pre>
+<div class="codehilite"><pre><span></span><code>MariaDB [(none)]&gt; set global wsrep_provider_options=&#39;pc.bootstrap=YES&#39;;
+</code></pre></div>
 
 <p>این فرمان موجب می شود تا نود جاری، به اصلی ترین نود خود راه انداز، تبدیل شده تا دیگر نودهای مشکل خورده بتوانند با اتصال به آن، خود را تصحیح کنند.</p>
 <h4>Bootstrap دستی</h4>
 <p>با اجرای دستورات زیر نود جاری به صورت دستی، تبدیل به خود راه انداز، خواهد شد:</p>
-<pre class="codehilite"><code>$ systemctl stop mariadb
-$ galera_new_cluster
-$ systemctl restart mariadb
-</code></pre>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>systemctl<span class="w"> </span>stop<span class="w"> </span>mariadb
+$<span class="w"> </span>galera_new_cluster
+$<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>mariadb
+</code></pre></div>
 
 <p>بعد از این که این نود به عنوان نود اصلی راه اندازی و اجرا شد، کافی است تا سرویس <code>MaraiDB</code> روی دیگر نودها را یکی یکی ریست کرد.</p>
 <h2>بازگرداندن کامل کلاستر</h2>
@@ -288,90 +288,90 @@ $ systemctl restart mariadb
 <h3>بازسازی براساس بیشترین مقدار seqno</h3>
 <p>این روش زمانی کاربردی هست که یک حداقل یک نود به صورت درست و کامل در حین خرابی خاموش شده باشد. نودی با داشتن آخرین دیتا دارای بیشترین مقدار <code>seqno</code> در بین تمامی نودهای خراب می باشد. این موضوع در فایل <code>/var/lib/mysql/grastate.dat</code> قابل مشاهده هست. بسته به این که کدام نود دچار خرابی کامل شده مقدار <code>seqno</code> یا منفی بوده و یا یکی از نودها حاوی بیشتر مقدار <code>seqno</code> می باشد. </p>
 <p>در ادامه محتویات فایل <code>grastate.dat</code> در ۳ نود را می توانید مشاهده کنید. معمولا حالت نشان داده شده به هنگام پردازش زبان تعریف داده <code>(DDL)</code> رخ می دهد:</p>
-<pre class="codehilite"><code>$ cat /var/lib/mysql/grastate.dat
-# GALERA saved state
-version: 2.1
-uuid: 00000000-0000-0000-0000-000000000000
-seqno: -1
-safe_to_bootstrap: 0
-</code></pre>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>cat<span class="w"> </span>/var/lib/mysql/grastate.dat
+<span class="c1"># GALERA saved state</span>
+version:<span class="w"> </span><span class="m">2</span>.1
+uuid:<span class="w"> </span><span class="m">00000000</span>-0000-0000-0000-000000000000
+seqno:<span class="w"> </span>-1
+safe_to_bootstrap:<span class="w"> </span><span class="m">0</span>
+</code></pre></div>
 
 <p>در ادامه محتویات فایل <code>grastate.dat</code> در نود ۲ قابل مشاهده می باشد. این نود در حین پرداز ترنس اکشن با <code>seqno</code> منفی اما با <code>group ID</code> کرش کرده است:</p>
-<pre class="codehilite"><code>$ cat /var/lib/mysql/grastate.dat
-# GALERA saved state
-version: 2.1
-uuid: 886dd8da-3d07-11e8-a109-8a3c80cebab4
-seqno: -1
-safe_to_bootstrap: 0
-</code></pre>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>cat<span class="w"> </span>/var/lib/mysql/grastate.dat
+<span class="c1"># GALERA saved state</span>
+version:<span class="w"> </span><span class="m">2</span>.1
+uuid:<span class="w"> </span>886dd8da-3d07-11e8-a109-8a3c80cebab4
+seqno:<span class="w"> </span>-1
+safe_to_bootstrap:<span class="w"> </span><span class="m">0</span>
+</code></pre></div>
 
 <p>همچنین در ادامه محتویات فایل <code>grastate.dat</code> در نود ۱ با بالاترین <code>seqno</code> قابل رویت هست:</p>
-<pre class="codehilite"><code>$ cat /var/lib/mysql/grastate.dat
-# GALERA saved state
-version: 2.1
-uuid: 886dd8da-3d07-11e8-a109-8a3c80cebab4
-seqno: 31929
-safe_to_bootstrap: 1
-</code></pre>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>cat<span class="w"> </span>/var/lib/mysql/grastate.dat
+<span class="c1"># GALERA saved state</span>
+version:<span class="w"> </span><span class="m">2</span>.1
+uuid:<span class="w"> </span>886dd8da-3d07-11e8-a109-8a3c80cebab4
+seqno:<span class="w"> </span><span class="m">31929</span>
+safe_to_bootstrap:<span class="w"> </span><span class="m">1</span>
+</code></pre></div>
 
 <p>این نکته را فراموش نکنیم که فقط نودی که به درستی خاموش شده باشد دارای <strong>بالاترین مقدار <code>seqno</code> مثبت</strong> خواهد بود. این نود، همیشه اولین نودی هست که بازیابی از آن شروع می شود.</p>
 <p>اگر در تمامی نودها مقدار <code>seqno</code> -1 باشد و <code>safe_to_bootstrap</code> برابر 0 باشد، این نشانه آن است که <strong>خرابی کامل کلاستر</strong> رخ داده است. در این نقطه، فقط باید کلاستر را با دستور زیر مجددا راه اندازی نمود. اما این کار تا زمانی که مشخص نشود که هر نود دارای کپی مشخصی از دیتای دیتابیس دارد، به هیچ عنوان توصیه نمی شود.</p>
 <p>$ galera_new_cluster</p>
 <p>قبل از راه اندازی مجدد نود 1 باید در فایل تنظیمات کلاستر <code>/etc/my.cnf.d/server.cnf</code> برای تعیین آدرس IP نودها تغییری ایجاد کنیم:</p>
-<pre class="codehilite"><code>[galera]
-# Mandatory settings
-wsrep_on=ON
-wsrep_provider=/usr/lib64/galera/libgalera_smm.so
-wsrep_cluster_address=&quot;gcomm://10.0.0.51,10.0.0.52,10.0.0.53&quot;
-wsrep_cluster_name='galeraCluster01'
-wsrep_node_address='10.0.0.51'
-wsrep_node_name='galera-01'
-wsrep_sst_method=rsync
-binlog_format=row
-default_storage_engine=InnoDB
-innodb_autoinc_lock_mode=2
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="k">[galera]</span>
+<span class="c1"># Mandatory settings</span>
+<span class="na">wsrep_on</span><span class="o">=</span><span class="s">ON</span>
+<span class="na">wsrep_provider</span><span class="o">=</span><span class="s">/usr/lib64/galera/libgalera_smm.so</span>
+<span class="na">wsrep_cluster_address</span><span class="o">=</span><span class="s">&quot;gcomm://10.0.0.51,10.0.0.52,10.0.0.53&quot;</span>
+<span class="na">wsrep_cluster_name</span><span class="o">=</span><span class="s">&#39;galeraCluster01&#39;</span>
+<span class="na">wsrep_node_address</span><span class="o">=</span><span class="s">&#39;10.0.0.51&#39;</span>
+<span class="na">wsrep_node_name</span><span class="o">=</span><span class="s">&#39;galera-01&#39;</span>
+<span class="na">wsrep_sst_method</span><span class="o">=</span><span class="s">rsync</span>
+<span class="na">binlog_format</span><span class="o">=</span><span class="s">row</span>
+<span class="na">default_storage_engine</span><span class="o">=</span><span class="s">InnoDB</span>
+<span class="na">innodb_autoinc_lock_mode</span><span class="o">=</span><span class="s">2</span>
+</code></pre></div>
 
 <p>نکته این که  <code>wsrep_cluster_address</code> نشان دهنده آدرس IP تمامی نودهای کلاستر می باشد که باید به صروت زیر تغییر کند:</p>
-<pre class="codehilite"><code>wsrep_cluster_address=&quot;gcomm://&quot;
-</code></pre>
+<div class="codehilite"><pre><span></span><code>wsrep_cluster_address=&quot;gcomm://&quot;
+</code></pre></div>
 
 <p>هم اکنون می توان سرویس ماریا دی بی این نود را ریست نمود:</p>
-<pre class="codehilite"><code>$ systemctl restart mariadb
-</code></pre>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>mariadb
+</code></pre></div>
 
 <p>تنهای زمانی می توانیم مبادرت به راه اندازی مجدد دیگر نودها نمود که بعد از ریست این نود از راه اندازی سالم آن اطمینان حاصل کنیم. بعد از راه اندازی کامل و سالم تمامی نودهای دیگر، تنظیمات روی نود 1 را با اضافه نمودن آدرس IP دیگر اعضا و ریست مجدد ادامه می دهیم.</p>
-<pre class="codehilite"><code>wsrep_cluster_address=&quot;gcomm://10.8.8.53,10.8.8.54,10.8.8.55&quot;
-</code></pre>
+<div class="codehilite"><pre><span></span><code>wsrep_cluster_address=&quot;gcomm://10.8.8.53,10.8.8.54,10.8.8.55&quot;
+</code></pre></div>
 
 <p>هم اکنون گلرا کلاستر باید اجرا شده و تمامی نودها باید خود را با نود اولیه یا اصلی همسان کنند.</p>
 <h2>بازیابی بر اساس آخرین Commit</h2>
 <p>بدترین حالت ممکن در خرابی گلرا کلاستر این هست که در تمامی نودها <code>seqno</code> مقدار 1- گرفته و تماما خراب شده باشند. همانطور که پیشتر هم ذکر شده بود، اجرای دستور <code>galera_new_cluster</code> روی یک نود و اتصال مجدد دیگر نودها قبل از تعیین آخرین <code>commit</code> ی که روی کدام نود خورده وسوسه انگیز است. زمانی که دستور <code>galera_new_cluster</code> را اجرا کنید، یک کلاستر جدید ایجاد کرده و دیگر نودها به آن متصل و خود را با آن همسان می کنند.</p>
 <p>برای این که تعیین کنیم کدام نود آخرین <code>commit</code> را دارد باید مقدار 'wsrep_last_commit' را روی هر نود جداگانه بررسی کنیم. تنها نودی معتبر است که آخرین مقدار آن بالاترین مقدار باشد. سپس از آن نود راه اندازی مجدد کلاستر را آغاز و دیگر نودها به آن متصل می شوند. برای این موضوع به ترتیب زیر عمل می کنیم:</p>
-<pre class="codehilite"><code>$ systemctl stop mariadb
-</code></pre>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>systemctl<span class="w"> </span>stop<span class="w"> </span>mariadb
+</code></pre></div>
 
 <p>مقدار <code>wsrep_cluster_address</code> را در فایل <code>/etc/my.cnf.d/server.cnf</code> باید تغییر دهیم.</p>
-<pre class="codehilite"><code>wsrep_cluster_address=&quot;gcomm://&quot;
-</code></pre>
+<div class="codehilite"><pre><span></span><code>wsrep_cluster_address=&quot;gcomm://&quot;
+</code></pre></div>
 
 <p>سپس:</p>
-<pre class="codehilite"><code>$ systemctl start mariadb
-</code></pre>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>mariadb
+</code></pre></div>
 
 <p>سپس از داخل دیتابیس مقدار را چک می کنیم:</p>
-<pre class="codehilite"><code>MariaDB [(none)]&gt; show status like 'wsrep_last_committed';
-+----------------------+---------+
-| Variable_name | Value |
-+----------------------+---------+
-| wsrep_last_committed | 319589 |
-+----------------------+---------+
-1 row in set (0.01 sec)
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="c">MariaDB </span><span class="k">[</span><span class="c">(none)</span><span class="k">]</span><span class="nv">&gt;</span><span class="c"> show status like &#39;wsrep_last_committed&#39;;</span>
+<span class="nb">+----------------------+---------+</span>
+<span class="c">| Variable_name | Value |</span>
+<span class="nb">+----------------------+---------+</span>
+<span class="c">| wsrep_last_committed | 319589 |</span>
+<span class="nb">+----------------------+---------+</span>
+<span class="c">1 row in set (0</span><span class="nt">.</span><span class="c">01 sec)</span>
+</code></pre></div>
 
 <p>این عمل را برای به دست آوردن آخرین <code>commit</code> روی تمامی نودها انجام دهید. سپس با اجرای دستور زیر روی نودی که بالاترین مقدار روی آخرین <code>commit</code> کلاسترینگ را مجددا راه اندازی می کنیم.</p>
-<pre class="codehilite"><code>$ galera_new_cluster
-</code></pre>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>galera_new_cluster
+</code></pre></div>
 
 <p>سپس مقدار <code>wsrep_cluster_address</code> را روی دیگر نودها با آدرس IP های نودها تغییر داده و سرویس <code>mariadb</code> را روی آن ها ریست کنید.</p>
 <p>در نهایت، بعد از گذشت مدتی،  آخرین مقدار <code>commit</code> را روی نودهای مجددا بررسی کنید تا از صحت کلاسترینگ اطمینان حاصل کنید.</p>
@@ -515,9 +515,9 @@ innodb_autoinc_lock_mode=2
                     
                     <li><a href="https://www.instagram.com/shgninc/">Instagram</a></li>
                     
-                    <li><a href="http://vasni.ir/">Vasni</a></li>
-                    
                     <li><a href="https://virgool.io/@shgninc">Virgool</a></li>
+                    
+                    <li><a href="https://www.linkedin.com/in/sajjad-shahcheraghean/">Linkedin</a></li>
                     
                     <li><a href="https://twitter.com/shahcheraghian">Twiteer</a></li>
                     

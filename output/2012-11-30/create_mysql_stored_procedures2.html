@@ -179,130 +179,130 @@
 <p>برای کار با بانک اطلاعاتی روش های متداول و مرسوم زیادی وجود دارد. اما یک روشی که خیلی مورد پسند بنده واقع شده، روشی است که در آن با استفاده از استور پروسیجرها کار هایم با دیتابیس را انجام می دهم. استور پروسیجر ها امکانی است که برخی نرم افزارهای مدیریت پایگاه داده ها آن را حمایت کرده و برخی خیر. از جلمه این پایگاه داده ها می توان از <code>MySQL</code>، <code>MSSQL</code> و... نام برد.در این نوشته نحوه ایجاد و کار با این امکان در نرم افزار مدیریت پایگاه داده های <code>MySQL</code> را بیان می کنم.در  <a href="../2012-11-28/create_mysql_stored_procedures1.html">بخش اول</a>  سعی شد تعریفی مختصر و طریقه ایجاد، فراخوانی، تعریف پارامترها و متغییرها را عنوان کرده و ادامه آن را در این قسمت خدمت دوستان ارائه می کنم.</p>
 <h3>گام ۴ : متغییرها</h3>
 <p>در این گام نحوه تعریف متغییرها و ذخیره دادها در استور پروسیجر را با هم می آموزیم. تعریف متغییرها دقیقا در ابتدای بلاک <code>BEGIN</code> و <code>END</code> به همراه تعیین نوع آنها انجام می گیرد.تعریف متغییر به صورت زیر می باشد:</p>
-<pre class="codehilite"><code>DECLARE varname DATA-TYPE DEFAULT defaultvalue;
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="n">DECLARE</span><span class="w"> </span><span class="n">varname</span><span class="w"> </span><span class="n">DATA</span><span class="o">-</span><span class="n">TYPE</span><span class="w"> </span><span class="n">DEFAULT</span><span class="w"> </span><span class="n">defaultvalue</span><span class="p">;</span>
+</code></pre></div>
 
 <h5>مثالهایی از تعریف انواع متغییرها:</h5>
-<pre class="codehilite"><code>DECLARE a, b INT DEFAULT 5;
+<div class="codehilite"><pre><span></span><code>DECLARE a, b INT DEFAULT 5;
 DECLARE str VARCHAR(50);
 DECLARE today TIMESTAMP DEFAULT CURRENT_DATE;
 DECLARE v1, v2, v3 TINYINT;
-</code></pre>
+</code></pre></div>
 
 <h5>کار کردن با متغییرها</h5>
 <p>به منظور تخصیص مقدار به متغییرهای تعریف شده کافی است از دستورات <code>SET</code> یا <code>SELECT</code> استفاده نمایید:</p>
-<pre class="codehilite"><code>DELIMITER //
-CREATE PROCEDURE `var_proc` (IN paramstr VARCHAR(20))
-BEGIN
-  DECLARE a, b INT DEFAULT ۵;
-  DECLARE str VARCHAR(50);
-  DECLARE today TIMESTAMP DEFAULT CURRENT_DATE;
-  DECLARE v1, v2, v3 TINYINT;
-  INSERT INTO table1 VALUES (a);
-  SET str = ’I am a string’;
-  SELECT CONCAT(str,paramstr), today FROM table2 WHERE b &amp;gt;=5;
-END //
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="n">DELIMITER</span><span class="w"> </span><span class="o">//</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">PROCEDURE</span><span class="w"> </span><span class="n n-Quoted">`var_proc`</span><span class="w"> </span><span class="p">(</span><span class="k">IN</span><span class="w"> </span><span class="n">paramstr</span><span class="w"> </span><span class="kt">VARCHAR</span><span class="p">(</span><span class="mi">20</span><span class="p">))</span>
+<span class="k">BEGIN</span>
+<span class="w">  </span><span class="k">DECLARE</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="kt">INT</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">۵</span><span class="p">;</span>
+<span class="w">  </span><span class="k">DECLARE</span><span class="w"> </span><span class="n">str</span><span class="w"> </span><span class="kt">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">);</span>
+<span class="w">  </span><span class="k">DECLARE</span><span class="w"> </span><span class="n">today</span><span class="w"> </span><span class="kt">TIMESTAMP</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="k">CURRENT_DATE</span><span class="p">;</span>
+<span class="w">  </span><span class="k">DECLARE</span><span class="w"> </span><span class="n">v1</span><span class="p">,</span><span class="w"> </span><span class="n">v2</span><span class="p">,</span><span class="w"> </span><span class="n">v3</span><span class="w"> </span><span class="kt">TINYINT</span><span class="p">;</span>
+<span class="w">  </span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">table1</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="p">);</span>
+<span class="w">  </span><span class="k">SET</span><span class="w"> </span><span class="n">str</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">’I</span><span class="w"> </span><span class="n">am</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="k">string</span><span class="n">’</span><span class="p">;</span>
+<span class="w">  </span><span class="k">SELECT</span><span class="w"> </span><span class="nf">CONCAT</span><span class="p">(</span><span class="n">str</span><span class="p">,</span><span class="n">paramstr</span><span class="p">),</span><span class="w"> </span><span class="n">today</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">table2</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span><span class="o">=</span><span class="mi">5</span><span class="p">;</span>
+<span class="k">END</span><span class="w"> </span><span class="o">//</span>
+</code></pre></div>
 
 <h5>گام ۵ : کنترل روند اجرا برنامه در استور پروسیجرها</h5>
 <p>نرم افزار <code>MySQL</code> از ساختارهای کنترل روند اجرا <code>IF</code>, <code>CASE</code>, <code>ITERATE</code>, <code>LEAVE LOOP</code>, <code>WHILE</code> و <code>REPEAT</code> پشتیبانی می کند در این نوشته سعی می شود تا درباره ساختار هایی که بیشتر مرسوم و مورد استفاده هستند از قبیل <code>IF</code>, <code>CASE</code> و <code>WHILE</code> صحبت کنیم.</p>
 <h5>ساختار <code>IF</code></h5>
 <p>با این ساختار بخش هایی از برنامه که شامل شروط هستند را کنترل می کنیم.</p>
-<pre class="codehilite"><code>DELIMITER //
-CREATE PROCEDURE `proc_IF` (IN param1 INT)
-BEGIN
-  DECLARE variable1 INT;
-  SET variable1 = param1 + 1;
-   IF variable1 = 0 THEN
-     SELECT variable1;
-   END IF;
-   IF param1 = 0 THEN
-  SELECT 'Parameter value = 0';
-   ELSE
-  SELECT 'Parameter value &amp;lt;&amp;gt; 0';
-   END IF;
-END //
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="n">DELIMITER</span><span class="w"> </span><span class="o">//</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">PROCEDURE</span><span class="w"> </span><span class="n n-Quoted">`proc_IF`</span><span class="w"> </span><span class="p">(</span><span class="k">IN</span><span class="w"> </span><span class="n">param1</span><span class="w"> </span><span class="kt">INT</span><span class="p">)</span>
+<span class="k">BEGIN</span>
+<span class="w">  </span><span class="k">DECLARE</span><span class="w"> </span><span class="n">variable1</span><span class="w"> </span><span class="kt">INT</span><span class="p">;</span>
+<span class="w">  </span><span class="k">SET</span><span class="w"> </span><span class="n">variable1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">param1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">   </span><span class="k">IF</span><span class="w"> </span><span class="n">variable1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">THEN</span>
+<span class="w">     </span><span class="k">SELECT</span><span class="w"> </span><span class="n">variable1</span><span class="p">;</span>
+<span class="w">   </span><span class="k">END</span><span class="w"> </span><span class="k">IF</span><span class="p">;</span>
+<span class="w">   </span><span class="k">IF</span><span class="w"> </span><span class="n">param1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">THEN</span>
+<span class="w">  </span><span class="k">SELECT</span><span class="w"> </span><span class="s1">&#39;Parameter value = 0&#39;</span><span class="p">;</span>
+<span class="w">   </span><span class="k">ELSE</span>
+<span class="w">  </span><span class="k">SELECT</span><span class="w"> </span><span class="s1">&#39;Parameter value &amp;lt;&amp;gt; 0&#39;</span><span class="p">;</span>
+<span class="w">   </span><span class="k">END</span><span class="w"> </span><span class="k">IF</span><span class="p">;</span>
+<span class="k">END</span><span class="w"> </span><span class="o">//</span>
+</code></pre></div>
 
 <h5>ساختار <code>CASE</code></h5>
 <p>این ساختار نیز برای کنترل شروط در برنامه می باشد. اما نمی توان از آن دقیقا به جا ساختار<code>IF</code> استفاده کرد. دو راه برای استفاده از این ساختار وجود دارد. راه اول:</p>
-<pre class="codehilite"><code>DELIMITER //
-CREATE PROCEDURE `proc_CASE` (IN param1 INT)
-BEGIN
-  DECLARE variable1 INT;
-  SET variable1 = param1 + 1;
-  CASE variable1
-       WHEN 0 THEN
-          INSERT INTO table1 VALUES (param1);
-       WHEN 1 THEN
-          INSERT INTO table1 VALUES (variable1);
-        ELSE
-          INSERT INTO table1 VALUES (99);
-  END CASE;
-END //
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="n">DELIMITER</span><span class="w"> </span><span class="o">//</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">PROCEDURE</span><span class="w"> </span><span class="n n-Quoted">`proc_CASE`</span><span class="w"> </span><span class="p">(</span><span class="k">IN</span><span class="w"> </span><span class="n">param1</span><span class="w"> </span><span class="kt">INT</span><span class="p">)</span>
+<span class="k">BEGIN</span>
+<span class="w">  </span><span class="k">DECLARE</span><span class="w"> </span><span class="n">variable1</span><span class="w"> </span><span class="kt">INT</span><span class="p">;</span>
+<span class="w">  </span><span class="k">SET</span><span class="w"> </span><span class="n">variable1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">param1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">  </span><span class="k">CASE</span><span class="w"> </span><span class="n">variable1</span>
+<span class="w">       </span><span class="k">WHEN</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">THEN</span>
+<span class="w">          </span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">table1</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="n">param1</span><span class="p">);</span>
+<span class="w">       </span><span class="k">WHEN</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">THEN</span>
+<span class="w">          </span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">table1</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="n">variable1</span><span class="p">);</span>
+<span class="w">        </span><span class="k">ELSE</span>
+<span class="w">          </span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">table1</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">99</span><span class="p">);</span>
+<span class="w">  </span><span class="k">END</span><span class="w"> </span><span class="k">CASE</span><span class="p">;</span>
+<span class="k">END</span><span class="w"> </span><span class="o">//</span>
+</code></pre></div>
 
 <h6>راه دوم:</h6>
-<pre class="codehilite"><code>DELIMITER //
-CREATE PROCEDURE `proc_CASE` (IN param1 INT)
-BEGIN
-  DECLARE variable1 INT;
-  SET variable1 = param1 + 1;
-  CASE
-    WHEN variable1 = 0 THEN
-       INSERT INTO table1 VALUES (param1);
-    WHEN variable1 = 1 THEN
-       INSERT INTO table1 VALUES (variable1);
-     ELSE
-       INSERT INTO table1 VALUES (99);
-  END CASE;
-END //
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="n">DELIMITER</span><span class="w"> </span><span class="o">//</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">PROCEDURE</span><span class="w"> </span><span class="n n-Quoted">`proc_CASE`</span><span class="w"> </span><span class="p">(</span><span class="k">IN</span><span class="w"> </span><span class="n">param1</span><span class="w"> </span><span class="kt">INT</span><span class="p">)</span>
+<span class="k">BEGIN</span>
+<span class="w">  </span><span class="k">DECLARE</span><span class="w"> </span><span class="n">variable1</span><span class="w"> </span><span class="kt">INT</span><span class="p">;</span>
+<span class="w">  </span><span class="k">SET</span><span class="w"> </span><span class="n">variable1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">param1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">  </span><span class="k">CASE</span>
+<span class="w">    </span><span class="k">WHEN</span><span class="w"> </span><span class="n">variable1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">THEN</span>
+<span class="w">       </span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">table1</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="n">param1</span><span class="p">);</span>
+<span class="w">    </span><span class="k">WHEN</span><span class="w"> </span><span class="n">variable1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">THEN</span>
+<span class="w">       </span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">table1</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="n">variable1</span><span class="p">);</span>
+<span class="w">     </span><span class="k">ELSE</span>
+<span class="w">       </span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">table1</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">99</span><span class="p">);</span>
+<span class="w">  </span><span class="k">END</span><span class="w"> </span><span class="k">CASE</span><span class="p">;</span>
+<span class="k">END</span><span class="w"> </span><span class="o">//</span>
+</code></pre></div>
 
 <h5>ساختار <code>WHILE</code></h5>
 <p>در اصل سه نوع ساختار حلقه وجود دارد. حلقه <code>WHILE</code>، حلقه <code>LOOP</code> و حلقه <code>REPEAT</code>. و اختیار با شما است که از کدام نوع ساختار در برنامه استفاده کنید. در اینجا فقط حلقه <code>WHILE</code>گفته می شود:</p>
-<pre class="codehilite"><code>DELIMITER //
-CREATE PROCEDURE `proc_WHILE` (IN param1 INT)
-BEGIN
-  DECLARE variable1, variable2 INT;
-  SET variable1 = 0;
-  WHILE variable1 &amp;lt; param1 DO
-      INSERT INTO table1 VALUES (param1);
-      SELECT COUNT(*) INTO variable2 FROM table1;
-      SET variable1 = variable1 + 1;
-  END WHILE;
-END //
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="n">DELIMITER</span><span class="w"> </span><span class="o">//</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">PROCEDURE</span><span class="w"> </span><span class="n n-Quoted">`proc_WHILE`</span><span class="w"> </span><span class="p">(</span><span class="k">IN</span><span class="w"> </span><span class="n">param1</span><span class="w"> </span><span class="kt">INT</span><span class="p">)</span>
+<span class="k">BEGIN</span>
+<span class="w">  </span><span class="k">DECLARE</span><span class="w"> </span><span class="n">variable1</span><span class="p">,</span><span class="w"> </span><span class="n">variable2</span><span class="w"> </span><span class="kt">INT</span><span class="p">;</span>
+<span class="w">  </span><span class="k">SET</span><span class="w"> </span><span class="n">variable1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">  </span><span class="k">WHILE</span><span class="w"> </span><span class="n">variable1</span><span class="w"> </span><span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="w"> </span><span class="n">param1</span><span class="w"> </span><span class="k">DO</span>
+<span class="w">      </span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">table1</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="n">param1</span><span class="p">);</span>
+<span class="w">      </span><span class="k">SELECT</span><span class="w"> </span><span class="nf">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">variable2</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">table1</span><span class="p">;</span>
+<span class="w">      </span><span class="k">SET</span><span class="w"> </span><span class="n">variable1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">variable1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">  </span><span class="k">END</span><span class="w"> </span><span class="k">WHILE</span><span class="p">;</span>
+<span class="k">END</span><span class="w"> </span><span class="o">//</span>
+</code></pre></div>
 
 <h4>گام ۶ : اشاره گرها یا Cursors</h4>
 <p>از این امکان جهت واکاوی و پردازش هر سطر، در میان چند سطر از یک کوئری برگردانده شده را فراهم می کند.این امکان نیز در <code>MySQL</code> هم برای استفاده در استور پروسیجرها ایجاد شده است. یک مثال ساده برای ایجاد و استفاده از یک اشاره گر:</p>
-<pre class="codehilite"><code>DECLARE cursor-name CURSOR FOR SELECT ...;  /*Declare and populate the cursor with a SELECT statement */
-DECLARE  CONTINUE HANDLER FOR NOT FOUND          /*Specify what to do when no more records found*/
-OPEN cursor-name;                                /*Open cursor for use*/
-FETCH cursor-name INTO variable [, variable];    /*Assign variables with the current column values*/
-CLOSE cursor-name;                               /*Close cursor after use*/
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="n">DECLARE</span><span class="w"> </span><span class="n">cursor</span><span class="o">-</span><span class="n">name</span><span class="w"> </span><span class="n">CURSOR</span><span class="w"> </span><span class="n">FOR</span><span class="w"> </span><span class="n">SELECT</span><span class="w"> </span><span class="o">...</span><span class="p">;</span><span class="w">  </span><span class="o">/*</span><span class="n">Declare</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">populate</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">cursor</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">SELECT</span><span class="w"> </span><span class="n">statement</span><span class="w"> </span><span class="o">*/</span>
+<span class="n">DECLARE</span><span class="w">  </span><span class="n">CONTINUE</span><span class="w"> </span><span class="n">HANDLER</span><span class="w"> </span><span class="n">FOR</span><span class="w"> </span><span class="n">NOT</span><span class="w"> </span><span class="n">FOUND</span><span class="w">          </span><span class="o">/*</span><span class="n">Specify</span><span class="w"> </span><span class="n">what</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">do</span><span class="w"> </span><span class="n">when</span><span class="w"> </span><span class="n">no</span><span class="w"> </span><span class="n">more</span><span class="w"> </span><span class="n">records</span><span class="w"> </span><span class="n">found</span><span class="o">*/</span>
+<span class="n">OPEN</span><span class="w"> </span><span class="n">cursor</span><span class="o">-</span><span class="n">name</span><span class="p">;</span><span class="w">                                </span><span class="o">/*</span><span class="n">Open</span><span class="w"> </span><span class="n">cursor</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">use</span><span class="o">*/</span>
+<span class="n">FETCH</span><span class="w"> </span><span class="n">cursor</span><span class="o">-</span><span class="n">name</span><span class="w"> </span><span class="n">INTO</span><span class="w"> </span><span class="n">variable</span><span class="w"> </span><span class="p">[,</span><span class="w"> </span><span class="n">variable</span><span class="p">];</span><span class="w">    </span><span class="o">/*</span><span class="n">Assign</span><span class="w"> </span><span class="n">variables</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">current</span><span class="w"> </span><span class="n">column</span><span class="w"> </span><span class="n">values</span><span class="o">*/</span>
+<span class="n">CLOSE</span><span class="w"> </span><span class="n">cursor</span><span class="o">-</span><span class="n">name</span><span class="p">;</span><span class="w">                               </span><span class="o">/*</span><span class="n">Close</span><span class="w"> </span><span class="n">cursor</span><span class="w"> </span><span class="n">after</span><span class="w"> </span><span class="n">use</span><span class="o">*/</span>
+</code></pre></div>
 
 <p>و حالا مثالی اشاره گر استفاده شده در پروسیجر:</p>
-<pre class="codehilite"><code>DELIMITER //
-CREATE PROCEDURE `proc_CURSOR` (OUT param1 INT)
-BEGIN
-  DECLARE a, b, c INT;
-  DECLARE cur1 CURSOR FOR SELECT col1 FROM table1;
-  DECLARE CONTINUE HANDLER FOR NOT FOUND SET b = 1;
-  OPEN cur1;
-  SET b = 0;
-  SET c = 0;
-  WHILE b = 0 DO
-      FETCH cur1 INTO a;
-      IF b = 0 THEN
-         SET c = c + a;
-      END IF;
-  END WHILE;
-  CLOSE cur1;
-  SET param1 = c;
-END //
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="n">DELIMITER</span><span class="w"> </span><span class="o">//</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">PROCEDURE</span><span class="w"> </span><span class="n n-Quoted">`proc_CURSOR`</span><span class="w"> </span><span class="p">(</span><span class="k">OUT</span><span class="w"> </span><span class="n">param1</span><span class="w"> </span><span class="kt">INT</span><span class="p">)</span>
+<span class="k">BEGIN</span>
+<span class="w">  </span><span class="k">DECLARE</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="kt">INT</span><span class="p">;</span>
+<span class="w">  </span><span class="k">DECLARE</span><span class="w"> </span><span class="n">cur1</span><span class="w"> </span><span class="k">CURSOR</span><span class="w"> </span><span class="k">FOR</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="n">col1</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">table1</span><span class="p">;</span>
+<span class="w">  </span><span class="k">DECLARE</span><span class="w"> </span><span class="k">CONTINUE</span><span class="w"> </span><span class="k">HANDLER</span><span class="w"> </span><span class="k">FOR</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">FOUND</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">  </span><span class="k">OPEN</span><span class="w"> </span><span class="n">cur1</span><span class="p">;</span>
+<span class="w">  </span><span class="k">SET</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">  </span><span class="k">SET</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">  </span><span class="k">WHILE</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">DO</span>
+<span class="w">      </span><span class="k">FETCH</span><span class="w"> </span><span class="n">cur1</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">a</span><span class="p">;</span>
+<span class="w">      </span><span class="k">IF</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">THEN</span>
+<span class="w">         </span><span class="k">SET</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">a</span><span class="p">;</span>
+<span class="w">      </span><span class="k">END</span><span class="w"> </span><span class="k">IF</span><span class="p">;</span>
+<span class="w">  </span><span class="k">END</span><span class="w"> </span><span class="k">WHILE</span><span class="p">;</span>
+<span class="w">  </span><span class="k">CLOSE</span><span class="w"> </span><span class="n">cur1</span><span class="p">;</span>
+<span class="w">  </span><span class="k">SET</span><span class="w"> </span><span class="n">param1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c</span><span class="p">;</span>
+<span class="k">END</span><span class="w"> </span><span class="o">//</span>
+</code></pre></div>
 
 <p>اشاره گرها دارای سه ویژگی هستند که برای استفاده از آنها باید با این ویژگی ها آشنا باشید:</p>
 <ul>
@@ -438,9 +438,9 @@ END //
                     
                     <li><a href="https://www.instagram.com/shgninc/">Instagram</a></li>
                     
-                    <li><a href="http://vasni.ir/">Vasni</a></li>
-                    
                     <li><a href="https://virgool.io/@shgninc">Virgool</a></li>
+                    
+                    <li><a href="https://www.linkedin.com/in/sajjad-shahcheraghean/">Linkedin</a></li>
                     
                     <li><a href="https://twitter.com/shahcheraghian">Twiteer</a></li>
                     

@@ -180,26 +180,26 @@
 <p>مراحل آماده سازی و انجام اقدامات لازم برای خودکار سازی ورود به سرورها به ترتیب زیر می باشد:</p>
 <h3>تولید کلدیSSH</h3>
 <p>در ابتدا نیاز دارید تا یک کلید خصوصی و عمومی برای <code>ssh</code> به صورت زیر تولید کنید:</p>
-<pre class="codehilite"><code>$ ssh-keygen -t rsa -b 2048
-Generating public/private rsa key pair.
-Enter file in which to save the key (/home/username/.ssh/id_rsa): 
-Enter passphrase (empty for no passphrase): 
-Enter same passphrase again: 
-Your identification has been saved in /home/username/.ssh/id_rsa.
-Your public key has been saved in /home/username/.ssh/id_rsa.pub.
-</code></pre>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>ssh-keygen<span class="w"> </span>-t<span class="w"> </span>rsa<span class="w"> </span>-b<span class="w"> </span><span class="m">2048</span>
+Generating<span class="w"> </span>public/private<span class="w"> </span>rsa<span class="w"> </span>key<span class="w"> </span>pair.
+Enter<span class="w"> </span>file<span class="w"> </span><span class="k">in</span><span class="w"> </span>which<span class="w"> </span>to<span class="w"> </span>save<span class="w"> </span>the<span class="w"> </span>key<span class="w"> </span><span class="o">(</span>/home/username/.ssh/id_rsa<span class="o">)</span>:<span class="w"> </span>
+Enter<span class="w"> </span>passphrase<span class="w"> </span><span class="o">(</span>empty<span class="w"> </span><span class="k">for</span><span class="w"> </span>no<span class="w"> </span>passphrase<span class="o">)</span>:<span class="w"> </span>
+Enter<span class="w"> </span>same<span class="w"> </span>passphrase<span class="w"> </span>again:<span class="w"> </span>
+Your<span class="w"> </span>identification<span class="w"> </span>has<span class="w"> </span>been<span class="w"> </span>saved<span class="w"> </span><span class="k">in</span><span class="w"> </span>/home/username/.ssh/id_rsa.
+Your<span class="w"> </span>public<span class="w"> </span>key<span class="w"> </span>has<span class="w"> </span>been<span class="w"> </span>saved<span class="w"> </span><span class="k">in</span><span class="w"> </span>/home/username/.ssh/id_rsa.pub.
+</code></pre></div>
 
 <p>دقت داشته باشید که این کلید دقیقا برابر با نام کاربری و کلمه عبور شما هست.</p>
 <h3>ارسال کلید به سرور</h3>
 <p>در گام بعدی باید کلید عمومی تولید شده خود را بر روی سرور منتقل کنید:</p>
-<pre class="codehilite"><code>$ ssh-copy-id id@server
-id@server's password:
-</code></pre>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>ssh-copy-id<span class="w"> </span>id@server
+id@server<span class="err">&#39;</span>s<span class="w"> </span>password:
+</code></pre></div>
 
 <h4>خاتمه</h4>
 <p>اکنون هر زمان که نیاز به ورود داشتید کافی است تا فرمان زیر را اجرا کنید و بدون ورود هیچ گونه نام کاربری و کلمه عبوری به سرور وراد شوید:</p>
-<pre class="codehilite"><code>ssh id@server
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="n">ssh</span><span class="w"> </span><span class="n">id</span><span class="nv">@server</span>
+</code></pre></div>
 
 <p>در پایان مشاهده کردید که به سادگی و راحتی هر چه تمام خودکار سازی ورود به سرورها با <code>ssh</code> انجام شد.</p>
 <h4>منبع:</h4>
@@ -325,9 +325,9 @@ id@server's password:
                     
                     <li><a href="https://www.instagram.com/shgninc/">Instagram</a></li>
                     
-                    <li><a href="http://vasni.ir/">Vasni</a></li>
-                    
                     <li><a href="https://virgool.io/@shgninc">Virgool</a></li>
+                    
+                    <li><a href="https://www.linkedin.com/in/sajjad-shahcheraghean/">Linkedin</a></li>
                     
                     <li><a href="https://twitter.com/shahcheraghian">Twiteer</a></li>
                     

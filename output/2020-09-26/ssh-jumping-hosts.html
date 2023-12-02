@@ -184,23 +184,23 @@
 </ul>
 <h1>پرش داینامیک ssh</h1>
 <p>برای پرش از طریق هاست گیتوی باید از گزینه <code>-J</code> به ترتیب زیر استفاده نمود:</p>
-<pre class="codehilite"><code>user $ssh -J host1 host2
-</code></pre>
+<div class="codehilite"><pre><span></span><code>user $ssh -J host1 host2
+</code></pre></div>
 
 <p>اگر نام کاربری یا شماره پورت روی ماشین هدف تفاوت دارد می توانید به این ترتیب آن ها را تعیین کنید:</p>
-<pre class="codehilite"><code>user $ssh -J user1@host1:port1 user2@host2:port2
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="k">user</span><span class="w"> </span><span class="err">$</span><span class="n">ssh</span><span class="w"> </span><span class="o">-</span><span class="n">J</span><span class="w"> </span><span class="n">user1</span><span class="nv">@host1</span><span class="err">:</span><span class="n">port1</span><span class="w"> </span><span class="n">user2</span><span class="nv">@host2</span><span class="err">:</span><span class="n">port2</span>
+</code></pre></div>
 
 <h3>چندین پرش</h3>
 <p>با دستوری شبیه به دستورات قبلی، نیز می توان برای پرش از چندین هاست تا سرور هدف استفاده نمود:</p>
-<pre class="codehilite"><code>user $ssh -J user1@host1:port1,user2@host2:port2 user3@host3
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="k">user</span><span class="w"> </span><span class="err">$</span><span class="n">ssh</span><span class="w"> </span><span class="o">-</span><span class="n">J</span><span class="w"> </span><span class="n">user1</span><span class="nv">@host1</span><span class="err">:</span><span class="n">port1</span><span class="p">,</span><span class="n">user2</span><span class="nv">@host2</span><span class="err">:</span><span class="n">port2</span><span class="w"> </span><span class="n">user3</span><span class="nv">@host3</span>
+</code></pre></div>
 
 <p># پرش استاتیک ssh</p>
 <p>در این روش شما تنظیمات را درون فایل تنظیمات <code>ssh</code> انجام می دهید. برای این مهم لازم هست تا اطلاعات مربوط به هاست یا هاست های واسط تا سرور هدف را داشته باشید. سپس می توانید مسیریابی استاتیک برای پرش را در فایل تنظیمات <code>ssh</code> انجام دهید. تفاوت این روش با روش داینامیک در این است که، نیازی به ایجاد فایل تنظیمات <code>.ssh</code> روی هاست های واسط و سرور هدف نیست.  </p>
 <p>### نحوه تنظیم </p>
 <p>در فایل به مسیر <code>~/.ssh/config</code> تنظیمات زیر را اعمال می کنید:</p>
-<pre class="codehilite"><code>### First jumphost. Directly reachable
+<div class="codehilite"><pre><span></span><code>### First jumphost. Directly reachable
 Host betajump
     HostName jumphost1.example.org
 
@@ -208,20 +208,20 @@ Host betajump
 Host behindbeta
     HostName behindbeta.example.org
     ProxyJump  betajump
-</code></pre>
+</code></pre></div>
 
 <p>### نحوه استفاده </p>
 <p>نحوه استفاده به سادگی زیر می باشد:</p>
-<pre class="codehilite"><code>user $ssh behindalpha
-</code></pre>
+<div class="codehilite"><pre><span></span><code>user $ssh behindalpha
+</code></pre></div>
 
 <p>اگر نام کاربری روی هاست ها متفاوت بود، کافی هست تا آن را در خط مربوط به <code>ProxyJump</code> در فایل <code>~/.ssh/config</code> تعیین نمایید:</p>
-<pre class="codehilite"><code> ProxyJump  otheruser@behindalpha
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="w"> </span><span class="n">ProxyJump</span><span class="w">  </span><span class="n">otheruser</span><span class="nv">@behindalpha</span>
+</code></pre></div>
 
 <p>### چندین پرش </p>
 <p>برای استفاده از چندین هاست واسط و پرش ازآنها شبیه به تنظیمات قبل، می توان در مسیر فایل <code>~/.ssh/config</code> تنظیم نمود:</p>
-<pre class="codehilite"><code>### First jumphost. Directly reachable
+<div class="codehilite"><pre><span></span><code>### First jumphost. Directly reachable
 Host alphajump
     HostName jumphost1.example.org
 
@@ -234,11 +234,11 @@ Host betajump
 Host behindalphabeta
   HostName behindalphabeta.example.org
   ProxyJump betajump
-</code></pre>
+</code></pre></div>
 
 <p>همچنین برای استفاده نیز همانند قبل دستور زیر کافی می باشد:</p>
-<pre class="codehilite"><code>user $ssh behindalphabeta
-</code></pre>
+<div class="codehilite"><pre><span></span><code>user $ssh behindalphabeta
+</code></pre></div>
 
 <h1>منابع:</h1>
 <ul>
@@ -365,9 +365,9 @@ Host behindalphabeta
                     
                     <li><a href="https://www.instagram.com/shgninc/">Instagram</a></li>
                     
-                    <li><a href="http://vasni.ir/">Vasni</a></li>
-                    
                     <li><a href="https://virgool.io/@shgninc">Virgool</a></li>
+                    
+                    <li><a href="https://www.linkedin.com/in/sajjad-shahcheraghean/">Linkedin</a></li>
                     
                     <li><a href="https://twitter.com/shahcheraghian">Twiteer</a></li>
                     

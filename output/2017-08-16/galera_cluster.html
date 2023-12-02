@@ -177,121 +177,121 @@
 <p>برای نصب <code>Galera Cluster</code>، نیاز به دریافت و نصب آن به صورت جداگانه نمی باشد. در نسخه های جدید، این برنامه به همراه برنامه <code>mariadb-server</code> نصب می شود. باید دقت شود که فلسفه کاری <code>Galera Cluster</code> بر مبنای تعداد نود های فرد می باشد، بنابراین، برای ۳ نود توضیحات ارائه شده و در هرجا که کدها تکی بود، باید بر روی هر سه نود به طور همسان اجرا شوند.</p>
 <h3>مراحل نصب</h3>
 <p>مراحل نصب بر روی دبیان8:</p>
-<pre class="codehilite"><code>$ sudo apt-get install software-properties-common
-$ sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
-$ sudo add-apt-repository 'deb [arch=amd64,i386] http://mirror.mephi.ru/mariadb/repo/10.1/debian jessie main'
-$ apt-get update
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>software-properties-common
+$<span class="w"> </span>sudo<span class="w"> </span>apt-key<span class="w"> </span>adv<span class="w"> </span>--recv-keys<span class="w"> </span>--keyserver<span class="w"> </span>hkp://keyserver.ubuntu.com:80<span class="w"> </span>0xF1656F24C74CD1D8
+$<span class="w"> </span>sudo<span class="w"> </span>add-apt-repository<span class="w"> </span><span class="s1">&#39;deb [arch=amd64,i386] http://mirror.mephi.ru/mariadb/repo/10.1/debian jessie main&#39;</span>
+$<span class="w"> </span>apt-get<span class="w"> </span>update
 
-$ sudo apt-get install mariadb-server rsync
-</code></pre>
+$<span class="w"> </span>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>mariadb-server<span class="w"> </span>rsync
+</code></pre></div>
 
 <p>پس از نصب بسته ها لازم است تا فایل تنظیمات مربوط به راه اندازی کلاسترینگ ایجاد شود:</p>
-<pre class="codehilite"><code>$ sudo vi /etc/mysql/conf.d/galera.cnf
-</code></pre>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>sudo<span class="w"> </span>vi<span class="w"> </span>/etc/mysql/conf.d/galera.cnf
+</code></pre></div>
 
 <p>در فایل ایجاد شده باید پارامترهای زیر برای سرور <strong>اول</strong> اضافه و ذخیره شوند:</p>
-<pre class="codehilite"><code>[mysqld]
-#mysql settings
-binlog_format=ROW
-default-storage-engine=innodb
-innodb_autoinc_lock_mode=2
-query_cache_size=0
-query_cache_type=0
-innodb_flush_log_at_trx_commit=2
-innodb_buffer_pool_size=7G
-bind-address=192.168.205.32
+<div class="codehilite"><pre><span></span><code><span class="k">[mysqld]</span>
+<span class="c1">#mysql settings</span>
+<span class="na">binlog_format</span><span class="o">=</span><span class="s">ROW</span>
+<span class="na">default-storage-engine</span><span class="o">=</span><span class="s">innodb</span>
+<span class="na">innodb_autoinc_lock_mode</span><span class="o">=</span><span class="s">2</span>
+<span class="na">query_cache_size</span><span class="o">=</span><span class="s">0</span>
+<span class="na">query_cache_type</span><span class="o">=</span><span class="s">0</span>
+<span class="na">innodb_flush_log_at_trx_commit</span><span class="o">=</span><span class="s">2</span>
+<span class="na">innodb_buffer_pool_size</span><span class="o">=</span><span class="s">7G</span>
+<span class="na">bind-address</span><span class="o">=</span><span class="s">192.168.205.32</span>
 
-#Galera settings
-wsrep_provider=&quot;/usr/lib/galera/libgalera_smm.so&quot;
-wsrep_cluster_name=&quot;ahenart_cluster-BAD&quot;
-wsrep_cluster_address=&quot;gcomm://192.168.205.32,192.168.205.31,192.168.205.33&quot;
-wsrep_sst_method=rsync
-wsrep_on=ON
-wsrep_node_address=&quot;192.168.205.32&quot;
-wsrep_node_name=&quot;db12-rt&quot;
-&lt;/code&gt;
-</code></pre>
+<span class="c1">#Galera settings</span>
+<span class="na">wsrep_provider</span><span class="o">=</span><span class="s">&quot;/usr/lib/galera/libgalera_smm.so&quot;</span>
+<span class="na">wsrep_cluster_name</span><span class="o">=</span><span class="s">&quot;ahenart_cluster-BAD&quot;</span>
+<span class="na">wsrep_cluster_address</span><span class="o">=</span><span class="s">&quot;gcomm://192.168.205.32,192.168.205.31,192.168.205.33&quot;</span>
+<span class="na">wsrep_sst_method</span><span class="o">=</span><span class="s">rsync</span>
+<span class="na">wsrep_on</span><span class="o">=</span><span class="s">ON</span>
+<span class="na">wsrep_node_address</span><span class="o">=</span><span class="s">&quot;192.168.205.32&quot;</span>
+<span class="na">wsrep_node_name</span><span class="o">=</span><span class="s">&quot;db12-rt&quot;</span>
+<span class="na">&lt;/code&gt;</span>
+</code></pre></div>
 
 <p>در فایل ایجاد شده باید پارامترهای زیر برای سرور <strong>دوم</strong> اضافه و ذخیره شوند:</p>
-<pre class="codehilite"><code>[mysqld]
-#mysql settings
-binlog_format=ROW
-default-storage-engine=innodb
-innodb_autoinc_lock_mode=2
-query_cache_size=0
-query_cache_type=0
-innodb_flush_log_at_trx_commit=2
-innodb_buffer_pool_size=7G
-bind-address=192.168.205.33
+<div class="codehilite"><pre><span></span><code><span class="k">[mysqld]</span>
+<span class="c1">#mysql settings</span>
+<span class="na">binlog_format</span><span class="o">=</span><span class="s">ROW</span>
+<span class="na">default-storage-engine</span><span class="o">=</span><span class="s">innodb</span>
+<span class="na">innodb_autoinc_lock_mode</span><span class="o">=</span><span class="s">2</span>
+<span class="na">query_cache_size</span><span class="o">=</span><span class="s">0</span>
+<span class="na">query_cache_type</span><span class="o">=</span><span class="s">0</span>
+<span class="na">innodb_flush_log_at_trx_commit</span><span class="o">=</span><span class="s">2</span>
+<span class="na">innodb_buffer_pool_size</span><span class="o">=</span><span class="s">7G</span>
+<span class="na">bind-address</span><span class="o">=</span><span class="s">192.168.205.33</span>
 
-#Galera settings
-wsrep_provider=&quot;/usr/lib/galera/libgalera_smm.so&quot;
-wsrep_cluster_name=&quot;ahenart_cluster-BAD&quot;
-wsrep_cluster_address=&quot;gcomm://192.168.205.32,192.168.205.31,192.168.205.33&quot;
-wsrep_sst_method=rsync
-wsrep_on=ON
-wsrep_node_address=&quot;192.168.205.33&quot;
-wsrep_node_name=&quot;db22-rt&quot;
+<span class="c1">#Galera settings</span>
+<span class="na">wsrep_provider</span><span class="o">=</span><span class="s">&quot;/usr/lib/galera/libgalera_smm.so&quot;</span>
+<span class="na">wsrep_cluster_name</span><span class="o">=</span><span class="s">&quot;ahenart_cluster-BAD&quot;</span>
+<span class="na">wsrep_cluster_address</span><span class="o">=</span><span class="s">&quot;gcomm://192.168.205.32,192.168.205.31,192.168.205.33&quot;</span>
+<span class="na">wsrep_sst_method</span><span class="o">=</span><span class="s">rsync</span>
+<span class="na">wsrep_on</span><span class="o">=</span><span class="s">ON</span>
+<span class="na">wsrep_node_address</span><span class="o">=</span><span class="s">&quot;192.168.205.33&quot;</span>
+<span class="na">wsrep_node_name</span><span class="o">=</span><span class="s">&quot;db22-rt&quot;</span>
 
-در فایل ایجاد شده باید پارامترهای زیر برای سرور **سوم** اضافه و ذخیره شوند:
+<span class="na">در فایل ایجاد شده باید پارامترهای زیر برای سرور **سوم** اضافه و ذخیره شوند</span><span class="o">:</span>
 
-[mysqld]
-#mysql settings
-binlog_format=ROW
-default-storage-engine=innodb
-innodb_autoinc_lock_mode=2
-query_cache_size=0
-query_cache_type=0
-innodb_flush_log_at_trx_commit=2
-innodb_buffer_pool_size=7G
-bind-address=192.168.205.31
+<span class="k">[mysqld]</span>
+<span class="c1">#mysql settings</span>
+<span class="na">binlog_format</span><span class="o">=</span><span class="s">ROW</span>
+<span class="na">default-storage-engine</span><span class="o">=</span><span class="s">innodb</span>
+<span class="na">innodb_autoinc_lock_mode</span><span class="o">=</span><span class="s">2</span>
+<span class="na">query_cache_size</span><span class="o">=</span><span class="s">0</span>
+<span class="na">query_cache_type</span><span class="o">=</span><span class="s">0</span>
+<span class="na">innodb_flush_log_at_trx_commit</span><span class="o">=</span><span class="s">2</span>
+<span class="na">innodb_buffer_pool_size</span><span class="o">=</span><span class="s">7G</span>
+<span class="na">bind-address</span><span class="o">=</span><span class="s">192.168.205.31</span>
 
-#Galera settings
-wsrep_provider=&quot;/usr/lib/galera/libgalera_smm.so&quot;
-wsrep_cluster_name=&quot;ahenart_cluster-BAD&quot;
-wsrep_cluster_address=&quot;gcomm://192.168.205.32,192.168.205.31,192.168.205.33&quot;
-wsrep_sst_method=rsync
-wsrep_on=ON
-wsrep_node_address=&quot;192.168.205.31&quot;
-wsrep_node_name=&quot;db32-rt&quot;
-</code></pre>
+<span class="c1">#Galera settings</span>
+<span class="na">wsrep_provider</span><span class="o">=</span><span class="s">&quot;/usr/lib/galera/libgalera_smm.so&quot;</span>
+<span class="na">wsrep_cluster_name</span><span class="o">=</span><span class="s">&quot;ahenart_cluster-BAD&quot;</span>
+<span class="na">wsrep_cluster_address</span><span class="o">=</span><span class="s">&quot;gcomm://192.168.205.32,192.168.205.31,192.168.205.33&quot;</span>
+<span class="na">wsrep_sst_method</span><span class="o">=</span><span class="s">rsync</span>
+<span class="na">wsrep_on</span><span class="o">=</span><span class="s">ON</span>
+<span class="na">wsrep_node_address</span><span class="o">=</span><span class="s">&quot;192.168.205.31&quot;</span>
+<span class="na">wsrep_node_name</span><span class="o">=</span><span class="s">&quot;db32-rt&quot;</span>
+</code></pre></div>
 
 <h3>راه اندازی گلرا کلاستر</h3>
 <p><strong>برای راه اندزای گلرا کلاستر برای اول مرتبه باید به ترتیب زیر عمل نمود.</strong></p>
 <p><em>1</em> قبل از هر کاری بر روی هر سه سرور باید سرویس <code>mysql</code> متوقف شود:</p>
-<pre class="codehilite"><code>$ sudo service mysql stop
-</code></pre>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>sudo<span class="w"> </span>service<span class="w"> </span>mysql<span class="w"> </span>stop
+</code></pre></div>
 
 <p><em>2</em> سپس سروری که قرار است اولین نود تعیین شود به این صورت راه اندازی می شود:</p>
-<pre class="codehilite"><code>$ sudo galera_new_cluster
-</code></pre>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>sudo<span class="w"> </span>galera_new_cluster
+</code></pre></div>
 
 <p>یا</p>
-<pre class="codehilite"><code>$ sudo /usr/bin/galera_new_cluster
-</code></pre>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>sudo<span class="w"> </span>/usr/bin/galera_new_cluster
+</code></pre></div>
 
 <p><em>3</em> جهت اطمینان از اجرای کلاسترینگ بر روی اولین نود:</p>
-<pre class="codehilite"><code>$ sudo ps aux | grep mysql
-</code></pre>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>sudo<span class="w"> </span>ps<span class="w"> </span>aux<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>mysql
+</code></pre></div>
 
 <p>که باید نتیجه زیر مشاهده شود:</p>
-<pre class="codehilite"><code>mysql 10587 14.0 15.5 1266120 155268 ? Ssl 01:50 0:00 /usr/sbin/mysqld --wsrep-new-cluster --wsrep_start_position=00000000-0000-0000-0000-000000000000:-1
-root 20822 0.0 0.0 12948 980 pts/0 S+ 01:22 0:00 grep --color=auto mysql&lt;/code&gt;
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="s s-Atom">mysql</span> <span class="mi">10587</span> <span class="mf">14.0</span> <span class="mf">15.5</span> <span class="mi">1266120</span> <span class="mi">155268</span> <span class="nb">?</span> <span class="nv">Ssl</span> <span class="mi">01</span><span class="o">:</span><span class="mi">50</span> <span class="mi">0</span><span class="o">:</span><span class="mi">00</span> <span class="o">/</span><span class="s s-Atom">usr</span><span class="o">/</span><span class="s s-Atom">sbin</span><span class="o">/</span><span class="s s-Atom">mysqld</span> <span class="s s-Atom">--wsrep</span><span class="o">-</span><span class="s s-Atom">new</span><span class="o">-</span><span class="s s-Atom">cluster</span> <span class="s s-Atom">--wsrep_start_position</span><span class="o">=</span><span class="mi">00000000</span><span class="o">-</span><span class="mi">0000</span><span class="o">-</span><span class="mi">0000</span><span class="o">-</span><span class="mi">0000</span><span class="o">-</span><span class="mi">000000000000</span><span class="o">:-</span><span class="mi">1</span>
+<span class="s s-Atom">root</span> <span class="mi">20822</span> <span class="mf">0.0</span> <span class="mf">0.0</span> <span class="mi">12948</span> <span class="mi">980</span> <span class="s s-Atom">pts</span><span class="o">/</span><span class="mi">0</span> <span class="nv">S</span><span class="o">+</span> <span class="mi">01</span><span class="o">:</span><span class="mi">22</span> <span class="mi">0</span><span class="o">:</span><span class="mi">00</span> <span class="s s-Atom">grep</span> <span class="s s-Atom">--color</span><span class="o">=</span><span class="s s-Atom">auto</span> <span class="s s-Atom">mysql&lt;/code</span><span class="o">&gt;</span>
+</code></pre></div>
 
 <p><em>4</em> جهت الحاق نود های دوم و سوم به کلاسترینگ و فقط کافی است تا سرویس آن راه اندازی شود:</p>
-<pre class="codehilite"><code>$ sudo service mysql start
-</code></pre>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>sudo<span class="w"> </span>service<span class="w"> </span>mysql<span class="w"> </span>start
+</code></pre></div>
 
 <p>در این زمان هر سه نود گلرا کلاسترینگ راه اندازی و در حال اجرا می باشند. برای اطمینان از این موضوع می توان دستور زیر را بر روی هر سه نود گلرا اجرا و نتیجه را مشاهده نمود:</p>
-<pre class="codehilite"><code>$ mysql -u root -p -e &quot;SHOW STATUS LIKE 'wsrep_cluster_size';&quot;
-Enter password:
-+--------------------+-------+
-| Variable_name      | Value |
-+--------------------+-------+
-| wsrep_cluster_size | 3     |
-+--------------------+-------+
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="c">$ mysql </span><span class="nb">-</span><span class="c">u root </span><span class="nb">-</span><span class="c">p </span><span class="nb">-</span><span class="c">e &quot;SHOW STATUS LIKE &#39;wsrep_cluster_size&#39;;&quot;</span>
+<span class="c">Enter password:</span>
+<span class="nb">+--------------------+-------+</span>
+<span class="c">| Variable_name      | Value |</span>
+<span class="nb">+--------------------+-------+</span>
+<span class="c">| wsrep_cluster_size | 3     |</span>
+<span class="nb">+--------------------+-------+</span>
+</code></pre></div>
 
 <h3>منابع</h3>
 <ul>
@@ -430,9 +430,9 @@ Enter password:
                     
                     <li><a href="https://www.instagram.com/shgninc/">Instagram</a></li>
                     
-                    <li><a href="http://vasni.ir/">Vasni</a></li>
-                    
                     <li><a href="https://virgool.io/@shgninc">Virgool</a></li>
+                    
+                    <li><a href="https://www.linkedin.com/in/sajjad-shahcheraghean/">Linkedin</a></li>
                     
                     <li><a href="https://twitter.com/shahcheraghian">Twiteer</a></li>
                     

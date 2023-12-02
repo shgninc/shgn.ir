@@ -369,28 +369,28 @@
 <p>There are some L2TP/IPsec servers that will reject L2TP connections when an ephemeral source port is used (i.e. when UDP source port 1701 is not used), even though the use of an ephemeral port is considered acceptable in RFC3193, the L2TP/IPsec standard co-authored by Microsoft and Cisco.</p>
 <p>When NetworkManager-l2tp tries to start its own instance of xl2tpd or kl2tpd, if UDP port 1701 is not free (e.g. system xl2tpd is listening on UDP port 1701), an ephemeral source port will be used.</p>
 <p>The following netstat and ss command-lines can be used to check if there is system xl2tpd (or some other daemon) listening on UDP port 1701 :</p>
-<pre class="codehilite"><code>$ sudo netstat -unlp | grep 1701
-udp        0      0 0.0.0.0:1701            0.0.0.0:*                           4123/xl2tpd
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>sudo<span class="w"> </span>netstat<span class="w"> </span>-unlp<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="m">1701</span>
+udp<span class="w">        </span><span class="m">0</span><span class="w">      </span><span class="m">0</span><span class="w"> </span><span class="m">0</span>.0.0.0:1701<span class="w">            </span><span class="m">0</span>.0.0.0:*<span class="w">                           </span><span class="m">4123</span>/xl2tpd
 
-$ sudo ss -unlp | grep 1701
-UNCONN 0      0                               0.0.0.0:1701         0.0.0.0:*     users:((&quot;xl2tpd&quot;,pid=4123,fd=3))
-</code></pre>
+$<span class="w"> </span>sudo<span class="w"> </span>ss<span class="w"> </span>-unlp<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="m">1701</span>
+UNCONN<span class="w"> </span><span class="m">0</span><span class="w">      </span><span class="m">0</span><span class="w">                               </span><span class="m">0</span>.0.0.0:1701<span class="w">         </span><span class="m">0</span>.0.0.0:*<span class="w">     </span>users:<span class="o">((</span><span class="s2">&quot;xl2tpd&quot;</span>,pid<span class="o">=</span><span class="m">4123</span>,fd<span class="o">=</span><span class="m">3</span><span class="o">))</span>
+</code></pre></div>
 
 <p>Stopping the system xl2tpd service should free UDP port 1701 and on systemd based Linux distributions, the xl2tpd service can be stopped with the following:</p>
-<pre class="codehilite"><code>sudo systemctl stop xl2tpd.service
-</code></pre>
+<div class="codehilite"><pre><span></span><code>sudo systemctl stop xl2tpd.service
+</code></pre></div>
 
 <p>If stopping the xl2tpd service fixes your VPN connection issue, you can disable the xl2tpd service from starting at boot time with :</p>
-<pre class="codehilite"><code>sudo systemctl disable xl2tpd.service
-</code></pre>
+<div class="codehilite"><pre><span></span><code>sudo systemctl disable xl2tpd.service
+</code></pre></div>
 
 <p>There are some cases where disabling a service doesn't stop it from being started at boot time. You can check if the xl2tp service is still running with the following :</p>
-<pre class="codehilite"><code>systemctl disable xl2tpd.service
-</code></pre>
+<div class="codehilite"><pre><span></span><code>systemctl disable xl2tpd.service
+</code></pre></div>
 
 <p>If it is still running, you can issue the following to ensure is isn't started at boot time:</p>
-<pre class="codehilite"><code>sudo systemctl mask xl2tpd.service
-</code></pre>
+<div class="codehilite"><pre><span></span><code>sudo systemctl mask xl2tpd.service
+</code></pre></div>
 
 <p>Once connected, you can verify that your traffic is being routed properly by <a href="https://www.google.com/search?q=my+ip">looking up your IP address on Google</a>. It should say "Your public IP address is <code>Your VPN Server IP</code>".</p>
 <h3>Fedora and CentOS</h3>
@@ -474,7 +474,7 @@ UNCONN 0      0                               0.0.0.0:1701         0.0.0.0:*    
 <p>In addition, if your computer has IPv6 enabled, all IPv6 traffic (including DNS queries) will bypass the VPN. Learn how to <a href="https://support.microsoft.com/en-us/help/929852/guidance-for-configuring-ipv6-in-windows-for-advanced-users">disable IPv6</a> in Windows. If you need a VPN with IPv6 support, you could instead try <a href="https://github.com/hwdsl2/openvpn-install">OpenVPN</a>.</p>
 <h3>Android MTU/MSS issues</h3>
 <p>Some Android devices have MTU/MSS issues, that they are able to connect to the VPN using IPsec/XAuth ("Cisco IPsec") mode, but cannot open websites. If you encounter this problem, try running the following commands on the VPN server. If successful, you may add these commands to <code>/etc/rc.local</code> to persist after reboot.</p>
-<pre class="codehilite"><code>iptables -t mangle -A FORWARD -m policy --pol ipsec --dir in \
+<div class="codehilite"><pre><span></span><code>iptables -t mangle -A FORWARD -m policy --pol ipsec --dir in \
   -p tcp -m tcp --tcp-flags SYN,RST SYN -m tcpmss --mss 1361:1536 \
   -j TCPMSS --set-mss 1360
 iptables -t mangle -A FORWARD -m policy --pol ipsec --dir out \
@@ -482,7 +482,7 @@ iptables -t mangle -A FORWARD -m policy --pol ipsec --dir out \
   -j TCPMSS --set-mss 1360
 
 echo 1 &gt; /proc/sys/net/ipv4/ip_no_pmtu_disc
-</code></pre>
+</code></pre></div>
 
 <p><strong>Docker users:</strong> Instead of running the commands above, you may apply this fix by adding <code>VPN_ANDROID_MTU_FIX=yes</code> to your env file, then re-create the Docker container.</p>
 <p>References: <a href="https://wiki.strongswan.org/projects/strongswan/wiki/ForwardingAndSplitTunneling#MTUMSS-issues">[1]</a> <a href="https://www.zeitgeist.se/2013/11/26/mtu-woes-in-ipsec-tunnels-how-to-fix/">[2]</a>.</p>
@@ -521,177 +521,177 @@ Android devices will also disconnect Wi-Fi shortly after entering sleep mode, un
 <h3>Check logs and VPN status</h3>
 <p>Commands below must be run as <code>root</code> (or using <code>sudo</code>).</p>
 <p>First, restart services on the VPN server:</p>
-<pre class="codehilite"><code>service ipsec restart
+<div class="codehilite"><pre><span></span><code>service ipsec restart
 service xl2tpd restart
-</code></pre>
+</code></pre></div>
 
 <p><strong>Docker users:</strong> Run <code>docker restart ipsec-vpn-server</code>.</p>
 <p>Then reboot your VPN client device, and retry the connection. If still unable to connect, try removing and recreating the VPN connection. Make sure that the VPN credentials are entered correctly.</p>
 <p>Check the Libreswan (IPsec) and xl2tpd logs for errors:</p>
-<pre class="codehilite"><code># Ubuntu &amp; Debian
-grep pluto /var/log/auth.log
-grep xl2tpd /var/log/syslog
+<div class="codehilite"><pre><span></span><code><span class="c1"># Ubuntu &amp; Debian</span>
+<span class="n">grep</span><span class="w"> </span><span class="n">pluto</span><span class="w"> </span><span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="nb">log</span><span class="o">/</span><span class="n">auth</span><span class="o">.</span><span class="n">log</span>
+<span class="n">grep</span><span class="w"> </span><span class="n">xl2tpd</span><span class="w"> </span><span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="nb">log</span><span class="o">/</span><span class="n">syslog</span>
 
-# CentOS/RHEL, Rocky Linux, AlmaLinux, Oracle Linux &amp; Amazon Linux 2
-grep pluto /var/log/secure
-grep xl2tpd /var/log/messages
+<span class="c1"># CentOS/RHEL, Rocky Linux, AlmaLinux, Oracle Linux &amp; Amazon Linux 2</span>
+<span class="n">grep</span><span class="w"> </span><span class="n">pluto</span><span class="w"> </span><span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="nb">log</span><span class="o">/</span><span class="n">secure</span>
+<span class="n">grep</span><span class="w"> </span><span class="n">xl2tpd</span><span class="w"> </span><span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="nb">log</span><span class="o">/</span><span class="n">messages</span>
 
-# Alpine Linux
-grep pluto /var/log/messages
-grep xl2tpd /var/log/messages
-</code></pre>
+<span class="c1"># Alpine Linux</span>
+<span class="n">grep</span><span class="w"> </span><span class="n">pluto</span><span class="w"> </span><span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="nb">log</span><span class="o">/</span><span class="n">messages</span>
+<span class="n">grep</span><span class="w"> </span><span class="n">xl2tpd</span><span class="w"> </span><span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="nb">log</span><span class="o">/</span><span class="n">messages</span>
+</code></pre></div>
 
 <p>Check the status of the IPsec VPN server:</p>
-<pre class="codehilite"><code>ipsec status
-</code></pre>
+<div class="codehilite"><pre><span></span><code>ipsec status
+</code></pre></div>
 
 <p>Show currently established VPN connections:</p>
-<pre class="codehilite"><code>ipsec trafficstatus
-</code></pre>
+<div class="codehilite"><pre><span></span><code>ipsec trafficstatus
+</code></pre></div>
 
 <h2>Configure Linux VPN clients using the command line</h2>
 <p>After setting up your own VPN server, follow these steps to configure Linux VPN clients using the command line. Alternatively, you may connect using <a href="ikev2-howto.md">IKEv2</a> mode (recommended), or <a href="#linux">configure using the GUI</a>. Instructions below are based on <a href="https://gist.github.com/psanford/42c550a1a6ad3cb70b13e4aaa94ddb1c">the work of Peter Sanford</a>. Commands must be run as <code>root</code> on your VPN client.</p>
 <p>To set up the VPN client, first install the following packages:</p>
-<pre class="codehilite"><code># Ubuntu and Debian
-apt-get update
-apt-get install strongswan xl2tpd net-tools
+<div class="codehilite"><pre><span></span><code><span class="c1"># Ubuntu and Debian</span>
+<span class="n">apt</span><span class="o">-</span><span class="n">get</span><span class="w"> </span><span class="n">update</span>
+<span class="n">apt</span><span class="o">-</span><span class="n">get</span><span class="w"> </span><span class="n">install</span><span class="w"> </span><span class="n">strongswan</span><span class="w"> </span><span class="n">xl2tpd</span><span class="w"> </span><span class="n">net</span><span class="o">-</span><span class="n">tools</span>
 
-# Fedora
-yum install strongswan xl2tpd net-tools
+<span class="c1"># Fedora</span>
+<span class="n">yum</span><span class="w"> </span><span class="n">install</span><span class="w"> </span><span class="n">strongswan</span><span class="w"> </span><span class="n">xl2tpd</span><span class="w"> </span><span class="n">net</span><span class="o">-</span><span class="n">tools</span>
 
-# CentOS
-yum install epel-release
-yum --enablerepo=epel install strongswan xl2tpd net-tools
-</code></pre>
+<span class="c1"># CentOS</span>
+<span class="n">yum</span><span class="w"> </span><span class="n">install</span><span class="w"> </span><span class="n">epel</span><span class="o">-</span><span class="n">release</span>
+<span class="n">yum</span><span class="w"> </span><span class="o">--</span><span class="n">enablerepo</span><span class="o">=</span><span class="n">epel</span><span class="w"> </span><span class="n">install</span><span class="w"> </span><span class="n">strongswan</span><span class="w"> </span><span class="n">xl2tpd</span><span class="w"> </span><span class="n">net</span><span class="o">-</span><span class="n">tools</span>
+</code></pre></div>
 
 <p>Create VPN variables (replace with actual values):</p>
-<pre class="codehilite"><code>VPN_SERVER_IP='your_vpn_server_ip'
-VPN_IPSEC_PSK='your_ipsec_pre_shared_key'
-VPN_USER='your_vpn_username'
-VPN_PASSWORD='your_vpn_password'
-</code></pre>
+<div class="codehilite"><pre><span></span><code>VPN_SERVER_IP=&#39;your_vpn_server_ip&#39;
+VPN_IPSEC_PSK=&#39;your_ipsec_pre_shared_key&#39;
+VPN_USER=&#39;your_vpn_username&#39;
+VPN_PASSWORD=&#39;your_vpn_password&#39;
+</code></pre></div>
 
 <p>Configure strongSwan:</p>
-<pre class="codehilite"><code>cat &gt; /etc/ipsec.conf &lt;&lt;EOF
-# ipsec.conf - strongSwan IPsec configuration file
+<div class="codehilite"><pre><span></span><code><span class="nv">cat</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">/</span><span class="nv">etc</span><span class="o">/</span><span class="nv">ipsec</span>.<span class="nv">conf</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="nv">EOF</span>
+#<span class="w"> </span><span class="nv">ipsec</span>.<span class="nv">conf</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nv">strongSwan</span><span class="w"> </span><span class="nv">IPsec</span><span class="w"> </span><span class="nv">configuration</span><span class="w"> </span><span class="nv">file</span>
 
-conn myvpn
-  auto=add
-  keyexchange=ikev1
-  authby=secret
-  type=transport
-  left=%defaultroute
-  leftprotoport=17/1701
-  rightprotoport=17/1701
-  right=$VPN_SERVER_IP
-  ike=aes128-sha1-modp2048
-  esp=aes128-sha1
-EOF
+<span class="nv">conn</span><span class="w"> </span><span class="nv">myvpn</span>
+<span class="w">  </span><span class="nv">auto</span><span class="o">=</span><span class="nv">add</span>
+<span class="w">  </span><span class="nv">keyexchange</span><span class="o">=</span><span class="nv">ikev1</span>
+<span class="w">  </span><span class="nv">authby</span><span class="o">=</span><span class="nv">secret</span>
+<span class="w">  </span><span class="nv">type</span><span class="o">=</span><span class="nv">transport</span>
+<span class="w">  </span><span class="nv">left</span><span class="o">=%</span><span class="nv">defaultroute</span>
+<span class="w">  </span><span class="nv">leftprotoport</span><span class="o">=</span><span class="mi">17</span><span class="o">/</span><span class="mi">1701</span>
+<span class="w">  </span><span class="nv">rightprotoport</span><span class="o">=</span><span class="mi">17</span><span class="o">/</span><span class="mi">1701</span>
+<span class="w">  </span><span class="nv">right</span><span class="o">=</span>$<span class="nv">VPN_SERVER_IP</span>
+<span class="w">  </span><span class="nv">ike</span><span class="o">=</span><span class="nv">aes128</span><span class="o">-</span><span class="nv">sha1</span><span class="o">-</span><span class="nv">modp2048</span>
+<span class="w">  </span><span class="nv">esp</span><span class="o">=</span><span class="nv">aes128</span><span class="o">-</span><span class="nv">sha1</span>
+<span class="nv">EOF</span>
 
-cat &gt; /etc/ipsec.secrets &lt;&lt;EOF
-: PSK &quot;$VPN_IPSEC_PSK&quot;
-EOF
+<span class="nv">cat</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">/</span><span class="nv">etc</span><span class="o">/</span><span class="nv">ipsec</span>.<span class="nv">secrets</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="nv">EOF</span>
+:<span class="w"> </span><span class="nv">PSK</span><span class="w"> </span><span class="s2">&quot;$VPN_IPSEC_PSK&quot;</span>
+<span class="nv">EOF</span>
 
-chmod 600 /etc/ipsec.secrets
+<span class="nv">chmod</span><span class="w"> </span><span class="mi">600</span><span class="w"> </span><span class="o">/</span><span class="nv">etc</span><span class="o">/</span><span class="nv">ipsec</span>.<span class="nv">secrets</span>
 
-# For CentOS and Fedora ONLY
-mv /etc/strongswan/ipsec.conf /etc/strongswan/ipsec.conf.old 2&gt;/dev/null
-mv /etc/strongswan/ipsec.secrets /etc/strongswan/ipsec.secrets.old 2&gt;/dev/null
-ln -s /etc/ipsec.conf /etc/strongswan/ipsec.conf
-ln -s /etc/ipsec.secrets /etc/strongswan/ipsec.secrets
-</code></pre>
+#<span class="w"> </span><span class="k">For</span><span class="w"> </span><span class="nv">CentOS</span><span class="w"> </span><span class="nv">and</span><span class="w"> </span><span class="nv">Fedora</span><span class="w"> </span><span class="nv">ONLY</span>
+<span class="nv">mv</span><span class="w"> </span><span class="o">/</span><span class="nv">etc</span><span class="o">/</span><span class="nv">strongswan</span><span class="o">/</span><span class="nv">ipsec</span>.<span class="nv">conf</span><span class="w"> </span><span class="o">/</span><span class="nv">etc</span><span class="o">/</span><span class="nv">strongswan</span><span class="o">/</span><span class="nv">ipsec</span>.<span class="nv">conf</span>.<span class="nv">old</span><span class="w"> </span><span class="mi">2</span><span class="o">&gt;/</span><span class="nv">dev</span><span class="o">/</span><span class="nv">null</span>
+<span class="nv">mv</span><span class="w"> </span><span class="o">/</span><span class="nv">etc</span><span class="o">/</span><span class="nv">strongswan</span><span class="o">/</span><span class="nv">ipsec</span>.<span class="nv">secrets</span><span class="w"> </span><span class="o">/</span><span class="nv">etc</span><span class="o">/</span><span class="nv">strongswan</span><span class="o">/</span><span class="nv">ipsec</span>.<span class="nv">secrets</span>.<span class="nv">old</span><span class="w"> </span><span class="mi">2</span><span class="o">&gt;/</span><span class="nv">dev</span><span class="o">/</span><span class="nv">null</span>
+<span class="nv">ln</span><span class="w"> </span><span class="o">-</span><span class="nv">s</span><span class="w"> </span><span class="o">/</span><span class="nv">etc</span><span class="o">/</span><span class="nv">ipsec</span>.<span class="nv">conf</span><span class="w"> </span><span class="o">/</span><span class="nv">etc</span><span class="o">/</span><span class="nv">strongswan</span><span class="o">/</span><span class="nv">ipsec</span>.<span class="nv">conf</span>
+<span class="nv">ln</span><span class="w"> </span><span class="o">-</span><span class="nv">s</span><span class="w"> </span><span class="o">/</span><span class="nv">etc</span><span class="o">/</span><span class="nv">ipsec</span>.<span class="nv">secrets</span><span class="w"> </span><span class="o">/</span><span class="nv">etc</span><span class="o">/</span><span class="nv">strongswan</span><span class="o">/</span><span class="nv">ipsec</span>.<span class="nv">secrets</span>
+</code></pre></div>
 
 <p>Configure xl2tpd:</p>
-<pre class="codehilite"><code>cat &gt; /etc/xl2tpd/xl2tpd.conf &lt;&lt;EOF
-[lac myvpn]
-lns = $VPN_SERVER_IP
-ppp debug = yes
-pppoptfile = /etc/ppp/options.l2tpd.client
-length bit = yes
-EOF
+<div class="codehilite"><pre><span></span><code><span class="n">cat</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">xl2tpd</span><span class="o">/</span><span class="n">xl2tpd</span><span class="p">.</span><span class="n">conf</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="n">EOF</span>
+<span class="p">[</span><span class="n">lac</span><span class="w"> </span><span class="n">myvpn</span><span class="p">]</span>
+<span class="n">lns</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">$VPN_SERVER_IP</span>
+<span class="n">ppp</span><span class="w"> </span><span class="n">debug</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">yes</span>
+<span class="n">pppoptfile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">ppp</span><span class="o">/</span><span class="n">options</span><span class="p">.</span><span class="n">l2tpd</span><span class="p">.</span><span class="n">client</span>
+<span class="n">length</span><span class="w"> </span><span class="n">bit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">yes</span>
+<span class="n">EOF</span>
 
-cat &gt; /etc/ppp/options.l2tpd.client &lt;&lt;EOF
-ipcp-accept-local
-ipcp-accept-remote
-refuse-eap
-require-chap
-noccp
-noauth
-mtu 1280
-mru 1280
-noipdefault
-defaultroute
-usepeerdns
-connect-delay 5000
-name &quot;$VPN_USER&quot;
-password &quot;$VPN_PASSWORD&quot;
-EOF
+<span class="n">cat</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">ppp</span><span class="o">/</span><span class="n">options</span><span class="p">.</span><span class="n">l2tpd</span><span class="p">.</span><span class="n">client</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="n">EOF</span>
+<span class="n">ipcp</span><span class="o">-</span><span class="n">accept</span><span class="o">-</span><span class="n">local</span>
+<span class="n">ipcp</span><span class="o">-</span><span class="n">accept</span><span class="o">-</span><span class="n">remote</span>
+<span class="n">refuse</span><span class="o">-</span><span class="n">eap</span>
+<span class="n">require</span><span class="o">-</span><span class="n">chap</span>
+<span class="n">noccp</span>
+<span class="n">noauth</span>
+<span class="n">mtu</span><span class="w"> </span><span class="mi">1280</span>
+<span class="n">mru</span><span class="w"> </span><span class="mi">1280</span>
+<span class="n">noipdefault</span>
+<span class="n">defaultroute</span>
+<span class="n">usepeerdns</span>
+<span class="n">connect</span><span class="o">-</span><span class="n">delay</span><span class="w"> </span><span class="mi">5000</span>
+<span class="n">name</span><span class="w"> </span><span class="s">&quot;$VPN_USER&quot;</span>
+<span class="n">password</span><span class="w"> </span><span class="s">&quot;$VPN_PASSWORD&quot;</span>
+<span class="n">EOF</span>
 
-chmod 600 /etc/ppp/options.l2tpd.client
-</code></pre>
+<span class="n">chmod</span><span class="w"> </span><span class="mi">600</span><span class="w"> </span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">ppp</span><span class="o">/</span><span class="n">options</span><span class="p">.</span><span class="n">l2tpd</span><span class="p">.</span><span class="n">client</span>
+</code></pre></div>
 
 <p>The VPN client setup is now complete. Follow the steps below to connect.</p>
 <p><strong>Note:</strong> You must repeat all steps below every time you try to connect to the VPN.</p>
 <p>Create xl2tpd control file:</p>
-<pre class="codehilite"><code>mkdir -p /var/run/xl2tpd
-touch /var/run/xl2tpd/l2tp-control
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="n">mkdir</span><span class="w"> </span><span class="o">-</span><span class="n">p</span><span class="w"> </span><span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">xl2tpd</span>
+<span class="n">touch</span><span class="w"> </span><span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">xl2tpd</span><span class="o">/</span><span class="n">l2tp</span><span class="o">-</span><span class="n">control</span>
+</code></pre></div>
 
 <p>Restart services:</p>
-<pre class="codehilite"><code>service strongswan restart
+<div class="codehilite"><pre><span></span><code><span class="nv">service</span><span class="w"> </span><span class="nv">strongswan</span><span class="w"> </span><span class="nv">restart</span>
 
-# For Ubuntu 20.04, if strongswan service not found
-ipsec restart
+#<span class="w"> </span><span class="k">For</span><span class="w"> </span><span class="nv">Ubuntu</span><span class="w"> </span><span class="mi">20</span>.<span class="mi">04</span>,<span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nv">strongswan</span><span class="w"> </span><span class="nv">service</span><span class="w"> </span><span class="nv">not</span><span class="w"> </span><span class="nv">found</span>
+<span class="nv">ipsec</span><span class="w"> </span><span class="nv">restart</span>
 
-service xl2tpd restart
-</code></pre>
+<span class="nv">service</span><span class="w"> </span><span class="nv">xl2tpd</span><span class="w"> </span><span class="nv">restart</span>
+</code></pre></div>
 
 <p>Start the IPsec connection:</p>
-<pre class="codehilite"><code># Ubuntu and Debian
+<div class="codehilite"><pre><span></span><code># Ubuntu and Debian
 ipsec up myvpn
 
 # CentOS and Fedora
 strongswan up myvpn
-</code></pre>
+</code></pre></div>
 
 <p>Start the L2TP connection:</p>
-<pre class="codehilite"><code>echo &quot;c myvpn&quot; &gt; /var/run/xl2tpd/l2tp-control
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="n">echo</span><span class="w"> </span><span class="s2">&quot;c myvpn&quot;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">xl2tpd</span><span class="o">/</span><span class="n">l2tp</span><span class="o">-</span><span class="n">control</span>
+</code></pre></div>
 
 <p>Run <code>ifconfig</code> and check the output. You should now see a new interface <code>ppp0</code>.</p>
 <p>Check your existing default route:</p>
-<pre class="codehilite"><code>ip route
-</code></pre>
+<div class="codehilite"><pre><span></span><code>ip route
+</code></pre></div>
 
 <p>Find this line in the output: <code>default via X.X.X.X ...</code>. Write down this gateway IP for use in the two commands below.</p>
 <p>Exclude your VPN server's public IP from the new default route (replace with actual value):</p>
-<pre class="codehilite"><code>route add YOUR_VPN_SERVER_PUBLIC_IP gw X.X.X.X
-</code></pre>
+<div class="codehilite"><pre><span></span><code>route add YOUR_VPN_SERVER_PUBLIC_IP gw X.X.X.X
+</code></pre></div>
 
 <p>If your VPN client is a remote server, you must also exclude your Local PC's public IP from the new default route, to prevent your SSH session from being disconnected (replace with <a href="https://www.google.com/search?q=my+ip">actual value</a>):</p>
-<pre class="codehilite"><code>route add YOUR_LOCAL_PC_PUBLIC_IP gw X.X.X.X
-</code></pre>
+<div class="codehilite"><pre><span></span><code>route add YOUR_LOCAL_PC_PUBLIC_IP gw X.X.X.X
+</code></pre></div>
 
 <p>Add a new default route to start routing traffic via the VPN server：</p>
-<pre class="codehilite"><code>route add default dev ppp0
-</code></pre>
+<div class="codehilite"><pre><span></span><code>route add default dev ppp0
+</code></pre></div>
 
 <p>The VPN connection is now complete. Verify that your traffic is being routed properly:</p>
 <p>wget -qO- http://ipv4.icanhazip.com; echo</p>
 <p>The above command should return <code>Your VPN Server IP</code>.</p>
 <p>To stop routing traffic via the VPN server:</p>
-<pre class="codehilite"><code>route del default dev ppp0
-</code></pre>
+<div class="codehilite"><pre><span></span><code>route del default dev ppp0
+</code></pre></div>
 
 <p>To disconnect:</p>
-<pre class="codehilite"><code># Ubuntu and Debian
-echo &quot;d myvpn&quot; &gt; /var/run/xl2tpd/l2tp-control
-ipsec down myvpn
+<div class="codehilite"><pre><span></span><code><span class="c1"># Ubuntu and Debian</span>
+<span class="n">echo</span><span class="w"> </span><span class="s2">&quot;d myvpn&quot;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">xl2tpd</span><span class="o">/</span><span class="n">l2tp</span><span class="o">-</span><span class="n">control</span>
+<span class="n">ipsec</span><span class="w"> </span><span class="n">down</span><span class="w"> </span><span class="n">myvpn</span>
 
-# CentOS and Fedora
-echo &quot;d myvpn&quot; &gt; /var/run/xl2tpd/l2tp-control
-strongswan down myvpn
-</code></pre>
+<span class="c1"># CentOS and Fedora</span>
+<span class="n">echo</span><span class="w"> </span><span class="s2">&quot;d myvpn&quot;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">xl2tpd</span><span class="o">/</span><span class="n">l2tp</span><span class="o">-</span><span class="n">control</span>
+<span class="n">strongswan</span><span class="w"> </span><span class="n">down</span><span class="w"> </span><span class="n">myvpn</span>
+</code></pre></div>
 
 <p>This program is free software: you can redistribute it and/or modify it under the terms of the <a href="https://www.gnu.org/licenses/gpl.html">GNU General Public License</a> as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.</p>
 <p>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.</p>
@@ -817,9 +817,9 @@ strongswan down myvpn
                     
                     <li><a href="https://www.instagram.com/shgninc/">Instagram</a></li>
                     
-                    <li><a href="http://vasni.ir/">Vasni</a></li>
-                    
                     <li><a href="https://virgool.io/@shgninc">Virgool</a></li>
+                    
+                    <li><a href="https://www.linkedin.com/in/sajjad-shahcheraghean/">Linkedin</a></li>
                     
                     <li><a href="https://twitter.com/shahcheraghian">Twiteer</a></li>
                     

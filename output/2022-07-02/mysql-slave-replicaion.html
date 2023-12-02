@@ -182,68 +182,68 @@
 <p>۴- تنظیم دیتابیس <code>slave</code> برای آگاهی از دیتبایس <code>master</code> و شروع به کار رپلیکیشن برای همسان سازی داده ها.</p>
 <h3>گام۱: فعال سازی binlog در سرور مستر</h3>
 <p>برای فعال سازی <code>binlog</code> ها باید تنظیمات زیر را در فایل <code>/etc/mysql/my.cnf</code> قرار دهید:</p>
-<pre class="codehilite"><code>server-id=1
+<div class="codehilite"><pre><span></span><code>server-id=1
 binlog-format=mixed
 log-bin=mysql-bin
 innodb_flush_log_at_trx_commit=1
 sync_binlog=1
 binlog_do_db = dbname
-</code></pre>
+</code></pre></div>
 
 <p>سپس برای اعمال تنظیمات باید سرویس دیتابیس ریست شود:</p>
-<pre class="codehilite"><code>systemctl restart mysqld
-</code></pre>
+<div class="codehilite"><pre><span></span><code>systemctl restart mysqld
+</code></pre></div>
 
 <h3>گام۲: ایجاد کاربری با دسترسی رپلیکیشن</h3>
 <p>برای برقراری ارتباط رپلیکیشن لازم است تا دیتابیس <code>slave</code> از طریق این کابر به دیتابیس <code>master</code> متصل بشه:</p>
-<pre class="codehilite"><code>CREATE USER 'replicant'@'%';
-GRANT REPLICATION SLAVE ON *.* TO 'replicant'@'%' IDENTIFIED BY 'password';
+<div class="codehilite"><pre><span></span><code>CREATE USER &#39;replicant&#39;@&#39;%&#39;;
+GRANT REPLICATION SLAVE ON *.* TO &#39;replicant&#39;@&#39;%&#39; IDENTIFIED BY &#39;password&#39;;
 FLUSH PRIVILEGES;
-</code></pre>
+</code></pre></div>
 
 <h3>گام۳: ایجاد بکاپ از دیتابیس</h3>
 <p>در این مرحله لازم اس تا بک بکاپ با <code>mysqldump</code> برای ایجاد دیتابیس <code>slave</code> ایجاد شود.</p>
-<pre class="codehilite"><code>mysqldump --skip-lock-tables --single-transaction --flush-logs --master-data=2 dbname &gt; ~/mysqldump.sql
-gzip -9 ~/mysqldump.sql
-scp ~/mysqldump.sql.gz root@salveServer:~/
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="n">mysqldump</span><span class="w"> </span><span class="o">--</span><span class="n">skip</span><span class="o">-</span><span class="n">lock</span><span class="o">-</span><span class="n">tables</span><span class="w"> </span><span class="o">--</span><span class="n">single</span><span class="o">-</span><span class="k">transaction</span><span class="w"> </span><span class="o">--</span><span class="n">flush</span><span class="o">-</span><span class="n">logs</span><span class="w"> </span><span class="o">--</span><span class="n">master</span><span class="o">-</span><span class="k">data</span><span class="o">=</span><span class="mi">2</span><span class="w"> </span><span class="n">dbname</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">~/</span><span class="n">mysqldump</span><span class="p">.</span><span class="k">sql</span>
+<span class="n">gzip</span><span class="w"> </span><span class="o">-</span><span class="mi">9</span><span class="w"> </span><span class="o">~/</span><span class="n">mysqldump</span><span class="p">.</span><span class="k">sql</span>
+<span class="n">scp</span><span class="w"> </span><span class="o">~/</span><span class="n">mysqldump</span><span class="p">.</span><span class="k">sql</span><span class="p">.</span><span class="n">gz</span><span class="w"> </span><span class="n">root</span><span class="nv">@salveServer</span><span class="err">:</span><span class="o">~/</span>
+</code></pre></div>
 
 <h3>گام۴: بازگرداندن بکاپ</h3>
 <p>مراحل برگرداندن فایل بکاپ دیتابیس روی سرور <code>slave</code> به این صورت می باشد:</p>
-<pre class="codehilite"><code>gunzip ~/mysqldump.sql.gz
-mysql -u root -p -e 'create database dbname;'
+<div class="codehilite"><pre><span></span><code>gunzip ~/mysqldump.sql.gz
+mysql -u root -p -e &#39;create database dbname;&#39;
 mysql -uroot -p dbname &lt; ~/mysqldump.sql
-</code></pre>
+</code></pre></div>
 
 <h3>گام۵:  تنظیمات سرور slave</h3>
 <p>لازم است تا روی سرور مقصد تنظیمات زیر نیز اعمال شوند:</p>
-<pre class="codehilite"><code>server-id = 2
+<div class="codehilite"><pre><span></span><code>server-id = 2
 binlog-format = mixed
 log_bin = mysql-bin
 relay-log = mysql-relay-bin
 log-slave-updates = 1
 read-only = 1
 binlog_do_db = dbname
-</code></pre>
+</code></pre></div>
 
 <p>برای اعمال تنظیمات لازم است تا سرویس دیتابیس ریست شود:</p>
-<pre class="codehilite"><code>systemctl restart mysqld
-</code></pre>
+<div class="codehilite"><pre><span></span><code>systemctl restart mysqld
+</code></pre></div>
 
 <h3>گام۶:  راه اندزای slave replication</h3>
 <p>ابتدا لازم است تا مقادیر <code>MASTER_LOG_FILE</code> و <code>MATER_LOG_POS</code>  را بدست بیاریم:</p>
-<pre class="codehilite"><code>head dump.sql -n80 | grep &quot;MASTER_LOG_POS&quot;
-</code></pre>
+<div class="codehilite"><pre><span></span><code>head dump.sql -n80 | grep &quot;MASTER_LOG_POS&quot;
+</code></pre></div>
 
 <p>سپس به کنسول <code>mysql</code> لاگین کرده و تنظیمات و دستورات زیر را اجرا می کنیم:</p>
-<pre class="codehilite"><code>CHANGE MASTER TO MASTER_HOST='&lt;&gt;',MASTER_USER='replicant',MASTER_PASSWORD='&lt;&gt;', MASTER_LOG_FILE='&lt;&gt;', MASTER_LOG_POS=&lt;&gt;;
+<div class="codehilite"><pre><span></span><code>CHANGE MASTER TO MASTER_HOST=&#39;&lt;&gt;&#39;,MASTER_USER=&#39;replicant&#39;,MASTER_PASSWORD=&#39;&lt;&gt;&#39;, MASTER_LOG_FILE=&#39;&lt;&gt;&#39;, MASTER_LOG_POS=&lt;&gt;;
 START SLAVE;
-</code></pre>
+</code></pre></div>
 
 <p>اگر اطلاعات بالا درست تنظیم شوند و مشکلی بین سرور <code>master</code> و <code>slave</code> وجود نداشته باشد، رپلیکیشن باید برقرار شده باشد.</p>
 <p>در نهایت برای بررسی برقراری ارتباط پلیکیشن می توان دستور زیر را اجرا نمود:</p>
-<pre class="codehilite"><code>SHOW SLAVE STATUS G
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="k">SHOW</span><span class="w"> </span><span class="nv">SLAVE</span><span class="w"> </span><span class="nv">STATUS</span><span class="w"> </span><span class="nv">G</span>
+</code></pre></div>
 
 <h2>منابع</h2>
 <p><a href="https://linuxscriptshub.com/mysql-replication-setup-without-downtime/">MySQL Replication Setup without Downtime</a>
@@ -379,9 +379,9 @@ START SLAVE;
                     
                     <li><a href="https://www.instagram.com/shgninc/">Instagram</a></li>
                     
-                    <li><a href="http://vasni.ir/">Vasni</a></li>
-                    
                     <li><a href="https://virgool.io/@shgninc">Virgool</a></li>
+                    
+                    <li><a href="https://www.linkedin.com/in/sajjad-shahcheraghean/">Linkedin</a></li>
                     
                     <li><a href="https://twitter.com/shahcheraghian">Twiteer</a></li>
                     

@@ -184,10 +184,10 @@
 <p></center></p>
 <p>اگر مقداری بیشتر از  1MB/sec را از حافظه در دسترس، یا فعالیت swap را ثبت کرده اید، باید تنظمیات انجام شده برای حافظه را بازبینی کنید.</p>
 <p>تخصیص حافظه در <code>Mysql</code> پیچیده است. بافرهای عمومی، بافرهای قبل از ارتباط (بستگی به میزان بارگزاری در زمان کار دارد)، و برخی تخصیص حافظه کنترل نشده (از قبیل حافظه هایی که داخل استور پروسیجر ها استفاده می شوند)، همگی این ها دست به دست هم داده اند تا انجام محاسبات سخت برای فضای کاری شما را فراهم آورند. بهتر است میزان فضای مورد استفاده از حافظه مجازی مورد استفاده <code>Mysql</code> را مورد بازبینی قرار دهید. این کار را می توانید با فرمان <code>top</code> یا <code>ps</code> به صورت ذیل انجام دهید.</p>
-<pre class="codehilite"><code>ps aux | grep mysqld
+<div class="codehilite"><pre><span></span><code>ps aux | grep mysqld
 
 mysql     3939 30.3 53.4 11635184 8748364 ?    Sl   Apr08 9106:41 /usr/sbin/mysqld
-</code></pre>
+</code></pre></div>
 
 <blockquote>
 <p>ستون پنجم نشان دهنده میزان استفاده از حافظه مجازی که حدودا ۱۱گیگ می باشد، است.</p>
@@ -213,27 +213,27 @@ mysql     3939 30.3 53.4 11635184 8748364 ?    Sl   Apr08 9106:41 /usr/sbin/mysq
 <li>اگر در تنظیمات <code>Mysql</code> دچار اشتباه شده یا تعدادی پردازش اضافه از میزان فضای پیش بینی شده، بیشتر استفاده کند، این هم موقعیت خوبی هست تا این گونه برنامه را نیز برای آزاد سازی فضای حافظه رم، آن ها را در swap نگهداری کرد</li>
 </ul>
 <p>با در نظر گرفتن این که ما قصد استفاده از swap را برای زمانی داریم که حافظه کافی وجود نداشته و یا پردازش هایی که کاری انجام نمی دهند را داریم، پس می توان میزان درصد استفاده از آن را برای سیستم عامل کاهش داد.  </p>
-<pre class="codehilite"><code>echo 1 &gt;  /proc/sys/vm/swappiness
-</code></pre>
+<div class="codehilite"><pre><span></span><code>echo 1 &gt;  /proc/sys/vm/swappiness
+</code></pre></div>
 
 <p>بدون این تنظیمات، ممکن است سیستم عامل موجب swap شدن <code>Mysql</code> شود به این دلیل که از نظر سیستم عامل آن نیاز به کش کردن میزان زیادتری فایل دارند (که البته این انتخابی اشتباه برای <code>Mysql</code> است).  </p>
 <p>مورد بعدی زمانی است که تنظیمات سیستم عامل نابود کننده خطای <code>Out Of Memory</code> است. ممکن است در فایل لاگ کرنل پیامی مثل پیام زیر را مشاهده نمایید:</p>
-<pre class="codehilite"><code>   Apr 24 02:43:18 db01 kernel: Out of memory: Kill process 22211 (mysqld) score 986 or sacrifice child
-</code></pre>
+<div class="codehilite"><pre><span></span><code>   Apr 24 02:43:18 db01 kernel: Out of memory: Kill process 22211 (mysqld) score 986 or sacrifice child
+</code></pre></div>
 
 <p>زمانی که خود <code>Mysql</code> دچار خطا شود، تنها کار منطقی خارج کردن آنها از حافظه است. هر چند که، این مشکل واقعی به علت یکی از فعالیت های خود شمااست: اسکریپت ها، پشتیبان ها و غیره. در این حالت، ممکن است که بخواهید آن پردازش را خارج کنید اگر سیستم حافظه کافی به جای <code>Mysql</code> نداشته باشد. </p>
 <p>به منظور کاهش اولیت برنامه <code>Mysql</code> در سرویس <a href="https://en.wikipedia.org/wiki/Out_of_memory"><code>OOM Killer</code></a> می توانید به ترتیب زیر عمل کنید:  </p>
-<pre class="codehilite"><code>echo '-800' &gt; /proc/$(pidof mysqld)/oom_score_adj
-</code></pre>
+<div class="codehilite"><pre><span></span><code>echo &#39;-800&#39; &gt; /proc/$(pidof mysqld)/oom_score_adj
+</code></pre></div>
 
 <p>این تنظم باعث می شود تا کرنل لینوکس برای خارج کردن برنامه هایی که بیشتر حافظه مصرف می کنند بهتر تصمیم گیری کند.</p>
 <p>در پایان بر روی یک سیستم با بیش از یک هسته <code>CPU</code>، بهتر است که درباره <a href="https://en.wikipedia.org/wiki/Non-uniform_memory_access"><code>NUMA</code></a> زمانی که برای تخصیص حافظه <code>Mysql</code> بیشتر مراقب باشید. در نسخه های جدید <code>Mysql</code>، می توانید تنظیم زیر را انجام دهید: </p>
-<pre class="codehilite"><code>innodb_numa_interleave=1
-</code></pre>
+<div class="codehilite"><pre><span></span><code>innodb_numa_interleave=1
+</code></pre></div>
 
 <p>در نسخه های قدیمی می توانید به صورت دستی  و با اجرای فرمان زیر قبل از اجرای سرویس <code>Mysql</code> اجرا می شود:</p>
-<pre class="codehilite"><code>numactl --interleave=all
-</code></pre>
+<div class="codehilite"><pre><span></span><code>numactl --interleave=all
+</code></pre></div>
 
 <p>یا از تنظیمات <a href="https://www.percona.com/doc/percona-server/5.6/performance/innodb_numa_support.html"><code>numa_interleave</code></a> در سرور <code>Percona</code> استفاده نمایید.</p>
 <h4>منبع: <a href="https://www.percona.com/blog/2016/05/03/best-practices-for-configuring-optimal-mysql-memory-usage/">percona</a></h4>
@@ -360,9 +360,9 @@ mysql     3939 30.3 53.4 11635184 8748364 ?    Sl   Apr08 9106:41 /usr/sbin/mysq
                     
                     <li><a href="https://www.instagram.com/shgninc/">Instagram</a></li>
                     
-                    <li><a href="http://vasni.ir/">Vasni</a></li>
-                    
                     <li><a href="https://virgool.io/@shgninc">Virgool</a></li>
+                    
+                    <li><a href="https://www.linkedin.com/in/sajjad-shahcheraghean/">Linkedin</a></li>
                     
                     <li><a href="https://twitter.com/shahcheraghian">Twiteer</a></li>
                     

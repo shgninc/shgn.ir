@@ -177,61 +177,61 @@
 پوزش بخوام، درگیری و مشلغه کاری خیلی اجازه تولید این قسمت را نمی داد.</p>
 <p>همچنین بقیه آموزها را می تونید از <a href="http://localhost:8000/tag/flask.html">از اینجا</a> مشاهده کنید.</p>
 <p>یکی از امکانات <code>Flask</code> اتصال خروجی یک تابع به یک آدرس در قالب <code>HTML</code> می باشد. برای نمونه، در کد پیش رو، تابع  <code>hello()</code> مقدار <code>Hello World</code> را به همراه تگ های <code>Html</code> قابل نمایش می کند.</p>
-<pre class="codehilite"><code>from flask import Flask
-app = Flask(__name__)
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
-@app.route('/')
-def index():
-    return '&lt;html&gt;&lt;body&gt;&lt;h1&gt;Hello World&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;'
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">index</span><span class="p">():</span>
+    <span class="k">return</span> <span class="s1">&#39;&lt;html&gt;&lt;body&gt;&lt;h1&gt;Hello World&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;&#39;</span>
 
-if __name__ == '__main__':
-    app.run(debug = True)
-</code></pre>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
 
 <p>هر چند، تولید محتوای <code>HTML</code> با پایتون، به ویژه زمانی که نیازمند مقادیر متغییرها، و المان های موجود در زبان پایتون، از قبیل چرخه ها، یا شروط، مایه زحمت است.</p>
 <p>اینجا، جایی است که می توان از قابلیت های موتور قالب <code>Jinja2</code> بهره برد. به جای استفاده از کدهای <code>HTML</code>، می توان با استفاده از تابع <code>render_template()</code> و یک فایل <code>HTML</code> جداگانه این موضوع را انجام داد.</p>
-<pre class="codehilite"><code>from flask import Flask
-app = Flask(__name__)
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
-@app.route('/')
-def index():
-    return render_template(‘hello.html’)
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">index</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="err">‘</span><span class="n">hello</span><span class="o">.</span><span class="n">html</span><span class="err">’</span><span class="p">)</span>
 
-if __name__ == '__main__':
-    app.run(debug = True)
-</code></pre>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
 
 <p>در این حالت،<code>Flask</code> سعی دارد تا فایل HTML را در مسیر فایل قالب، در مسیری که اسکریپت جاری اجرا شده است را پیدا و اجرا نماید. </p>
-<pre class="codehilite"><code>Application folder
+<div class="codehilite"><pre><span></span><code>Application folder
 ----Hello.py
 ----templates
     ----hello.html
-</code></pre>
+</code></pre></div>
 
 <p>اصطلاح <code>سیستم قالب وب</code> اشاره دارد به طراحی و تولید یک اسکریپت <code>HTML</code> که در آن مقادیر متغییرها می توانند به صورت پویا جانمایی شوند. یک سیستم قالب وب، شامل یک موتور تولید قالب، برخی منابع داده و یک پردازشگر قالب می باشد.</p>
 <p>برنامه <code>Flask</code> از <code>Jinja2</code> به عنوان یک موتور قالب استفاده می کند. یک قالب وب شامل مکان هایی نگهداری برای متغییرها و عبارات در لابلای تگ های <code>HTML</code>، جایی که مقادیر آنها زمانی که صفحه قالب نمایش داده می شود، جایگزاری می شوند.</p>
 <p>برای نمونه:</p>
-<pre class="codehilite"><code>&lt;!doctype html&gt;
-&lt;html&gt;
-    &lt;body&gt;
+<div class="codehilite"><pre><span></span><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="w">    </span><span class="nt">&lt;body&gt;</span>
 
-        &lt;h1&gt;Hello {{ name }}!&lt;/h1&gt;
+<span class="w">        </span><span class="nt">&lt;h1&gt;</span>Hello<span class="w"> </span><span class="cp">{{</span> <span class="nv">name</span> <span class="cp">}}</span>!<span class="nt">&lt;/h1&gt;</span>
 
-    &lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
+<span class="w">    </span><span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div>
 
 <p>سپس، اسکریپت زیر را در پایتون اجرا کنید:</p>
-<pre class="codehilite"><code>from flask import Flask, render_template
-app = Flask(__name__)
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">render_template</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
-@app.route('/hello/&lt;user&gt;')
-def hello_name(user):
-    return render_template('hello.html', name = user)
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/hello/&lt;user&gt;&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">hello_name</span><span class="p">(</span><span class="n">user</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s1">&#39;hello.html&#39;</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="n">user</span><span class="p">)</span>
 
-if __name__ == '__main__':
-    app.run(debug = True)
-</code></pre>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
 
 <p>زمانی که سرور شروع به اجرا کرد، مرورگر را اجرا و آدرس 
 <code>http://localhost:5000/hello/mvl</code>
@@ -247,60 +247,60 @@ if __name__ == '__main__':
 </ul>
 <p>در مثال پیش رو، انحوه استفاده از عبارات شرطی در قالب نمایش داده شده است. آدرسی که به تابع hello() اشاره دارد مقادیر عددی قبول می کند. در فایل <code>hello.html</code> مقدار عددی متغیر <code>mark</code> دریافت شده، مقایسه شده (بیشتر یا کمتر از ۵۰) و <code>HTML</code> متناسب نمایش داده می شود.</p>
 <p>اسکریپت مربوطه به پایتون به صورت زیر است:</p>
-<pre class="codehilite"><code>from flask import Flask, render_template
-app = Flask(__name__)
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">render_template</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
-@app.route('/hello/&lt;int:score&gt;')
-def hello_name(score):
-    return render_template('hello.html', marks = score)
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/hello/&lt;int:score&gt;&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">hello_name</span><span class="p">(</span><span class="n">score</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s1">&#39;hello.html&#39;</span><span class="p">,</span> <span class="n">marks</span> <span class="o">=</span> <span class="n">score</span><span class="p">)</span>
 
-if __name__ == '__main__':
-    app.run(debug = True)
-</code></pre>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
 
 <p>کد مربوط به <code>HTML</code> به صورت زیر است:</p>
-<pre class="codehilite"><code>&lt;!doctype html&gt;
-&lt;html&gt;
-    &lt;body&gt;
-        {% if marks&gt;50 %}
-            &lt;h1&gt; Your result is pass!&lt;/h1&gt;
-        {% else %}
-            &lt;h1&gt;Your result is fail&lt;/h1&gt;
-        {% endif %}
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="w">    </span><span class="nt">&lt;body&gt;</span>
+<span class="w">        </span><span class="cp">{%</span> <span class="k">if</span> <span class="nv">marks</span><span class="o">&gt;</span><span class="m">50</span> <span class="cp">%}</span>
+<span class="w">            </span><span class="nt">&lt;h1&gt;</span><span class="w"> </span>Your<span class="w"> </span>result<span class="w"> </span>is<span class="w"> </span>pass!<span class="nt">&lt;/h1&gt;</span>
+<span class="w">        </span><span class="cp">{%</span> <span class="k">else</span> <span class="cp">%}</span>
+<span class="w">            </span><span class="nt">&lt;h1&gt;</span>Your<span class="w"> </span>result<span class="w"> </span>is<span class="w"> </span>fail<span class="nt">&lt;/h1&gt;</span>
+<span class="w">        </span><span class="cp">{%</span> <span class="k">endif</span> <span class="cp">%}</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div>
 
 <p>همچنین می توان از چرخه های پایتون در قالب استفاده نمود. در اسکریپت پیش رو، تابع result() زمانی که آدرس http://localhost:5000/result فراخوانی شود، یک شئ <code>dictionary</code> به قالب result.html ارسال کرده </p>
 <p>در فایل result.html یک حلقه for جهت نمایش مقادیر در قالب <code>HTML</code> به صورت کلید مقدار استفاده شده است. </p>
 <p>کد پایتون:</p>
-<pre class="codehilite"><code>from flask import Flask, render_template
-app = Flask(__name__)
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">render_template</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
-@app.route('/result')
-def result():
-    dict = {'phy':50,'che':60,'maths':70}
-    return render_template('result.html', result = dict)
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/result&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">result</span><span class="p">():</span>
+    <span class="nb">dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;phy&#39;</span><span class="p">:</span><span class="mi">50</span><span class="p">,</span><span class="s1">&#39;che&#39;</span><span class="p">:</span><span class="mi">60</span><span class="p">,</span><span class="s1">&#39;maths&#39;</span><span class="p">:</span><span class="mi">70</span><span class="p">}</span>
+    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s1">&#39;result.html&#39;</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">)</span>
 
-if __name__ == '__main__':
-    app.run(debug = True)
-</code></pre>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
 
 <p>و کد <code>HTML</code></p>
-<pre class="codehilite"><code>&lt;!doctype html&gt;
-&lt;html&gt;
-    &lt;body&gt;
-        &lt;table border = 1&gt;
-            {% for key, value in result.items() %}
-            &lt;tr&gt;
-                &lt;th&gt; {{ key }} &lt;/th&gt;
-                &lt;td&gt; {{ value }} &lt;/td&gt;
-            &lt;/tr&gt;
-            {% endfor %}
-        &lt;/table&gt;
-    &lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="w">    </span><span class="nt">&lt;body&gt;</span>
+<span class="w">        </span><span class="nt">&lt;table</span><span class="w"> </span><span class="na">border =</span><span class="w"> </span><span class="s">1</span><span class="nt">&gt;</span>
+<span class="w">            </span><span class="cp">{%</span> <span class="k">for</span> <span class="nv">key</span><span class="o">,</span> <span class="nv">value</span> <span class="k">in</span> <span class="nv">result.items</span><span class="o">()</span> <span class="cp">%}</span>
+<span class="w">            </span><span class="nt">&lt;tr&gt;</span>
+<span class="w">                </span><span class="nt">&lt;th&gt;</span><span class="w"> </span><span class="cp">{{</span> <span class="nv">key</span> <span class="cp">}}</span><span class="w"> </span><span class="nt">&lt;/th&gt;</span>
+<span class="w">                </span><span class="nt">&lt;td&gt;</span><span class="w"> </span><span class="cp">{{</span> <span class="nv">value</span> <span class="cp">}}</span><span class="w"> </span><span class="nt">&lt;/td&gt;</span>
+<span class="w">            </span><span class="nt">&lt;/tr&gt;</span>
+<span class="w">            </span><span class="cp">{%</span> <span class="k">endfor</span> <span class="cp">%}</span>
+<span class="w">        </span><span class="nt">&lt;/table&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div>
 
 <p>سپس برنامه را اجرا و آدرس 
 http://localhost:5000/result 
@@ -434,9 +434,9 @@ http://localhost:5000/result
                     
                     <li><a href="https://www.instagram.com/shgninc/">Instagram</a></li>
                     
-                    <li><a href="http://vasni.ir/">Vasni</a></li>
-                    
                     <li><a href="https://virgool.io/@shgninc">Virgool</a></li>
+                    
+                    <li><a href="https://www.linkedin.com/in/sajjad-shahcheraghean/">Linkedin</a></li>
                     
                     <li><a href="https://twitter.com/shahcheraghian">Twiteer</a></li>
                     
