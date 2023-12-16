@@ -15,11 +15,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title> آشنایی با ویژگی Cgroup در کرنل لینوکس - دست نوشته های یک تازه کار </title>
+    <title> آشنایی با mydumper/myloader - دست نوشته های یک تازه کار </title>
     <meta name="description"
-          content="یک قابلیت هستهٔ لینوکس است که منابع مجموعه‌ای از فرایندها را مدیریت و مجزاسازی می‌کند."/>
+          content="در حوزه پشتیبان گیری از دیتابیس ها به ویژه دیتابیس mysql/mariadb مرسوم ترین و معروف ترین برنامه پشتیبان گیری، mysqldump می باشد که به شدت در این زمینه قدرتمند و دقیق عمل می کند."/>
     <meta name="keywords"
-          content="لینوکس،لینوکس مشهد،آموزش,پایتون,پایتون مشهد,آموزش لینوکس,دیتابیس,آموزش دیتابیس,برنامه نویسی,linux,database,mysql,mariadb,datamart,galera cluster,apache,big data,dataware house,cluster,galera,percona,python,php,tutorial,debian,ubuntu,centos,arch linux,mashhad linux,iran linux,debian mashhad, kenel, linux, virtualization, container"/>
+          content="لینوکس،لینوکس مشهد،آموزش,پایتون,پایتون مشهد,آموزش لینوکس,دیتابیس,آموزش دیتابیس,برنامه نویسی,linux,database,mysql,mariadb,datamart,galera cluster,apache,big data,dataware house,cluster,galera,percona,python,php,tutorial,debian,ubuntu,centos,arch linux,mashhad linux,iran linux,debian mashhad, linux, database, mariadb, mysql, tips"/>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
@@ -157,9 +157,9 @@
         <div class="col-md-9">
             
     <div itemscope itemtype="http://schema.org/NewsArticle">
-    <meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="http://https://shgn.ir/2019-07-08/Cgroup-linux-kernel.html"/>
+    <meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="http://https://shgn.ir/2023-12-16/mydumper-myloader.html"/>
     <div class="page-header">
-      <h3 itemprop="name">آشنایی با ویژگی Cgroup در کرنل لینوکس</h3>
+      <h3 itemprop="name">آشنایی با mydumper/myloader</h3>
       
       
         <small>
@@ -167,80 +167,120 @@
             ارسال شده <span itemprop="author" itemscope itemtype="https://schema.org/Person">
                 توسط <span itemprop="name">سید سجاد شاهچراغیان</span>
               </span>
-              در تاریخ <span itemprop="datePublished">2019-07-08</span>
+              در تاریخ <span itemprop="datePublished">2023-12-16</span>
           </p>
         </small>
       
     </div>
       <section itemprop="articleBody">
-        <p>قابلیت <code>Cgroup</code> (مخفف Control Group)،‌ یک ویژگی کرنل لینوکس می باشد که امکان جدا و محدود سازی منابع سیستم (CPU, memory, disk I/O, network و...) برای مجموعه ای از پردازش ها را می دهد. 
-این قابلیت در  سال ۲۰۰۶ توسط دو نفر از مهندسان گوگل به نام های primarily Paul Menage و Rohit Seth این قابلیت ایجاد و آن‌ را در سال ۲۰۰۷ <code>control groups</code> نامیدند. این قابلیت از نسخه ۲.۶.۲۴ در سال ۲۰۰۸ به کرنل اضافه شده است. </p>
-<p>قابلیت CGroup ویژگی های زیر را فراهم می کند:</p>
+        <p><img alt="mariadb mysql backup - musqldump - mydumper" src="mysql-mariadb.png" /></p>
+<h1>مقدمه</h1>
+<p>در حوزه پشتیبان گیری از دیتابیس ها به ویژه دیتابیس <code>mysql/mariadb</code> مرسوم ترین و معروف ترین برنامه 
+پشتیبان گیری، <code>mysqldump</code> می باشد که به شدت در این زمینه قدرتمند و دقیق عمل می کند.</p>
+<p>اما این برنامه قدرتمند، روی دیتابیس های بزرگ و حجیم خیلی کند عمل می کند</p>
+<h1>معرفی برنامه های بکاپ گیری</h1>
+<p>در حوزه دیتابیس های <code>mysql/mariadb</code>، همانطور که بالاتر هم ذکر شد، از برنامه <code>mysqldump</code> استفاده می شود.
+این برنامه به عنوان اصلی ترین و محبوب ترین برنامه پشتیبان گیری برای <code>mysql/mariadb</code> از قدیم
+الایام بوده است.</p>
+<p>با این برنامه می توان از تمام دیتابیس ها یکجا، از یک دیتابیس یا از بخشی از جدول، جدول یا 
+جداول بکاپ گیری کرد. خروجی این برنامه در عین قدرت بالا، ساده و به صورت فایل متنی sql می باشد.</p>
+<p>در کنار این برنامه قدرتمند، برنامه جدیدی به نام <code>MyDumper</code> برای پشتیبان گیری با سرعت بالا 
+از دیتابیس <code>mysql/mariadb</code> ارائه شده است. این برنامه خود شامل دو برنامه <code>mydumper</code> برای 
+پشتیبان گیری و <code>myloader</code> برای بازگرداندن پشتیبان ها می شود.</p>
+<p>خروجی این برنامه فایل های پشتیبان به صورت باینری هایی فشرده می باشد که توسط برنامه <code>myloader</code> 
+خودش قابل بازگردانی است.</p>
+<h3>مزیت های mydumper</h3>
 <ul>
-<li>محدودسازی منابع: می توان استفاده از میزان رم، یا تعداد CPU-Core، یا هر سخت افزاری دیگری را محدود و مشخص نمود.</li>
-<li>اولویت بندی: گروه یا چندین گروه پردازش امکان تنظیم برای استفاده از میزان کمتر یا بیشتر ورودی/خروجی یا CPU را می دهد.</li>
-<li>کنترل استفاده: اجازه کنترل و اندازهگیری میزان استفاده از منابع را فراهم می کند.</li>
-<li>کنترل: می توان گروهی از پردازش ها را ثابت یا متوقف و یا راه اندازی مجدد نمود.</li>
+<li>همزمانی پردازش و کارایی بالا</li>
+<li>مدیریت ساده فایل های خروجی (فایل های خروجی جداول به صورت جدا جدا ذخیره می شوند)</li>
+<li>ثبات - حفظ حالت فعلی در سراسر تردهای اجرایی، تامین موقعیت دقیق وضعیت مستر و اسلیو دیتابیس</li>
+<li>قابل مدیریت - پشتیبانی از تعیین دیتابیس و جداولی که باید یا نباید پشتیبان گیری شوند</li>
 </ul>
-<p>به مجموعه ای از پردازش ها که با شرایط همسان با هم مرتبط می شوند را یک گروه کنترل یا <code>cgroup</code> می نامند. این گروه ها می توانند به صورت سلسله مراتبی شرایط و محدودیت ها را اعمال کنند. </p>
-<p>گروهایی کنترل به روش های زیر قابل استفاده هستند:</p>
+<h2>نصب mydumper</h2>
+<p>برای استفاده از این برنامه آن را نصب نکردیم، بلکه با اجرا داکر و با کامپوز زیر اجرا شده است:</p>
+<div class="codehilite"><pre><span></span><code>version: &quot;3&quot;
+services:
+  mydumper:
+    image: mydumper:v0.15.2-5
+    volumes:
+      - /core/db/backup/test/:/backups/
+    hostname: mydumper
+    privileged: true
+    container_name: mydumper
+    entrypoint: tail
+    command: -f /dev/null
+</code></pre></div>
+
+<p>بعد دستور زیر را اجرا می کنیم:</p>
+<div class="codehilite"><pre><span></span><code>docker-compose up -d
+</code></pre></div>
+
+<h2>پشتیبان گیری از دیتابیس ویراستی</h2>
+<p>از قدیم برای پشتیبان گیری از <code>mysqldump</code> استفاده می شده است که با توجه به حجم فعلی خیلی 
+بالای برخی دیتابیس ها روی برخی جداول، و نرخ رشد سریع آن پیشنهاد می شود تا به جای 
+استفاده <code>mysqldump</code> از <code>mydumper</code> استفاده نمود.</p>
+<h2>نحوه پشتیبان گیری</h2>
+<p>برای پشتیبان گیری از دیتابیس با دستور زیر می توان پشتیبان گیری را انجام داد:</p>
+<div class="codehilite"><pre><span></span><code>dex mydumper mydumper --host IPOFDATABASE --user BACKUPUSER --password &#39;USERPASSWORD&#39; --database microblog --port 3306 --rows 100:100:0 --threads 14 --compress --verbose 3 --no-locks --outputdir &#39;/backups/&#39; --logfile &#39;/backups/backup.log&#39; --chunk-filesize 100
+</code></pre></div>
+
+<h3>توضیح گزینه ها</h3>
+<p>گزینه های استفاده شده در این دستور به صورت زیر هستند:</p>
 <ul>
-<li>بوسیله دسترسی <code>cgroup</code> به سیستم مدیریت فایل به صورت مجازی.</li>
-<li>بوسیله ایجاد و مدییت گروهها توسط ابزاهایی همانند <code>cgcreate</code>،‌<code>cgexec</code> و <code>cgclassify</code> (از طریق کتابخانه <code>libcgroup</code>)</li>
-<li>بوسیله سرویس موتور قوانین که به طور خودکارپردازش های کاربران، گروه ها یا دستورات را به <code>cgroups</code> پیرو تنظیمات انجام شده منتقل می کند. </li>
-<li>به طور مستقیم، بوسیله دیگر برنامه هایی که از <code>cgroups</code> استفاده می کنند، همانند <code>Docker</code>، <code>Firejail</code>، <code>libvirt</code>، <code>systemd</code>، <code>Open Grid Scheduler/Grid Engine</code> و برنامه درحال توسعه گوگل <code>lmctfy</code>. </li>
+<li>--host: با این گزینه هاست دیتابیسی که پشتیبانی گیری میشود تعیین می شود</li>
+<li>--user: تعیین کننده نام کاربری ارتباط با دیتابیس</li>
+<li>--password: تعیین کننده کلمه عبور ارتباطی با دیتابیس</li>
+<li>--database: تعیین کننده نام دیتابیس برای پشتیبان گیری</li>
+<li>--port: تعیین کننده شماره پورت ارتباطی با دیتابیس</li>
+<li>--rows: یک جدول را به تعداد این عدد در پشتیبان گیری جدا می کند، مقدار این گزینه به صورت MIN:START_AT:MAX نیز می تواند تعیین شود. Min مشخص کننده حداقل میزان جداسازی است و START_AT مشخص کننده نقطه آغاز است و Max مقدار ۰ مشخص کننده این است که محدودیتی ندارد</li>
+<li>--threads: تعیین کننده تعداد ترد همزمان مورد استفاده از CPU</li>
+<li>--compress: تعیین کننده نحوه فشرده سازی خروجی با gzip یا zstd می باشد</li>
+<li>--verbose: تعیین کننده سطح لاگ برنامه</li>
+<li>--no-locks: در زمان پشتیبان گیری جداول را lock نمی کند</li>
+<li>--outputdir: تعیین کننده مسیر خروجی فایل های پشتیبان است</li>
+<li>--logfile: تعیین کننده مسیر فایل لاگ برنامه است</li>
+<li>--chunk-filesize: تعیین کننده جدا کردن فایل های خروجی جدول به MB می باشد.</li>
 </ul>
-<p><img alt="linux container" src="lxc_architecture.png" /></p>
-<h3>جداسازی فضای نام</h3>
-<p>زمانی که بخشی از cgroups به صورت تکنیکی کار نمی کرد، یک ویژگی مرتبط با کرنل لینوکس <code>جداساز فضای نام (namespace isolation)</code> هست، جایی که گروهی از پردازش ها طوری از جدا می شوند که امکان استفاده و مشاهده منابع دیگر گروه ها را ندارند. برای مثال یک فضای نام <code>PID</code> یک تعداد شناسه پردازش مجزا برای هر فضای نام تأمین می کند. همچنین فضای نام برای <code>mount</code>، کاربران، <code>UTS</code>، شبکه و <code>SysV IPC</code> قابل ایجاد می باشد.   </p>
+<h1>نحوه بازگرداندن پشتیبان</h1>
+<p>برای برگرداند فایل پشتیبان از دستور زیر استفاده می شود:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">myloader</span><span class="w"> </span><span class="o">--</span><span class="n">host</span><span class="w"> </span><span class="n">IPOFSETSERVER</span><span class="w"> </span><span class="o">--</span><span class="n">user</span><span class="w"> </span><span class="n">USERNAME</span><span class="w"> </span><span class="o">--</span><span class="n">password</span><span class="w"> </span><span class="s1">&#39;USERPASSWORD&#39;</span><span class="w"> </span><span class="o">--</span><span class="n">database</span><span class="w"> </span><span class="n">microblog</span><span class="w"> </span><span class="o">--</span><span class="n">queries</span><span class="o">-</span><span class="n">per</span><span class="o">-</span><span class="n">transaction</span><span class="w"> </span><span class="mi">1000</span><span class="w"> </span><span class="o">--</span><span class="n">threads</span><span class="w"> </span><span class="mi">20</span><span class="w"> </span><span class="o">--</span><span class="n">compress</span><span class="o">-</span><span class="n">protocol</span><span class="w"> </span><span class="o">--</span><span class="n">verbose</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="o">--</span><span class="n">directory</span><span class="w"> </span><span class="s1">&#39;/backups/&#39;</span><span class="w"> </span><span class="o">--</span><span class="n">logfile</span><span class="w"> </span><span class="s1">&#39;/backups/backup.log&#39;</span>
+</code></pre></div>
+
+<h3>توضیح گزینه ها</h3>
+<p>گزینه های استفاده شده در این دستور به صورت زیر هستند:</p>
 <ul>
-<li>فضای نام <code>PID</code> شناسه پردازش های مجزا، لیستی از پردازش ها و جزئیات آنها را مجزا می کند. مادامی که یک فضای نام جدید از دیگر پردازش های والدش جداسازی شده است، امکان مشاهده تمامی پردازش های موجود در فضای نام فرزندانش حتی با <code>PID</code> متفاوت باشند را دارد.   </li>
-<li>فضای نام شبکه، کنترلر کارت شبکه را (مجازی یا فیزیکی)، قوانینفایروال <code>iptables</code>، جدول <code>routing</code> و غیره را جداسازی می کند. امکان دستیابی به فضای نام شبکه به دیگران با استفاده از کارت شبکه مجازی <code>veth</code> می باشد.</li>
-<li>فضای نام <code>UTS</code> امکان تغییر 'hostname' را می دهد.</li>
-<li>فضای نام <code>Mount</code> امکان ایجاد یک لایه سیستم فایل متفاوت یا بارگزاری نقطه بارگزادری فقط خواندنی ا می دهد. </li>
-<li>فضای نام <code>IPC</code> پردازش ورودی یا ابتدایی سیستم <code>System V</code> را برای </li>
-<li>فضای نام کاربری شناسه های کاربری بین فضاهای نام را جداسازی می کند.</li>
-<li>فضای نام <code>Cgroup</code></li>
+<li>--queries-per-transaction: تعیین کننده تعداد کوئری اجرا شده در هر ترنس اکشن است</li>
+<li>--compress-protocol: فعال کننده فشرده سازی در  ارتباطی با دیتابیس</li>
+<li>--directory: تعیین کننده مسیر فایل های پشتیبان دیتابیس</li>
 </ul>
-<p>فضای نام با دستور <code>unshare</code> یا <code>syscall</code> یا با یک علامت جدید در یک <code>syscall‍</code> کپی گرفته شده، ایجاد می شود.</p>
-<h3>محصولات این ویژگی</h3>
-<p>پروژه های مختلفی از جمله پروژه های زیر، از ویژگی <code>cgroup</code> به عنوان مبنای خود استفاده می کنند:</p>
+<h1>منابع</h1>
 <ul>
-<li><a href="https://en.wikipedia.org/wiki/CoreOS">CoreOS</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Docker_(software)">Docker (in 2013)</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Apache_Hadoop">Hadoop</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Jelastic">Jelastic</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Kubernetes">Kubernetes</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Lmctfy">lmctfy (Let Me Contain That For You)</a></li>
-<li><a href="https://en.wikipedia.org/wiki/LXC">LXC (LinuX Containers)</a></li>
-<li>systemd</li>
-<li><a href="https://en.wikipedia.org/wiki/Apache_Mesos">Mesos</a> and Mesosphere</li>
-<li><a href="https://en.wikipedia.org/wiki/HTCondor">HTCondor</a></li>
-</ul>
-<p>در پایان، سعی شد تا در این نوشته آشنایی مختصری پیرامون ویژگی کاربردیی که در کرنل لینوکس ایجاد شده و باعث رخدادن انقلابی در حوزه مجازی سازی و <code>DevOps</code> بوده است، ارائه گردد. امیدوارم که مفید بوده باشد.</p>
-<h5>منابع</h5>
-<ul>
-<li><a href="https://en.wikipedia.org/wiki/Cgroups">wikipedia</a></li>
-<li><a href="https://www.linuxjournal.com/content/everything-you-need-know-about-linux-containers-part-i-linux-control-groups-and-process">Everything You Need to Know about Linux Containers, Part I: Linux Control Groups and Process Isolation</a></li>
+<li><a href="https://github.com/mydumper/mydumper/blob/master/docs/mydumper_usage.rst">mydumper usage</a></li>
+<li><a href="https://www.percona.com/blog/backup-and-restore-with-mydumper-on-docker/">backup and restore with mydumper on docker</a></li>
+<li><a href="https://psujit775.medium.com/easily-backup-and-restore-mysql-using-mydumper-28189f5777cf">easily backup and restore mysql using mydumper</a></li>
 </ul>
       </section>
       <div>
         برچسب ها:
       
-        <a href="/tag/kenel.html">
-            <span class="label label-default" itemprop="about">kenel</span>
-        </a>
-      
         <a href="/tag/linux.html">
             <span class="label label-default" itemprop="about">linux</span>
         </a>
       
-        <a href="/tag/virtualization.html">
-            <span class="label label-default" itemprop="about">virtualization</span>
+        <a href="/tag/database.html">
+            <span class="label label-default" itemprop="about">database</span>
         </a>
       
-        <a href="/tag/container.html">
-            <span class="label label-default" itemprop="about">container</span>
+        <a href="/tag/mariadb.html">
+            <span class="label label-default" itemprop="about">mariadb</span>
+        </a>
+      
+        <a href="/tag/mysql.html">
+            <span class="label label-default" itemprop="about">mysql</span>
+        </a>
+      
+        <a href="/tag/tips.html">
+            <span class="label label-default" itemprop="about">tips</span>
         </a>
       
     </div>
