@@ -198,7 +198,111 @@ db3 192.168.1.43
 </code></pre></div>
 
 <p>نیازمندی دیگر ما، فایل های <code>docker-compose.yml</code> می باشد که روی این ۳ سرور برای اجرای سرویس 
-دیتابیس و کلاستر آن به ترتیب زیر هستند:</p>
+دیتابیس و کلاستر آن به ترتیب زیر است:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">version</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;3&quot;</span>
+<span class="n">services</span><span class="p">:</span><span class="w"> </span>
+<span class="w">    </span><span class="n">mariadb</span><span class="p">:</span>
+<span class="w">        </span><span class="n">image</span><span class="p">:</span><span class="w"> </span><span class="n">mariadb</span><span class="p">:</span><span class="mf">11.1</span><span class="o">.</span><span class="mi">2</span>
+<span class="w">        </span><span class="n">container_name</span><span class="p">:</span><span class="w"> </span><span class="n">mariadb</span>
+<span class="w">        </span><span class="n">network_mode</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;host&quot;</span>
+<span class="w">        </span><span class="n">environment</span><span class="p">:</span>
+<span class="w">            </span><span class="o">-</span><span class="w"> </span><span class="n">MARIADB_ROOT_PASSWORD</span><span class="o">=$</span><span class="n">ROOTPASSWORD</span>
+<span class="w">            </span><span class="o">-</span><span class="w"> </span><span class="n">REPLICATION_PASSWORD</span><span class="o">=$</span><span class="n">ROOTPASSWORD</span>
+<span class="w">        </span><span class="n">volumes</span><span class="p">:</span>
+<span class="w">            </span><span class="o">-</span><span class="w"> </span><span class="o">./</span><span class="n">mariadb</span><span class="o">/</span><span class="n">galera</span><span class="o">.</span><span class="n">cnf</span><span class="p">:</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">mariadb</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">galera</span><span class="o">.</span><span class="n">cnf</span>
+<span class="w">            </span><span class="o">-</span><span class="w"> </span><span class="o">/</span><span class="n">source</span><span class="o">/</span><span class="n">db</span><span class="o">/</span><span class="n">galera</span><span class="p">:</span><span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">mysql</span>
+<span class="w">        </span><span class="n">command</span><span class="p">:</span>
+<span class="w">            </span><span class="o">--</span><span class="n">wsrep</span><span class="o">-</span><span class="n">new</span><span class="o">-</span><span class="n">cluster</span><span class="w"> </span>
+<span class="w">            </span><span class="c1"># uncomment this line in first run</span>
+<span class="w">        </span><span class="n">stdin_open</span><span class="p">:</span><span class="w"> </span><span class="bp">true</span>
+<span class="w">        </span><span class="n">privileged</span><span class="p">:</span><span class="w"> </span><span class="bp">true</span>
+<span class="w">        </span><span class="n">tty</span><span class="p">:</span><span class="w"> </span><span class="bp">true</span>
+<span class="w">        </span><span class="n">ulimits</span><span class="p">:</span>
+<span class="w">            </span><span class="n">nofile</span><span class="p">:</span>
+<span class="w">                </span><span class="n">soft</span><span class="p">:</span><span class="w"> </span><span class="mi">600000</span>
+<span class="w">                </span><span class="n">hard</span><span class="p">:</span><span class="w"> </span><span class="mi">640000</span>
+</code></pre></div>
+
+<p><em>دقت شود که به جای $ROOTPASSWORD پسورد مورد نظر خود را جایگذاری کنید</em></p>
+<p><strong>نکته مهم این که، برای اولین نودی که قرار است راه اندازی شود، در فایل کامپوز فوق قسمت comman در 
+اولین اجرا نبایدکامنت باشد تا گزینه <code>wsrep-new-cluster</code> جهت راه اندازی کلاستر جدید اجرا شود. مابقی نودها
+نباید مجدد این گزینه را هنگام راه اندازی اجرا کنند، پس کامنت کنید</strong></p>
+<p>در کنار فایل کامپوز، یک فایل تنظیمات به نام galera.cnf نیز وجود دارد که محتوای آن به صورت زیر می باشد:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">[galera]</span>
+<span class="na">query_cache_size</span><span class="w">                </span><span class="o">=</span><span class="s">0</span>
+<span class="na">query_cache_type</span><span class="w">                </span><span class="o">=</span><span class="s">0</span>
+<span class="na">innodb_flush_log_at_trx_commit</span><span class="w">  </span><span class="o">=</span><span class="s">2</span>
+<span class="na">innodb_buffer_pool_size</span><span class="w">         </span><span class="o">=</span><span class="s">20G</span>
+<span class="na">bind-address</span><span class="w">                    </span><span class="o">=</span><span class="s">0.0.0.0</span>
+<span class="na">max_heap_table_size</span><span class="w">             </span><span class="o">=</span><span class="s">300MB</span>
+<span class="na">innodb_flush_log_at_trx_commit</span><span class="w">  </span><span class="o">=</span><span class="s">0</span>
+<span class="na">wsrep_provider_options</span><span class="w">          </span><span class="o">=</span><span class="w"> </span><span class="s">&#39;gcache.size=5G</span><span class="c1">; gcache.page_size=5G;gcs.fc_limit=40;gcs.fc_factor=0.8&#39;</span>
+<span class="na">wsrep_slave_threads</span><span class="w">             </span><span class="o">=</span><span class="w"> </span><span class="s">32</span>
+<span class="na">wsrep_on</span><span class="w">                        </span><span class="o">=</span><span class="w"> </span><span class="s">ON</span>
+<span class="na">wsrep_provider</span><span class="w">                  </span><span class="o">=</span><span class="w"> </span><span class="s">/usr/lib/galera/libgalera_smm.so</span>
+<span class="na">wsrep_cluster_address</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;gcomm://192.168.1.41,192.168.1.42,192.168.1.43&quot;</span>
+<span class="na">binlog_format</span><span class="w">                   </span><span class="o">=</span><span class="w"> </span><span class="s">row</span>
+<span class="na">default_storage_engine</span><span class="w">          </span><span class="o">=</span><span class="w"> </span><span class="s">InnoDB</span>
+<span class="na">innodb_autoinc_lock_mode</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="s">2</span>
+<span class="na">wsrep_node_address</span><span class="w">              </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;192.168.1.41&quot;</span>
+<span class="na">wsrep_sst_method</span><span class="w">                </span><span class="o">=</span><span class="w"> </span><span class="s">rsync</span>
+<span class="na">wsrep_node_name</span><span class="w">                 </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;db41&quot;</span>
+<span class="na">wsrep_cluster_name</span><span class="w">              </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;my_cluster&quot;</span>
+</code></pre></div>
+
+<h1>راه اندزای کلاستر</h1>
+<p>برای راه اندزای کلاستر گلرا لازم است تا گام های زیر را طی کنیم:</p>
+<h2>گام اول</h2>
+<p>در سرور اول، در مسیر مشخصی فایل کامپوز و تنظیمات فوق را قرار داده و دستور زیر را جهت راه اندازی اولین نود 
+اجرا می کنیم:</p>
+<div class="codehilite"><pre><span></span><code>docker-compose up -d
+</code></pre></div>
+
+<p>سپس کمی صبر می کنیم تا کلاستر آماده سازی های اولیه خود را انجام و مهیا شود.</p>
+<p><strong>مجدد تأکید می شود که، برای اولین نودی که قرار است راه اندازی شود، در فایل کامپوز قسمت comman در اولین اجرا 
+نباید کامنت باشد تا گزینه <code>wsrep-new-cluster</code> جهت راه اندازی کلاستر جدید اجرا شود. مابقی نودها نباید مجدد 
+این گزینه را هنگام راه اندازی اجرا کنند، پس کامنت کنید</strong></p>
+<h2>گام دوم</h2>
+<p>در سرور دوم، در مسیر مشخصی فایل کامپوز و تنظیمات فوق را قرار داده و دستور زیر را جهت راه اندازی نود دوم 
+اجرا می کنیم:</p>
+<div class="codehilite"><pre><span></span><code>docker-compose up -d
+</code></pre></div>
+
+<p>سپس کمی صبر می کنیم تا نود دوم به کلاستر متصل شود</p>
+<p><strong>و مجدد تأکید می شود که، ذز این نود که، در فایل کامپوز قسمت comman <em>باید</em> کامنت باشد تا 
+گزینه <code>wsrep-new-cluster</code> مجددا اجرا نشود.</strong></p>
+<h2>گام سوم</h2>
+<p>در سرور سوم، در مسیر مشخصی فایل کامپوز و تنظیمات فوق را نیز قرار داده و دستور زیر را جهت راه اندازی نود سوم 
+اجرا می کنیم:</p>
+<div class="codehilite"><pre><span></span><code>docker-compose up -d
+</code></pre></div>
+
+<p>سپس کمی صبر می کنیم تا نود سوم هم به کلاستر متصل شود</p>
+<p><strong>و مجدد تأکید می شود که، ذز این نود که، در فایل کامپوز قسمت comman <em>باید</em> کامنت باشد تا 
+گزینه <code>wsrep-new-cluster</code> مجددا اجرا نشود.</strong></p>
+<h2>گام چهارم</h2>
+<p>در هر کدام از ۳ سرور، داخل کانتینر <code>exec</code> کرده و دستور زیر را جهت اطمینان از صحت راه اندازی کلاستر 
+اجرا می کنیم:</p>
+<div class="codehilite"><pre><span></span><code><span class="c">docker</span><span class="nb">-</span><span class="c">compose exec </span><span class="nb">-</span><span class="c">it mariadb bash</span>
+
+<span class="c">mariadb </span><span class="nb">-</span><span class="c">u root </span><span class="nb">-</span><span class="c">p </span><span class="nb">-</span><span class="c">e &quot;SHOW STATUS LIKE &#39;wsrep_cluster_size&#39;;&quot;</span>
+<span class="c">Enter password:</span>
+<span class="nb">+--------------------+-------+</span>
+<span class="c">| Variable_name      | Value |</span>
+<span class="nb">+--------------------+-------+</span>
+<span class="c">| wsrep_cluster_size | 3     |</span>
+<span class="nb">+--------------------+-------+</span>
+</code></pre></div>
+
+<p>در صورتی که عدد نمایش داده شده غیر از ۳ باشد، به این معنی است که یکی از نودهای در اتصال به کلاستر با مشکل
+مواجه شده و نیاز به بررسی بیشتر می باشد.</p>
+<h1>منابع</h1>
+<ul>
+<li><a href="https://shgn.ir/2021-03-07/galera-cluster-debian-10.html">نصب Galera Cluster بر روی debian</a></li>
+<li><a href="https://shgn.ir/2020-08-15/installing_docker_on_debian.html">نصب Docker روی Debian 10</a></li>
+<li><a href="https://mariadb.com/kb/en/what-is-mariadb-galera-cluster/">What is MariaDB Galera Cluster?</a></li>
+<li><a href="https://www.digitalocean.com/community/tutorials/how-to-configure-a-galera-cluster-with-mariadb-on-centos-7-servers">How To Configure a Galera Cluster with MariaDB on CentOS 7 Servers</a></li>
+</ul>
       </section>
       <div>
         برچسب ها:
