@@ -2,7 +2,7 @@ title: آشنایی با ویژگی Cgroup در کرنل لینوکس
 briefing: یک قابلیت هستهٔ لینوکس است که منابع مجموعه‌ای از فرایندها را مدیریت و مجزاسازی می‌کند.
 date_time: 2019-07-08 15:14
 slug: Cgroup-linux-kernel
-tags: kenel, linux, virtualization, container
+tags: kernel, linux, virtualization, container
 type: post
 
 قابلیت `Cgroup` (مخفف Control Group)،‌ یک ویژگی کرنل لینوکس می باشد که امکان جدا و محدود سازی منابع سیستم (CPU, memory, disk I/O, network و...) برای مجموعه ای از پردازش ها را می دهد. 
