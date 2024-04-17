@@ -50,6 +50,32 @@
         margin-left: auto;
         margin-right: auto;
     }
+    .header { margin-top: 150px; text-align: center; }
+      .header h1{
+          text-align: center;
+          font-size: 50px;
+          margin: 0;
+          font-family: 'Inter';
+      }
+    .counter-flex {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 600px;
+    }
+    .counter-box {
+      width: 350px;
+    }
+    .counter-box h2 {
+      font-size: 70px;
+      text-align: center;
+      font-family: 'Inter';
+      margin: 0;
+    }
+    .counter-box p{
+        text-align: center;
+      font-family: arial;
+    }
     pre {
         direction: ltr;
         border-left: 5px solid #6ce26c;
@@ -121,8 +147,6 @@
         background-color: #DDF;
         color: #000;
     }
-
-
     </style>
 </head>
 <body>
@@ -299,6 +323,7 @@
 </footer>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="{{ site_url }}/static/jquery/3.5.1/jquery.min.js"></script>
+<script src="{{ site_url }}/static/jquery/3.5.1/app.js"></script>
 <script src="{{ site_url }}/static/ProngnRoll/prognroll.min.js"></script>
 <script>
 var jQ_3_5_1 = $.noConflict(true);
