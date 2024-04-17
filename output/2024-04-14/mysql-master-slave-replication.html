@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!— Global site tag (gtag.js) - Google Analytics —>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-124515881-2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-124515881-2');
+
+    </script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title> راه اندازی Mysql/Mariadb Slave Replication - دست نوشته های یک تازه کار </title>
+    <meta name="description"
+          content="یکی از روش های راه اندازی رپلیکیشن در دیتابیس ها master/slave است"/>
+    <meta name="keywords"
+          content="لینوکس،لینوکس مشهد،آموزش,پایتون,پایتون مشهد,آموزش لینوکس,دیتابیس,آموزش دیتابیس,برنامه نویسی,linux,database,mysql,mariadb,datamart,galera cluster,apache,big data,dataware house,cluster,galera,percona,python,php,tutorial,debian,ubuntu,centos,arch linux,mashhad linux,iran linux,debian mashhad, database, mariadb, mysql, replication"/>
+
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+          integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+    <!--    <link href="https://rawgit.com/richleland/pygments-css/master/github.css" rel="stylesheet" crossorigin="anonymous">-->
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <style>
+    body {
+      direction: rtl;
+      font-family: Vazirmatn, sans-serif;
+    }
+    p {
+        font-size: 1.3em;
+        line-height: 1.5em;
+        text-align: justify;
+      }
+    p img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    pre {
+        direction: ltr;
+        border-left: 5px solid #6ce26c;
+      }
+    .panel-body ul li{
+        margin: 10px 0;
+    }
+    a {
+        color: #4608ad;
+      }
+    .panel-group .panel {
+        margin-bottom: 5px;
+    }
+    .panel-primary > .panel-heading {
+        background-color: #4608ad;
+    }
+    .navbar-default {
+        background-color: #4608ad;
+    }
+    .navbar-default .navbar-brand {
+        color: #ffffff;
+    }
+    .navbar-default .navbar-nav > li > a {
+        color: #ffffff;
+        font-size:initial;
+    }
+    .navbar-default .navbar-nav > li > a:hover{
+        color: #00ffd9;
+    }
+    .navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:focus, .navbar-default .navbar-nav > .open > a:hover{
+        color: #4608ad;
+    }
+
+    .dropdown-menu{
+        background-color: #4608ad;
+        color:#ffffff;
+        font-size:initial;
+    }
+    .dropdown-menu > li > a{
+        color:#ffffff;
+        font-size:initial;
+    }
+    .dropdown-menu > li > a:hover{
+        color: #00ffd9;
+        background-color:#4608ad;
+    }
+
+    #back2Top {
+    width: 40px;
+    line-height: 40px;
+    overflow: hidden;
+    z-index: 999;
+    display: none;
+    cursor: pointer;
+    -moz-transform: rotate(270deg);
+    -webkit-transform: rotate(270deg);
+    -o-transform: rotate(270deg);
+    -ms-transform: rotate(270deg);
+    transform: rotate(270deg);
+    position: fixed;
+    bottom: 50px;
+    right: 0;
+    background-color: #DDD;
+    text-align: center;
+    font-size: 30px;
+    text-decoration: none;
+    }
+    #back2Top:hover {
+        background-color: #DDF;
+        color: #000;
+    }
+
+
+    </style>
+</head>
+<body>
+
+<a id="top"></a>
+<div id="scroollto1"></div>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header navbar-right">
+            <a class="navbar-brand" href="/">دست نوشته های یک تازه کار</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            
+            
+            <li><a href="https://shgn.ir/about.html" title="درباره ما">درباره ما</a></li>
+            
+            <li><a href="https://shgn.ir/contacus.html" title="ارتباط با ما">ارتباط با ما</a></li>
+            
+            <li><a href="https://shgn.ir/links.html" title="لینک های مفید">لینک های مفید</a></li>
+            
+            <li><a href="https://shgn.ir/tag/database.html" title="دیتابیس">دیتابیس</a></li>
+            
+            <li><a href="https://shgn.ir/tag/linux.html" title="لینوکس">لینوکس</a></li>
+            
+            <li class="dropdown">
+                <a href="https://shgn.ir/tag/learn.html" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                   aria-expanded="false">آموزش <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="https://shgn.ir/tag/lpic1.html">دوره LPIC1</a></li>
+                </ul>
+            </li>
+            
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-9">
+            
+    <div itemscope itemtype="http://schema.org/NewsArticle">
+    <meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="http://https://shgn.ir/2024-04-14/mysql-master-slave-replication.html"/>
+    <div class="page-header">
+      <h3 itemprop="name">راه اندازی Mysql/Mariadb Slave Replication</h3>
+      
+      
+        <small>
+          <p class="text-right">
+            ارسال شده <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+                توسط <span itemprop="name">سید سجاد شاهچراغیان</span>
+              </span>
+              در تاریخ <span itemprop="datePublished">2024-04-14</span>
+          </p>
+        </small>
+      
+    </div>
+      <section itemprop="articleBody">
+        <p>دیتابیس <code>mysql/mariadb</code> توپولوژی های رپلیکیشن مختلفی را معرفی کرده اند، معروف ترین آنها
+توپولوژی <code>Master/Slave</code> می باشد که در آن یک سرور به عنوان مستر عمل کرده و دیگری به عنوان اسلیو.
+به طور پیش فرض، رپلیکیشن به صوت نامتقارن بوده که با ارسال وقایع مستر به باینری لاگ دیتابیس که
+ توضیح دهنده تغییرات لحظه ای دیتابیس بوده و اسلیوها این وقایع را زمانی که آماده باشند درخواست
+ می کنند. نکته مهم این است که در این روش، امکان عملبات <code>write/read</code> فقط روی سرور مستر می باشد و
+ روی سرور اسلیو فقط امکان <code>read</code> وجود دارد.</p>
+<p><img alt="maridb-replication" src="mariadb-replication.png" title="Mysql/Mariadb Master/Salve Replication" /></p>
+<p>یکی دیگر از روشهای راه اندازی رپلیکیشن، <code>master-master</code> است که در دیتابیس <code>mysql/mariadb</code> به وسیله
+ تکنولوژی <code>Galera cluster</code> قابل پیاده سازی و راه اندازی می باشد. در این روش امکان <code>read</code> و<code>write</code>
+به صورت همزمان وجود دارد. ما هم راه اندازی این روش رپلیکیشن به
+ صورت ساده در لینک
+<a href="https://shgn.ir/2021-03-07/galera-cluster-debian-10.html">نصب Galera Cluster بر روی debian 10</a>
+و راه اندازی همین رپلیکیشن بر بستر <code>Docker</code> در لینک
+<a href="https://shgn.ir/2023-12-20/galera-cluster-by-docker.html">راه اندزای گلرا کلاستر با داکر</a>
+توضیح داده شده است.</p>
+<p>در این نوشته نحوه راه اندازی یک رپلیکیشن <code>Master/Slave</code> از دیتابیسی که موجود و زیر بار است، 
+روی <code>Mariadb</code>، طوری که قطعی اتفاق نیفتد را با هم مرور خواهیم کرد.</p>
+<h2>تنظیمات سرور مستر</h2>
+<p>روی این سرور سرویسی دیتابیس <code>Mariadb</code> نصب شده است و حاوی دیتابیس به همراه داده ها و اطلاعات
+ برنامه ها می باشد.
+برای آماده سازی سرور اصلی، یک سری تنظیمات باید روی آن اعمال شود.</p>
+<p>server-id یک شماره یکتا به مستر تخصیص داده می شود. تمام اسلیوها نیز یک id می گیرند که این عدد بیین
+۱ تا ۲۳۲-۱ می باشد و برای هر سرور در گروه رپلیکیشن، این عدد باید یکتا باشد.</p>
+<p>bind-address تنظیم کننده و تخصیص دهنده یک آدرس مشخص ip برای سرویس دهی روی آن آدرس می باشد.از <code>localhost</code>
+ یا <code>127.0.0.1</code> استفاده نشود.</p>
+<p>log-bin ویژگی ثبت باینری لاگ ها را فعال می کند</p>
+<p>در نهایت این تنظیمات در فایل <code>/etc/mysql/my.cnf</code> به صورت زیر می شوند:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">[mariadb]</span>
+<span class="na">bind-address</span><span class="w">                    </span><span class="o">=</span><span class="w"> </span><span class="s">0.0.0.0</span>
+<span class="na">server-id</span><span class="w">                       </span><span class="o">=</span><span class="w"> </span><span class="s">10</span>
+<span class="na">log_bin</span><span class="w">                         </span><span class="o">=</span><span class="w"> </span><span class="s">mysql-bin</span>
+<span class="na">binlog-format</span><span class="w">                   </span><span class="o">=</span><span class="w"> </span><span class="s">mixed</span>
+<span class="na">innodb_flush_log_at_trx_commit</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="s">1</span>
+<span class="na">sync_binlog</span><span class="w">                     </span><span class="o">=</span><span class="w"> </span><span class="s">1</span>
+</code></pre></div>
+
+<p>و در نهایت برای اعمال تنظیمات روی مستر باید سرویس ریست شود:</p>
+<div class="codehilite"><pre><span></span><code>systemctl restart mariadb.service
+</code></pre></div>
+
+<h3>ایجاد دسترسی رپلیکیشن</h3>
+<p>یک حساب کاربری با دسترسی <code>REPLICATION SLAVE</code> باید ایجاد شود:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">MariaDB</span><span class="w"> </span><span class="p">[(</span><span class="n">none</span><span class="p">)]</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CREATE</span><span class="w"> </span><span class="n">USER</span><span class="w"> </span><span class="err">&#39;</span><span class="n">slave1</span><span class="sc">&#39;@&#39;</span><span class="o">%</span><span class="err">&#39;</span><span class="w"> </span><span class="n">IDENTIFIED</span><span class="w"> </span><span class="n">BY</span><span class="w"> </span><span class="err">&#39;</span><span class="n">slave</span><span class="mi">@1234</span><span class="err">&#39;</span><span class="p">;</span>
+<span class="n">Query</span><span class="w"> </span><span class="n">OK</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="n">rows</span><span class="w"> </span><span class="n">affected</span><span class="w"> </span><span class="p">(</span><span class="mf">0.001</span><span class="w"> </span><span class="n">sec</span><span class="p">)</span>
+
+<span class="n">MariaDB</span><span class="w"> </span><span class="p">[(</span><span class="n">none</span><span class="p">)]</span><span class="o">&gt;</span><span class="w">  </span><span class="n">GRANT</span><span class="w"> </span><span class="n">REPLICATION</span><span class="w"> </span><span class="n">SLAVE</span><span class="w"> </span><span class="n">ON</span><span class="w"> </span><span class="o">*</span><span class="p">.</span><span class="o">*</span><span class="w"> </span><span class="n">TO</span><span class="w"> </span><span class="err">&#39;</span><span class="n">slave1</span><span class="sc">&#39;@&#39;</span><span class="o">%</span><span class="err">&#39;</span><span class="p">;</span>
+<span class="n">Query</span><span class="w"> </span><span class="n">OK</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="n">rows</span><span class="w"> </span><span class="n">affected</span><span class="w"> </span><span class="p">(</span><span class="mf">0.001</span><span class="w"> </span><span class="n">sec</span><span class="p">)</span>
+</code></pre></div>
+
+<h2>تنظیم سرور Slave</h2>
+<p>همان تنظماتی که روی مستر ایجاد شده بود، را نیز روی اسلیوها در فایل 
+<code>/etc/mysql/my.cnf</code>
+اعمال می کنیم. فقط باید دقت شود 
+تا sever-id متفاوتی از مستر داده شود.</p>
+<div class="codehilite"><pre><span></span><code><span class="k">[mariadb]</span>
+<span class="na">bind-address</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="s">0.0.0.0</span>
+<span class="na">server-id</span><span class="w">          </span><span class="o">=</span><span class="w"> </span><span class="s">20</span>
+<span class="na">log_bin</span><span class="w">            </span><span class="o">=</span><span class="w"> </span><span class="s">mysql-bin</span>
+<span class="na">binlog-format</span><span class="w">      </span><span class="o">=</span><span class="w"> </span><span class="s">mixed</span>
+<span class="na">relay-log</span><span class="w">          </span><span class="o">=</span><span class="w"> </span><span class="s">mysql-relay-bin</span>
+<span class="na">log-slave-updates</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="s">1</span>
+<span class="na">read-only</span><span class="w">          </span><span class="o">=</span><span class="w"> </span><span class="s">1</span>
+</code></pre></div>
+
+<p>لازم است تا سرویس ریست شود:</p>
+<div class="codehilite"><pre><span></span><code>systemctl restart mariadb.service
+</code></pre></div>
+
+<h2>همسان سازی اسلیو با مستر</h2>
+<p>زمانی که روی سرور مستر دیتابیسی دارید بزرگ و سنگین، برای انتقال آن به سرور اسلیو جهت همسان سازی
+ لازم است تا یک <code>dump</code> از دیتابیس گرفته و روی اسلوی بازگردانده شود، سپس تنظیمات رپلیکیشن روی سرور
+ اسلیو اعمال شد تا <code>mysql/mariadb</code> عملیات رپلیکشن را شروع کند.</p>
+<p>برای انجام همسان سازی مراحل زیر را به ترتیب باید انجام شوند.</p>
+<h3>بکاپ گیری دیتابیس-سرور مستر</h3>
+<p>ابتدا باید از دیتابیس مورد نظر،‌ بکاپی با گزینه های زیر گرفته شود:</p>
+<div class="codehilite"><pre><span></span><code>mysqldump --skip-lock-tables --single-transaction --flush-logs --master-data=2 mydb &gt; ~/mysqldump.sql
+</code></pre></div>
+
+<p>گزینه <code>skip-lock-tables</code> باعث می شود تا زمان پشتیبان گیری، خللی در عملکرد جداول با لاک کردن آن ها
+ ایجاد نشود.</p>
+<p>گزینه مهم بعدی <code>master-data=2</code> است که در آن موجب می شود تا اطلاعات مربوط به مستر را نیز در 
+ فایل یکاپ شامل اطلاعات مستر position و مستر فایل می باشد.</p>
+<div class="codehilite"><pre><span></span><code><span class="n">gzip</span><span class="w"> </span><span class="o">-</span><span class="mi">9</span><span class="w"> </span><span class="o">~/</span><span class="n">mysqldump</span><span class="p">.</span><span class="k">sql</span>
+<span class="n">rsync</span><span class="w"> </span><span class="o">-</span><span class="n">azv</span><span class="w"> </span><span class="o">~/</span><span class="n">mysqldump</span><span class="p">.</span><span class="k">sql</span><span class="p">.</span><span class="n">gz</span><span class="w"> </span><span class="n">root</span><span class="nv">@slave</span><span class="o">-</span><span class="nl">server</span><span class="p">:</span>
+</code></pre></div>
+
+<h3>بازگرداندن دیتابیس -اسلیو سرور</h3>
+<p>برای بازگرداندن پشتیبان روی سرور اسلیو مراحل زیر را باید طی شوند:</p>
+<div class="codehilite"><pre><span></span><code>gunzip ~/mysqldump.sql.gz
+mysql -uroot -p mydb &lt; ~/mysqldump.sql
+</code></pre></div>
+
+<h3>راه اندازی رپلیکیشن</h3>
+<p>برای راه اندازی رپلیکیشن ما نیاز به دو داده مهم از سرور مستر داریم: <code>MASTER_LOG_FILE</code> و 
+<code>MASTER_LOG_POS</code> که این ها در فایل یکاپ درج شده اند. پس:</p>
+<div class="codehilite"><pre><span></span><code>head dump.sql -n80 | grep &quot;MASTER_LOG_POS&quot;
+</code></pre></div>
+
+<p>در نهایت با لاگین به کنسول <code>mysql/mariadb</code> و اعمال تنظیمات نهایی رپلیکیشن راه اندازی خواهد شد:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">CHANGE</span><span class="w"> </span><span class="n">MASTER</span><span class="w"> </span><span class="n">TO</span><span class="w"> </span><span class="n">MASTER_HOST</span><span class="o">=</span><span class="err">&#39;</span><span class="n">master</span><span class="o">-</span><span class="n">ip</span><span class="err">&#39;</span><span class="p">,</span><span class="n">MASTER_USER</span><span class="o">=</span><span class="err">&#39;</span><span class="n">slave1</span><span class="err">&#39;</span><span class="p">,</span><span class="n">MASTER_PASSWORD</span><span class="o">=</span><span class="err">&#39;</span><span class="n">slave</span><span class="mi">@1234</span><span class="err">&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">MASTER_LOG_FILE</span><span class="o">=</span><span class="err">&#39;</span><span class="n">mster</span><span class="o">-</span><span class="n">log</span><span class="o">-</span><span class="n">file</span><span class="err">&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">MASTER_LOG_POS</span><span class="o">=</span><span class="n">master</span><span class="o">-</span><span class="n">log</span><span class="o">-</span><span class="n">pos</span><span class="p">;</span>
+<span class="n">START</span><span class="w"> </span><span class="n">SLAVE</span><span class="p">;</span>
+</code></pre></div>
+
+<p>در پایان برای اطمینان از صحت رپلیکیشن دستور زیر را اجرا می کنیم:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">SHOW</span><span class="w"> </span><span class="nv">SLAVE</span><span class="w"> </span><span class="nv">STATUSG</span>
+</code></pre></div>
+
+<p>با خروجی زیر:</p>
+<div class="codehilite"><pre><span></span><code><span class="nt">MariaDB</span><span class="w"> </span><span class="cp">[</span><span class="p">(</span><span class="kc">none</span><span class="p">)</span><span class="cp">]</span><span class="o">&gt;</span><span class="w"> </span><span class="nt">SHOW</span><span class="w"> </span><span class="nt">SLAVE</span><span class="w"> </span><span class="nt">STATUS</span><span class="err">\</span><span class="nt">G</span>
+<span class="o">***************************</span><span class="w"> </span><span class="nt">1</span><span class="o">.</span><span class="w"> </span><span class="nt">row</span><span class="w"> </span><span class="o">***************************</span>
+<span class="w">               </span><span class="nt">Slave_IO_State</span><span class="o">:</span><span class="w"> </span><span class="nt">Waiting</span><span class="w"> </span><span class="nt">for</span><span class="w"> </span><span class="nt">master</span><span class="w"> </span><span class="nt">to</span><span class="w"> </span><span class="nt">send</span><span class="w"> </span><span class="nt">event</span>
+<span class="w">                  </span><span class="nt">Master_Host</span><span class="o">:</span><span class="w"> </span><span class="nt">master-ip</span>
+<span class="w">                  </span><span class="nt">Master_User</span><span class="o">:</span><span class="w"> </span><span class="nt">slave1</span>
+<span class="w">                  </span><span class="nt">Master_Port</span><span class="o">:</span><span class="w"> </span><span class="nt">3306</span>
+<span class="w">                </span><span class="nt">Connect_Retry</span><span class="o">:</span><span class="w"> </span><span class="nt">60</span>
+<span class="w">              </span><span class="nt">Master_Log_File</span><span class="o">:</span><span class="w"> </span><span class="nt">mysql-bin</span><span class="p">.</span><span class="nc">000002</span>
+<span class="w">          </span><span class="nt">Read_Master_Log_Pos</span><span class="o">:</span><span class="w"> </span><span class="nt">665</span>
+<span class="w">               </span><span class="nt">Relay_Log_File</span><span class="o">:</span><span class="w"> </span><span class="nt">relay-bin</span><span class="p">.</span><span class="nc">000002</span>
+<span class="w">                </span><span class="nt">Relay_Log_Pos</span><span class="o">:</span><span class="w"> </span><span class="nt">555</span>
+<span class="w">        </span><span class="nt">Relay_Master_Log_File</span><span class="o">:</span><span class="w"> </span><span class="nt">mysql-bin</span><span class="p">.</span><span class="nc">000002</span>
+<span class="w">             </span><span class="nt">Slave_IO_Running</span><span class="o">:</span><span class="w"> </span><span class="nt">Yes</span>
+<span class="w">            </span><span class="nt">Slave_SQL_Running</span><span class="o">:</span><span class="w"> </span><span class="nt">Yes</span>
+<span class="w">              </span><span class="nt">Replicate_Do_DB</span><span class="o">:</span>
+<span class="w">          </span><span class="nt">Replicate_Ignore_DB</span><span class="o">:</span>
+<span class="w">           </span><span class="nt">Replicate_Do_Table</span><span class="o">:</span>
+<span class="w">       </span><span class="nt">Replicate_Ignore_Table</span><span class="o">:</span>
+<span class="w">      </span><span class="nt">Replicate_Wild_Do_Table</span><span class="o">:</span>
+<span class="w">  </span><span class="nt">Replicate_Wild_Ignore_Table</span><span class="o">:</span>
+<span class="w">                   </span><span class="nt">Last_Errno</span><span class="o">:</span><span class="w"> </span><span class="nt">0</span>
+<span class="w">                   </span><span class="nt">Last_Error</span><span class="o">:</span>
+<span class="w">                 </span><span class="nt">Skip_Counter</span><span class="o">:</span><span class="w"> </span><span class="nt">0</span>
+<span class="w">          </span><span class="nt">Exec_Master_Log_Pos</span><span class="o">:</span><span class="w"> </span><span class="nt">665</span>
+<span class="w">              </span><span class="nt">Relay_Log_Space</span><span class="o">:</span><span class="w"> </span><span class="nt">875</span>
+<span class="w">              </span><span class="nt">Until_Condition</span><span class="o">:</span><span class="w"> </span><span class="nt">None</span>
+<span class="w">               </span><span class="nt">Until_Log_File</span><span class="o">:</span>
+<span class="w">                </span><span class="nt">Until_Log_Pos</span><span class="o">:</span><span class="w"> </span><span class="nt">0</span>
+<span class="w">           </span><span class="nt">Master_SSL_Allowed</span><span class="o">:</span><span class="w"> </span><span class="nt">No</span>
+<span class="w">           </span><span class="nt">Master_SSL_CA_File</span><span class="o">:</span>
+<span class="w">           </span><span class="nt">Master_SSL_CA_Path</span><span class="o">:</span>
+<span class="w">              </span><span class="nt">Master_SSL_Cert</span><span class="o">:</span>
+<span class="w">            </span><span class="nt">Master_SSL_Cipher</span><span class="o">:</span>
+<span class="w">               </span><span class="nt">Master_SSL_Key</span><span class="o">:</span>
+<span class="w">        </span><span class="nt">Seconds_Behind_Master</span><span class="o">:</span><span class="w"> </span><span class="nt">0</span>
+<span class="nt">Master_SSL_Verify_Server_Cert</span><span class="o">:</span><span class="w"> </span><span class="nt">No</span>
+<span class="w">                </span><span class="nt">Last_IO_Errno</span><span class="o">:</span><span class="w"> </span><span class="nt">0</span>
+<span class="w">                </span><span class="nt">Last_IO_Error</span><span class="o">:</span>
+<span class="w">               </span><span class="nt">Last_SQL_Errno</span><span class="o">:</span><span class="w"> </span><span class="nt">0</span>
+<span class="w">               </span><span class="nt">Last_SQL_Error</span><span class="o">:</span>
+<span class="w">  </span><span class="nt">Replicate_Ignore_Server_Ids</span><span class="o">:</span>
+<span class="w">             </span><span class="nt">Master_Server_Id</span><span class="o">:</span><span class="w"> </span><span class="nt">10</span>
+<span class="w">               </span><span class="nt">Master_SSL_Crl</span><span class="o">:</span>
+<span class="w">           </span><span class="nt">Master_SSL_Crlpath</span><span class="o">:</span>
+<span class="w">                   </span><span class="nt">Using_Gtid</span><span class="o">:</span><span class="w"> </span><span class="nt">No</span>
+<span class="w">                  </span><span class="nt">Gtid_IO_Pos</span><span class="o">:</span>
+<span class="w">      </span><span class="nt">Replicate_Do_Domain_Ids</span><span class="o">:</span>
+<span class="w">  </span><span class="nt">Replicate_Ignore_Domain_Ids</span><span class="o">:</span>
+<span class="w">                </span><span class="nt">Parallel_Mode</span><span class="o">:</span><span class="w"> </span><span class="nt">optimistic</span>
+<span class="w">                    </span><span class="nt">SQL_Delay</span><span class="o">:</span><span class="w"> </span><span class="nt">0</span>
+<span class="w">          </span><span class="nt">SQL_Remaining_Delay</span><span class="o">:</span><span class="w"> </span><span class="nt">NULL</span>
+<span class="w">      </span><span class="nt">Slave_SQL_Running_State</span><span class="o">:</span><span class="w"> </span><span class="nt">Slave</span><span class="w"> </span><span class="nt">has</span><span class="w"> </span><span class="nt">read</span><span class="w"> </span><span class="nt">all</span><span class="w"> </span><span class="nt">relay</span><span class="w"> </span><span class="nt">log</span><span class="o">;</span><span class="w"> </span><span class="nt">waiting</span><span class="w"> </span><span class="nt">for</span><span class="w"> </span><span class="nt">more</span><span class="w"> </span><span class="nt">updates</span>
+<span class="w">             </span><span class="nt">Slave_DDL_Groups</span><span class="o">:</span><span class="w"> </span><span class="nt">2</span>
+<span class="nt">Slave_Non_Transactional_Groups</span><span class="o">:</span><span class="w"> </span><span class="nt">0</span>
+<span class="w">   </span><span class="nt">Slave_Transactional_Groups</span><span class="o">:</span><span class="w"> </span><span class="nt">0</span>
+<span class="nt">1</span><span class="w"> </span><span class="nt">row</span><span class="w"> </span><span class="nt">in</span><span class="w"> </span><span class="nt">set</span><span class="w"> </span><span class="o">(</span><span class="nt">0</span><span class="p">.</span><span class="nc">000</span><span class="w"> </span><span class="nt">sec</span><span class="o">)</span>
+</code></pre></div>
+
+<p>اگر در خروجی فوق این دو پارمتر با مقادیر <code>yes</code>باشند<code>Slave_IO_Running: Yes</code>و
+<code>Slave_SQL_Running: Yes</code> رپلیکشین درست است و همچینین مقدار پارمتر <code>Seconds_Behind_Master</code> نشان
+ دهنده میزان ثانیه ای است که اسلیو از مستر عقب است.</p>
+<h1>منابع</h1>
+<ul>
+<li><a href="https://medium.com/@chandika.s/mysql-mariadb-master-slave-replication-feca556baa8f">MySQL/MariaDB Master-Slave Replication</a></li>
+<li><a href="https://linuxscriptshub.com/mysql-replication-setup-without-downtime/">MySQL Replication Setup without Downtime</a></li>
+<li><a href="https://serverfault.com/a/220435/194975">How to setup MySQL replication with minimal downtime</a></li>
+<li><a href="https://mariadb.com/kb/en/setting-up-replication/">Setting Up Replication</a></li>
+</ul>
+      </section>
+      <div>
+        برچسب ها:
+      
+        <a href="/tag/database.html">
+            <span class="label label-default" itemprop="about">database</span>
+        </a>
+      
+        <a href="/tag/mariadb.html">
+            <span class="label label-default" itemprop="about">mariadb</span>
+        </a>
+      
+        <a href="/tag/mysql.html">
+            <span class="label label-default" itemprop="about">mysql</span>
+        </a>
+      
+        <a href="/tag/replication.html">
+            <span class="label label-default" itemprop="about">replication</span>
+        </a>
+      
+    </div>
+    </div>
+
+        </div>
+        <div class="col-md-3">
+            <div class="panel-group">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        من در stackexchange.com
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-md-3 col-md-offset-9">
+                            <a href="https://stackexchange.com/users/887576" target="_blank">
+                                <img src="https://stackexchange.com/users/flair/887576.png" width="208" height="58"
+                                     alt="profile for shgnInc on Stack Exchange, a network of free, community-driven Q&A sites"
+                                     title="profile for shgnInc on Stack Exchange, a network of free, community-driven Q&A sites">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="panel-group">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            مطالب مهم
+                        </div>
+                        <div class="panel-body">
+                            <ul>
+                                <li><a href="https://shgn.ir/2021-03-07/galera-cluster-debian-10.html"
+                                       title="نصب Galer Cluster بر روی debian 10">نصب Galer Cluster بر روی debian 10</a>
+                                </li>
+                                <li><a href="https://shgn.ir/2020-08-15/installing_docker_on_debian.html"
+                                       title="نصب Docker روی Debian 10">نصب Docker روی Debian 10</a></li>
+                                <li><a href="https://shgn.ir/2018-09-05/Mysql-JSON-DataType.html"
+                                       title="معرفی نوع داده JSON در دیتابیس Mysql-Mariadb">معرفی نوع داده JSON در
+                                    دیتابیس Mysql-Mariadb</a></li>
+                                <li><a href="https://shgn.ir/2018-07-23/ssh_automatic_login.html"
+                                       title="لاگین خودکار با SSH">لاگین خودکار با SSH</a></li>
+                                <li><a href="https://shgn.ir/2017-08-16/galera_cluster.html"
+                                       title="نصب Galer Cluster بر روی debian8">نصب Galer Cluster بر روی debian8</a>
+                                </li>
+                                <li><a href="https://shgn.ir/2022-07-02/mysql-slave-replicaion.html"
+                                       title="راه اندازی Mysql/Mariadb Slave Replication بدون توقف">راه اندازی Mysql/Mariadb Slave Replication بدون توقف</a>
+                                </li>
+                                <li><a href="https://shgn.ir/2023-12-03/Using-all-CPU-with-tar.html"
+                                       title="فشرده سازی با استفاده از تمام ظرفیت CPU">فشرده سازی با استفاده از تمام ظرفیت CPU</a>
+                                </li>
+                                <li><a href="https://shgn.ir/2022-10-22/reduce-LVM-Partition-size.html"
+                                       title="کاهش فضای دیسک LVM">کاهش فضای دیسک LVM</a>
+                                </li>
+                                <li><a href="https://shgn.ir/2023-12-03/Using-all-CPU-with-tar.html"
+                                       title="فشرده سازی با استفاده از تمام ظرفیت CPU">فشرده سازی با استفاده از تمام ظرفیت CPU</a>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-group">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            تازه ترین مطالب
+                        </div>
+                        <div class="panel-body">
+                            <ul>
+                                
+                            </ul>
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="panel-group">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            Linux ISO Images
+                        </div>
+                        <div class="panel-body">
+                            <ul>
+                                <li><a href="https://shgn.ir/images/gparted-live-1.1.0-1-amd64.iso"
+                                       title="gparted-live-1.1.0-1-amd64">GParted Live CD/USB/HD/PXE Bootable Image</a></li>
+                                <li><a href="https://shgn.ir/images/debian-10.3.0-amd64-xfce-CD-1.iso"
+                                       title="debian-10.3.0-amd64-xfce-CD-1">Debian-10-amd64-xfce-CD</a></li>
+                                <li><a href="https://shgn.ir/images/SNG7-PBX16-64bit-2302-1.iso"
+                                       title="FreePBX16-64bit-2302-1">FreePBX16-64bit-2302-1</a></li>
+                                <li><a href="https://shgn.ir/images/debian-12.2.0-amd64-netinst.iso"
+                                       title="debian-12.2.0-amd64-netinst.iso">debian-12.2.0-amd64-netinst</a></li>
+                                <li><a href="https://shgn.ir/images/debian-live-12.2.0-amd64-xfce.iso"
+                                       title="debian-live-12.2.0-amd64-xfce">debian-live-12.2.0-amd64-xfce</a></li>
+                                <li><a href="https://shgn.ir/images/ubuntu-22.04.3-desktop-amd64.iso"
+                                       title="ubuntu-22.04.3-desktop-amd64">Ubuntu Desktop</a></li>
+                                <li><a href="https://shgn.ir/images/ubuntu-22.04.3-live-server-amd64.iso"
+                                       title="ubuntu-22.04.3-live-server-amd64">Ubuntu Server</a></li>
+                                <li><a href="https://shgn.ir/images/CentOS-7-aarch64-Minimal-1908.iso"
+                                       title="CentOS-7-aarch64-Minimal-1908">CentOS-7-aarch64-Minimal-1908</a></li>
+                                <li><a href="https://shgn.ir/images/CentOS-8.2.2004-x86_64-minimal.iso"
+                                       title="CentOS-8.2.2004-x86_64-minimal">CentOS-8.2.2004-x86_64-minimal</a></li>
+                                <li><a href="https://shgn.ir/images/clonezilla-live-3.1.1-27-amd64.iso"
+                                       title="clonezilla-live-3.1.1-27-amd64">clonezilla-live</a></li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<hr/>
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                
+                <strong>پیشنهادی های</strong>
+                <ul>
+                    
+                    <li><a href="https://github.com/shgninc">GitHub</a></li>
+                    
+                    <li><a href="https://www.instagram.com/shgninc/">Instagram</a></li>
+                    
+                    <li><a href="https://virgool.io/@shgninc">Virgool</a></li>
+                    
+                    <li><a href="https://www.linkedin.com/in/sajjad-shahcheraghean/">Linkedin</a></li>
+                    
+                    <li><a href="https://twitter.com/shahcheraghian">Twiteer</a></li>
+                    
+                    <li><a href="https://shgn.ir/yii2/">معرفی Yii2</a></li>
+                    
+                </ul>
+                
+            </div>
+            <div class="col-md-6">
+                <strong>دسترسی های ساده</strong>
+                <ul>
+                    <li><a href="/">تمامی پست ها</a></li>
+                    <li><a href="/tags.html">فهرست تگ ها</a></li>
+                    <li><a href="/tag/video.html">ویدیوها</a></li>
+                </ul>
+            </div>
+            <div class="col-md-12">
+                <p class="text-center"><small>https://shgn.ir &copy; 2023</small></p>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://shgn.ir/static/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://shgn.ir/static/ProngnRoll/prognroll.min.js"></script>
+<script>
+var jQ_3_5_1 = $.noConflict(true);
+
+    /*Scroll to top when arrow up clicked BEGIN*/
+jQ_3_5_1(window).scroll(function() {
+    var height = jQ_3_5_1(window).scrollTop();
+    if (height > 100) {
+        jQ_3_5_1('#back2Top').fadeIn();
+    } else {
+        jQ_3_5_1('#back2Top').fadeOut();
+    }
+});
+jQ_3_5_1(document).ready(function() {
+    jQ_3_5_1("#back2Top").click(function(event) {
+        event.preventDefault();
+        jQ_3_5_1("html, body").animate({ scrollTop: 0 }, "slow");
+        return false;
+    });
+});
+ /*Scroll to top when arrow up clicked END*/
+
+/* https://www.jqueryscript.net/other/jQuery-Scroll-Progress-Indicator-For-Any-Containers-ProngnRoll.html */
+
+jQ_3_5_1("body").prognroll({
+  position:"bottom",
+  height:5,
+  color:"#f54905"
+});
+
+</script>
+
+<script>
+var $x = jQuery.noConflict();
+
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+        integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+        crossorigin="anonymous"></script>
+
+<a id="back2Top" title="Back to top" href="#">&#10148;</a>
+
+</body>
+</html>
