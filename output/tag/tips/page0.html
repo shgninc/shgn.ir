@@ -39,6 +39,7 @@
     body {
       direction: rtl;
       font-family: Vazirmatn, sans-serif;
+      background-color: rgba(226,232,240,.8)
     }
     p {
         font-size: 1.3em;
@@ -67,9 +68,7 @@
       width: 350px;
     }
     .counter-box h2 {
-      font-size: 70px;
-      text-align: center;
-      font-family: 'Inter';
+      font-size: 60px;
       margin: 0;
     }
     .counter-box p{
@@ -88,9 +87,11 @@
       }
     .panel-group .panel {
         margin-bottom: 5px;
+        border-radius: 1.1rem
     }
     .panel-primary > .panel-heading {
         background-color: #4608ad;
+        border-radius: 1.1rem
     }
     .navbar-default {
         background-color: #4608ad;
@@ -282,13 +283,11 @@
                         مطالب نوشته شده تا کنون
                     </div>
                     <div class="panel-body">
-                        <div class="counter-flex">
                             <div class="counter-box">
                                 <h2>
-                                    <span class="count">10000</span>
+                                    <span class="count">51</span>
                                 </h2>
                             </div>
-                        </div>
                     </div>
                 </div>
 
@@ -432,7 +431,7 @@
 <script src="https://shgn.ir/static/jquery/3.5.1/app.js"></script>
 <script src="https://shgn.ir/static/ProngnRoll/prognroll.min.js"></script>
 <script>
-var jQ_3_5_1 = $.noConflict(true);
+var jQ_3_5_1 = jQuery.noConflict(true);
 
     /*Scroll to top when arrow up clicked BEGIN*/
 jQ_3_5_1(window).scroll(function() {
@@ -462,10 +461,6 @@ jQ_3_5_1("body").prognroll({
 
 </script>
 
-<script>
-var $x = jQuery.noConflict();
-
-</script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
         integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
         crossorigin="anonymous"></script>
