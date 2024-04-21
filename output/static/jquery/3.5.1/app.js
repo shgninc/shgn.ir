@@ -1,16 +1,17 @@
-$(".count").each(function () {
-  $(this)
+var j = jQuery.noConflict();
+j(".count").each(function () {
+  j(this)
     .prop("Counter", 0)
     .animate(
       {
-        Counter: $(this).text(),
+        Counter: j(this).text(),
       },
       {
         duration: 4000,
         easing: "swing",
         step: function (now) {
           now = Number(Math.ceil(now)).toLocaleString('en');
-                                $(this).text(now);
+                                j(this).text(now);
         },
       }
     );
