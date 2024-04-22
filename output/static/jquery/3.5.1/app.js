@@ -7,7 +7,7 @@ j(".count").each(function () {
         Counter: j(this).text(),
       },
       {
-        duration: 8000,
+        duration: 4000,
         easing: "swing",
         step: function (now) {
           now = Number(Math.ceil(now)).toLocaleString('en');
