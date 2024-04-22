@@ -15,11 +15,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title> پستهای تگ شده با  'learn' - دست نوشته های یک تازه کار </title>
+    <title> ایجاد دیسک LVM در لینوکس - دست نوشته های یک تازه کار </title>
     <meta name="description"
-          content="این وبلاگ پیرامون تجربیات، دانسته ها، اینجاب درباره linux, database, mysql, mariadb, datamart, galera cluster,apache می باشد."/>
+          content="کلمه LVM بر مبنی مدیریت دیسک ها منطقی -Logical Volume Management - معروف شده"/>
     <meta name="keywords"
-          content="لینوکس،لینوکس مشهد،آموزش,پایتون,پایتون مشهد,آموزش لینوکس,دیتابیس,آموزش دیتابیس,برنامه نویسی,linux,database,mysql,mariadb,datamart,galera cluster,apache,big data,dataware house,cluster,galera,percona,python,php,tutorial,debian,ubuntu,centos,arch linux,mashhad linux,iran linux,debian mashhad,"/>
+          content="لینوکس،لینوکس مشهد،آموزش,پایتون,پایتون مشهد,آموزش لینوکس,دیتابیس,آموزش دیتابیس,برنامه نویسی,linux,database,mysql,mariadb,datamart,galera cluster,apache,big data,dataware house,cluster,galera,percona,python,php,tutorial,debian,ubuntu,centos,arch linux,mashhad linux,iran linux,debian mashhad, linux, learn, tutorial, lvm, disk"/>
 
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
     <!-- Bootstrap -->
@@ -188,142 +188,101 @@
     <div class="row">
         <div class="col-md-9">
             
+    <div itemscope itemtype="http://schema.org/NewsArticle">
+    <meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="http://https://shgn.ir/2024-04-22/create-lvm-partiotion-in-linux.html"/>
     <div class="page-header">
-      <h2>پستهای تگ شده با  'learn'</h2>
-      <p class="lead"></p>
+      <h3 itemprop="name">ایجاد دیسک LVM در لینوکس</h3>
+      
+      
+        <small>
+          <p class="text-right">
+            ارسال شده <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+                توسط <span itemprop="name">سید سجاد شاهچراغیان</span>
+              </span>
+              در تاریخ <span itemprop="datePublished">2024-04-22</span>
+          </p>
+        </small>
+      
     </div>
+      <section itemprop="articleBody">
+        <p>کلمه <code>LVM</code> بر مبنی مدیریت دیسک ها منطقی -Logical Volume Management - معروف شده. یکی از مزیت های اصلی
+ پارتیشن <code>LVM</code>، امکان افزایش و توسعه سایز آن به صورت آنلاین و بدون قطعی می باشد. همچنین با این روش امکان
+ کاهش هم سایز هم است اما توصیه نمی شود.</p>
+<h1>ایجاد PV ولوم منطقی</h1>
+<p>برای شروع ابتدا باید بسته <code>lvm2</code> نصب شود.</p>
+<div class="codehilite"><pre><span></span><code>sudo apt install lvm2
+</code></pre></div>
+
+<p>سپس با دستور زیر روی <code>/dev/sdb</code> یک <code>pv</code> ایجاد می شود</p>
+<div class="codehilite"><pre><span></span><code>sudo pvcreate /dev/sdb
+</code></pre></div>
+
+<p>برای اطمینان می توانید دستورات زیر را اجرا کنید</p>
+<div class="codehilite"><pre><span></span><code>sudo pvs /dev/sdb
+OR
+sudo pvdisplay /dev/sdb
+</code></pre></div>
+
+<h1>ایجاد VG ولوم گروه</h1>
+<p>در گام بعد باید یک گروه ولوم ایجاد شود. برای ایجاد گروه ولوم از دستور زیر استفاده می شود:</p>
+<div class="codehilite"><pre><span></span><code>sudo vgcreate vg_group /dev/sdb
+</code></pre></div>
+
+<p>برا بررسی صحت ایجاد ولوم گروه دستور زیر باید اجرا شود.</p>
+<div class="codehilite"><pre><span></span><code>sudo vgs
+OR
+sudo vgdisplay vg_group
+</code></pre></div>
+
+<h1>ایجاد دیکس منطقی LV</h1>
+<p>برای ایجاد دیسک منطقی از گروه ولوم ساخته شده با استفاده از دستور زیر انجام می شود:</p>
+<div class="codehilite"><pre><span></span><code>#sudo lvcreate -L Size -n Name VG-NAME
+sudo lvcreate -L 20G -n lv-disk1 vg_group
+</code></pre></div>
+
+<p>برای بررسی صحت دیسک ایجاد شده:</p>
+<div class="codehilite"><pre><span></span><code>sudo lvs
+OR
+sudo lvdisplay /dev/vg_group/lv-disk1
+</code></pre></div>
+
+<h2>فرمت کردن دیسک LV</h2>
+<p>در نهایت برای ایجاد دیسک <code>lvm</code> باید آن را فرمت کنیم تا قابل استفاده باشد. پس دستور زیر را اجرا می کنیم</p>
+<div class="codehilite"><pre><span></span><code>sudo mkfs.ext4 /dev/vg_group/lv-disk1
+</code></pre></div>
+
+<p>اکنون دیسک ایجاد شده فرمت شده و قابل <code>mount</code> و استفاده می باشد.</p>
+<h1>منابع</h1>
+<ul>
+<li><a href="https://www.linuxtechi.com/how-to-create-lvm-partition-in-linux/">How to Create LVM Partition Step-by-Step in Linux</a></li>
+<li><a href="https://www.thegeekdiary.com/lvremove-command-examples-in-linux/">lvremove Command Examples in Linux</a></li>
+</ul>
+      </section>
+      <div>
+        برچسب ها:
       
-        <h3><a href="/2024-04-22/create-lvm-partiotion-in-linux.html" title="ایجاد دیسک LVM در لینوکس">ایجاد دیسک LVM در لینوکس</a></h3>
-            
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
-            
-                <a href="/tag/learn.html">
-                    <span class="label label-default">learn</span></a>
-            
-                <a href="/tag/tutorial.html">
-                    <span class="label label-default">tutorial</span></a>
-            
-                <a href="/tag/lvm.html">
-                    <span class="label label-default">lvm</span></a>
-            
-                <a href="/tag/disk.html">
-                    <span class="label label-default">disk</span></a>
-            
-        <p>کلمه LVM بر مبنی مدیریت دیسک ها منطقی -Logical Volume Management - معروف شده</p>
-        <hr />
+        <a href="/tag/linux.html">
+            <span class="label label-default" itemprop="about">linux</span>
+        </a>
       
-        <h3><a href="/2021-02-20/lpic1-exam-101-7-Boot-Process-sysvinit.html" title="دوره LPIC1 آزمون 101-6">دوره LPIC1 آزمون 101-6</a></h3>
-            
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
-            
-                <a href="/tag/learn.html">
-                    <span class="label label-default">learn</span></a>
-            
-                <a href="/tag/lpic1.html">
-                    <span class="label label-default">lpic1</span></a>
-            
-                <a href="/tag/video.html">
-                    <span class="label label-default">video</span></a>
-            
-        <p>قسمت ششم ویدیو های آموزشی دوره LPIC1 موسسه لینوکس آکادمی با سرفصل '125-1096-3 - 101.2 - Boot Process - sysvinit - Power On to System Prompt.</p>
-        <hr />
+        <a href="/tag/learn.html">
+            <span class="label label-default" itemprop="about">learn</span>
+        </a>
       
-        <h3><a href="/2020-10-06/lpic1-exam-101-6-Utilities-to-Explore-System-Devices.html" title="دوره LPIC1 آزمون 101-5">دوره LPIC1 آزمون 101-5</a></h3>
-            
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
-            
-                <a href="/tag/learn.html">
-                    <span class="label label-default">learn</span></a>
-            
-                <a href="/tag/lpic1.html">
-                    <span class="label label-default">lpic1</span></a>
-            
-                <a href="/tag/video.html">
-                    <span class="label label-default">video</span></a>
-            
-        <p>قسمت پنجم ویدیو های آموزشی دوره LPIC1 موسسه لینوکس آکادمی با سرفصل Tools and Utilities to Explore System Devices.</p>
-        <hr />
+        <a href="/tag/tutorial.html">
+            <span class="label label-default" itemprop="about">tutorial</span>
+        </a>
       
-        <h3><a href="/2020-10-06/lpic1-exam-101-5-Hardware-Settings.html" title="دوره LPIC1 آزمون 101-4">دوره LPIC1 آزمون 101-4</a></h3>
-            
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
-            
-                <a href="/tag/learn.html">
-                    <span class="label label-default">learn</span></a>
-            
-                <a href="/tag/lpic1.html">
-                    <span class="label label-default">lpic1</span></a>
-            
-                <a href="/tag/video.html">
-                    <span class="label label-default">video</span></a>
-            
-        <p>قسمت چهارم ویدیو های آموزشی دوره LPIC1 موسسه لینوکس آکادمی.</p>
-        <hr />
+        <a href="/tag/lvm.html">
+            <span class="label label-default" itemprop="about">lvm</span>
+        </a>
       
-        <h3><a href="/2020-09-19/lpic1-exam-101-Syllabus.html" title="دوره LPIC1 آزمون 101-3">دوره LPIC1 آزمون 101-3</a></h3>
-            
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
-            
-                <a href="/tag/learn.html">
-                    <span class="label label-default">learn</span></a>
-            
-                <a href="/tag/lpic1.html">
-                    <span class="label label-default">lpic1</span></a>
-            
-                <a href="/tag/video.html">
-                    <span class="label label-default">video</span></a>
-            
-        <p>قسمت سوم ویدیو های آموزشی دوره LPIC1 موسسه لینوکس آکادمی.</p>
-        <hr />
+        <a href="/tag/disk.html">
+            <span class="label label-default" itemprop="about">disk</span>
+        </a>
       
-        <h3><a href="/2020-09-17/lpic1-exam-101-Introduction-to-Exam.html" title="دوره LPIC1 آزمون 101-2">دوره LPIC1 آزمون 101-2</a></h3>
-            
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
-            
-                <a href="/tag/learn.html">
-                    <span class="label label-default">learn</span></a>
-            
-                <a href="/tag/lpic1.html">
-                    <span class="label label-default">lpic1</span></a>
-            
-                <a href="/tag/video.html">
-                    <span class="label label-default">video</span></a>
-            
-        <p>قسمت دوم ویدیو های آموزشی دوره LPIC1 موسسه لینوکس آکادمی..</p>
-        <hr />
-      
-        <h3><a href="/2020-09-14/lpic1-exam-101-introduction.html" title="دوره LPIC1 آزمون 101-1">دوره LPIC1 آزمون 101-1</a></h3>
-            
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
-            
-                <a href="/tag/learn.html">
-                    <span class="label label-default">learn</span></a>
-            
-                <a href="/tag/lpic1.html">
-                    <span class="label label-default">lpic1</span></a>
-            
-                <a href="/tag/video.html">
-                    <span class="label label-default">video</span></a>
-            
-        <p>قسمت اول ویدیو های آموزشی دوره LPIC1 موسسه لینوکس آکادمی.</p>
-        <hr />
-      
-      
-              <ul class="pagination">
-                
-                    
-                        <li class="active"><a href="#">0 <span class="sr-only">(current)</span></a></li>
-                    
-                
-              </ul>
-      
+    </div>
+    </div>
 
         </div>
         <div class="col-md-3">
@@ -401,20 +360,6 @@
                         </div>
                         <div class="panel-body">
                             <ul>
-                                
-                                <li><a href="/2024-04-22/create-lvm-partiotion-in-linux.html" title="ایجاد دیسک LVM در لینوکس">ایجاد دیسک LVM در لینوکس</a></li>
-                                
-                                <li><a href="/2021-02-20/lpic1-exam-101-7-Boot-Process-sysvinit.html" title="دوره LPIC1 آزمون 101-6">دوره LPIC1 آزمون 101-6</a></li>
-                                
-                                <li><a href="/2020-10-06/lpic1-exam-101-6-Utilities-to-Explore-System-Devices.html" title="دوره LPIC1 آزمون 101-5">دوره LPIC1 آزمون 101-5</a></li>
-                                
-                                <li><a href="/2020-10-06/lpic1-exam-101-5-Hardware-Settings.html" title="دوره LPIC1 آزمون 101-4">دوره LPIC1 آزمون 101-4</a></li>
-                                
-                                <li><a href="/2020-09-19/lpic1-exam-101-Syllabus.html" title="دوره LPIC1 آزمون 101-3">دوره LPIC1 آزمون 101-3</a></li>
-                                
-                                <li><a href="/2020-09-17/lpic1-exam-101-Introduction-to-Exam.html" title="دوره LPIC1 آزمون 101-2">دوره LPIC1 آزمون 101-2</a></li>
-                                
-                                <li><a href="/2020-09-14/lpic1-exam-101-introduction.html" title="دوره LPIC1 آزمون 101-1">دوره LPIC1 آزمون 101-1</a></li>
                                 
                             </ul>
 
