@@ -41,3 +41,6 @@ type: post
     :# reboot -f
 
 اکنون کلمه عبور جدید اعمال شده و شما باید بتوانید با آن لاگین کنید.
+
+#منابع
+ - [Linux Guide/Reset a forgotten root password](https://en.wikibooks.org/wiki/Linux_Guide/Reset_a_forgotten_root_password)
