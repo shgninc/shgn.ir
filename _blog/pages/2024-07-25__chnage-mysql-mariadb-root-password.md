@@ -1,5 +1,5 @@
 title: تغییر کلمه عبور کاربر root در mysql/mariadb
-briefing: گاهی ممکن لازم باشه تا کلمه عبور کاربر root را بخواهیم تغییر بدیم.
+briefing: گاهی ممکن لازم باشه تا کلمه عبور کاربر root دیتابیس را بخواهیم تغییر بدیم.
 date_time: 2024-07-25 11:03
 slug: chnage-mysql-mariadb-root-password
 tags: database, mariadb, mysql, tips
