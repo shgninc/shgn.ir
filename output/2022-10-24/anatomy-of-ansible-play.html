@@ -19,7 +19,7 @@
     <meta name="description"
           content="برنامه مدیریت ساختار و تنظیمات روی زیرساخت های مختلف می باشد."/>
     <meta name="keywords"
-          content="لینوکس،لینوکس مشهد،آموزش,پایتون,پایتون مشهد,آموزش لینوکس,دیتابیس,آموزش دیتابیس,برنامه نویسی,linux,database,mysql,mariadb,datamart,galera cluster,apache,big data,dataware house,cluster,galera,percona,python,php,tutorial,debian,ubuntu,centos,arch linux,mashhad linux,iran linux,debian mashhad, linux, ansible"/>
+          content="لینوکس،لینوکس مشهد،آموزش,پایتون,پایتون مشهد,آموزش لینوکس,دیتابیس,آموزش دیتابیس,برنامه نویسی,linux,database,mysql,mariadb,datamart,galera cluster,apache,big data,dataware house,cluster,galera,percona,python,php,tutorial,debian,ubuntu,centos,arch linux,mashhad linux,iran linux,debian mashhad, linux, ansible, tutorial, devops, automation"/>
 
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
     <!-- Bootstrap -->
@@ -219,7 +219,6 @@
 <span class="w">    </span><span class="nv">become</span>:<span class="w"> </span><span class="nv">yes</span><span class="w"> </span>#<span class="w"> </span><span class="nv">optional</span>
 <span class="w">    </span><span class="nv">become_user</span>:<span class="w"> </span><span class="nv">postgres</span><span class="w"> </span>#<span class="w"> </span><span class="nv">optional</span>
 <span class="w">    </span><span class="nv">gather_facts</span>:<span class="w"> </span><span class="nv">False</span>
-<span class="w">    </span><span class="nv">order</span>:<span class="w"> </span><span class="nv">inventory</span><span class="w"> </span>#<span class="w"> </span><span class="nv">Default</span>
 <span class="w">    </span><span class="nv">connection</span>:<span class="w"> </span><span class="nv">local</span><span class="w"> </span><span class="nv">or</span><span class="w"> </span><span class="nv">network_cli</span>
 <span class="w">    </span><span class="nv">serial</span>:<span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="nv">OR</span><span class="w"> </span><span class="mi">30</span><span class="o">%</span>
 <span class="w">    </span><span class="nv">max_fail_percentage</span>
@@ -234,9 +233,9 @@
 <h4>host</h4>
 <p>مشخص کننده دیوایس هدف است. تعریف بیشتر از یک هاست یا گروه یا قالب نام را که با نام های تعریف شده در inventory تعریف شده، مطابقت داشته باشند، را می توان با کاما از هم جدا نمود.</p>
 <h4>متغییرهای ارتباطی remote_user, become and become_user</h4>
-<p>متغییر <code>remote_user</code> مشخص کننده نام کاربری پیش فرض ریموت برای لاگین است.</p>
-<p>متغییر <code>gather_facts</code> مشخص کننده این است اطلاعات دیوایس ریموت را جمع آوری کند یا خیر.</p>
-<p>متغییر <code>become</code> و <code>become_user</code> تعیین کننده نحوه دسترسی کاربر در دیوایس ریموت است </p>
+<p><strong><code>remote_user</code>:</strong> مشخص کننده نام کاربری پیش فرض ریموت برای لاگین است.</p>
+<p><strong><code>gather_facts</code>:</strong> مشخص کننده این است اطلاعات دیوایس ریموت را جمع آوری کند یا خیر.</p>
+<p><strong><code>become</code> و <code>become_user</code>:</strong> تعیین کننده نحوه دسترسی کاربر در دیوایس ریموت است </p>
 <h4>order</h4>
 <p>این متغییر تعیین کننده ترتیب اجرا دستورات روی هاست ها است. پیش فرض آن به ترتیب چیده شدن در <code>inventory</code> هست. مقادیر زیر، مقادیر معتبر هستند:</p>
 <ul>
@@ -245,14 +244,14 @@
 <li>sorted: ترتیب اجرا براساس نام هاست ها به صورت الفبایی می شود.</li>
 <li>reverse_sorted: ترتیب اجرا براساس نام هاست ها به صورت از آخر به اول الفبایی می شود.</li>
 <li>shuffle: ترتیب اجرا تصادفی می شود.</li>
-<li>max_fail_percentage: ترتیب اجرا براساس درصدی از هاست هایی که با خطا مواجه شده اند می باشد. </li>
-<li>strategy: ترتیب اجرا براساس هاست هایی هست که سریعتر اجرا می شوند.</li>
-<li>serial: بدین وسیله می توان تعداد هاست هایی که به صورت همزمان اجرا روی آن ها صورت پذیرد را مشخص نمود. مقدار <code>batch</code> 
-زیرمجموعه ای از هاست ها که اجرا روی آنها قبل از مجموعه بعدی شروع شوند را شروع می کند. همچنین می توان به این متغییر مقدار 
-به صورت درصدی داد که مشخص می کند نسبت تعداد هاستی که در اجرا می باشند به نسبت تعداد هاستی که اجرا شده اند را.</li>
-<li>any_errors_fatal: با این مقدار، هر خطایی روی هر هاستی رخ بده انسیبل آن را وخیم تلقی کرده 
-و بدون در نظر گرفتن مابقی هاست ها، از روند اجرا خارج می شود.</li>
 </ul>
+<p><strong><code>max_fail_percentage</code>:</strong> ترتیب اجرا براساس درصدی از هاست هایی که با خطا مواجه شده اند می باشد.</p>
+<p><strong><code>strategy</code>:</strong> ترتیب اجرا براساس هاست هایی هست که سریعتر اجرا می شوند.</p>
+<p><strong><code>serial</code>:</strong> بدین وسیله می توان تعداد هاست هایی که به صورت همزمان اجرا روی آن ها صورت پذیرد را مشخص نمود. مقدار <code>batch</code> 
+زیرمجموعه ای از هاست ها که اجرا روی آنها قبل از مجموعه بعدی شروع شوند را شروع می کند. همچنین می توان به این متغییر مقدار 
+به صورت درصدی داد که مشخص می کند نسبت تعداد هاستی که در اجرا می باشند به نسبت تعداد هاستی که اجرا شده اند را.</p>
+<p><strong><code>any_errors_fatal</code>:</strong> با این مقدار، هر خطایی روی هر هاستی رخ بده انسیبل آن را وخیم تلقی کرده 
+و بدون در نظر گرفتن مابقی هاست ها، از روند اجرا خارج می شود.</p>
 <p>به عنوان نمونه</p>
 <div class="codehilite"><pre><span></span><code><span class="o">---</span>
 <span class="o">-</span><span class="w"> </span><span class="n">name</span><span class="p">:</span><span class="w"> </span><span class="n">Start</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">Play</span><span class="w">          </span><span class="c1"># describes WHAT we are doing</span>
@@ -325,6 +324,18 @@
             <span class="label label-default" itemprop="about">ansible</span>
         </a>
       
+        <a href="/tag/tutorial.html">
+            <span class="label label-default" itemprop="about">tutorial</span>
+        </a>
+      
+        <a href="/tag/devops.html">
+            <span class="label label-default" itemprop="about">devops</span>
+        </a>
+      
+        <a href="/tag/automation.html">
+            <span class="label label-default" itemprop="about">automation</span>
+        </a>
+      
     </div>
     </div>
 
@@ -353,7 +364,7 @@
                     <div class="panel-body">
                             <div class="counter-box">
                                 <h2>
-                                    <span class="count">56</span>
+                                    <span class="count">57</span>
                                 </h2>
                             </div>
                     </div>
