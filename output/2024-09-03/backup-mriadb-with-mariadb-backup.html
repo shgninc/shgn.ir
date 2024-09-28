@@ -207,6 +207,7 @@
       <section itemprop="articleBody">
         <p>یکی از سریع ترین روش های پشتیبان گیری از دیتابیس <code>mariadb</code> استفاده از <code>mariadb-backup</code> است. در حقیقت این
  این برنامه از <code>xtrabackup</code> که از دیتابیس های <code>mysql</code> و <code>xtradb</code> پشتیبان گیری می کند، گرفته شده است.</p>
+<p><img src="mariadb-backup.jpg" alt="Mariadb Backup" style="width:700px;" /></p>
 <p>قبلا درباره دیگر روش های پشتیبان گیری از دیتابیس <code>mysql/mariadb</code> صحبت کرده ایم، از جمله 
 <a href="https://shgn.ir/2023-12-16/mydumper-myloader.html">آشنایی با mydumper/myloader</a>
  و یک اشاره اولیه به <code>mysqldump</code> در مقاله
@@ -214,7 +215,71 @@
  کرده ایم. در این دو حالت مطمئن ترین روش <code>mysqldump/mariadb-dump</code> می باشد اما سرعت در
  <code>mydumper/myloader</code> خیلی بیشتر است.</p>
 <p>در روش <code>mariadb-backup</code> ما در پشتیبان گیری به ویژه به صورت افزایشی - incremantal - نیز سرعت بسیار قابل
- قبولی را داریم.</p>
+ قبولی را داریم. نکته ای که باید در نظر داشت، <strong>از هر نسخه ای از <code>mariadb</code> پشتیبان گیری انجام شود، بازگرداندن
+ نیز باید روی همان نسخه صورت پذیرد.</strong></p>
+<h2>پشتیبان گیری کامل از دیتابیس</h2>
+<p>به صورت خیلی ساده برای پشتیبان گیری از دیتابیس می توان با اجرا دستور زیر پشتیبان گیری انجام داد. نکته حائز
+ اهمیت این است که، هاستی که قرار است پشتیبان گیری آن جا انجام شود، نیازمند به <em>فضای دیسکی برابر با میزان فعلی
+ دیتابیس</em> می باشد. </p>
+<div class="codehilite"><pre><span></span><code>mariadb-backup<span class="w"> </span>--backup<span class="w"> </span>--target-dir=/path/to/save/backup/files<span class="w"> </span>--user=backup_user<span class="w"> </span>--password=&quot;<span class="cp">${</span><span class="n">PASSWORD</span><span class="cp">}</span>&quot;<span class="w"> </span>--host=mariadb-host-address
+</code></pre></div>
+
+<p>بعد از اجرای دستور فوق باید دستور زیر اجرا شود تا پشتیبان گرفته شده جهت بازیابی معتبر و پایدار شود:</p>
+<div class="codehilite"><pre><span></span><code>mariadb-backup --prepare --target-dir=/path/to/save/backup/files
+</code></pre></div>
+
+<h3>پشتیبان گیری افزایشی</h3>
+<p>برای انجام پشتیبان گیری افزایشی از دیتابیس، مراحل به این صورت است که ابتدا باید یک پشتیبان گیری کامل از
+ دیتابیس انجام شود، که بالاتر بیان شد، سپس با دستور زیر به صورت افزایشی از دیتابیس پشتیبان گیری انجام شود:</p>
+<div class="codehilite"><pre><span></span><code>mariabackup --backup --target-dir=/path/to/save/backup/inc1 --incremental-basedir=/path/to/save/backup/files --host=host-maridb-address --user=backup_user --password=&quot;${PASSWORD&quot;
+</code></pre></div>
+
+<p>گزینه <code>--target-dir</code> مشخص کننده مسیر قرار گیری فایل های تغییرات بر اساس گزینه <code>--incremental-basedir</code> می باشد
+ که محل قرارگیری پشتیبان کامل است.</p>
+<p>برای انجام پشتیبان گیری افزایش بعدی، به صورت زیر عمل می شود:</p>
+<div class="codehilite"><pre><span></span><code>mariabackup --backup --target-dir=/path/to/save/backup/inc2 --incremental-basedir=/path/to/save/backup/inc1 --host=host-maridb-address --user=backup_user --password=&quot;${PASSWORD&quot;
+</code></pre></div>
+
+<h3>آماده سازی پشتیبان</h3>
+<p>در پشتیبان گیری افزایشی ما حداقل ۲ یا بیشتر پشتیبان خواهیم داشت که اولین آن پشتیبان کامل و مابقی افزایشی
+ می باشد. جهت بازگرداندن پشیتبان، ابتدا باید افزایشی ها را به پشتیبان کامل پایه اعمال نمود، برای این مهم
+ با گزینه <code>--prepare</code> و همچنین <code>--aply-log-only</code> قابل انجام است.</p>
+<div class="codehilite"><pre><span></span><code>mariadb-backup --prepare --target-dir=/path/to/save/backup/files
+</code></pre></div>
+
+<p>با این دستور، پشتیبان کامل پایه گرفته شده، در مسیر مشخص شده، با تغییرات <code>InnoDB redo log</code> همسان سازی
+ می شوند، سپس با دستور زیر پشتیبان های افزایشی به پشیتبان کامل اعمال می شود:</p>
+<div class="codehilite"><pre><span></span><code>mariadb-backup --prepare --target-dir=/path/to/save/backup/files --incremental-dir=/path/to/save/backup/inc1
+</code></pre></div>
+
+<p>با اجرای این دستور پشتیبان افزایشی اول به پشتیبان کامل پایه اعمال می گردد.</p>
+<h2>بازیابی دیتابیس پشتیبان گرفته شده</h2>
+<p>بعد از انجام پشتیبان گیری از دیتابیس و آماده سازی پشتیبان های کامل و افزایشی، گام بعدی، انتقال فایل ها و 
+ بازگرداندن پشتیبان در سرور مقصد می باشد. برای این مهم باید از گزینه های <code>--copy-back</code> یا<code>--move-back</code>
+ استفاده کرد. با گزینه <code>--copy-back</code>علاوه بر بازگرداندن پشتیبان دیتابیس، فایل های پشتیبان نیز حفظ می شوند،
+ اما در گزینه <code>--move-back</code> فقط پشتیبان بازگردانده می شود و فایل ها حذف می شوند.
+مراحل بازگرداندن پشتیبان دیتابیس:</p>
+<ul>
+<li>
+<p>توقف سرویس دیتابیس <code>MariaDB Server</code></p>
+<p>sudo systemctl stop mariadb.service
+ * از خالی بودن <code>datadir</code> اطمینان حاصل کنید</p>
+<p>sudo rm -rf /var/lib/mysql/*
+ * اجرای دستور بازگردانی پشتیبان:</p>
+<p>sudo rsync -avrP /path/to/save/backup/files /var/lib/mysql/
+ * تصحیح دسترسی و مجوز فایل های بازگردانده شده:</p>
+<p>sudo chown -R mysql:mysql /var/lib/mysql
+ * در پایان راه اندازی مجدد سرویس دیتابیس:</p>
+<p>sudo systemctl strat mariadb.service</p>
+</li>
+</ul>
+<p>این مراحل خیلی ساده و سریع انجام می شود.</p>
+<h1>منابع</h1>
+<ul>
+<li><a href="https://mariadb.com/kb/en/full-backup-and-restore-with-mariabackup/">full backup and restore with mariabackup</a></li>
+<li><a href="https://mariadb.com/kb/en/incremental-backup-and-restore-with-mariabackup/">incremental backup and restore with mariabackup</a></li>
+<li><a href="https://travishorn.com/comprehensive-guide-backing-up-and-recovering-data-in-mariadb">comprehensive guide backing up and recovering data in mariadb</a></li>
+</ul>
       </section>
       <div>
         برچسب ها:
