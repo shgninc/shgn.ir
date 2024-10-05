@@ -205,20 +205,56 @@
       
     </div>
       <section itemprop="articleBody">
-        <p>دیتابیس mariadb توپولوژی های رپلیکیشن مختلفی را معرفی کرده، معروف ترین 
-آنها توپولوژی Master/Slave می باشد. به طور پیش فرض، رپلیکیشن به صورت نامتقارن بوده 
-که با ارسال وقایع مستر به باینری لاگ دیتابیس که توضیح دهنده تغییرات لحظه ای دیتابیس بوده و 
-اسلیوها این وقایع را زمانی که آماده باشند درخواست می کنند. نکته مهم این است که در این روش، 
-امکان عملیات write/read فقط روی سرور مستر می باشد و روی سرور اسلیو فقط امکان read وجود دارد.</p>
+        <p>دیتابیس mariadb توپولوژی های رپلیکیشن مختلفی را معرفی کرده، معروف ترین آنها توپولوژی Master/Slave می باشد. به طور 
+پیش فرض، رپلیکیشن به صورت نامتقارن بوده که با ارسال وقایع مستر به باینری لاگ دیتابیس که توضیح دهنده تغییرات لحظه ای 
+دیتابیس بوده و اسلیوها این وقایع را زمانی که آماده باشند درخواست می کنند. نکته مهم این است که در این روش، امکان 
+عملیات write/read فقط روی سرور مستر می باشد و روی سرور اسلیو فقط امکان read وجود دارد.</p>
 <p>در نوشته قبلی
 <a href="https://shgn.ir/2024-04-14/mysql-master-slave-replication.html">راه اندازی Mysql/Mariadb Slave Replication</a>
 صرفا پیرامون راه اندازی یک رپلیکیشن <code>master/slave</code> روی <code>mariadb/mysql</code> به صورت ساده و با 
 استفاده از دستور <code>mysqldump</code> با این ویژگی که نیازی به توقف دیتابیس در حین کار نباشد و یک نود 
 <code>slave</code> را ایجاد نمود.</p>
-<p>این روش، روشی مطمئن می باشد، اما یکی از مشکلات بزرگ آن زمان بر بودن اچرای آن می باشد. استفاده 
-دستور <code>mysqldump</code>، چه در مرحله بکاپ گیری و چه در مرحله بازگردانی بکاپ، طولانی عمل کرده که این
- کندی در مجموعه راه اندازی یک رپلیکیشن بسیار نمایان خواهد بود.</p>
+<p><img alt="replication.png" src="replication.png" title="Mariadb master/slave replication" /></p>
+<p>این روش، روشی مطمئن می باشد، اما یکی از مشکلات بزرگ آن زمان بر بودن اجرای آن می باشد. استفاده دستور <code>mysqldump</code>، 
+چه در مرحله بکاپ گیری و چه در مرحله بازگردانی بکاپ، طولانی عمل کرده که این کندی در مجموع راه اندازی یک رپلیکیشن، 
+بسیار <em>نمایان</em> خواهد بود.</p>
 <p>پس راه دیگری که خیلی سریع تر از آن عمل می کند، استفاده از روش <code>mariadb-backup</code> می باشد.</p>
+<p>تنظیمات اولیه روی سروی های <code>master</code> و <code>slave</code> همانطور که در نوشته قبلی توضیح داده شد، انجام
+می گردد. در قسمت همگام سازی دیتابیس ها <code>master</code> با <code>slave</code> به جای <code>mysqldump</code> از 
+<code>mariadb-backup</code> طبق نوشته
+<a href="http://localhost:8000/2024-09-03/backup-mriadb-with-mariadb-backup.html">پشتیبان گیری سریع دیتابیس mariadb</a>
+ عمل می گردد.</p>
+<h2>همگام سازی</h2>
+<p>از دیتابیس اصلی به صورت زیر بکاپ گیری می شود:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">mariadb</span><span class="o">-</span><span class="n">backup</span><span class="w"> </span><span class="o">--</span><span class="n">backup</span><span class="w"> </span><span class="o">--</span><span class="n">target</span><span class="o">-</span><span class="n">dir</span><span class="o">=/</span><span class="k">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">backup</span><span class="w"> </span><span class="o">--</span><span class="n">user</span><span class="o">=</span><span class="n">backup</span><span class="o">-</span><span class="n">user</span><span class="w"> </span><span class="o">--</span><span class="n">password</span><span class="o">=$</span><span class="p">{</span><span class="n">PASSWORD</span><span class="p">}</span>
+<span class="n">mariadb</span><span class="o">-</span><span class="n">backup</span><span class="w"> </span><span class="o">--</span><span class="n">prepare</span><span class="w"> </span><span class="o">--</span><span class="n">target</span><span class="o">-</span><span class="n">dir</span><span class="o">=/</span><span class="k">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">backup</span>
+</code></pre></div>
+
+<p>انتقال به <code>datadir</code> سرور مقصد:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">rsync</span><span class="w"> </span><span class="o">-</span><span class="n">azviP</span><span class="w"> </span><span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">backup</span><span class="w"> </span><span class="n">app</span><span class="o">-</span><span class="n">user</span><span class="err">@</span><span class="n">salve</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">ip</span><span class="p">:</span><span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">mysql</span>
+</code></pre></div>
+
+<p>راه اندازی سرویس <code>mariadb</code> سرور مقصد و انجام تنظیمات نهایی رپلیکیشن:</p>
+<div class="codehilite"><pre><span></span><code>systemctl start mariadb
+</code></pre></div>
+
+<p>و</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">change</span><span class="w"> </span><span class="nv">master</span><span class="w"> </span><span class="nv">to</span>
+<span class="w">     </span><span class="nv">master_host</span><span class="o">=</span><span class="s1">&#39;master-server-ip&#39;</span>,
+<span class="w">     </span><span class="nv">master_user</span><span class="o">=</span><span class="s1">&#39;salve1&#39;</span>,
+<span class="w">     </span><span class="nv">master_password</span><span class="o">=</span><span class="s1">&#39;1234&#39;</span>,
+<span class="w">     </span><span class="nv">master_log_file</span><span class="o">=</span><span class="s1">&#39;binalog_file_name&#39;</span>,
+<span class="w">     </span><span class="nv">master_log_pos</span><span class="o">=</span><span class="mi">345</span><span class="c1">;</span>
+<span class="nv">start</span><span class="w"> </span><span class="nv">slave</span><span class="c1">;</span>
+<span class="k">show</span><span class="w"> </span><span class="nv">slave</span><span class="w"> </span><span class="nv">status</span><span class="w"> </span>\<span class="nv">G</span>
+</code></pre></div>
+
+<p>در پایان انتظار می رود تا رپلیکیشن با موفقیت ایجاد و اجرا شود.</p>
+<h1>منابع:</h1>
+<ul>
+<li><a href="https://mariadb.com/kb/en/gtid/">Global Tranaction ID</a></li>
+<li><a href="https://mariadb.com/kb/en/setting-up-a-replica-with-mariabackup/#gtids">setting up a replica with mariabackup</a></li>
+</ul>
       </section>
       <div>
         برچسب ها:
