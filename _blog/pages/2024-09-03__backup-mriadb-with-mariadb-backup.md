@@ -63,20 +63,24 @@ type: post
 مراحل بازگرداندن پشتیبان دیتابیس:
 
  * توقف سرویس دیتابیس `MariaDB Server`
-      
-       sudo systemctl stop mariadb.service
+
+        sudo systemctl stop mariadb.service
+
  * از خالی بودن `datadir` اطمینان حاصل کنید
 
-       sudo rm -rf /var/lib/mysql/*
+        sudo rm -rf /var/lib/mysql/*
+
  * اجرای دستور بازگردانی پشتیبان:
 
-       sudo rsync -avrP /path/to/save/backup/files /var/lib/mysql/
+        sudo rsync -avrP /path/to/save/backup/files /var/lib/mysql/
+
  * تصحیح دسترسی و مجوز فایل های بازگردانده شده:
  
-       sudo chown -R mysql:mysql /var/lib/mysql
+        sudo chown -R mysql:mysql /var/lib/mysql
+
  * در پایان راه اندازی مجدد سرویس دیتابیس:
        
-       sudo systemctl strat mariadb.service
+        sudo systemctl strat mariadb.service
 
 این مراحل خیلی ساده و سریع انجام می شود.
 
