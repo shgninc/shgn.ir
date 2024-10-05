@@ -182,8 +182,8 @@ log-bin ویژگی ثبت باینری لاگ ها را فعال می کند
        Slave_Transactional_Groups: 0
     1 row in set (0.000 sec)
 
-اگر در خروجی فوق این دو پارمتر با مقادیر `yes`باشند`Slave_IO_Running: Yes`و
-`Slave_SQL_Running: Yes` رپلیکشین درست است و همچینین مقدار پارمتر `Seconds_Behind_Master` نشان
+اگر در خروجی فوق این دو پارامتر با مقادیر `yes`باشند`Slave_IO_Running: Yes`و
+`Slave_SQL_Running: Yes` رپلیکشین درست است و همچنین مقدار پارامتر `Seconds_Behind_Master` نشان
  دهنده میزان ثانیه ای است که اسلیو از مستر عقب است.
 
 #منابع
