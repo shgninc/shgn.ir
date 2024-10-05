@@ -15,11 +15,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title> پستهای تگ شده با  'sql' - دست نوشته های یک تازه کار </title>
+    <title> سریعترین راه mariadb master/slave replication - دست نوشته های یک تازه کار </title>
     <meta name="description"
-          content="این وبلاگ پیرامون تجربیات، دانسته ها، اینجاب درباره linux, database, mysql, mariadb, datamart, galera cluster,apache می باشد."/>
+          content="راه اندازی رپلیکیشن master/slave در mariadb در سریعترین حالت ممکن."/>
     <meta name="keywords"
-          content="لینوکس،لینوکس مشهد،آموزش,پایتون,پایتون مشهد,آموزش لینوکس,دیتابیس,آموزش دیتابیس,برنامه نویسی,linux,database,mysql,mariadb,datamart,galera cluster,apache,big data,dataware house,cluster,galera,percona,python,php,tutorial,debian,ubuntu,centos,arch linux,mashhad linux,iran linux,debian mashhad,"/>
+          content="لینوکس،لینوکس مشهد،آموزش,پایتون,پایتون مشهد,آموزش لینوکس,دیتابیس,آموزش دیتابیس,برنامه نویسی,linux,database,mysql,mariadb,datamart,galera cluster,apache,big data,dataware house,cluster,galera,percona,python,php,tutorial,debian,ubuntu,centos,arch linux,mashhad linux,iran linux,debian mashhad, database, mariadb, replication"/>
 
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
     <!-- Bootstrap -->
@@ -188,77 +188,55 @@
     <div class="row">
         <div class="col-md-9">
             
+    <div itemscope itemtype="http://schema.org/NewsArticle">
+    <meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="http://https://shgn.ir/2024-10-05/mariadb-master-salve-replication-fastest.html"/>
     <div class="page-header">
-      <h2>پستهای تگ شده با  'sql'</h2>
-      <p class="lead"></p>
+      <h3 itemprop="name">سریعترین راه mariadb master/slave replication</h3>
+      
+      
+        <small>
+          <p class="text-right">
+            ارسال شده <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+                توسط <span itemprop="name">سید سجاد شاهچراغیان</span>
+              </span>
+              در تاریخ <span itemprop="datePublished">2024-10-05</span>
+          </p>
+        </small>
+      
     </div>
+      <section itemprop="articleBody">
+        <p>دیتابیس mariadb توپولوژی های رپلیکیشن مختلفی را معرفی کرده، معروف ترین 
+آنها توپولوژی Master/Slave می باشد. به طور پیش فرض، رپلیکیشن به صورت نامتقارن بوده 
+که با ارسال وقایع مستر به باینری لاگ دیتابیس که توضیح دهنده تغییرات لحظه ای دیتابیس بوده و 
+اسلیوها این وقایع را زمانی که آماده باشند درخواست می کنند. نکته مهم این است که در این روش، 
+امکان عملیات write/read فقط روی سرور مستر می باشد و روی سرور اسلیو فقط امکان read وجود دارد.</p>
+<p>در نوشته قبلی
+<a href="https://shgn.ir/2024-04-14/mysql-master-slave-replication.html">راه اندازی Mysql/Mariadb Slave Replication</a>
+صرفا پیرامون راه اندازی یک رپلیکیشن <code>master/slave</code> روی <code>mariadb/mysql</code> به صورت ساده و با 
+استفاده از دستور <code>mysqldump</code> با این ویژگی که نیازی به توقف دیتابیس در حین کار نباشد و یک نود 
+<code>slave</code> را ایجاد نمود.</p>
+<p>این روش، روشی مطمئن می باشد، اما یکی از مشکلات بزرگ آن زمان بر بودن اچرای آن می باشد. استفاده 
+دستور <code>mysqldump</code>، چه در مرحله بکاپ گیری و چه در مرحله بازگردانی بکاپ، طولانی عمل کرده که این
+ کندی در مجموعه راه اندازی یک رپلیکیشن بسیار نمایان خواهد بود.</p>
+<p>پس راه دیگری که خیلی سریع تر از آن عمل می کند، استفاده از روش <code>mariadb-backup</code> می باشد.</p>
+      </section>
+      <div>
+        برچسب ها:
       
-        <h3><a href="/2018-09-05/Mysql-JSON-DataType.html" title="معرفی نوع داده JSON در دیتابیس Mysql-Mariadb">معرفی نوع داده JSON در دیتابیس Mysql-Mariadb</a></h3>
-            
-                <a href="/tag/mysql.html">
-                    <span class="label label-default">mysql</span></a>
-            
-                <a href="/tag/mariadb.html">
-                    <span class="label label-default">mariadb</span></a>
-            
-                <a href="/tag/database.html">
-                    <span class="label label-default">database</span></a>
-            
-                <a href="/tag/json.html">
-                    <span class="label label-default">json</span></a>
-            
-                <a href="/tag/sql.html">
-                    <span class="label label-default">sql</span></a>
-            
-                <a href="/tag/noSql.html">
-                    <span class="label label-default">noSql</span></a>
-            
-        <p>این نوع داده بر اساس استاندارد RFC 7159 بوده و به صورت یک رشته با قالب JSON قابل ذخیره سازی می باشد.</p>
-        <hr />
+        <a href="/tag/database.html">
+            <span class="label label-default" itemprop="about">database</span>
+        </a>
       
-        <h3><a href="/2012-11-30/create_mysql_stored_procedures2.html" title="نحوه ایجاد یک Stored Procedures در MySQL5- بخش دوم">نحوه ایجاد یک Stored Procedures در MySQL5- بخش دوم</a></h3>
-            
-                <a href="/tag/database.html">
-                    <span class="label label-default">database</span></a>
-            
-                <a href="/tag/sql.html">
-                    <span class="label label-default">sql</span></a>
-            
-                <a href="/tag/mysql.html">
-                    <span class="label label-default">mysql</span></a>
-            
-                <a href="/tag/stored_procedure.html">
-                    <span class="label label-default">stored_procedure</span></a>
-            
-        <p>یک روشی که خیلی مورد پسند بنده واقع شده، روشی است که در آن با استفاده از استور پروسیجرها کار هایم با دیتابیس را انجام می دهم. استور پروسیجر ها امکانی است که برخی نرم افزارهای مدیریت پایگاه داده ها آن را حمایت کرده و برخی خیر. از جلمه این پایگاه داده ها می توان از `MySQL، MSSQL` و... نام برد.</p>
-        <hr />
+        <a href="/tag/mariadb.html">
+            <span class="label label-default" itemprop="about">mariadb</span>
+        </a>
       
-        <h3><a href="/2012-11-28/create_mysql_stored_procedures1.html" title="نحوه ایجاد یک Stored Procedures در MySQL5- بخش اول">نحوه ایجاد یک Stored Procedures در MySQL5- بخش اول</a></h3>
-            
-                <a href="/tag/database.html">
-                    <span class="label label-default">database</span></a>
-            
-                <a href="/tag/sql.html">
-                    <span class="label label-default">sql</span></a>
-            
-                <a href="/tag/mysql.html">
-                    <span class="label label-default">mysql</span></a>
-            
-                <a href="/tag/stored_procedure.html">
-                    <span class="label label-default">stored_procedure</span></a>
-            
-        <p>یک روشی که خیلی مورد پسند بنده واقع شده، روشی است که در آن با استفاده از استور پروسیجرها کار هایم با دیتابیس را انجام می دهم. استور پروسیجر ها امکانی است که برخی نرم افزارهای مدیریت پایگاه داده ها آن را حمایت کرده و برخی خیر. از جلمه این پایگاه داده ها می توان از `MySQL، MSSQL` و... نام برد.</p>
-        <hr />
+        <a href="/tag/replication.html">
+            <span class="label label-default" itemprop="about">replication</span>
+        </a>
       
-      
-              <ul class="pagination">
-                
-                    
-                        <li class="active"><a href="#">0 <span class="sr-only">(current)</span></a></li>
-                    
-                
-              </ul>
-      
+    </div>
+    </div>
 
         </div>
         <div class="col-md-3">
@@ -339,12 +317,6 @@
                         </div>
                         <div class="panel-body">
                             <ul>
-                                
-                                <li><a href="/2018-09-05/Mysql-JSON-DataType.html" title="معرفی نوع داده JSON در دیتابیس Mysql-Mariadb">معرفی نوع داده JSON در دیتابیس Mysql-Mariadb</a></li>
-                                
-                                <li><a href="/2012-11-30/create_mysql_stored_procedures2.html" title="نحوه ایجاد یک Stored Procedures در MySQL5- بخش دوم">نحوه ایجاد یک Stored Procedures در MySQL5- بخش دوم</a></li>
-                                
-                                <li><a href="/2012-11-28/create_mysql_stored_procedures1.html" title="نحوه ایجاد یک Stored Procedures در MySQL5- بخش اول">نحوه ایجاد یک Stored Procedures در MySQL5- بخش اول</a></li>
                                 
                             </ul>
 

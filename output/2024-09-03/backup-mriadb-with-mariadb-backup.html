@@ -262,15 +262,33 @@
 <ul>
 <li>
 <p>توقف سرویس دیتابیس <code>MariaDB Server</code></p>
-<p>sudo systemctl stop mariadb.service
- * از خالی بودن <code>datadir</code> اطمینان حاصل کنید</p>
-<p>sudo rm -rf /var/lib/mysql/*
- * اجرای دستور بازگردانی پشتیبان:</p>
-<p>sudo rsync -avrP /path/to/save/backup/files /var/lib/mysql/
- * تصحیح دسترسی و مجوز فایل های بازگردانده شده:</p>
-<p>sudo chown -R mysql:mysql /var/lib/mysql
- * در پایان راه اندازی مجدد سرویس دیتابیس:</p>
-<p>sudo systemctl strat mariadb.service</p>
+<div class="codehilite"><pre><span></span><code>sudo systemctl stop mariadb.service
+</code></pre></div>
+
+</li>
+<li>
+<p>از خالی بودن <code>datadir</code> اطمینان حاصل کنید</p>
+<div class="codehilite"><pre><span></span><code><span class="n">sudo</span><span class="w"> </span><span class="n">rm</span><span class="w"> </span><span class="o">-</span><span class="n">rf</span><span class="w"> </span><span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">mysql</span><span class="o">/*</span>
+</code></pre></div>
+
+</li>
+<li>
+<p>اجرای دستور بازگردانی پشتیبان:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">sudo</span><span class="w"> </span><span class="n">rsync</span><span class="w"> </span><span class="o">-</span><span class="n">avrP</span><span class="w"> </span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">save</span><span class="o">/</span><span class="n">backup</span><span class="o">/</span><span class="n">files</span><span class="w"> </span><span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span>
+</code></pre></div>
+
+</li>
+<li>
+<p>تصحیح دسترسی و مجوز فایل های بازگردانده شده:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">sudo</span><span class="w"> </span><span class="n">chown</span><span class="w"> </span><span class="o">-</span><span class="n">R</span><span class="w"> </span><span class="n">mysql</span><span class="p">:</span><span class="n">mysql</span><span class="w"> </span><span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">mysql</span>
+</code></pre></div>
+
+</li>
+<li>
+<p>در پایان راه اندازی مجدد سرویس دیتابیس:</p>
+<div class="codehilite"><pre><span></span><code>sudo systemctl strat mariadb.service
+</code></pre></div>
+
 </li>
 </ul>
 <p>این مراحل خیلی ساده و سریع انجام می شود.</p>
@@ -324,7 +342,7 @@
                     <div class="panel-body">
                             <div class="counter-box">
                                 <h2>
-                                    <span class="count">57</span>
+                                    <span class="count">58</span>
                                 </h2>
                             </div>
                     </div>
