@@ -1,0 +1,9 @@
+.slides{
+    direction: rtl;
+}
+.reveal ul{
+    text-align: right;
+}
+.php{
+    direction: ltr;
+}

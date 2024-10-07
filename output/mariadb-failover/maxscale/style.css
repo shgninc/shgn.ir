@@ -1,0 +1,37 @@
+/*body {
+	background-position: top;
+	background-image: url(mariadb-background.jpeg);
+	background-size: 100% 15%;
+	background-repeat: no-repeat;
+}
+*/
+ul.sponsors {
+	list-style: none;
+	text-align: center;
+}
+
+.sponsors li {
+	display: inline-block;
+	padding: 0 .5em;
+}
+
+.sponsors li:before {
+	content: "";
+}
+
+.sponsors li img {
+	width: 80px;
+}
+
+.replications li {
+	display: inline-block;
+	padding: 0 .5em;
+}
+
+.replications li:before {
+	content: "";
+}
+
+.replications li img {
+	width: 150px;
+}
