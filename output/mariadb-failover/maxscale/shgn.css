@@ -12,8 +12,14 @@
   padding: 10px;
 }
 
-.reveal code {
+.reveal pre code {
   font-family: Monaco, consolas, monospace;
+  direction: ltr;
+  font-size: 14px;
+  font-weight: normal;
+  text-align: justify;
+  padding: 0;
+  line-height: 1.1;
 }
 
 .reveal pre.big code {
