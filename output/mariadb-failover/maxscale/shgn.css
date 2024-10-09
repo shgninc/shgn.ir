@@ -1,7 +1,4 @@
 @import url(../../../fonts/stylesheet.css);
-/**
- * samdark theme for reveal.js.
- */
 .reveal table {
   table-layout: fixed;
 }
@@ -18,7 +15,7 @@
   font-size: 14px;
   font-weight: normal;
   text-align: justify;
-  padding: 0;
+  padding: 5px;
   line-height: 1.1;
 }
 
@@ -91,6 +88,16 @@ body {
   letter-spacing: 0.02em;
   text-transform: none;
   text-shadow: 0px 0px 6px rgba(0, 0, 0, 0.2);
+}
+
+.reveal.rtl .slides,
+.reveal.rtl .slides h1,
+.reveal.rtl .slides h2,
+.reveal.rtl .slides h3,
+.reveal.rtl .slides h4,
+.reveal.rtl .slides h5,
+.reveal.rtl .slides h6 {
+  font-family: "vazir";
 }
 
 .reveal h1 {
@@ -187,6 +194,8 @@ body {
  *********************************************/
 .reveal .progress {
   background: rgba(0, 0, 0, 0.2);
+  color: #7e588aff;
+  height: 1%;
 }
 
 .reveal .progress span {

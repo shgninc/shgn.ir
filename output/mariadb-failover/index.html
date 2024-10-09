@@ -42,8 +42,8 @@
 
             <!-- Any section element inside of this container is displayed as a slide -->
             <div style="width: 960px; height: 700px; transform: translate(-50%, -50%) scale(1) translate(50%, 50%);" class="slides">
-
-                <section class="present" style="top: -350px; display: block;">
+                <!-- START SLIDE - 1 -->
+                <section>
                     <section>
                     <h1 style="direction: ltr;">Failover با Maxscale</h1>
                         <br \>
@@ -82,11 +82,13 @@
 
                     </section>
                 </section>
+                <!-- START SLIDE - 1 -->
 
-                <section class="present" style="top: -160px; display: block;">
+                <!-- SLIDE - 2 -->
+                <section>
                     <h1>مراحل انجام کار</h1>
                     <br \>
-                    <ul>
+                    <ul style="text-align:justify;">
                         <li>                            راه اندازی رپلیکیشن
                             <a class="roll" href="https://mariadb.com/kb/en/replication-overview/" title="mariadb master/slave"><span data-title="mariadb master/slave">mariadb master/slave</span></a>
                         </li>
@@ -95,8 +97,10 @@
                         <li>راه اندازی maxscale cluster</li>
                     </ul>
                 </section>
+                <!-- SLIDE - 2 -->
 
-                <section class="future" style="top: -269.5px; display: block;">
+                <!-- SLIDE - 3 -->
+                <section>
                     <section>
                         <h2>mariadb master/slave replication so simple</h2>
                         <img src="maxscale/mariadb-replication.png" alt="mariadb master/slave replication" \>
@@ -183,8 +187,10 @@
                        <img src="maxscale/slaveStatus.png" alt="show slave status"/>
                    </section>
                 </section>
+                <!-- SLIDE - 3 -->
 
-                <section class="future" style="top: -20px; display: none;">
+                <!-- SLIDE - 4 -->
+                <section>
                     <section>
                         <h2>Maxscale</h2>
                         <img src="maxscale/MaxScale-logo.png" alt="Maxscale" width="40%" />
@@ -251,8 +257,10 @@
                        </code></pre>
                     </section>
                 </section>
+                <!-- SLIDE - 4 -->
 
-                <section class="future" style="top: -20px; display: none;">
+                <!-- SLIDE - 5 -->
+                <section>
                     <section>
                         <h1><a class="roll" href="https://mariadb.com/resources/blog/mariadb-maxscale-2-2-introducing-failover-switchover-and-automatic-rejoin/" title="Maxscale Failover"><span data-title="Maxscale Failover">Maxscale Failover</span></a></h1>
                         <img src="maxscale/MaxScale-Cluster.jpg" alt="Maxscale Failover" \>
@@ -278,8 +286,10 @@
                        </code></pre>
                     </section>
                 </section>
+                <!-- SLIDE - 5 -->
 
-                <section>
+                <!-- SLIDE - 6 -->
+                <section >
                     <section>
                         <h1>Maxscale Cluster</h1>
                         <img src="maxscale/maxscal_cluster.png" alt="maxscale cluster by VIP">
@@ -292,8 +302,10 @@
                         </ul>
                     </section>
                 </section>
+                <!-- SLIDE - 6 -->
 
-                <section class="future" style="top: -20px; display: none;" data-auto-animate>
+                <!-- SLIDE - 7 -->
+                <section>
                     <section>
                         <h2>همسان سازی تنظمیات maxscale</h2>
                         <ul style="direction: ltr; text-align: justify;">
@@ -351,8 +363,10 @@
                        </code></pre>
                     </section>
                 </section>
+                <!-- SLIDE - 7 -->
 
-                <section class="future" style="top: -20px; display: none;">
+                <!-- SLIDE - 8 -->
+                <section>
                     <section>
                         <h2 class="r-fit-text">Maxscale High Available</h2>
                         <img src="maxscale/vip.png" \>
@@ -413,7 +427,9 @@
                        </code></pre>
                     </section>
                 </section>
+                <!-- SLIDE - 8 -->
 
+                <!-- SLIDE - 9 -->
                 <section>
                     <section>
                         <img src="maxscale/colorful-todo-list-illustration.jpeg" width="50%">
@@ -427,11 +443,30 @@
                         </ul>
                     </section>
                 </section>
+                <!-- SLIDE - 9 -->
 
+                <!-- SLIDE - 10 -->
                 <section>
                     <h2>سوالات؟</h2>
                     <img width="80%" src="maxscale/questions.jpeg" \>
                 </section>
+                <!-- SLIDE - 10 -->
+
+                <!-- SLIDE - 11 -->
+                <section>
+                    <h2>منابع</h2>
+                    <ul class="vip">
+                        <li><a class="roll" href="https://mariadb.com/resources/blog/mariadb-maxscale-2-2-introducing-failover-switchover-and-automatic-rejoin/" title="MariaDB MaxScale 2.2: Introducing Failover, Switchover and Automatic Rejoin"><span data-title="MariaDB MaxScale 2.2: Introducing Failover, Switchover and Automatic Rejoin">MariaDB MaxScale 2.2: Introducing Failover, Switchover and Automatic Rejoin</span></a></li>
+                        <li><a class="roll" href="https://mariadb.com/kb/en/mariadb-maxscale-2308-mariadb-maxscale-configuration-guide/#configuration-synchronization" title="MariaDB MaxScale Configuration Guide"><span data-title="MariaDB MaxScale Configuration Guide">MariaDB MaxScale Configuration Guide</span></a></li>
+                        <li><a class="roll" href="https://severalnines.com/blog/how-use-failover-mechanism-maxscale/" title="How to Use the Failover Mechanism of MaxScale"><span data-title="How to Use the Failover Mechanism of MaxScale">How to Use the Failover Mechanism of MaxScale</span></a></li>
+                        <li><a class="roll" href="https://rasyiqul.wordpress.com/2019/03/08/setup-maxscale-ha-using-keepalived-and-maxctrl/" title="Setup Maxscale HA using Keepalived and Maxctrl"><span data-title="Setup Maxscale HA using Keepalived and Maxctrl">Setup Maxscale HA using Keepalived and Maxctrl</span></a></li>
+                        <li><a class="roll" href="https://mariadb.com/resources/blog/mariadb-maxscale-6-0-native-clustering/" title="MariaDB MaxScale 6.0 Native Clustering"><span data-title="MariaDB MaxScale 6.0 Native Clustering">MariaDB MaxScale 6.0 Native Clustering</span></a></li>
+                        <li><a class="roll" href="https://mariadb.com/kb/en/mariadb-maxscale-25-mariadb-monitor/" title="MariaDB Monitor"><span data-title="MariaDB Monitor">MariaDB Monitor</span></a></li>
+                        <li><a class="roll" href="https://mariadb.com/es/resources/blog/mariadb-automatic-failover-with-maxscale-and-replication-manager/" title="MariaDB automatic failover with MaxScale and Replication Manager"><span data-title="MariaDB automatic failover with MaxScale and Replication Manager">MariaDB automatic failover with MaxScale and Replication Manager</span></a></li>
+
+                    </ul>
+                </section>
+                <!-- SLIDE - 11 -->
 
             </div>
 
@@ -442,7 +477,6 @@
         <script src="maxscale/reveal.js"></script>
 
         <script>
-            // Full list of configuration options available here:
             Reveal.initialize({
                 margin: 0.01,
                 controls: true,
@@ -459,7 +493,5 @@
                 plugins: [RevealHighlight],
             });
         </script>
-        <!--script src="maxscale/zoom.js" type="text/javascript"></script>
-        <script src="maxscale/notes.js" type="text/javascript"></script-->
 
     </body></html>
