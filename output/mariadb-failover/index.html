@@ -45,7 +45,7 @@
                 <!-- START SLIDE - 1 -->
                 <section>
                     <section>
-                    <h1 style="direction: ltr;">Failover با Maxscale</h1>
+                    <h1 style="direction: ltr;">Failover on Maxscale</h1>
                         <br \>
                         <small>
                         ارائه کننده:<br \><a class="roll" href="https://www.linkedin.com/in/sajjad-shahcheraghean/"><span data-title="سید سجاد شاهچراغیان">سید سجاد شاهچراغیان</span></a>
@@ -79,7 +79,9 @@
                             <li><img src="maxscale/multi_source_replication.png" alt="چند مبدأیی" \></li>
                         </ul>
                         که برای هدف ما، روش استاندارد مورد نظر می باشد.
-
+                    </section>
+                    <section>
+                        <img src="maxscale/maxscal_cluster.png" style="width:135%; margin:-55px;" \>
                     </section>
                 </section>
                 <!-- START SLIDE - 1 -->
@@ -89,7 +91,7 @@
                     <h1>مراحل انجام کار</h1>
                     <br \>
                     <ul style="text-align:justify;">
-                        <li>                            راه اندازی رپلیکیشن
+                        <li style="color:rebeccapurple; font-weight: bold;">                            راه اندازی رپلیکیشن
                             <a class="roll" href="https://mariadb.com/kb/en/replication-overview/" title="mariadb master/slave"><span data-title="mariadb master/slave">mariadb master/slave</span></a>
                         </li>
                         <li>راه اندازی maxscale</li>
@@ -99,7 +101,7 @@
                 </section>
                 <!-- SLIDE - 2 -->
 
-                <!-- SLIDE - 3 -->
+                <!-- SLIDE - REPLICATION - 3 -->
                 <section>
                     <section>
                         <h2>mariadb master/slave replication so simple</h2>
@@ -128,7 +130,7 @@
                             MariaDB [(none)]> CREATE USER 'slave1'@'%' IDENTIFIED BY '1234';
                             Query OK, 0 rows affected (0.001 sec)
 
-                            MariaDB [(none)]>  GRANT REPLICATION SLAVE, REPLICATION MONITOR ON *.* TO 'slave1'@'%';
+                            MariaDB [(none)]>  GRANT REPLICATION SLAVE, REPLICATION SLAVE ADMIN ON *.* TO 'slave1'@'%';
                             Query OK, 0 rows affected (0.001 sec)
                        </code></pre>
                    </section>
@@ -187,9 +189,24 @@
                        <img src="maxscale/slaveStatus.png" alt="show slave status"/>
                    </section>
                 </section>
-                <!-- SLIDE - 3 -->
+                <!-- SLIDE - REPLICATION - 3 -->
 
                 <!-- SLIDE - 4 -->
+                <section>
+                    <h1>مراحل انجام کار</h1>
+                    <br \>
+                    <ul style="text-align:justify;">
+                        <li>                            راه اندازی رپلیکیشن
+                            <a class="roll" href="https://mariadb.com/kb/en/replication-overview/" title="mariadb master/slave"><span data-title="mariadb master/slave">mariadb master/slave</span></a>
+                        </li>
+                        <li style="color:rebeccapurple; font-weight: bold;">راه اندازی maxscale</li>
+                        <li>راه اندازی failover</li>
+                        <li>راه اندازی maxscale cluster</li>
+                    </ul>
+                </section>
+                <!-- SLIDE - 4 -->
+
+                <!-- SLIDE - MAXSCALE - 5 -->
                 <section>
                     <section>
                         <h2>Maxscale</h2>
@@ -214,12 +231,15 @@
                        ایجاد دسترسی برای بخش های مختلف Maxscale
                        <pre><code data-trim data-noescape data-line-numbers>
                             CREATE USER 'maxscale'@'%' IDENTIFIED BY 'maxscale-password';
-                            GRANT REPLICA MONITOR, REPLICATION SLAVE, FILE, CONNECTION ADMIN, RELOAD, PROCESS, SHOW DATABASES, EVENT, SET USER, READ_ONLY ADMIN, BINLOG ADMIN ON *.* TO 'maxscale'@'%';
+                            GRANT REPLICA MONITOR, REPLICATION SLAVE, REPLICATION SLAVE ADMIN, FILE, CONNECTION ADMIN, RELOAD, PROCESS, SHOW DATABASES, EVENT, SET USER, READ_ONLY ADMIN, BINLOG ADMIN ON *.* TO 'maxscale'@'%';
                             GRANT SELECT ON mysql.global_priv TO 'maxscale'@'%';
                             GRANT SELECT ON mysql.procs_priv TO 'maxscale'@'%';
                             GRANT SELECT ON mysql.user TO 'maxscale'@'%';
                             GRANT SELECT ON mysql.db TO 'maxscale'@'%';
                             GRANT SELECT ON mysql.tables_priv TO 'maxscale'@'%';
+                            GRANT SELECT ON mysql.proxies_priv TO 'maxscale'@'%';
+                            GRANT SELECT ON mysql.roles_mapping TO 'maxscale'@'%';
+                            GRANT SELECT ON mysql.columns_priv TO 'maxscale'@'%';
                        </code></pre>
                     </section>
                     <section>
@@ -257,9 +277,24 @@
                        </code></pre>
                     </section>
                 </section>
-                <!-- SLIDE - 4 -->
+                <!-- SLIDE - MAXSCALE - 5 -->
 
-                <!-- SLIDE - 5 -->
+               <!-- SLIDE - 6 -->
+                <section>
+                    <h1>مراحل انجام کار</h1>
+                    <br \>
+                    <ul style="text-align:justify;">
+                        <li>                            راه اندازی رپلیکیشن
+                            <a class="roll" href="https://mariadb.com/kb/en/replication-overview/" title="mariadb master/slave"><span data-title="mariadb master/slave">mariadb master/slave</span></a>
+                        </li>
+                        <li>راه اندازی maxscale</li>
+                        <li  style="color:rebeccapurple; font-weight: bold;">راه اندازی failover</li>
+                        <li>راه اندازی maxscale cluster</li>
+                    </ul>
+                </section>
+                <!-- SLIDE - 6 -->
+
+                <!-- SLIDE - FAILOVER - 7 -->
                 <section>
                     <section>
                         <h1><a class="roll" href="https://mariadb.com/resources/blog/mariadb-maxscale-2-2-introducing-failover-switchover-and-automatic-rejoin/" title="Maxscale Failover"><span data-title="Maxscale Failover">Maxscale Failover</span></a></h1>
@@ -286,12 +321,27 @@
                        </code></pre>
                     </section>
                 </section>
-                <!-- SLIDE - 5 -->
+                <!-- SLIDE - FAILOVER - 7 -->
 
-                <!-- SLIDE - 6 -->
+                <!-- SLIDE - 8 -->
+                <section>
+                    <h1>مراحل انجام کار</h1>
+                    <br \>
+                    <ul style="text-align:justify;">
+                        <li>                            راه اندازی رپلیکیشن
+                            <a class="roll" href="https://mariadb.com/kb/en/replication-overview/" title="mariadb master/slave"><span data-title="mariadb master/slave">mariadb master/slave</span></a>
+                        </li>
+                        <li>راه اندازی maxscale</li>
+                        <li>راه اندازی failover</li>
+                        <li  style="color:rebeccapurple; font-weight: bold;">راه اندازی maxscale cluster</li>
+                    </ul>
+                </section>
+                <!-- SLIDE - 8 -->
+
+                <!-- SLIDE CLUSTER 9 -->
                 <section >
                     <section>
-                        <h1>Maxscale Cluster</h1>
+                        <h1>Maxscale Redundancy</h1>
                         <img src="maxscale/maxscal_cluster.png" alt="maxscale cluster by VIP">
                     </section>
                     <section>
@@ -302,9 +352,9 @@
                         </ul>
                     </section>
                 </section>
-                <!-- SLIDE - 6 -->
+                <!-- SLIDE - CLUSTER - 9 -->
 
-                <!-- SLIDE - 7 -->
+                <!-- SLIDE - SYNC - 10 -->
                 <section>
                     <section>
                         <h2>همسان سازی تنظمیات maxscale</h2>
@@ -363,9 +413,9 @@
                        </code></pre>
                     </section>
                 </section>
-                <!-- SLIDE - 7 -->
+                <!-- SLIDE - SYNC - 10 -->
 
-                <!-- SLIDE - 8 -->
+                <!-- SLIDE - HA - 11 -->
                 <section>
                     <section>
                         <h2 class="r-fit-text">Maxscale High Available</h2>
@@ -427,9 +477,9 @@
                        </code></pre>
                     </section>
                 </section>
-                <!-- SLIDE - 8 -->
+                <!-- SLIDE - HA - 11 -->
 
-                <!-- SLIDE - 9 -->
+                <!-- SLIDE - TODO - 12 -->
                 <section>
                     <section>
                         <img src="maxscale/colorful-todo-list-illustration.jpeg" width="50%">
@@ -443,16 +493,16 @@
                         </ul>
                     </section>
                 </section>
-                <!-- SLIDE - 9 -->
+                <!-- SLIDE - TODO - 12 -->
 
-                <!-- SLIDE - 10 -->
+                <!-- SLIDE - QUESTIONS - 13 -->
                 <section>
                     <h2>سوالات؟</h2>
                     <img width="80%" src="maxscale/questions.jpeg" \>
                 </section>
-                <!-- SLIDE - 10 -->
+                <!-- SLIDE - QUESTIONS - 13 -->
 
-                <!-- SLIDE - 11 -->
+                <!-- SLIDE - SOURCE - 14 -->
                 <section>
                     <h2>منابع</h2>
                     <ul class="vip">
@@ -466,7 +516,7 @@
 
                     </ul>
                 </section>
-                <!-- SLIDE - 11 -->
+                <!-- SLIDE - SOURCE - 14 -->
 
             </div>
 
