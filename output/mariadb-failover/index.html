@@ -168,7 +168,8 @@
                             gtid_strict_mode        = on
                             binlog_format           = row
                             skip-name-resolve
-                           relay-log                = mysql-relay-bin
+                            relay-log               = mysql-relay-bin
+                            read_only               = on
                             server-id               =22
                             log_slave_updates       =ON
                             proxy_protocol_networks = 172.16.1.0/28, 192.168.0.0/23, localhost
