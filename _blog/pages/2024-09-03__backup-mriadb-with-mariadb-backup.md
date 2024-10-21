@@ -84,34 +84,9 @@ type: post
 
 این مراحل خیلی ساده و سریع انجام می شود.
 
-## رفع خطا در replication
-در ارتباط بین سرور `master/slave` بعضا ممکن است خطایی رخ دهد که رپلیکیشن متأثر از آن شود.
-ممکن است خطا جزئی باشد و بتوان دستی آن را رفع نمود، و گاها ممکن خطا اساسی باشد یا زمان زیادی
- از رخ دادن خطا گذشته باشد و `bonlog`های مربوطه در دسترس نباشند، که در این صورت لازم است تا 
-رپلیکیشن از ابتدا ایجاد و راه اندازی شود.
 
-اما در حالتی که خطایی چزئی رخ داده و بتوان آن را به صورت دستی رفع نمود، کافی است برای راه 
-اندازی مجدد رپلیکیشن با استفاده از دستور`sql_slave_skip_counter = N` که`N`تعداد رخدادی 
-است که در `binlog`ثبت شده و با این دستور اعلام می شود تا به اندازه آن، از آن رخدادها چشم 
-پوشی شود. پس کافی است تا به ترتیب زیر عمل نمود.
-
-        show slave status \G
-
-خطا به صورت فرضی مشاهده شد.
-
-        stop slave;
-        -- THE COMMAND WHICH SOLVE TH PROBLEM --
-        set global sql_slave_skip_counter = 1;
-        start slave;
-        show slave status \G
-و این چرخه را ادامه می دهیم تا خطا رفع شود
-        
-***نکته مهم این که اگر این چشم پوشی ها زیاد اتفاق بیفتد، اون نود اسلیو از اعتبار لازم ساقط 
-می شود و داده های آن ناقص می باشد و در این زمان، لازم است تا رپلیکیشن از ابتدا و کامل 
-راه اندازی شود.***
 
 # منابع
  - [full backup and restore with mariabackup](https://mariadb.com/kb/en/full-backup-and-restore-with-mariabackup/)
  - [incremental backup and restore with mariabackup](https://mariadb.com/kb/en/incremental-backup-and-restore-with-mariabackup/)
  - [comprehensive guide backing up and recovering data in mariadb](https://travishorn.com/comprehensive-guide-backing-up-and-recovering-data-in-mariadb)
- - [SET GLOBAL SQL_SLAVE_SKIP_COUNTER](https://mariadb.com/kb/en/set-global-sql_slave_skip_counter/)

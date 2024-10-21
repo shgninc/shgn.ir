@@ -292,36 +292,11 @@
 </li>
 </ul>
 <p>این مراحل خیلی ساده و سریع انجام می شود.</p>
-<h2>رفع خطا در replication</h2>
-<p>در ارتباط بین سرور <code>master/slave</code> بعضا ممکن است خطایی رخ دهد که رپلیکیشن متأثر از آن شود.
-ممکن است خطا جزئی باشد و بتوان دستی آن را رفع نمود، و گاها ممکن خطا اساسی باشد یا زمان زیادی
- از رخ دادن خطا گذشته باشد و <code>bonlog</code>های مربوطه در دسترس نباشند، که در این صورت لازم است تا 
-رپلیکیشن از ابتدا ایجاد و راه اندازی شود.</p>
-<p>اما در حالتی که خطایی چزئی رخ داده و بتوان آن را به صورت دستی رفع نمود، کافی است برای راه 
-اندازی مجدد رپلیکیشن با استفاده از دستور<code>sql_slave_skip_counter = N</code> که<code>N</code>تعداد رخدادی 
-است که در <code>binlog</code>ثبت شده و با این دستور اعلام می شود تا به اندازه آن، از آن رخدادها چشم 
-پوشی شود. پس کافی است تا به ترتیب زیر عمل نمود.</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="k">show</span><span class="w"> </span><span class="nv">slave</span><span class="w"> </span><span class="nv">status</span><span class="w"> </span>\<span class="nv">G</span>
-</code></pre></div>
-
-<p>خطا به صورت فرضی مشاهده شد.</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="nv">stop</span><span class="w"> </span><span class="nv">slave</span><span class="c1">;</span>
-<span class="w">    </span><span class="o">--</span><span class="w"> </span><span class="nv">THE</span><span class="w"> </span><span class="nv">COMMAND</span><span class="w"> </span><span class="nv">WHICH</span><span class="w"> </span><span class="nv">SOLVE</span><span class="w"> </span><span class="nv">TH</span><span class="w"> </span><span class="nv">PROBLEM</span><span class="w"> </span><span class="o">--</span>
-<span class="w">    </span><span class="nv">set</span><span class="w"> </span><span class="nv">global</span><span class="w"> </span><span class="nv">sql_slave_skip_counter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="c1">;</span>
-<span class="w">    </span><span class="nv">start</span><span class="w"> </span><span class="nv">slave</span><span class="c1">;</span>
-<span class="w">    </span><span class="k">show</span><span class="w"> </span><span class="nv">slave</span><span class="w"> </span><span class="nv">status</span><span class="w"> </span>\<span class="nv">G</span>
-</code></pre></div>
-
-<p>و این چرخه را ادامه می دهیم تا خطا رفع شود</p>
-<p><strong><em>نکته مهم این که اگر این چشم پوشی ها زیاد اتفاق بیفتد، اون نود اسلیو از اعتبار لازم ساقط 
-می شود و داده های آن ناقص می باشد و در این زمان، لازم است تا رپلیکیشن از ابتدا و کامل 
-راه اندازی شود.</em></strong></p>
 <h1>منابع</h1>
 <ul>
 <li><a href="https://mariadb.com/kb/en/full-backup-and-restore-with-mariabackup/">full backup and restore with mariabackup</a></li>
 <li><a href="https://mariadb.com/kb/en/incremental-backup-and-restore-with-mariabackup/">incremental backup and restore with mariabackup</a></li>
 <li><a href="https://travishorn.com/comprehensive-guide-backing-up-and-recovering-data-in-mariadb">comprehensive guide backing up and recovering data in mariadb</a></li>
-<li><a href="https://mariadb.com/kb/en/set-global-sql_slave_skip_counter/">SET GLOBAL SQL_SLAVE_SKIP_COUNTER</a></li>
 </ul>
       </section>
       <div>
