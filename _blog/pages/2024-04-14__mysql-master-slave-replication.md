@@ -217,4 +217,4 @@ log-bin ویژگی ثبت باینری لاگ ها را فعال می کند
  * [MySQL Replication Setup without Downtime](https://linuxscriptshub.com/mysql-replication-setup-without-downtime/)
  * [How to setup MySQL replication with minimal downtime](https://serverfault.com/a/220435/194975)
  * [Setting Up Replication](https://mariadb.com/kb/en/setting-up-replication/)
- *  - [SET GLOBAL SQL_SLAVE_SKIP_COUNTER](https://mariadb.com/kb/en/set-global-sql_slave_skip_counter/)
+ * [SET GLOBAL SQL_SLAVE_SKIP_COUNTER](https://mariadb.com/kb/en/set-global-sql_slave_skip_counter/)
