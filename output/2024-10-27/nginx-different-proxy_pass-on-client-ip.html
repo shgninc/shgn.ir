@@ -15,11 +15,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title> فشرده سازی با استفاده از تمام ظرفیت CPU - دست نوشته های یک تازه کار </title>
+    <title> ارسال درخواست nginx به upstream های متفاوت بر مبنای آدرس کلاینت - دست نوشته های یک تازه کار </title>
     <meta name="description"
-          content="با برنامه pigz می توان از تمام ظرفیت cpu برای فشرده سازی با دستور tar استفاده کرد."/>
+          content="انتقال درخواست کاربر به بکند ای متفاوت براساس آدرس درخواست دهنده."/>
     <meta name="keywords"
-          content="لینوکس،لینوکس مشهد،آموزش,پایتون,پایتون مشهد,آموزش لینوکس,دیتابیس,آموزش دیتابیس,برنامه نویسی,linux,database,mysql,mariadb,datamart,galera cluster,apache,big data,dataware house,cluster,galera,percona,python,php,tutorial,debian,ubuntu,centos,arch linux,mashhad linux,iran linux,debian mashhad, linux, tar, gzip, shell, debian, tips"/>
+          content="لینوکس،لینوکس مشهد،آموزش,پایتون,پایتون مشهد,آموزش لینوکس,دیتابیس,آموزش دیتابیس,برنامه نویسی,linux,database,mysql,mariadb,datamart,galera cluster,apache,big data,dataware house,cluster,galera,percona,python,php,tutorial,debian,ubuntu,centos,arch linux,mashhad linux,iran linux,debian mashhad, tips, nginx, security"/>
 
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
     <!-- Bootstrap -->
@@ -189,9 +189,9 @@
         <div class="col-md-9">
             
     <div itemscope itemtype="http://schema.org/NewsArticle">
-    <meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="http://https://shgn.ir/2023-12-03/Using-all-CPU-with-tar.html"/>
+    <meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="http://https://shgn.ir/2024-10-27/nginx-different-proxy_pass-on-client-ip.html"/>
     <div class="page-header">
-      <h3 itemprop="name">فشرده سازی با استفاده از تمام ظرفیت CPU</h3>
+      <h3 itemprop="name">ارسال درخواست nginx به upstream های متفاوت بر مبنای آدرس کلاینت</h3>
       
       
         <small>
@@ -199,71 +199,48 @@
             ارسال شده <span itemprop="author" itemscope itemtype="https://schema.org/Person">
                 توسط <span itemprop="name">سید سجاد شاهچراغیان</span>
               </span>
-              در تاریخ <span itemprop="datePublished">2023-12-03</span>
+              در تاریخ <span itemprop="datePublished">2024-10-27</span>
           </p>
         </small>
       
     </div>
       <section itemprop="articleBody">
-        <p>ممکن شما یک پوشه حجیم داشته باشید و قصد فشرده سازی آن را داشته باشید. برای این مهم از دستور زیر خیلی راحت 
-می توانید این کار را انجام دهید:</p>
-<div class="codehilite"><pre><span></span><code>$&gt; tar -czvf filename.tar.gz /path/to/compress
+        <p>همانطور که می دانید، سرویس <code>nginx</code> به عنوان پروکسی نیز عمل می کند. در شرایطی ممکن است که نیاز شود، تا
+ براساس آدرس <code>IP</code> کابر سرویس گیرنده، درخواست به <code>upstream</code> با <code>backend</code> ای متفاوت منتقل شود.</p>
+<p>تنظیمات برای انجام این نیازمندی خیلی ساده، به ترتیب زیر، می باشد:</p>
+<div class="codehilite"><pre><span></span><code><span class="nt">location</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">    </span><span class="err">include</span><span class="w"> </span><span class="err">/etc/nginx/proxy.conf</span><span class="p">;</span>
+<span class="w">    </span><span class="err">proxy_set_header</span><span class="w"> </span><span class="err">X-Forwarded-Proto</span><span class="w"> </span><span class="err">https</span><span class="p">;</span>
+
+<span class="w">    </span><span class="err">if</span><span class="w"> </span><span class="err">($remote_addr</span><span class="w"> </span><span class="err">~</span><span class="w"> </span><span class="err">&quot;(172.30.123.50)|(172.30.123.55)&quot;)</span><span class="w"> </span><span class="err">{</span>
+<span class="w">      </span><span class="err">proxy_pass</span><span class="w"> </span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">different-upstream</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nt">proxy_pass</span><span class="w"> </span><span class="nt">http</span><span class="o">://</span><span class="nt">default-upstream</span><span class="p">.</span><span class="nc">example</span><span class="p">.</span><span class="nc">com</span><span class="p">:</span><span class="nd">8080</span><span class="o">;</span>
+
+<span class="err">}</span>
 </code></pre></div>
 
-<p>خب با این دستور شما یک پوشه را با متد <code>gzip</code> فشرده می کنید. با این تفاوت که روند فشرده سازی خیلی ساده و 
-با یک کور <code>CPU</code> انجام می شود.</p>
-<p>فرمان <code>tar</code> گزینه ای برای مشخص کردن نحوه فشرده سازی دارد که می توان با استفاده از آن و نصب پکیج های 
-مورد نیاز، از تمام ظرفیت  <code>CPU</code> استفاده کرد که به طبع آن سرعت فشرده سازی نیز بالا می رود.</p>
-<h2>PIGZ یا PBZIP2</h2>
-<p>با نصب این دو بسته متد فشرده سازی بر پایه <code>gzip</code> و <code>bzip2</code> به صورت همزمان (parallel) را می توان برای 
-<code>tar</code> تأمین نمود.</p>
-<h3>نحوه نصب</h3>
-<p>برای نصب به صورت زیر عمل می کنیم:</p>
-<div class="codehilite"><pre><span></span><code>sudo apt install pigz pbzip2 # Debian/Ubuntu
-sudo dnf install pigz pbzip2 # Fedora
-sudo pacman -Sy pigz pbzip2  # Arch Linux
-</code></pre></div>
-
-<p>به همین سادگی</p>
-<h3>نحوه فشرده سازی</h3>
-<p>برای استفاده از این متد فشرده سازی کافی است تا دستور <code>tar</code> را به صورت زیر اجرا کنیم:</p>
-<div class="codehilite"><pre><span></span><code>tar -I pigz -cf linux-5.10-rc3.tar.gz linux/
-tar -I pbzip2 -cf linux-5.10-rc3.tar.bz2 linux/
-</code></pre></div>
-
-<p>با استفاده از گزینه <code>-I</code> یا <code>--use-compression-program</code>  می توان نحوه فشرده سازی را با 
-برنامه ای بیرونی تعیین نمود</p>
-<h2>منابع:</h2>
+<p>در قسمت <code>if</code> می توانید آدرس <code>IP</code> های مورد نیاز خود را اضافه کنید.</p>
+<h1>منابع</h1>
 <ul>
-<li><a href="https://www.maketecheasier.com/compress-archives-using-all-cpu-cores-tar/">How to Compress Archives Using All CPU Cores with Tar</a></li>
-<li><a href="https://stackoverflow.com/a/17110941/926639">Utilizing multi core for tar+gzip/bzip compression/decompression</a></li>
+<li><a href="https://www.claudiokuenzler.com/blog/804/different-proxy_pass-upstream-depending-client-ip-address-nginx">different proxy_pass upstream depending client ip address nginx</a></li>
 </ul>
       </section>
       <div>
         برچسب ها:
       
-        <a href="/tag/linux.html">
-            <span class="label label-default" itemprop="about">linux</span>
-        </a>
-      
-        <a href="/tag/tar.html">
-            <span class="label label-default" itemprop="about">tar</span>
-        </a>
-      
-        <a href="/tag/gzip.html">
-            <span class="label label-default" itemprop="about">gzip</span>
-        </a>
-      
-        <a href="/tag/shell.html">
-            <span class="label label-default" itemprop="about">shell</span>
-        </a>
-      
-        <a href="/tag/debian.html">
-            <span class="label label-default" itemprop="about">debian</span>
-        </a>
-      
         <a href="/tag/tips.html">
             <span class="label label-default" itemprop="about">tips</span>
+        </a>
+      
+        <a href="/tag/nginx.html">
+            <span class="label label-default" itemprop="about">nginx</span>
+        </a>
+      
+        <a href="/tag/security.html">
+            <span class="label label-default" itemprop="about">security</span>
         </a>
       
     </div>
