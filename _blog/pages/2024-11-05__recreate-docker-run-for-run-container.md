@@ -2,7 +2,7 @@ title: بازنویسی docker run از روی یک کانتینر در حال �
 briefing: باز سازی docker run از کانتینر در حال اجرا به راحتی.
 date_time: 2024-11-05 12:21
 slug: recreate-docker-run-for-run-container
-tags: linux, tips, docker, container, 
+tags: linux, tips, docker, container
 type: post
 
 گاها ممکن پیش آمده باشد که روی سروری، `container` ای را بیابید که در حال اجرا است، اما هیچ
