@@ -212,9 +212,18 @@ log-bin ویژگی ثبت باینری لاگ ها را فعال می کند
 می شود و داده های آن ناقص می باشد و در این زمان، لازم است تا رپلیکیشن از ابتدا و کامل 
 راه اندازی شود.***
 
+#تغییرات ساختاری در رپلیکیشن
+
+گاهی ممکن است تا یک سری دستورات `DDL` روی برخی جداول اعمال شوند. بعضا این نوع دستورات باعث `lock` شدن جدول (خواندن/نوشتن) می شوند؛ که این امر ممکن باعث نقص در روند رپلیکیشن یا یکپارچگی اطلاعات شود.
+برهمین مبنا، به ویژه روی موتور دیتابیس `InnoDB` با یک سری استراتژی روی `lock` می توان این موضوع را مدیریت نمود.
+فقط کافی است تا در دستور `alter` از استراتژی `lock=none` استفاده نمود:
+
+    ALTER TABLE tab ADD COLUMN c varchar(50), ALGORITHM=INPLACE, LOCK=NONE;
+
 #منابع
  * [MySQL/MariaDB Master-Slave Replication](https://medium.com/@chandika.s/mysql-mariadb-master-slave-replication-feca556baa8f)
  * [MySQL Replication Setup without Downtime](https://linuxscriptshub.com/mysql-replication-setup-without-downtime/)
  * [How to setup MySQL replication with minimal downtime](https://serverfault.com/a/220435/194975)
  * [Setting Up Replication](https://mariadb.com/kb/en/setting-up-replication/)
  * [SET GLOBAL SQL_SLAVE_SKIP_COUNTER](https://mariadb.com/kb/en/set-global-sql_slave_skip_counter/)
+ * [Alter Lock Strategy](https://mariadb.com/kb/en/innodb-online-ddl-overview/#alter-locking-strategies)
