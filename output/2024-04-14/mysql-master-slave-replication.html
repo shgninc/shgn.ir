@@ -398,6 +398,15 @@ mysql -uroot -p mydb &lt; ~/mysqldump.sql
 <p><strong><em>نکته مهم این که اگر این چشم پوشی ها زیاد اتفاق بیفتد، اون نود اسلیو از اعتبار لازم ساقط 
 می شود و داده های آن ناقص می باشد و در این زمان، لازم است تا رپلیکیشن از ابتدا و کامل 
 راه اندازی شود.</em></strong></p>
+<h1>تغییرات ساختاری در رپلیکیشن</h1>
+<p>گاهی ممکن است تا یک سری دستورات <code>DDL</code> روی برخی جداول اعمال شوند. بعضا این نوع دستورات باعث <code>lock</code> شدن جدول (خواندن/نوشتن) می شوند؛ که این امر ممکن باعث نقص در روند رپلیکیشن یا یکپارچگی اطلاعات شود.
+برهمین مبنا، به ویژه روی موتور دیتابیس <code>InnoDB</code> با یک سری استراتژی روی <code>lock</code> می توان این موضوع را مدیریت نمود.
+فقط کافی است تا در دستور <code>alter</code> از استراتژی <code>lock=none</code> استفاده نمود:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">ALTER</span><span class="w"> </span><span class="n">TABLE</span><span class="w"> </span><span class="n">tab</span><span class="w"> </span><span class="n">ADD</span><span class="w"> </span><span class="n">COLUMN</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="n">varchar</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span><span class="w"> </span><span class="n">ALGORITHM</span><span class="o">=</span><span class="n">INPLACE</span><span class="p">,</span><span class="w"> </span><span class="n">LOCK</span><span class="o">=</span><span class="n">NONE</span><span class="p">;</span>
+<span class="n">ALTER</span><span class="w"> </span><span class="n">TABLE</span><span class="w"> </span><span class="n">tab</span><span class="w"> </span><span class="n">MODIFY</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="w"> </span><span class="nb nb-Type">null</span><span class="p">,</span><span class="w"> </span><span class="n">algorithm</span><span class="o">=</span><span class="n">INPLACE</span><span class="p">,</span><span class="w"> </span><span class="n">LOCK</span><span class="o">=</span><span class="n">NONE</span><span class="p">;</span>
+<span class="n">ALTER</span><span class="w"> </span><span class="n">TABLE</span><span class="w"> </span><span class="n">tab</span><span class="w"> </span><span class="n">drop</span><span class="w"> </span><span class="n">index</span><span class="w"> </span><span class="n">tab_user</span><span class="p">,</span><span class="w"> </span><span class="n">algorithm</span><span class="o">=</span><span class="n">INPLACE</span><span class="p">,</span><span class="w"> </span><span class="n">LOCK</span><span class="o">=</span><span class="n">NONE</span><span class="p">;</span>
+</code></pre></div>
+
 <h1>منابع</h1>
 <ul>
 <li><a href="https://medium.com/@chandika.s/mysql-mariadb-master-slave-replication-feca556baa8f">MySQL/MariaDB Master-Slave Replication</a></li>
@@ -405,6 +414,7 @@ mysql -uroot -p mydb &lt; ~/mysqldump.sql
 <li><a href="https://serverfault.com/a/220435/194975">How to setup MySQL replication with minimal downtime</a></li>
 <li><a href="https://mariadb.com/kb/en/setting-up-replication/">Setting Up Replication</a></li>
 <li><a href="https://mariadb.com/kb/en/set-global-sql_slave_skip_counter/">SET GLOBAL SQL_SLAVE_SKIP_COUNTER</a></li>
+<li><a href="https://mariadb.com/kb/en/innodb-online-ddl-overview/#alter-locking-strategies">Alter Lock Strategy</a></li>
 </ul>
       </section>
       <div>
@@ -454,7 +464,7 @@ mysql -uroot -p mydb &lt; ~/mysqldump.sql
                     <div class="panel-body">
                             <div class="counter-box">
                                 <h2>
-                                    <span class="count">59</span>
+                                    <span class="count">60</span>
                                 </h2>
                             </div>
                     </div>

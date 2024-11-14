@@ -219,6 +219,8 @@ log-bin ویژگی ثبت باینری لاگ ها را فعال می کند
 فقط کافی است تا در دستور `alter` از استراتژی `lock=none` استفاده نمود:
 
     ALTER TABLE tab ADD COLUMN c varchar(50), ALGORITHM=INPLACE, LOCK=NONE;
+    ALTER TABLE tab MODIFY user int null, algorithm=INPLACE, LOCK=NONE;
+    ALTER TABLE tab drop index tab_user, algorithm=INPLACE, LOCK=NONE;
 
 #منابع
  * [MySQL/MariaDB Master-Slave Replication](https://medium.com/@chandika.s/mysql-mariadb-master-slave-replication-feca556baa8f)
