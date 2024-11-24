@@ -221,7 +221,18 @@ log-bin ویژگی ثبت باینری لاگ ها را فعال می کند
     ALTER TABLE tab ADD COLUMN c varchar(50), ALGORITHM=INPLACE, LOCK=NONE;
     ALTER TABLE tab MODIFY user int null, algorithm=INPLACE, LOCK=NONE;
     ALTER TABLE tab drop index tab_user, algorithm=INPLACE, LOCK=NONE;
+# رپلیکشین موازی
+از `mariadb10.0` قابلیت رپلیکیشن موازی معرفی شده است. در این نوع رپلیکیشن چندین ورکر ترد، که به صورت
+موازی، ترنس اکشن ها را اعمال می کنند. در این حالت سرعت همسان سازی رپلیکا بالاتر می رود. 
+برای موازی کردن رپلیکیشن روی یک رپلیکای موجود به صورت زیر عمل می شود:
 
+     stop slave;
+     set global slave_parallel_threads=8;
+     set global slave_domain_parallel_threads=8;
+     start slave;
+
+اگر رپلیکیشن تشخیص دهد که تراکنش های روی مستر با هم کنفلیکتی ندارند، می تواند آن ها را به صورت 
+موازی روی اسلیوها پردازش کند.
 #منابع
  * [MySQL/MariaDB Master-Slave Replication](https://medium.com/@chandika.s/mysql-mariadb-master-slave-replication-feca556baa8f)
  * [MySQL Replication Setup without Downtime](https://linuxscriptshub.com/mysql-replication-setup-without-downtime/)
