@@ -15,11 +15,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title> پستهای تگ شده با  'tutorial' - دست نوشته های یک تازه کار </title>
+    <title> راه‌اندازی یک سرور لینوکس به عنوان Gateway - دست نوشته های یک تازه کار </title>
     <meta name="description"
-          content="این وبلاگ پیرامون تجربیات، دانسته ها، اینجاب درباره linux, database, mysql, mariadb, datamart, galera cluster,apache می باشد."/>
+          content="برای اینکه یک سرور لینوکس را به عنوان Gateway  راه‌اندازی کنید، باید آن را به یک روتر تبدیل کنید تا ترافیک شبکه را بین دو شبکه مختلف، مانند شبکه داخلی و اینترنت، هدایت کند."/>
     <meta name="keywords"
-          content="لینوکس،لینوکس مشهد،آموزش,پایتون,پایتون مشهد,آموزش لینوکس,دیتابیس,آموزش دیتابیس,برنامه نویسی,linux,database,mysql,mariadb,datamart,galera cluster,apache,big data,dataware house,cluster,galera,percona,python,php,tutorial,debian,ubuntu,centos,arch linux,mashhad linux,iran linux,debian mashhad,"/>
+          content="لینوکس،لینوکس مشهد،آموزش,پایتون,پایتون مشهد,آموزش لینوکس,دیتابیس,آموزش دیتابیس,برنامه نویسی,linux,database,mysql,mariadb,datamart,galera cluster,apache,big data,dataware house,cluster,galera,percona,python,php,tutorial,debian,ubuntu,centos,arch linux,mashhad linux,iran linux,debian mashhad, linux, tutorial, learn, debian, network"/>
 
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
     <!-- Bootstrap -->
@@ -188,194 +188,92 @@
     <div class="row">
         <div class="col-md-9">
             
+    <div itemscope itemtype="http://schema.org/NewsArticle">
+    <meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="http://https://shgn.ir/2025-03-26/linux-server-as-gateway.html"/>
     <div class="page-header">
-      <h2>پستهای تگ شده با  'tutorial'</h2>
-      <p class="lead"></p>
+      <h3 itemprop="name">راه‌اندازی یک سرور لینوکس به عنوان Gateway</h3>
+      
+      
+        <small>
+          <p class="text-right">
+            ارسال شده <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+                توسط <span itemprop="name">سید سجاد شاهچراغیان</span>
+              </span>
+              در تاریخ <span itemprop="datePublished">2025-03-26</span>
+          </p>
+        </small>
+      
     </div>
+      <section itemprop="articleBody">
+        <p>برای اینکه یک سرور لینوکس را به عنوان Gateway راه‌اندازی کنید، باید آن را به یک روتر تبدیل کنید تا 
+ترافیک شبکه را بین دو شبکه مختلف، مانند شبکه داخلی و اینترنت، هدایت کند.</p>
+<p><img alt="linux-gateway" src="linux-gateway.webp" title="linux-gateway.webp" /></p>
+<h2>پیش‌نیازها</h2>
+<p>یک سرور لینوکس با دو کارت شبکه:</p>
+<p>۱- کارت شبکه داخلی (مثلاً eth0 یا ens33) متصل به شبکه محلی (LAN).</p>
+<p>۲- کارت شبکه خارجی (مثلاً eth1 یا ens34) متصل به اینترنت.</p>
+<p>۳- دسترسی sudo یا root.</p>
+<h2>فعال کردن قابلیت IP Forwarding</h2>
+<p>برای اینکه سرور بتواند بسته‌های شبکه را بین دو کارت شبکه انتقال دهد، باید IP Forwarding را فعال کنید:</p>
+<p>برای فعال‌سازی دائمی، فایل تنظیمات را ویرایش کنید:</p>
+<div class="codehilite"><pre><span></span><code>sudo nano /etc/sysctl.conf
+</code></pre></div>
+
+<p>سپس خط زیر را پیدا کرده و فعال کنید (یا اضافه کنید):</p>
+<div class="codehilite"><pre><span></span><code>net.ipv4.ip_forward=1
+</code></pre></div>
+
+<p>و تغییرات را ذخیره و اعمال کنید:</p>
+<div class="codehilite"><pre><span></span><code>sudo sysctl -p
+</code></pre></div>
+
+<h2>راه‌اندازی NAT برای اشتراک اینترنت</h2>
+<p>برای اینکه شبکه داخلی بتواند از اینترنت استفاده کند، باید NAT را در iptables فعال کنیم.</p>
+<p>دستور زیر را اجرا کنید تا NAT فعال شود:</p>
+<div class="codehilite"><pre><span></span><code>sudo iptables -t nat -A POSTROUTING -o eth1 -j MASQUERADE
+</code></pre></div>
+
+<p>اجازه دادن به فورواردینگ ترافیک بین کارت‌های شبکه:</p>
+<div class="codehilite"><pre><span></span><code>sudo iptables -A FORWARD -i eth0 -o eth1 -j ACCEPT
+sudo iptables -A FORWARD -i eth1 -o eth0 -m state --state RELATED,ESTABLISHED -j ACCEPT
+</code></pre></div>
+
+<h2>استفاده دیگر نودها</h2>
+<p>برای استفاده دیگر نودهای داخل شبکه از این دروازه فقط کافی است تا روت گیتوی آن سرور را برابر با آدرس ip سرور
+اصلی قرار داد</p>
+<div class="codehilite"><pre><span></span><code>sudo ip route add default via 192.168.1.1 via eth0
+</code></pre></div>
+
+<p>و تمام.</p>
+<p>برای تست می توان از دستور زیر استفاده کرد:</p>
+<div class="codehilite"><pre><span></span><code>ping shgn.ir
+</code></pre></div>
+      </section>
+      <div>
+        برچسب ها:
       
-        <h3><a href="/2025-03-26/linux-server-as-gateway.html" title="راه‌اندازی یک سرور لینوکس به عنوان Gateway">راه‌اندازی یک سرور لینوکس به عنوان Gateway</a></h3>
-            
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
-            
-                <a href="/tag/tutorial.html">
-                    <span class="label label-default">tutorial</span></a>
-            
-                <a href="/tag/learn.html">
-                    <span class="label label-default">learn</span></a>
-            
-                <a href="/tag/debian.html">
-                    <span class="label label-default">debian</span></a>
-            
-                <a href="/tag/network.html">
-                    <span class="label label-default">network</span></a>
-            
-        <p>برای اینکه یک سرور لینوکس را به عنوان Gateway  راه‌اندازی کنید، باید آن را به یک روتر تبدیل کنید تا ترافیک شبکه را بین دو شبکه مختلف، مانند شبکه داخلی و اینترنت، هدایت کند.</p>
-        <hr />
+        <a href="/tag/linux.html">
+            <span class="label label-default" itemprop="about">linux</span>
+        </a>
       
-        <h3><a href="/2024-08-24/linux-reset-a-forgotten-root-password.html" title="تغییر کلمه عبور کاربر root در لینوکس">تغییر کلمه عبور کاربر root در لینوکس</a></h3>
-            
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
-            
-                <a href="/tag/learn.html">
-                    <span class="label label-default">learn</span></a>
-            
-                <a href="/tag/tutorial.html">
-                    <span class="label label-default">tutorial</span></a>
-            
-                <a href="/tag/recovery.html">
-                    <span class="label label-default">recovery</span></a>
-            
-        <p>نحوه ریست کلمه عبور کاربر root در سیستم عامل linux آمده است</p>
-        <hr />
+        <a href="/tag/tutorial.html">
+            <span class="label label-default" itemprop="about">tutorial</span>
+        </a>
       
-        <h3><a href="/2024-04-22/create-lvm-partiotion-in-linux.html" title="ایجاد دیسک LVM در لینوکس">ایجاد دیسک LVM در لینوکس</a></h3>
-            
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
-            
-                <a href="/tag/learn.html">
-                    <span class="label label-default">learn</span></a>
-            
-                <a href="/tag/tutorial.html">
-                    <span class="label label-default">tutorial</span></a>
-            
-                <a href="/tag/lvm.html">
-                    <span class="label label-default">lvm</span></a>
-            
-                <a href="/tag/disk.html">
-                    <span class="label label-default">disk</span></a>
-            
-        <p>کلمه LVM بر مبنی مدیریت دیسک ها منطقی -Logical Volume Management - معروف شده</p>
-        <hr />
+        <a href="/tag/learn.html">
+            <span class="label label-default" itemprop="about">learn</span>
+        </a>
       
-        <h3><a href="/2022-10-24/anatomy-of-ansible-play.html" title="ساختار اجرا در انسیبل">ساختار اجرا در انسیبل</a></h3>
-            
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
-            
-                <a href="/tag/ansible.html">
-                    <span class="label label-default">ansible</span></a>
-            
-                <a href="/tag/tutorial.html">
-                    <span class="label label-default">tutorial</span></a>
-            
-                <a href="/tag/devops.html">
-                    <span class="label label-default">devops</span></a>
-            
-                <a href="/tag/automation.html">
-                    <span class="label label-default">automation</span></a>
-            
-        <p>برنامه مدیریت ساختار و تنظیمات روی زیرساخت های مختلف می باشد.</p>
-        <hr />
+        <a href="/tag/debian.html">
+            <span class="label label-default" itemprop="about">debian</span>
+        </a>
       
-        <h3><a href="/2021-12-27/Flask-tutorial-04.html" title="آموزش برنامه نویسی Flask - فصل۴">آموزش برنامه نویسی Flask - فصل۴</a></h3>
-            
-                <a href="/tag/python.html">
-                    <span class="label label-default">python</span></a>
-            
-                <a href="/tag/flask.html">
-                    <span class="label label-default">flask</span></a>
-            
-                <a href="/tag/programming.html">
-                    <span class="label label-default">programming</span></a>
-            
-                <a href="/tag/tutorial.html">
-                    <span class="label label-default">tutorial</span></a>
-            
-        <p>یکی از امکانات `Flask` اتصال خروجی یک تابع به یک آدرس در قالب `HTML` می باشد.</p>
-        <hr />
+        <a href="/tag/network.html">
+            <span class="label label-default" itemprop="about">network</span>
+        </a>
       
-        <h3><a href="/2021-04-13/drone-ci.html" title="نصب و راه اندازی Drone CI.">نصب و راه اندازی Drone CI.</a></h3>
-            
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
-            
-                <a href="/tag/devops.html">
-                    <span class="label label-default">devops</span></a>
-            
-                <a href="/tag/ci/cd.html">
-                    <span class="label label-default">ci/cd</span></a>
-            
-                <a href="/tag/drone.html">
-                    <span class="label label-default">drone</span></a>
-            
-                <a href="/tag/tutorial.html">
-                    <span class="label label-default">tutorial</span></a>
-            
-                <a href="/tag/docker.html">
-                    <span class="label label-default">docker</span></a>
-            
-        <p>نصب و راه اندازی Drone CI.</p>
-        <hr />
-      
-        <h3><a href="/2018-09-30/Flask-tutorial-03.html" title="آموزش برنامه نویسی Flask - فصل۳">آموزش برنامه نویسی Flask - فصل۳</a></h3>
-            
-                <a href="/tag/python.html">
-                    <span class="label label-default">python</span></a>
-            
-                <a href="/tag/flask.html">
-                    <span class="label label-default">flask</span></a>
-            
-                <a href="/tag/programming.html">
-                    <span class="label label-default">programming</span></a>
-            
-                <a href="/tag/tutorial.html">
-                    <span class="label label-default">tutorial</span></a>
-            
-        <p>امروزه پروتکل `http`در دنیای وب به عنوان پایه گذار ارتباط اطلاعات هست.</p>
-        <hr />
-      
-        <h3><a href="/2018-09-24/Flask-tutorial-02.html" title="آموزش برنامه نویسی Flask - فصل۲">آموزش برنامه نویسی Flask - فصل۲</a></h3>
-            
-                <a href="/tag/python.html">
-                    <span class="label label-default">python</span></a>
-            
-                <a href="/tag/flask.html">
-                    <span class="label label-default">flask</span></a>
-            
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
-            
-                <a href="/tag/programming.html">
-                    <span class="label label-default">programming</span></a>
-            
-                <a href="/tag/tutorial.html">
-                    <span class="label label-default">tutorial</span></a>
-            
-        <p>دسترسی سریع و ساده به آدرس ها و بخش های مختلف سایت از مزایای مهم این فریمورک می باشد.</p>
-        <hr />
-      
-        <h3><a href="/2018-09-09/Flask-tutorial-01.html" title="آموزش برنامه نویسی Flask - فصل۱">آموزش برنامه نویسی Flask - فصل۱</a></h3>
-            
-                <a href="/tag/python.html">
-                    <span class="label label-default">python</span></a>
-            
-                <a href="/tag/flask.html">
-                    <span class="label label-default">flask</span></a>
-            
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
-            
-                <a href="/tag/programming.html">
-                    <span class="label label-default">programming</span></a>
-            
-                <a href="/tag/tutorial.html">
-                    <span class="label label-default">tutorial</span></a>
-            
-        <p>در واقع فلسک یک میکرو فریمورک می باشد که با زبان پایتون نوشته شده و بسیار ساده و سبک عمل می کند.</p>
-        <hr />
-      
-      
-              <ul class="pagination">
-                
-                    
-                        <li class="active"><a href="#">0 <span class="sr-only">(current)</span></a></li>
-                    
-                
-              </ul>
-      
+    </div>
+    </div>
 
         </div>
         <div class="col-md-3">
@@ -456,24 +354,6 @@
                         </div>
                         <div class="panel-body">
                             <ul>
-                                
-                                <li><a href="/2025-03-26/linux-server-as-gateway.html" title="راه‌اندازی یک سرور لینوکس به عنوان Gateway">راه‌اندازی یک سرور لینوکس به عنوان Gateway</a></li>
-                                
-                                <li><a href="/2024-08-24/linux-reset-a-forgotten-root-password.html" title="تغییر کلمه عبور کاربر root در لینوکس">تغییر کلمه عبور کاربر root در لینوکس</a></li>
-                                
-                                <li><a href="/2024-04-22/create-lvm-partiotion-in-linux.html" title="ایجاد دیسک LVM در لینوکس">ایجاد دیسک LVM در لینوکس</a></li>
-                                
-                                <li><a href="/2022-10-24/anatomy-of-ansible-play.html" title="ساختار اجرا در انسیبل">ساختار اجرا در انسیبل</a></li>
-                                
-                                <li><a href="/2021-12-27/Flask-tutorial-04.html" title="آموزش برنامه نویسی Flask - فصل۴">آموزش برنامه نویسی Flask - فصل۴</a></li>
-                                
-                                <li><a href="/2021-04-13/drone-ci.html" title="نصب و راه اندازی Drone CI.">نصب و راه اندازی Drone CI.</a></li>
-                                
-                                <li><a href="/2018-09-30/Flask-tutorial-03.html" title="آموزش برنامه نویسی Flask - فصل۳">آموزش برنامه نویسی Flask - فصل۳</a></li>
-                                
-                                <li><a href="/2018-09-24/Flask-tutorial-02.html" title="آموزش برنامه نویسی Flask - فصل۲">آموزش برنامه نویسی Flask - فصل۲</a></li>
-                                
-                                <li><a href="/2018-09-09/Flask-tutorial-01.html" title="آموزش برنامه نویسی Flask - فصل۱">آموزش برنامه نویسی Flask - فصل۱</a></li>
                                 
                             </ul>
 
