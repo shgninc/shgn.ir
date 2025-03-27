@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!— Global site tag (gtag.js) - Google Analytics —>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-124515881-2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-124515881-2');
+
+    </script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title> برش یا کوتاه کردن ویدیو با FFmpeg - دست نوشته های یک تازه کار </title>
+    <meta name="description"
+          content="این راهنما به شما کمک می‌کند تا به‌راحتی ویدیوهای خود را با FFmpeg کوتاه کنید یا بخش‌هایی از آن‌ها را جدا کنید."/>
+    <meta name="keywords"
+          content="لینوکس،لینوکس مشهد،آموزش,پایتون,پایتون مشهد,آموزش لینوکس,دیتابیس,آموزش دیتابیس,برنامه نویسی,linux,database,mysql,mariadb,datamart,galera cluster,apache,big data,dataware house,cluster,galera,percona,python,php,tutorial,debian,ubuntu,centos,arch linux,mashhad linux,iran linux,debian mashhad, linux, tips, ffmpeg"/>
+
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+          integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+    <!--    <link href="https://rawgit.com/richleland/pygments-css/master/github.css" rel="stylesheet" crossorigin="anonymous">-->
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <style>
+    body {
+      direction: rtl;
+      font-family: Vazirmatn, sans-serif;
+      background-color: rgba(226,232,240,.8)
+    }
+    p {
+        font-size: 1.3em;
+        line-height: 1.5em;
+        text-align: justify;
+      }
+    p img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .header {
+        margin-top: 150px;
+        text-align: center;
+    }
+    .header h1{
+        text-align: center;
+        font-size: 50px;
+        margin: 0;
+        font-family: 'Inter';
+    }
+    .counter-box {
+      width: 350px;
+    }
+    .counter-box h2 {
+      font-size: 60px;
+      margin-right: 90px;
+    }
+    .counter-box p{
+        text-align: center;
+      font-family: arial;
+    }
+    pre {
+        direction: ltr;
+        border-left: 5px solid #6ce26c;
+      }
+    .panel-body {
+        padding: 10px 0;
+    }
+    .panel-body ul li{
+        margin: 5px 0;
+    }
+    a {
+        color: #4608ad;
+      }
+    .panel-group .panel {
+        margin-bottom: 5px;
+        border-radius: 1.1rem
+    }
+    .panel-primary > .panel-heading {
+        background-color: #4608ad;
+        border-radius: 1.1rem
+    }
+    .navbar-default {
+        background-color: #4608ad;
+    }
+    .navbar-default .navbar-brand {
+        color: #ffffff;
+    }
+    .navbar-default .navbar-nav > li > a {
+        color: #ffffff;
+        font-size:initial;
+    }
+    .navbar-default .navbar-nav > li > a:hover{
+        color: #00ffd9;
+    }
+    .navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:focus, .navbar-default .navbar-nav > .open > a:hover{
+        color: #4608ad;
+    }
+
+    .dropdown-menu{
+        background-color: #4608ad;
+        color:#ffffff;
+        font-size:initial;
+    }
+    .dropdown-menu > li > a{
+        color:#ffffff;
+        font-size:initial;
+    }
+    .dropdown-menu > li > a:hover{
+        color: #00ffd9;
+        background-color:#4608ad;
+    }
+
+    #back2Top {
+    width: 40px;
+    line-height: 40px;
+    overflow: hidden;
+    z-index: 999;
+    display: none;
+    cursor: pointer;
+    -moz-transform: rotate(270deg);
+    -webkit-transform: rotate(270deg);
+    -o-transform: rotate(270deg);
+    -ms-transform: rotate(270deg);
+    transform: rotate(270deg);
+    position: fixed;
+    bottom: 50px;
+    right: 0;
+    background-color: #DDD;
+    text-align: center;
+    font-size: 30px;
+    text-decoration: none;
+    }
+    #back2Top:hover {
+        background-color: #DDF;
+        color: #000;
+    }
+    </style>
+</head>
+<body>
+
+<a id="top"></a>
+<div id="scroollto1"></div>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header navbar-right">
+            <a class="navbar-brand" href="/">دست نوشته های یک تازه کار</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            
+            
+            <li><a href="https://shgn.ir/about.html" title="درباره ما">درباره ما</a></li>
+            
+            <li><a href="https://shgn.ir/contacus.html" title="ارتباط با ما">ارتباط با ما</a></li>
+            
+            <li><a href="https://shgn.ir/links.html" title="لینک های مفید">لینک های مفید</a></li>
+            
+            <li><a href="https://shgn.ir/tag/database.html" title="دیتابیس">دیتابیس</a></li>
+            
+            <li><a href="https://shgn.ir/tag/linux.html" title="لینوکس">لینوکس</a></li>
+            
+            <li class="dropdown">
+                <a href="https://shgn.ir/tag/learn.html" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                   aria-expanded="false">آموزش <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="https://shgn.ir/tag/lpic1.html">دوره LPIC1</a></li>
+                </ul>
+            </li>
+            
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-9">
+            
+    <div itemscope itemtype="http://schema.org/NewsArticle">
+    <meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="http://https://shgn.ir/2025-03-27/trim-video-ffmpeg.html"/>
+    <div class="page-header">
+      <h3 itemprop="name">برش یا کوتاه کردن ویدیو با FFmpeg</h3>
+      
+      
+        <small>
+          <p class="text-right">
+            ارسال شده <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+                توسط <span itemprop="name">سید سجاد شاهچراغیان</span>
+              </span>
+              در تاریخ <span itemprop="datePublished">2025-03-27</span>
+          </p>
+        </small>
+      
+    </div>
+      <section itemprop="articleBody">
+        <p>یکی از ویژگی‌های رایج برنامه‌های ویرایش ویدیو، قابلیت برش یا کوتاه کردن ویدیوها است. هنگام ویرایش یک 
+ویدیو، ممکن است بخواهید برخی قسمت‌ها را حذف کنید یا بخش‌هایی از ویدیوهای مختلف را ببرید و آن‌ها را در یک 
+ویدیوی واحد ترکیب کنید.</p>
+<p><img alt="cut-ffmpeg" src="cut-ffmpeg.webp" title="cut-ffmpeg" /></p>
+<p>در این مطلب، یاد می‌گیریم که چگونه این کار را با استفاده از <code>FFmpeg</code> انجام دهیم—یک ابزار خط فرمان 
+که می‌توان از آن برای ایجاد، ویرایش و پردازش انواع رسانه‌ها استفاده کرد. برخی از دستورات <code>FFmpeg</code> را 
+بررسی می‌کنیم که می‌توانند برای برش ویدیو به بخش‌های مختلف استفاده شوند و یک ویدیوی یکپارچه ایجاد کرد. </p>
+<h2>برش یا کوتاه کردن ویدیو با FFmpeg</h2>
+<p>FFmpeg 
+چندین دستور برای تقسیم ویدیو ارائه می‌دهد. در اینجا نحوه استفاده از پارامتر <code>-ss</code> را بررسی می‌کنیم، 
+اما همچنین می‌توان از فیلتر trim نیز استفاده کرد.</p>
+<p>برای برش یک بخش خاص از یک ویدیو، می‌توان از گزینه <code>-ss</code> برای مشخص کردن نقطه شروع استفاده کرد. <code>-ss</code> 
+می‌تواند به روش‌های مختلفی استفاده شود، بسته به اینکه چگونه می‌خواهید ویدیو را برش دهید. بیایید 
+چند مثال را بررسی کنیم.</p>
+<h3>برش با استفاده از مدت‌زمان مشخص</h3>
+<div class="codehilite"><pre><span></span><code>ffmpeg -i input.mp4 -ss 00:05:20 -t 00:10:00 -c:v copy -c:a copy output1.mp4
+</code></pre></div>
+
+<p>این دستور، ویدیوی input.mp4 را پردازش کرده و 10 دقیقه از آن را از موقعیت 00:05:20 (5 دقیقه و 20 ثانیه 
+پس از شروع ویدیو) برش می‌دهد، بنابراین ویدیوی خروجی از 00:05:20 تا 00:15:20 خواهد بود.</p>
+<ul>
+<li>-ss موقعیت شروع را مشخص می‌کند.</li>
+<li>-t مدت‌زمان برش را از موقعیت شروع تعیین می‌کند.</li>
+<li>-c:v copy -c:a copy ویدیو و صدا را بدون انکود مجدد کپی می‌کنند.</li>
+</ul>
+<p>برای مشخص کردن زمان، می‌توان از دو قالب استفاده کرد:</p>
+<p>1- قالب ساعتی: HH:MM:SS.MILLISECONDS (مثلاً 01:23:45.678).
+ 2- ثانیه‌ها: مقدار زمان را فقط بر حسب ثانیه مشخص می‌کند.</p>
+<p>اگر مدت‌زمانی که تعیین کرده‌اید، از طول ویدیوی ورودی بیشتر باشد، ویدیوی خروجی در پایان ویدیوی ورودی متوقف 
+خواهد شد.</p>
+<h2>برش با استفاده از زمان پایان مشخص</h2>
+<div class="codehilite"><pre><span></span><code>ffmpeg -i input.mp4 -ss 00:05:10 -to 00:15:30 -c:v copy -c:a copy output2.mp4
+</code></pre></div>
+
+<p>این دستور، از گزینه <code>-to</code> برای مشخص کردن زمان دقیق پایان برش استفاده می‌کند. در این مثال، ویدیو از 00:05:10 تا 00:15:30 
+برش داده می‌شود و در نتیجه ویدیویی با 10 دقیقه و 20 ثانیه زمان ایجاد خواهد شد.</p>
+<ul>
+<li>اگر مقدار -to بیشتر از طول ویدیوی ورودی باشد، خروجی تا انتهای ویدیوی ورودی خواهد بود.</li>
+<li>
+<p>اگر مقدار -to کمتر از مقدار -ss باشد، دستور اجرا نخواهد شد و خطای زیر نمایش داده می‌شود:</p>
+<p>Error: -to value smaller than -ss; aborting.</p>
+</li>
+</ul>
+<p>همچنین اگر <code>-ss</code> را قبل از <code>-i</code> قرار دهید، <code>-to</code> مشابه <code>-t</code> عمل می‌کند و به عنوان مدت‌زمان در نظر گرفته می‌شود:</p>
+<div class="codehilite"><pre><span></span><code>ffmpeg -ss 00:05:20 -i input.mp4 -t 00:10:00 -c:v copy -c:a copy output3.mp4
+ffmpeg -ss 00:05:20 -i input.mp4 -to 00:10:00 -c:v copy -c:a copy output4.mp4
+</code></pre></div>
+
+<p>هر دو دستور فوق، ویدیویی 10 دقیقه‌ای را از بازه 00:05:20 تا 00:15:20 برش می‌دهند.</p>
+<h2>دقت در تعیین نقاط برش</h2>
+<p>ممکن است متوجه شوید که در برخی موارد، ویدیوی خروجی دقیقاً همان مدت‌زمانی که انتظار داشتید نیست و ممکن 
+است چند ثانیه اختلاف داشته باشد. این به این دلیل است که اکثر فرمت‌های ویدیویی امکان <code>Seek</code> دقیق را ندارند.</p>
+<p>برای بهبود دقت، می‌توان از گزینه <code>-accurate_seek</code> استفاده کرد. این گزینه باعث می‌شود که بخش اضافی قبل از نقطه 
+برش مورد نظر دی‌کد و حذف شود.</p>
+<div class="codehilite"><pre><span></span><code>ffmpeg -accurate_seek -ss 00:05:20 -i input.mp4 -t 00:10:00 -c:v copy -c:a copy output5.mp4
+</code></pre></div>
+
+<p>در مقابل، گزینه <code>-noaccurate_seek</code> این بخش اضافی را حفظ می‌کند.</p>
+<h2>برش انتهای ویدیو</h2>
+<p>پارامتر <code>-sseof</code> یک نوع دیگر از گزینه <code>-ss</code> است که می‌توان از آن برای برش آخرین N ثانیه از یک ویدیو 
+استفاده کرد. مقدار این پارامتر به‌صورت عدد منفی مشخص می‌شود که نشان‌دهنده موقعیت نسبی نسبت به انتهای 
+فایل است.</p>
+<div class="codehilite"><pre><span></span><code>ffmpeg -sseof -600 -i input.mp4 -c copy output6.mp4
+ffmpeg -sseof -00:10:00 -i input.mp4 -c copy output7.mp4
+</code></pre></div>
+
+<p>دستورات بالا، آخرین 10 دقیقه از ویدیوی ورودی را برش می‌دهند.</p>
+<p>اگر زمانی بیشتر از طول ویدیو تعیین کنید (مثلاً -01:10:00 برای ویدیویی که 20 دقیقه است)، دستور همچنان اجرا 
+خواهد شد اما خروجی همان طول ویدیوی ورودی خواهد بود.</p>
+      </section>
+      <div>
+        برچسب ها:
+      
+        <a href="/tag/linux.html">
+            <span class="label label-default" itemprop="about">linux</span>
+        </a>
+      
+        <a href="/tag/tips.html">
+            <span class="label label-default" itemprop="about">tips</span>
+        </a>
+      
+        <a href="/tag/ffmpeg.html">
+            <span class="label label-default" itemprop="about">ffmpeg</span>
+        </a>
+      
+    </div>
+    </div>
+
+        </div>
+        <div class="col-md-3">
+            <div class="panel-group">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        من در stackexchange.com
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-md-3 col-md-offset-9">
+                            <a href="https://stackexchange.com/users/887576" target="_blank">
+                                <img src="https://stackexchange.com/users/flair/887576.png" width="208" height="58"
+                                     alt="profile for shgnInc on Stack Exchange, a network of free, community-driven Q&A sites"
+                                     title="profile for shgnInc on Stack Exchange, a network of free, community-driven Q&A sites">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-group">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        مطالب نوشته شده تا کنون
+                    </div>
+                    <div class="panel-body">
+                            <div class="counter-box">
+                                <h2>
+                                    <span class="count">61</span>
+                                </h2>
+                            </div>
+                    </div>
+                </div>
+
+                <div class="panel-group">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            مطالب مهم
+                        </div>
+                        <div class="panel-body">
+                            <ul>
+                                <li><a href="https://shgn.ir/2021-03-07/galera-cluster-debian-10.html"
+                                       title="نصب Galer Cluster بر روی debian 10">نصب Galer Cluster بر روی debian 10</a>
+                                </li>
+                                <li><a href="https://shgn.ir/2020-08-15/installing_docker_on_debian.html"
+                                       title="نصب Docker روی Debian 10">نصب Docker روی Debian 10</a></li>
+                                <li><a href="https://shgn.ir/2018-09-05/Mysql-JSON-DataType.html"
+                                       title="معرفی نوع داده JSON در دیتابیس Mysql-Mariadb">معرفی نوع داده JSON در
+                                    دیتابیس Mysql-Mariadb</a></li>
+                                <li><a href="https://shgn.ir/2018-07-23/ssh_automatic_login.html"
+                                       title="لاگین خودکار با SSH">لاگین خودکار با SSH</a></li>
+                                <li><a href="https://shgn.ir/2017-08-16/galera_cluster.html"
+                                       title="نصب Galer Cluster بر روی debian8">نصب Galer Cluster بر روی debian8</a>
+                                </li>
+                                <li><a href="https://shgn.ir/2022-07-02/mysql-slave-replicaion.html"
+                                       title="راه اندازی Mysql/Mariadb Slave Replication بدون توقف">راه اندازی Mysql/Mariadb Slave Replication بدون توقف</a>
+                                </li>
+                                <li><a href="https://shgn.ir/2023-12-03/Using-all-CPU-with-tar.html"
+                                       title="فشرده سازی با استفاده از تمام ظرفیت CPU">فشرده سازی با استفاده از تمام ظرفیت CPU</a>
+                                </li>
+                                <li><a href="https://shgn.ir/2022-10-22/reduce-LVM-Partition-size.html"
+                                       title="کاهش فضای دیسک LVM">کاهش فضای دیسک LVM</a>
+                                </li>
+                                <li><a href="https://shgn.ir/2023-12-03/Using-all-CPU-with-tar.html"
+                                       title="فشرده سازی با استفاده از تمام ظرفیت CPU">فشرده سازی با استفاده از تمام ظرفیت CPU</a>
+                                </li>
+                                <li><a href="https://shgn.ir/2024-01-13/hangup-a-call-on-asterisk.html"
+                                       title="بستن تماس باز در asterisk">بستن تماس باز در asterisk</a>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-group">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            تازه ترین مطالب
+                        </div>
+                        <div class="panel-body">
+                            <ul>
+                                
+                            </ul>
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="panel-group">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            Linux ISO Images
+                        </div>
+                        <div class="panel-body">
+                            <ul>
+                                <li><a href="https://shgn.ir/images/gparted-live-1.1.0-1-amd64.iso"
+                                       title="gparted-live-1.1.0-1-amd64">GParted Live CD/USB/HD/PXE Bootable Image</a></li>
+                                <li><a href="https://shgn.ir/images/debian-10.3.0-amd64-xfce-CD-1.iso"
+                                       title="debian-10.3.0-amd64-xfce-CD-1">Debian-10-amd64-xfce-CD</a></li>
+                                <li><a href="https://shgn.ir/images/SNG7-PBX16-64bit-2302-1.iso"
+                                       title="FreePBX16-64bit-2302-1">FreePBX16-64bit-2302-1</a></li>
+                                <li><a href="https://shgn.ir/images/debian-12.2.0-amd64-netinst.iso"
+                                       title="debian-12.2.0-amd64-netinst.iso">debian-12.2.0-amd64-netinst</a></li>
+                                <li><a href="https://shgn.ir/images/debian-live-12.2.0-amd64-xfce.iso"
+                                       title="debian-live-12.2.0-amd64-xfce">debian-live-12.2.0-amd64-xfce</a></li>
+                                <li><a href="https://shgn.ir/images/ubuntu-22.04.3-desktop-amd64.iso"
+                                       title="ubuntu-22.04.3-desktop-amd64">Ubuntu Desktop</a></li>
+                                <li><a href="https://shgn.ir/images/ubuntu-22.04.3-live-server-amd64.iso"
+                                       title="ubuntu-22.04.3-live-server-amd64">Ubuntu Server</a></li>
+                                <li><a href="https://shgn.ir/images/CentOS-7-aarch64-Minimal-1908.iso"
+                                       title="CentOS-7-aarch64-Minimal-1908">CentOS-7-aarch64-Minimal-1908</a></li>
+                                <li><a href="https://shgn.ir/images/CentOS-8.2.2004-x86_64-minimal.iso"
+                                       title="CentOS-8.2.2004-x86_64-minimal">CentOS-8.2.2004-x86_64-minimal</a></li>
+                                <li><a href="https://shgn.ir/images/clonezilla-live-3.1.1-27-amd64.iso"
+                                       title="clonezilla-live-3.1.1-27-amd64">clonezilla-live</a></li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<hr/>
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                
+                <strong>پیشنهادی های</strong>
+                <ul>
+                    
+                    <li><a href="https://github.com/shgninc">GitHub</a></li>
+                    
+                    <li><a href="https://www.instagram.com/shgninc/">Instagram</a></li>
+                    
+                    <li><a href="https://virgool.io/@shgninc">Virgool</a></li>
+                    
+                    <li><a href="https://www.linkedin.com/in/sajjad-shahcheraghean/">Linkedin</a></li>
+                    
+                    <li><a href="https://twitter.com/shahcheraghian">Twiteer</a></li>
+                    
+                    <li><a href="https://virasty.com/twitter">Virsty</a></li>
+                    
+                    <li><a href="https://shgn.ir/mariadb-failover">Falilover By Maxscale</a></li>
+                    
+                    <li><a href="https://shgn.ir/yii2/">معرفی Yii2</a></li>
+                    
+                </ul>
+                
+            </div>
+            <div class="col-md-6">
+                <strong>دسترسی های ساده</strong>
+                <ul>
+                    <li><a href="/">تمامی پست ها</a></li>
+                    <li><a href="/tags.html">فهرست تگ ها</a></li>
+                    <li><a href="/tag/video.html">ویدیوها</a></li>
+                </ul>
+            </div>
+            <div class="col-md-12">
+                <p class="text-center"><small>https://shgn.ir &copy; 2023</small></p>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://shgn.ir/static/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+            integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+            crossorigin="anonymous"></script>
+
+<script src="https://shgn.ir/static/jquery/3.5.1/app.js"></script>
+<script src="https://shgn.ir/static/ProngnRoll/prognroll.min.js"></script>
+<script>
+var jQ_3_5_1 = jQuery.noConflict(true);
+
+    /*Scroll to top when arrow up clicked BEGIN*/
+jQ_3_5_1(window).scroll(function() {
+    var height = jQ_3_5_1(window).scrollTop();
+    if (height > 100) {
+        jQ_3_5_1('#back2Top').fadeIn();
+    } else {
+        jQ_3_5_1('#back2Top').fadeOut();
+    }
+});
+jQ_3_5_1(document).ready(function() {
+    jQ_3_5_1("#back2Top").click(function(event) {
+        event.preventDefault();
+        jQ_3_5_1("html, body").animate({ scrollTop: 0 }, "slow");
+        return false;
+    });
+});
+ /*Scroll to top when arrow up clicked END*/
+
+/* https://www.jqueryscript.net/other/jQuery-Scroll-Progress-Indicator-For-Any-Containers-ProngnRoll.html */
+
+jQ_3_5_1("body").prognroll({
+  position:"bottom",
+  height:5,
+  color:"#f54905"
+});
+
+</script>
+
+<a id="back2Top" title="Back to top" href="#">&#10148;</a>
+</body>
+</html>
