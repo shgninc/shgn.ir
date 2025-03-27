@@ -88,3 +88,6 @@ FFmpeg
 
 اگر زمانی بیشتر از طول ویدیو تعیین کنید (مثلاً -01:10:00 برای ویدیویی که 20 دقیقه است)، دستور همچنان اجرا 
 خواهد شد اما خروجی همان طول ویدیوی ورودی خواهد بود.
+
+#منابع
+ * [How to trim a video using FFmpeg](https://shotstack.io/learn/use-ffmpeg-to-trim-video/)
