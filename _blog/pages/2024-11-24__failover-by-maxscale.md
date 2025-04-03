@@ -207,7 +207,7 @@ type: post
 جدا سازی کوئری های `write` و  `read` و توزیع بار بین دیتابیس های بکند بر مبنای سناریو 
 تصویر زیر وجود دارد:
 
-![MaxScale Cluster.jpg](MaxScale Cluster)
+![MaxScale Cluster](MaxScale-Cluster.jpg)
 
 برای نمونه، می توان به صورت زیر کوئری را به آدرس و پورتی که در بخش `listener`در 
 تنظیمات `maxscale` استفاده شده اند، ارسال نمود، خود `maxscale` براساس تنظیمات 
