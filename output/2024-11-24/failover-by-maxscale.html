@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!— Global site tag (gtag.js) - Google Analytics —>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-124515881-2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-124515881-2');
+
+    </script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title> جلوگیری توقف سرویس دهی دیتابیس با maxscale - دست نوشته های یک تازه کار </title>
+    <meta name="description"
+          content="MariaDB MaxScaleیک پراکسی پایگاه داده است که در دسترس بودن، مقیاس پذیری و امنیت سرویس MariaDB را گسترش می دهد."/>
+    <meta name="keywords"
+          content="لینوکس،لینوکس مشهد،آموزش,پایتون,پایتون مشهد,آموزش لینوکس,دیتابیس,آموزش دیتابیس,برنامه نویسی,linux,database,mysql,mariadb,datamart,galera cluster,apache,big data,dataware house,cluster,galera,percona,python,php,tutorial,debian,ubuntu,centos,arch linux,mashhad linux,iran linux,debian mashhad, database, mariadb, replication, maxscale, recovery"/>
+
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+          integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+    <!--    <link href="https://rawgit.com/richleland/pygments-css/master/github.css" rel="stylesheet" crossorigin="anonymous">-->
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <style>
+    body {
+      direction: rtl;
+      font-family: Vazirmatn, sans-serif;
+      background-color: rgba(226,232,240,.8)
+    }
+    p {
+        font-size: 1.3em;
+        line-height: 1.5em;
+        text-align: justify;
+      }
+    p img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .header {
+        margin-top: 150px;
+        text-align: center;
+    }
+    .header h1{
+        text-align: center;
+        font-size: 50px;
+        margin: 0;
+        font-family: 'Inter';
+    }
+    .counter-box {
+      width: 350px;
+    }
+    .counter-box h2 {
+      font-size: 60px;
+      margin-right: 90px;
+    }
+    .counter-box p{
+        text-align: center;
+      font-family: arial;
+    }
+    pre {
+        direction: ltr;
+        border-left: 5px solid #6ce26c;
+      }
+    .panel-body {
+        padding: 10px 0;
+    }
+    .panel-body ul li{
+        margin: 5px 0;
+    }
+    a {
+        color: #4608ad;
+      }
+    .panel-group .panel {
+        margin-bottom: 5px;
+        border-radius: 1.1rem
+    }
+    .panel-primary > .panel-heading {
+        background-color: #4608ad;
+        border-radius: 1.1rem
+    }
+    .navbar-default {
+        background-color: #4608ad;
+    }
+    .navbar-default .navbar-brand {
+        color: #ffffff;
+    }
+    .navbar-default .navbar-nav > li > a {
+        color: #ffffff;
+        font-size:initial;
+    }
+    .navbar-default .navbar-nav > li > a:hover{
+        color: #00ffd9;
+    }
+    .navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:focus, .navbar-default .navbar-nav > .open > a:hover{
+        color: #4608ad;
+    }
+
+    .dropdown-menu{
+        background-color: #4608ad;
+        color:#ffffff;
+        font-size:initial;
+    }
+    .dropdown-menu > li > a{
+        color:#ffffff;
+        font-size:initial;
+    }
+    .dropdown-menu > li > a:hover{
+        color: #00ffd9;
+        background-color:#4608ad;
+    }
+
+    #back2Top {
+    width: 40px;
+    line-height: 40px;
+    overflow: hidden;
+    z-index: 999;
+    display: none;
+    cursor: pointer;
+    -moz-transform: rotate(270deg);
+    -webkit-transform: rotate(270deg);
+    -o-transform: rotate(270deg);
+    -ms-transform: rotate(270deg);
+    transform: rotate(270deg);
+    position: fixed;
+    bottom: 50px;
+    right: 0;
+    background-color: #DDD;
+    text-align: center;
+    font-size: 30px;
+    text-decoration: none;
+    }
+    #back2Top:hover {
+        background-color: #DDF;
+        color: #000;
+    }
+    </style>
+</head>
+<body>
+
+<a id="top"></a>
+<div id="scroollto1"></div>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header navbar-right">
+            <a class="navbar-brand" href="/">دست نوشته های یک تازه کار</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            
+            
+            <li><a href="https://shgn.ir/about.html" title="درباره ما">درباره ما</a></li>
+            
+            <li><a href="https://shgn.ir/contacus.html" title="ارتباط با ما">ارتباط با ما</a></li>
+            
+            <li><a href="https://shgn.ir/links.html" title="لینک های مفید">لینک های مفید</a></li>
+            
+            <li><a href="https://shgn.ir/tag/database.html" title="دیتابیس">دیتابیس</a></li>
+            
+            <li><a href="https://shgn.ir/tag/linux.html" title="لینوکس">لینوکس</a></li>
+            
+            <li class="dropdown">
+                <a href="https://shgn.ir/tag/learn.html" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                   aria-expanded="false">آموزش <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="https://shgn.ir/tag/lpic1.html">دوره LPIC1</a></li>
+                </ul>
+            </li>
+            
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-9">
+            
+    <div itemscope itemtype="http://schema.org/NewsArticle">
+    <meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="http://https://shgn.ir/2024-11-24/failover-by-maxscale.html"/>
+    <div class="page-header">
+      <h3 itemprop="name">جلوگیری توقف سرویس دهی دیتابیس با maxscale</h3>
+      
+      
+        <small>
+          <p class="text-right">
+            ارسال شده <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+                توسط <span itemprop="name">سید سجاد شاهچراغیان</span>
+              </span>
+              در تاریخ <span itemprop="datePublished">2024-11-24</span>
+          </p>
+        </small>
+      
+    </div>
+      <section itemprop="articleBody">
+        <h1>مقدمه</h1>
+<p><code>MariaDB MaxScale</code>یک پراکسی پایگاه داده است که در دسترس بودن، مقیاس پذیری و امنیت سرویس 
+<code>MariaDB</code> را گسترش می دهد و در عین حال توسعه برنامه 
+را با جدا کردن آن از زیرساخت پایگاه داده اصلی ساده می کند.</p>
+<p><code>MariaDB MaxScale</code> با یک معماری توسعه‌یافته برای پشتیبانی از پلاگین‌ها تولید شده است و 
+عملکرد آن را فراتر از متعادل‌سازی بار می‌برد تا به عنوان مثال، به یک فایروال 
+پایگاه داده تبدیل شود. با افزونه‌های داخلی برای روترها، فیلترها و پروتکل‌های متعدد، <code>MariaDB MaxScale</code> 
+را می‌توان برای ارسال درخواست‌های پایگاه داده و اصلاح پاسخ‌های پایگاه داده بر اساس الزامات
+تجاری و فنی - به عنوان مثال، برای پوشاندن داده‌های حساس یا خواندن مقیاس، پیکربندی کرد.</p>
+<h1>پیش فرض های راه اندازی</h1>
+<p>در این نوشته هدف راه اندازی لود بالانسر بالادستی برای دیتابیس mariadb می باشد.</p>
+<h2>راه اندازی رپلیکیشن</h2>
+<p>پس قبل از آن لازم است تا یک رپلیکیشن <code>master/slave</code> دیتابیس <code>mariadb</code> که قبلا در
+<a href="https://shgn.ir/2024-10-05/mariadb-master-salve-replication-fastest.html"><code>mariadb master/slave replication</code></a>
+توضیح داده شده است را آماده داشته باشیم.
+پس یک سرور داریم که به عنوان <code>master</code> به کار گیری می شود و یک یا بیشتر سرور 
+دیگر که به عنوان <code>slave</code>.</p>
+<h2>رپلیکیشن با GTID</h2>
+<p>با توجه به این که هدف این نوشته، راه اندازی <code>failover, switchover</code> با <code>maxscale</code> است، 
+لازمه انجام این مهم این است که رپلیکیشن با <code>gtid</code> بسته شده باشد. پس برای راه اندازی 
+رپلیکیشن با 
+<a href="https://shgn.ir/2024-11-10/enabling-GTIDs-in-mariadb-replication.html"><code>gitd</code></a>
+موارد زیر باید انجام شوند.</p>
+<h3>تنظیمات اولیه</h3>
+<p>ابتدا باید <code>gtid</code> را روی نودها فعال کرد. برای فعال کردن تنظیمات زیر روی 
+فایل /etc/mysql/my.cnf اضافه می شوند:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">[mysqld]</span>
+<span class="na">gtid_domain_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">1</span>
+<span class="na">gtid_strict_mode</span><span class="o">=</span><span class="s">1</span>
+</code></pre></div>
+
+<p>بعد از اعمال تنظیمات، زمانی که مراحل انتقال به <code>slave</code> انجام می شود، <code>gtid</code> نیز در 
+اطلاعات مورد نیاز برای ایجاد رپلیکیشن وجود خواهد داشت. پس برای راه اندازی رپلیکیشن با
+<code>gtid</code> دستور زیر را اجرا می کنیم .</p>
+<div class="codehilite"><pre><span></span><code><span class="n">SET</span><span class="w"> </span><span class="n">GLOBAL</span><span class="w"> </span><span class="n">gtid_slave_pos</span><span class="o">=</span><span class="s">&quot;1-1-2&quot;</span><span class="p">;</span>
+<span class="n">CHANGE</span><span class="w"> </span><span class="n">MASTER</span><span class="w"> </span><span class="n">TO</span>
+<span class="w">    </span><span class="n">MASTER_HOST</span><span class="o">=</span><span class="err">&#39;</span><span class="n">master</span><span class="o">-</span><span class="n">ip</span><span class="err">&#39;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">MASTER_USER</span><span class="o">=</span><span class="err">&#39;</span><span class="n">slave1</span><span class="err">&#39;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">MASTER_PASSWORD</span><span class="o">=</span><span class="err">&#39;</span><span class="n">slave</span><span class="mi">@1234</span><span class="err">&#39;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">MASTER_LOG_FILE</span><span class="o">=</span><span class="err">&#39;</span><span class="n">mster</span><span class="o">-</span><span class="n">log</span><span class="o">-</span><span class="n">file</span><span class="err">&#39;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">MASTER_USE_GTID</span><span class="o">=</span><span class="n">salve_pos</span><span class="p">,</span>
+<span class="w">    </span><span class="n">MASTER_LOG_POS</span><span class="o">=</span><span class="n">master</span><span class="o">-</span><span class="n">log</span><span class="o">-</span><span class="n">pos</span><span class="p">;</span>
+<span class="n">START</span><span class="w"> </span><span class="n">SLAVE</span><span class="p">;</span>
+</code></pre></div>
+
+<h2>دسترسی های لازم روی دیتابیس</h2>
+<p>سرویس <code>maxscale</code> برای سرویس دهی، لازم دارد تا یک سری حساب کاربری با دسترسی های 
+مشخص روی دیتابیس های بکندش ایجاد شوند.</p>
+<h3>کاربر مانیتور</h3>
+<p>یک حساب کاربری با دسترسی های زیر برای بخش مانیتور لازم است. دستور زیر اجرا شود:</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">CREATE</span><span class="w"> </span><span class="nv">USER</span><span class="w"> </span><span class="s1">&#39;maxscale&#39;</span>@<span class="s1">&#39;%&#39;</span><span class="w"> </span><span class="nv">IDENTIFIED</span><span class="w"> </span><span class="nv">BY</span><span class="w"> </span><span class="s1">&#39;maxscale-password&#39;</span><span class="c1">;</span>
+<span class="nv">GRANT</span><span class="w"> </span><span class="nv">REPLICA</span><span class="w"> </span><span class="nv">MONITOR</span>,<span class="w"> </span><span class="nv">REPLICATION</span><span class="w"> </span><span class="nv">SLAVE</span>,<span class="w"> </span><span class="nv">REPLICATION</span><span class="w"> </span><span class="nv">SLAVE</span><span class="w"> </span><span class="nv">ADMIN</span>,<span class="w"> </span><span class="nv">FILE</span>,<span class="w"> </span><span class="nv">CONNECTION</span><span class="w"> </span><span class="nv">ADMIN</span>,<span class="w"> </span><span class="nv">RELOAD</span>,<span class="w"> </span><span class="nv">PROCESS</span>,<span class="w"> </span><span class="k">SHOW</span><span class="w"> </span><span class="nv">DATABASES</span>,<span class="w"> </span><span class="nv">EVENT</span>,<span class="w"> </span><span class="nv">SET</span><span class="w"> </span><span class="nv">USER</span>,<span class="w"> </span><span class="nv">READ_ONLY</span><span class="w"> </span><span class="nv">ADMIN</span>,<span class="w"> </span><span class="nv">BINLOG</span><span class="w"> </span><span class="nv">ADMIN</span><span class="w"> </span><span class="nv">ON</span><span class="w"> </span><span class="o">*</span>.<span class="o">*</span><span class="w"> </span><span class="nv">TO</span><span class="w"> </span><span class="s1">&#39;maxscale&#39;</span>@<span class="s1">&#39;%&#39;</span><span class="c1">;</span>
+<span class="nv">GRANT</span><span class="w"> </span><span class="nv">SELECT</span><span class="w"> </span><span class="nv">ON</span><span class="w"> </span><span class="nv">mysql</span>.<span class="nv">global_priv</span><span class="w"> </span><span class="nv">TO</span><span class="w"> </span><span class="s1">&#39;maxscale&#39;</span>@<span class="s1">&#39;%&#39;</span><span class="c1">;</span>
+<span class="nv">GRANT</span><span class="w"> </span><span class="nv">SELECT</span><span class="w"> </span><span class="nv">ON</span><span class="w"> </span><span class="nv">mysql</span>.<span class="nv">procs_priv</span><span class="w"> </span><span class="nv">TO</span><span class="w"> </span><span class="s1">&#39;maxscale&#39;</span>@<span class="s1">&#39;%&#39;</span><span class="c1">;</span>
+</code></pre></div>
+
+<p>همچنین دسترسی برای رپلیکیشن به این صورت می باشد:</p>
+<div class="codehilite"><pre><span></span><code>CREATE USER &#39;replication&#39;@&#39;%&#39; IDENTIFIED BY &#39;replication-password&#39;;
+GRANT REPLICATION SLAVE, REPLICATION SLAVE ADMIN ON *.* TO &#39;replication&#39;@&#39;%&#39;;
+</code></pre></div>
+
+<h3>کاربر service</h3>
+<p>یک حساب کاربری با دسترسی های زیر برای بخش مانیتور لازم است. دستور زیر اجرا شود:</p>
+<div class="codehilite"><pre><span></span><code>GRANT SELECT ON mysql.user TO &#39;maxscale&#39;@&#39;%&#39;;
+GRANT SELECT ON mysql.db TO &#39;maxscale&#39;@&#39;%&#39;;
+GRANT SELECT ON mysql.tables_priv TO &#39;maxscale&#39;@&#39;%&#39;;
+GRANT SELECT ON mysql.proxies_priv TO &#39;maxscale&#39;@&#39;%&#39;;
+GRANT SELECT ON mysql.roles_mapping TO &#39;maxscale&#39;@&#39;%&#39;;
+GRANT SELECT ON mysql.columns_priv TO &#39;maxscale&#39;@&#39;%&#39;;
+</code></pre></div>
+
+<h2>راه اندازی maxscale</h2>
+<p>راه اندازی <code>mariadb maxscale</code> به صورت داکری و با فایل  <code>docker-compose.yml</code> زیر انجام شده است:</p>
+<div class="codehilite"><pre><span></span><code>version: &quot;3&quot;
+services:
+    max:
+      image: hub.gap.im/ops/mariadb-maxscale:23.02
+      network_mode: host
+      environment:
+        - TZ=Asia/Tehran
+      volumes:
+        - ./conf.d/max.cnf:/etc/maxscale.cnf
+</code></pre></div>
+
+<h3>فایل تنظیمات</h3>
+<div class="codehilite"><pre><span></span><code><span class="k">[maxscale]</span>
+<span class="na">threads</span><span class="o">=</span><span class="s">auto</span>
+<span class="na">log_augmentation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">1</span>
+<span class="na">admin_host</span><span class="o">=</span><span class="s">0.0.0.0</span>
+<span class="na">admin_port</span><span class="o">=</span><span class="s">8989</span>
+<span class="na">admin_secure_gui</span><span class="o">=</span><span class="s">false</span>
+
+<span class="k">[server1]</span>
+<span class="na">type</span><span class="w">                        </span><span class="o">=</span><span class="w"> </span><span class="s">server</span>
+<span class="na">address</span><span class="w">                     </span><span class="o">=</span><span class="w"> </span><span class="s">192.168.0.72</span>
+<span class="na">port</span><span class="w">                        </span><span class="o">=</span><span class="w"> </span><span class="s">3306</span>
+<span class="na">proxy_protocol</span><span class="w">              </span><span class="o">=</span><span class="w"> </span><span class="s">true</span>
+
+<span class="k">[server2]</span>
+<span class="na">type</span><span class="w">                        </span><span class="o">=</span><span class="w"> </span><span class="s">server</span>
+<span class="na">address</span><span class="w">                     </span><span class="o">=</span><span class="w"> </span><span class="s">192.168.0.28</span>
+<span class="na">port</span><span class="w">                        </span><span class="o">=</span><span class="w"> </span><span class="s">3306</span>
+<span class="na">proxy_protocol</span><span class="w">              </span><span class="o">=</span><span class="w"> </span><span class="s">true</span>
+
+<span class="k">[server3]</span>
+<span class="na">type</span><span class="w">                        </span><span class="o">=</span><span class="w"> </span><span class="s">server</span>
+<span class="na">address</span><span class="w">                     </span><span class="o">=</span><span class="w"> </span><span class="s">192.168.0.28</span>
+<span class="na">port</span><span class="w">                        </span><span class="o">=</span><span class="w"> </span><span class="s">3307</span>
+<span class="na">proxy_protocol</span><span class="w">              </span><span class="o">=</span><span class="w"> </span><span class="s">true</span>
+
+<span class="k">[Replication-Monitor]</span>
+<span class="na">type</span><span class="w">                        </span><span class="o">=</span><span class="w"> </span><span class="s">monitor</span>
+<span class="na">module</span><span class="w">                      </span><span class="o">=</span><span class="w"> </span><span class="s">mariadbmon</span>
+<span class="na">servers</span><span class="w">                     </span><span class="o">=</span><span class="w"> </span><span class="s">server1,server2,server3</span>
+<span class="na">user</span><span class="w">                        </span><span class="o">=</span><span class="s">&#39;maxscale_admin&#39;</span>
+<span class="na">password</span><span class="w">                    </span><span class="o">=</span><span class="s">&#39;maxscale&#39;</span>
+<span class="na">auto_failover</span><span class="w">               </span><span class="o">=</span><span class="w"> </span><span class="s">true</span>
+<span class="na">auto_rejoin</span><span class="w">                 </span><span class="o">=</span><span class="w"> </span><span class="s">true</span>
+<span class="na">enforce_read_only_slaves</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="s">true</span>
+<span class="na">replication_user</span><span class="w">            </span><span class="o">=</span><span class="s">&#39;slave1&#39;</span>
+<span class="na">replication_password</span><span class="w">        </span><span class="o">=</span><span class="s">&#39;slave@1234&#39;</span>
+<span class="na">cooperative_monitoring_locks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">majority_of_running</span>
+
+<span class="k">[WriteListener]</span>
+<span class="na">type</span><span class="w">                        </span><span class="o">=</span><span class="w"> </span><span class="s">listener</span>
+<span class="na">service</span><span class="w">                     </span><span class="o">=</span><span class="w"> </span><span class="s">WriteService</span>
+<span class="na">port</span><span class="w">                        </span><span class="o">=</span><span class="w"> </span><span class="s">3306</span>
+<span class="na">address</span><span class="w">                      </span><span class="o">=</span><span class="w"> </span><span class="s">0.0.0.0</span>
+
+<span class="k">[WriteService]</span>
+<span class="na">type</span><span class="w">                        </span><span class="o">=</span><span class="w"> </span><span class="s">service</span>
+<span class="na">router</span><span class="w">                      </span><span class="o">=</span><span class="w"> </span><span class="s">readwritesplit</span>
+<span class="na">servers</span><span class="w">                     </span><span class="o">=</span><span class="w"> </span><span class="s">server1,server2,server3</span>
+<span class="na">user</span><span class="w">                        </span><span class="o">=</span><span class="s">&#39;usr_maxscal&#39;</span>
+<span class="na">password</span><span class="w">                    </span><span class="o">=</span><span class="s">&#39;maxscale&#39;</span>
+<span class="na">transaction_replay</span><span class="w">          </span><span class="o">=</span><span class="w"> </span><span class="s">true</span>
+<span class="na">transaction_replay_timeout</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="s">30s</span>
+</code></pre></div>
+
+<p>توضیحات تنظیمات به ترتیب زیر می باشند:</p>
+<h3>بخش server</h3>
+<p>در این قسمت نودهای بکند (سرورهای دیتابیس mariadb) مشخص می شوند.
+شامل:</p>
+<ul>
+<li>type: تعیین کننده نوع ماژول</li>
+<li>address: آدرس نود - سرور دیتابیس</li>
+<li>port: تعیین کننده پورت ارتباطی سرور دیتابیس</li>
+<li>proxy_protocol: ویژگی ای می باشد که روی تنظیمات نودهای دیتابیس ها با ویژگی 
+<a href="http://proxy_protocol_networks">proxy_protocol_networks</a>
+اعمال می شود</li>
+</ul>
+<h3>بخش monitor</h3>
+<p>در این بخش، قسمت های مختلف و اطلاعات مورد نیاز برای مانیتور کردن نودهای دیتابیس تعیین 
+می شوند:</p>
+<ul>
+<li>type: تعیین کننده نوع ماژول</li>
+<li>module: براساس معماری در نظر گرفته شده، تعیین کننده ماژول مدنظر برای مانیتور سرورها می باشد. در این سناریو <code>mariadbmon</code> می باشد.</li>
+<li>servers: تعیین کننده سرورهایی که باید این ماژول آن ها را مانیتور کند.</li>
+<li>user: نام کاربری که ماژول مانیتور برای مانیتور کردن سرورهای از آن استفاده می کند.</li>
+<li>password: کلمه عبور حساب کاربری ماژول مانیتور</li>
+<li>auto_failover: برای ایجاد امکان <code>failover</code> به صورت خودکار، این ویژگی باید فعال باشد.</li>
+<li>auto_rejoin: برای ایجاد امکان <code>rejoin</code> نود به رپلیکا، به صورت خودکار، این ویژگی باید فعال باشد.</li>
+<li>enforce_read_only_slaves: این ویژگی برای کنترل نودهایی که قابلیت رایت دارند، زمانی که <code>failover/switchover</code> عمل می کند، با استفاده از این خصیصه کنترل <code>read/write</code> روی نودها را انجام می دهد.</li>
+<li>replication_user: زمانی که <code>failover/switchover/rejoin</code> عمل می کند، لازم است تا حالت نودهای دیتابیس از <code>master</code> به <code>slave</code> یا بلعکس تغییر کند، و یکی از پیش نیازهای اصلی و مهم داشتن حساب کاربری با دسترسی <code>replication</code> می باشد. این ویژگی تعیین کننده نام کاربری حساب رپلیکیشن می باشد.</li>
+<li>replication_password: تعیین کننده کلمه عبور حساب کاربری رپلیکیشن می باشد.</li>
+<li>cooperative_monitoring_locks: با این ویژگی، زمانی که چند نود <code>maxscale</code> استفاده شود، بین خودشان نود اصلی را مشخص می کنند.</li>
+<li>servers_no_promotion: این گزینه، لیستی از سرورها را گرفته و آن ها را از قرار گرفتن در <code>failover</code> و <code>switchover</code> در می آورد.</li>
+</ul>
+<h3>بخش service</h3>
+<p>این بخش با قرار دادن چندین نود دیتابیس پشت سر خود، به عنوان یک سرویس دهنده به کلاینت عمل 
+می کند. کنترل نوع <code>route</code> کوئری ها و ارسال آن ها به کدام دیتابیس وظیفه این قسمت است.</p>
+<ul>
+<li>type: تعیین کننده نوع ماژول</li>
+<li>router: مقدار این خصیصه، مشخص کنند مدل توزیع کوئری ها بین دیتابیس های می باشد.</li>
+<li>servers: تعیین کننده دیتابیس های پشت سر این سرویس می باشد.</li>
+<li>transaction_replay: اگر این خصیصه فعال باشد، این امکان را می دهد در صورت خطا خوردن کوئری رایت، سرویس مجدد آن را روی یک نود دیگر اجرا کرده و خطا را پوشش دهد.</li>
+<li>user: تعیین کننده نام کاربری یک حساب کاربری جهت دریافت اطلاعاتی پیرامون کاربران، دیتابیس ها و … روی سرورهای بکندش می باشد.</li>
+<li>password: تعیین کننده کلمه عبور برای حساب کاربری سرویس می باشد.</li>
+<li>transaction_replay_timeout: تعیین کننده زمانی است که برای اجرای یک کوئری مشخص می کند تا با خطا مواجه شود یا نشود.</li>
+</ul>
+<h3>بخش listener</h3>
+<p>با استفاده از <code>listener</code> یک پورت روی <code>maxscale</code> باز شده و تمامی ارتباطات دریافتی روی 
+آن پورت را به یک سرویس منتقل می کند.</p>
+<ul>
+<li>type: تعیین کننده نوع ماژول</li>
+<li>service: مشخص کننده سرویسی که این <code>listener</code> به سمت آن ارسال می کند.</li>
+<li>port: شماره پورتی که روی <code>maxscale</code> باز و روی آن <code>listen</code> می کند.</li>
+<li>address: آدرس <code>ip</code> که روی آن پورت مورد نظر را باز می کند، اگر <code>0.0.0.0</code> باشد، روی تمای آردس های <code>ip</code> هاست پورت را باز می کند.</li>
+</ul>
+<h1>استفاده از maxscale</h1>
+<p>اکنون امکان قرارگیری <code>maxscale</code> به عنوان لود بالانسر بین کاربر و دیتابیس ها به صورت 
+جدا سازی کوئری های <code>write</code> و  <code>read</code> و توزیع بار بین دیتابیس های بکند بر مبنای سناریو 
+تصویر زیر وجود دارد:</p>
+<p><img alt="MaxScale Cluster.jpg" src="MaxScale Cluster" /></p>
+<p>برای نمونه، می توان به صورت زیر کوئری را به آدرس و پورتی که در بخش <code>listener</code>در 
+تنظیمات <code>maxscale</code> استفاده شده اند، ارسال نمود، خود <code>maxscale</code> براساس تنظیمات 
+انجام شده، کوئری را به سمت بکند مناسب روت می کند.</p>
+<div class="codehilite"><pre><span></span><code>mariadb -u microblog_user -p -h 192.168.0.99 -P 3306 -D application -e &#39;select * from user;&#39;
+</code></pre></div>
+
+<p>همچنین تا اینجا ویژگی های <code>failover/switchover</code> نیز پیاده سازی شده اند. زمانی که 
+نود <code>master</code> به هر دلیلی با مشکل مواجه شود که نتواند پاسخ درخواست ها را دهد، <code>maxscale</code> به 
+صورت خودکار یکی از نودهای <code>slave</code> را انتخاب و پروسه تبدیل به <code>master</code> را برای آن انجام 
+می دهد و آن را تبدیل به <code>master</code> جدید و مابقی <code>slave</code> ها را به این <code>slave</code> اشاره می دهد.</p>
+<h3>مدیریت و کنترل maxscale</h3>
+<p>مدیریت و کنترل <code>maxscale</code> در حال اجرا با دستور <code>maxcltr</code> انجام می شود. تمامی تنظیماتی 
+که می توان با فایل ثابت تنظیمات سرویس انجام شوند، نیز با این دستور به 
+صورت <code>runtime</code> قابل اجرا می باشند.</p>
+<p>برای نمونه با دستور زیر می توان لیستی از سرورها و وضعیت آن ها را مشاهده نمود:</p>
+<div class="codehilite"><pre><span></span><code>maxctrl list servers
+</code></pre></div>
+
+<p>لیست کامل و توضیحات مربوط به این دستور را می توان در
+<a href="https://mariadb.com/kb/en/mariadb-maxscale-2208-maxctrl/"><code>mariadb knowledge Maxscale</code></a>
+دید.</p>
+<h1>منابع</h1>
+<ul>
+<li><a href="https://mariadb.com/kb/en/gtid/">Global Transaction ID</a></li>
+<li><a href="https://mariadb.com/resources/blog/mariadb-maxscale-2-2-introducing-failover-switchover-and-automatic-rejoin/">MariaDB MaxScale 2.2: Introducing Failover, Switchover and Automatic Rejoin</a></li>
+<li><a href="https://severalnines.com/blog/how-use-failover-mechanism-maxscale/">How to Use the Failover Mechanism of MaxScale</a></li>
+<li><a href="https://www.kesterriley.tech/mariadb/maxscale/mariadb-maxscale-cooperative-monitoring-p1/">MariaDB MaxScale — High Availability – Part 1</a></li>
+<li><a href="https://severalnines.com/blog/maxscale-basic-management-using-maxctrl-mariadb-cluster/">MaxScale Basic Management Using MaxCtrl for MariaDB Cluster</a></li>
+<li><a href="https://severalnines.com/blog/how-install-and-configure-maxscale-mariadb/">How to Install and Configure MaxScale for MariaDB</a></li>
+<li><a href="https://mariadb.com/resources/blog/mariadb-maxscale-2-5-cooperative-monitoring/">MariaDB MaxScale 2.5 Cooperative Monitoring</a></li>
+<li><a href="https://mariadb.com/kb/en/mariadb-maxscale-25-mariadb-monitor/">MariaDB Monitor</a></li>
+<li><a href="https://severalnines.com/blog/introduction-maxscale-administration-using-maxctrl-mariadb-cluster/">Introduction to MaxScale Administration Using maxctrl for MariaDB Cluster</a></li>
+</ul>
+      </section>
+      <div>
+        برچسب ها:
+      
+        <a href="/tag/database.html">
+            <span class="label label-default" itemprop="about">database</span>
+        </a>
+      
+        <a href="/tag/mariadb.html">
+            <span class="label label-default" itemprop="about">mariadb</span>
+        </a>
+      
+        <a href="/tag/replication.html">
+            <span class="label label-default" itemprop="about">replication</span>
+        </a>
+      
+        <a href="/tag/maxscale.html">
+            <span class="label label-default" itemprop="about">maxscale</span>
+        </a>
+      
+        <a href="/tag/recovery.html">
+            <span class="label label-default" itemprop="about">recovery</span>
+        </a>
+      
+    </div>
+    </div>
+
+        </div>
+        <div class="col-md-3">
+            <div class="panel-group">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        من در stackexchange.com
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-md-3 col-md-offset-9">
+                            <a href="https://stackexchange.com/users/887576" target="_blank">
+                                <img src="https://stackexchange.com/users/flair/887576.png" width="208" height="58"
+                                     alt="profile for shgnInc on Stack Exchange, a network of free, community-driven Q&A sites"
+                                     title="profile for shgnInc on Stack Exchange, a network of free, community-driven Q&A sites">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-group">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        مطالب نوشته شده تا کنون
+                    </div>
+                    <div class="panel-body">
+                            <div class="counter-box">
+                                <h2>
+                                    <span class="count">62</span>
+                                </h2>
+                            </div>
+                    </div>
+                </div>
+
+                <div class="panel-group">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            مطالب مهم
+                        </div>
+                        <div class="panel-body">
+                            <ul>
+                                <li><a href="https://shgn.ir/2021-03-07/galera-cluster-debian-10.html"
+                                       title="نصب Galer Cluster بر روی debian 10">نصب Galer Cluster بر روی debian 10</a>
+                                </li>
+                                <li><a href="https://shgn.ir/2020-08-15/installing_docker_on_debian.html"
+                                       title="نصب Docker روی Debian 10">نصب Docker روی Debian 10</a></li>
+                                <li><a href="https://shgn.ir/2018-09-05/Mysql-JSON-DataType.html"
+                                       title="معرفی نوع داده JSON در دیتابیس Mysql-Mariadb">معرفی نوع داده JSON در
+                                    دیتابیس Mysql-Mariadb</a></li>
+                                <li><a href="https://shgn.ir/2018-07-23/ssh_automatic_login.html"
+                                       title="لاگین خودکار با SSH">لاگین خودکار با SSH</a></li>
+                                <li><a href="https://shgn.ir/2017-08-16/galera_cluster.html"
+                                       title="نصب Galer Cluster بر روی debian8">نصب Galer Cluster بر روی debian8</a>
+                                </li>
+                                <li><a href="https://shgn.ir/2022-07-02/mysql-slave-replicaion.html"
+                                       title="راه اندازی Mysql/Mariadb Slave Replication بدون توقف">راه اندازی Mysql/Mariadb Slave Replication بدون توقف</a>
+                                </li>
+                                <li><a href="https://shgn.ir/2023-12-03/Using-all-CPU-with-tar.html"
+                                       title="فشرده سازی با استفاده از تمام ظرفیت CPU">فشرده سازی با استفاده از تمام ظرفیت CPU</a>
+                                </li>
+                                <li><a href="https://shgn.ir/2022-10-22/reduce-LVM-Partition-size.html"
+                                       title="کاهش فضای دیسک LVM">کاهش فضای دیسک LVM</a>
+                                </li>
+                                <li><a href="https://shgn.ir/2023-12-03/Using-all-CPU-with-tar.html"
+                                       title="فشرده سازی با استفاده از تمام ظرفیت CPU">فشرده سازی با استفاده از تمام ظرفیت CPU</a>
+                                </li>
+                                <li><a href="https://shgn.ir/2024-01-13/hangup-a-call-on-asterisk.html"
+                                       title="بستن تماس باز در asterisk">بستن تماس باز در asterisk</a>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-group">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            تازه ترین مطالب
+                        </div>
+                        <div class="panel-body">
+                            <ul>
+                                
+                            </ul>
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="panel-group">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            Linux ISO Images
+                        </div>
+                        <div class="panel-body">
+                            <ul>
+                                <li><a href="https://shgn.ir/images/gparted-live-1.1.0-1-amd64.iso"
+                                       title="gparted-live-1.1.0-1-amd64">GParted Live CD/USB/HD/PXE Bootable Image</a></li>
+                                <li><a href="https://shgn.ir/images/debian-10.3.0-amd64-xfce-CD-1.iso"
+                                       title="debian-10.3.0-amd64-xfce-CD-1">Debian-10-amd64-xfce-CD</a></li>
+                                <li><a href="https://shgn.ir/images/SNG7-PBX16-64bit-2302-1.iso"
+                                       title="FreePBX16-64bit-2302-1">FreePBX16-64bit-2302-1</a></li>
+                                <li><a href="https://shgn.ir/images/debian-12.2.0-amd64-netinst.iso"
+                                       title="debian-12.2.0-amd64-netinst.iso">debian-12.2.0-amd64-netinst</a></li>
+                                <li><a href="https://shgn.ir/images/debian-live-12.2.0-amd64-xfce.iso"
+                                       title="debian-live-12.2.0-amd64-xfce">debian-live-12.2.0-amd64-xfce</a></li>
+                                <li><a href="https://shgn.ir/images/ubuntu-22.04.3-desktop-amd64.iso"
+                                       title="ubuntu-22.04.3-desktop-amd64">Ubuntu Desktop</a></li>
+                                <li><a href="https://shgn.ir/images/ubuntu-22.04.3-live-server-amd64.iso"
+                                       title="ubuntu-22.04.3-live-server-amd64">Ubuntu Server</a></li>
+                                <li><a href="https://shgn.ir/images/CentOS-7-aarch64-Minimal-1908.iso"
+                                       title="CentOS-7-aarch64-Minimal-1908">CentOS-7-aarch64-Minimal-1908</a></li>
+                                <li><a href="https://shgn.ir/images/CentOS-8.2.2004-x86_64-minimal.iso"
+                                       title="CentOS-8.2.2004-x86_64-minimal">CentOS-8.2.2004-x86_64-minimal</a></li>
+                                <li><a href="https://shgn.ir/images/clonezilla-live-3.1.1-27-amd64.iso"
+                                       title="clonezilla-live-3.1.1-27-amd64">clonezilla-live</a></li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<hr/>
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                
+                <strong>پیشنهادی های</strong>
+                <ul>
+                    
+                    <li><a href="https://github.com/shgninc">GitHub</a></li>
+                    
+                    <li><a href="https://www.instagram.com/shgninc/">Instagram</a></li>
+                    
+                    <li><a href="https://virgool.io/@shgninc">Virgool</a></li>
+                    
+                    <li><a href="https://www.linkedin.com/in/sajjad-shahcheraghean/">Linkedin</a></li>
+                    
+                    <li><a href="https://twitter.com/shahcheraghian">Twiteer</a></li>
+                    
+                    <li><a href="https://virasty.com/twitter">Virsty</a></li>
+                    
+                    <li><a href="https://shgn.ir/mariadb-failover">Falilover By Maxscale</a></li>
+                    
+                    <li><a href="https://shgn.ir/yii2/">معرفی Yii2</a></li>
+                    
+                </ul>
+                
+            </div>
+            <div class="col-md-6">
+                <strong>دسترسی های ساده</strong>
+                <ul>
+                    <li><a href="/">تمامی پست ها</a></li>
+                    <li><a href="/tags.html">فهرست تگ ها</a></li>
+                    <li><a href="/tag/video.html">ویدیوها</a></li>
+                </ul>
+            </div>
+            <div class="col-md-12">
+                <p class="text-center"><small>https://shgn.ir &copy; 2023</small></p>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://shgn.ir/static/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+            integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+            crossorigin="anonymous"></script>
+
+<script src="https://shgn.ir/static/jquery/3.5.1/app.js"></script>
+<script src="https://shgn.ir/static/ProngnRoll/prognroll.min.js"></script>
+<script>
+var jQ_3_5_1 = jQuery.noConflict(true);
+
+    /*Scroll to top when arrow up clicked BEGIN*/
+jQ_3_5_1(window).scroll(function() {
+    var height = jQ_3_5_1(window).scrollTop();
+    if (height > 100) {
+        jQ_3_5_1('#back2Top').fadeIn();
+    } else {
+        jQ_3_5_1('#back2Top').fadeOut();
+    }
+});
+jQ_3_5_1(document).ready(function() {
+    jQ_3_5_1("#back2Top").click(function(event) {
+        event.preventDefault();
+        jQ_3_5_1("html, body").animate({ scrollTop: 0 }, "slow");
+        return false;
+    });
+});
+ /*Scroll to top when arrow up clicked END*/
+
+/* https://www.jqueryscript.net/other/jQuery-Scroll-Progress-Indicator-For-Any-Containers-ProngnRoll.html */
+
+jQ_3_5_1("body").prognroll({
+  position:"bottom",
+  height:5,
+  color:"#f54905"
+});
+
+</script>
+
+<a id="back2Top" title="Back to top" href="#">&#10148;</a>
+</body>
+</html>

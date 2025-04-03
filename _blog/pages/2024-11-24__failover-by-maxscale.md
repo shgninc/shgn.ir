@@ -1,5 +1,5 @@
-title: جلوگیریتوقف سرویس دهی دیتابیس با maxscale
-briefing: A brief description of post.
+title: جلوگیری توقف سرویس دهی دیتابیس با maxscale
+briefing: MariaDB MaxScaleیک پراکسی پایگاه داده است که در دسترس بودن، مقیاس پذیری و امنیت سرویس MariaDB را گسترش می دهد.
 date_time: 2024-11-24 17:31
 slug: failover-by-maxscale
 tags: database, mariadb, replication, maxscale, recovery
@@ -206,7 +206,9 @@ type: post
 اکنون امکان قرارگیری `maxscale` به عنوان لود بالانسر بین کاربر و دیتابیس ها به صورت 
 جدا سازی کوئری های `write` و  `read` و توزیع بار بین دیتابیس های بکند بر مبنای سناریو 
 تصویر زیر وجود دارد:
-!(maxscale.jpg)[maxscale]
+
+![MaxScale Cluster.jpg](MaxScale Cluster)
+
 برای نمونه، می توان به صورت زیر کوئری را به آدرس و پورتی که در بخش `listener`در 
 تنظیمات `maxscale` استفاده شده اند، ارسال نمود، خود `maxscale` براساس تنظیمات 
 انجام شده، کوئری را به سمت بکند مناسب روت می کند.
