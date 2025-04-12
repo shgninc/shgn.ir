@@ -15,11 +15,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title> پستهای تگ شده با  'ssh' - دست نوشته های یک تازه کار </title>
+    <title> نصب Docker روی Debian 12 bookworm - دست نوشته های یک تازه کار </title>
     <meta name="description"
-          content="این وبلاگ پیرامون تجربیات، دانسته ها، اینجاب درباره linux, database, mysql, mariadb, datamart, galera cluster,apache می باشد."/>
+          content="نحوه نصب Docker بر روی سیستم عامل محبوب  Debian 12 Bookworm."/>
     <meta name="keywords"
-          content="لینوکس،لینوکس مشهد،آموزش,پایتون,پایتون مشهد,آموزش لینوکس,دیتابیس,آموزش دیتابیس,برنامه نویسی,linux,database,mysql,mariadb,datamart,galera cluster,apache,big data,dataware house,cluster,galera,percona,python,php,tutorial,debian,ubuntu,centos,arch linux,mashhad linux,iran linux,debian mashhad,"/>
+          content="لینوکس،لینوکس مشهد،آموزش,پایتون,پایتون مشهد,آموزش لینوکس,دیتابیس,آموزش دیتابیس,برنامه نویسی,linux,database,mysql,mariadb,datamart,galera cluster,apache,big data,dataware house,cluster,galera,percona,python,php,tutorial,debian,ubuntu,centos,arch linux,mashhad linux,iran linux,debian mashhad, linux, docker, debian, virtualization"/>
 
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
     <!-- Bootstrap -->
@@ -188,42 +188,96 @@
     <div class="row">
         <div class="col-md-9">
             
+    <div itemscope itemtype="http://schema.org/NewsArticle">
+    <meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="http://https://shgn.ir/2025-04-12/installing-docker-on-debian12.html"/>
     <div class="page-header">
-      <h2>پستهای تگ شده با  'ssh'</h2>
-      <p class="lead"></p>
+      <h3 itemprop="name">نصب Docker روی Debian 12 bookworm</h3>
+      
+      
+        <small>
+          <p class="text-right">
+            ارسال شده <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+                توسط <span itemprop="name">سید سجاد شاهچراغیان</span>
+              </span>
+              در تاریخ <span itemprop="datePublished">2025-04-12</span>
+          </p>
+        </small>
+      
     </div>
+      <section itemprop="articleBody">
+        <h1>مقدمه</h1>
+<p>در پستی که قبلا در همین سایت بوده با نام 
+<a href="https://shgn.ir/2020-08-15/installing_docker_on_debian.html">نصب Docker روی Debian 10</a>
+مبحث نصب داکر روی دبیان۱۰ مطرح و ارائه شد. با گذشت زمان و به روز رسانی های انجام شده، چه در
+ سطح سیستم عامل و چه در سطح خود برنامه تغییرات زیادی به وجود آمده است.</p>
+<p>لذا در این نوشته سعی می شود تا نحوه نصب <code>docker</code> روی <code>debian 12</code> بیان شود.</p>
+<p>یه سری توضیحات پیشنیاز برای داکر از جمله مفاهیم <code>Cgroup</code>، <code>namespace</code> و <code>container</code> ها
+در پست قبلی با نام
+<a href="http://shgn.ir/2019-07-08/Cgroup-linux-kernel.html">آشنایی با ویژگی Cgroup در کرنل لینوکس</a>
+ آشنا شدیم.
+<img alt="installing-docker-on-debian12" src="installing-docker-on-debian12.jpg" /></p>
+<h1>نصب داکر</h1>
+<p>برای نصب داکر روی دبیان ۱۲ پیشنیازهایی لازم است.</p>
+<p>به عنوان پیشنیاز دستورات زیر باید اجرا شوند:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">sudo</span><span class="w"> </span><span class="n">apt</span><span class="o">-</span><span class="n">get</span><span class="w"> </span><span class="n">update</span>
+<span class="n">sudo</span><span class="w"> </span><span class="n">apt</span><span class="o">-</span><span class="n">get</span><span class="w"> </span><span class="n">install</span><span class="w"> </span><span class="n">ca</span><span class="o">-</span><span class="n">certificates</span><span class="w"> </span><span class="n">curl</span>
+<span class="n">sudo</span><span class="w"> </span><span class="n">install</span><span class="w"> </span><span class="o">-</span><span class="n">m</span><span class="w"> </span><span class="mi">0755</span><span class="w"> </span><span class="o">-</span><span class="n">d</span><span class="w"> </span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">apt</span><span class="o">/</span><span class="n">keyrings</span>
+<span class="n">sudo</span><span class="w"> </span><span class="n">curl</span><span class="w"> </span><span class="o">-</span><span class="n">fsSL</span><span class="w"> </span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">download</span><span class="o">.</span><span class="n">docker</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">linux</span><span class="o">/</span><span class="n">debian</span><span class="o">/</span><span class="n">gpg</span><span class="w"> </span><span class="o">-</span><span class="n">o</span><span class="w"> </span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">apt</span><span class="o">/</span><span class="n">keyrings</span><span class="o">/</span><span class="n">docker</span><span class="o">.</span><span class="n">asc</span>
+<span class="n">sudo</span><span class="w"> </span><span class="n">chmod</span><span class="w"> </span><span class="n">a</span><span class="o">+</span><span class="n">r</span><span class="w"> </span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">apt</span><span class="o">/</span><span class="n">keyrings</span><span class="o">/</span><span class="n">docker</span><span class="o">.</span><span class="n">asc</span>
+</code></pre></div>
+
+<p>در گام بعدی سورس لیست برای نصب داکر اضافه می شود:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">echo</span><span class="w"> </span>\
+<span class="s2">&quot;deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian </span><span class="se">\</span>
+<span class="s2">$(. /etc/os-release &amp;&amp; echo &quot;</span><span class="o">$</span><span class="n">VERSION_CODENAME</span><span class="s2">&quot;) stable&quot;</span><span class="w"> </span><span class="o">|</span><span class="w"> </span>\
+<span class="n">sudo</span><span class="w"> </span><span class="n">tee</span><span class="w"> </span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">apt</span><span class="o">/</span><span class="n">sources</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">docker</span><span class="o">.</span><span class="n">list</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="nb nb-Type">null</span>
+
+<span class="n">sudo</span><span class="w"> </span><span class="n">apt</span><span class="o">-</span><span class="n">get</span><span class="w"> </span><span class="n">update</span>
+</code></pre></div>
+
+<p>در انتها برای نصب خود برنامه از دستور زیر استفاده می شود:</p>
+<div class="codehilite"><pre><span></span><code>sudo apt-get install docker-ce docker-ce-cli containerd.io
+</code></pre></div>
+
+<h1>نصب docker-compose</h1>
+<p>در پایان یکی از ابزارهای مفی و به شدت کاربردی برای داکر با عنوان <code>docker-compose</code> را معرفی می کنیم. از این ابزار به نوعی می توان به جای <code>docker run</code> استفاده نمود به طوری که پارامترهای آن به صورت مستند و پایدار می ماند. از طرفی به عنوان یک <code>orchestrator</code> ساده نیز شناخته می شود. روش عملکرد آن به این صورت هست که یک فایل ساده با نام <code>docker-compose.yml</code> را در پوشه ای (ترجیحا بانام سرویس مورد نظر) ایجاد کرده و تمامی پارامترهای اجرایی یک یا چند کانتینر به هم مرتبط را داخل فایل قرارداده و در نهایت با اجرای <code>docker-compose</code> تمامی سرویس های آن اجرا خواهند شد.</p>
+<h3>نصب</h3>
+<div class="codehilite"><pre><span></span><code><span class="n">sudo</span><span class="w"> </span><span class="n">curl</span><span class="w"> </span><span class="o">-</span><span class="n">L</span><span class="w"> </span><span class="s2">&quot;https://github.com/docker/compose/releases/download/v2.35.0/docker-compose-$(uname -s)-$(uname -m)&quot;</span><span class="w"> </span><span class="o">-</span><span class="n">o</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">docker</span><span class="o">-</span><span class="n">compose</span>
+<span class="n">sudo</span><span class="w"> </span><span class="n">chmod</span><span class="w"> </span><span class="o">+</span><span class="n">x</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">docker</span><span class="o">-</span><span class="n">compose</span>
+</code></pre></div>
+
+<p>و در پایان برای اطمینان می توان دستور زیر را اجرا نمود:</p>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>docker-compose<span class="w"> </span>--version
+docker-compose<span class="w"> </span>version<span class="w"> </span><span class="m">2</span>.35.0,<span class="w"> </span>build<span class="w"> </span>1110ad01
+</code></pre></div>
+
+<h1>منابع</h1>
+<ul>
+<li><a href="https://docs.docker.com/engine/install/debian/">Install Docker Engine on Debian</a></li>
+<li><a href="https://shgn.ir/2020-08-15/installing_docker_on_debian.html">نصب Docker روی Debian 10</a></li>
+</ul>
+      </section>
+      <div>
+        برچسب ها:
       
-        <h3><a href="/2020-09-26/ssh-jumping-hosts.html" title="پرش با SSH">پرش با SSH</a></h3>
-            
-                <a href="/tag/ssh.html">
-                    <span class="label label-default">ssh</span></a>
-            
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
-            
-        <p>یک راهکار جایگزین برای ssh tunneling.</p>
-        <hr />
+        <a href="/tag/linux.html">
+            <span class="label label-default" itemprop="about">linux</span>
+        </a>
       
-        <h3><a href="/2018-07-23/ssh_automatic_login.html" title="لاگین خودکار با SSH">لاگین خودکار با SSH</a></h3>
-            
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
-            
-                <a href="/tag/ssh.html">
-                    <span class="label label-default">ssh</span></a>
-            
-        <p>بعضی وقت ها پیش آمده که از تکرار ورود نام کاربر و کلمه در لاگین SSH خسته شده باشید.</p>
-        <hr />
+        <a href="/tag/docker.html">
+            <span class="label label-default" itemprop="about">docker</span>
+        </a>
       
+        <a href="/tag/debian.html">
+            <span class="label label-default" itemprop="about">debian</span>
+        </a>
       
-              <ul class="pagination">
-                
-                    
-                        <li class="active"><a href="#">0 <span class="sr-only">(current)</span></a></li>
-                    
-                
-              </ul>
+        <a href="/tag/virtualization.html">
+            <span class="label label-default" itemprop="about">virtualization</span>
+        </a>
       
+    </div>
+    </div>
 
         </div>
         <div class="col-md-3">
@@ -323,10 +377,6 @@
                         </div>
                         <div class="panel-body">
                             <ul>
-                                
-                                <li><a href="/2020-09-26/ssh-jumping-hosts.html" title="پرش با SSH">پرش با SSH</a></li>
-                                
-                                <li><a href="/2018-07-23/ssh_automatic_login.html" title="لاگین خودکار با SSH">لاگین خودکار با SSH</a></li>
                                 
                             </ul>
 
