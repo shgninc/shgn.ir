@@ -27,7 +27,7 @@
         }
     },
     "date_format": "%Y-%m-%d %H:%M",
-    "items_per_page": 18,
+    "items_per_page": 12,
     "lang":{
         "fa":{
            "Posts_with_tag": "پستهای تگ شده با ",

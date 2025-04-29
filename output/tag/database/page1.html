@@ -14,6 +14,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="https://shgn.ir/images/favicon.ico">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title> پستهای تگ شده با  'database' - دست نوشته های یک تازه کار </title>
     <meta name="description"
@@ -77,7 +78,7 @@
         border-left: 5px solid #6ce26c;
       }
     .panel-body {
-        padding: 10px 0;
+        margin-right: -20px;
     }
     .panel-body ul li{
         margin: 5px 0;
@@ -125,29 +126,48 @@
     }
 
     #back2Top {
-    width: 40px;
-    line-height: 40px;
-    overflow: hidden;
-    z-index: 999;
-    display: none;
-    cursor: pointer;
-    -moz-transform: rotate(270deg);
-    -webkit-transform: rotate(270deg);
-    -o-transform: rotate(270deg);
-    -ms-transform: rotate(270deg);
-    transform: rotate(270deg);
-    position: fixed;
-    bottom: 50px;
-    right: 0;
-    background-color: #DDD;
-    text-align: center;
-    font-size: 30px;
-    text-decoration: none;
+        width: 40px;
+        line-height: 40px;
+        overflow: hidden;
+        z-index: 999;
+        display: none;
+        cursor: pointer;
+        -moz-transform: rotate(270deg);
+        -webkit-transform: rotate(270deg);
+        -o-transform: rotate(270deg);
+        -ms-transform: rotate(270deg);
+        transform: rotate(270deg);
+        position: fixed;
+        bottom: 50px;
+        right: 0;
+        background-color: #DDD;
+        text-align: center;
+        font-size: 30px;
+        text-decoration: none;
     }
     #back2Top:hover {
         background-color: #DDF;
         color: #000;
     }
+    .box {
+        width: 200px;
+        height: 200px;
+        background-color: lightblue;
+        border: 2px solid black;
+        padding: 20px;
+        margin: 20px;
+    }
+    .row-line{
+        margin-bottom: 10px;
+        margin-top: 10px;
+        overflow: hidden;
+    }
+    .img-post{
+        width: 100%;
+        height: 100%;
+        border-radius:20px
+    }
+
     </style>
 </head>
 <body>
@@ -192,41 +212,148 @@
       <h2>پستهای تگ شده با  'database'</h2>
       <p class="lead"></p>
     </div>
+    <div class="row">
       
-        <h3><a href="/2012-11-30/create_mysql_stored_procedures2.html" title="نحوه ایجاد یک Stored Procedures در MySQL5- بخش دوم">نحوه ایجاد یک Stored Procedures در MySQL5- بخش دوم</a></h3>
+        <div class="row-line">
+            <div class="col-md-8">
+            <h3><a href="/2018-09-05/Mysql-JSON-DataType.html" title="معرفی نوع داده JSON در دیتابیس Mysql-Mariadb">معرفی نوع داده JSON در دیتابیس Mysql-Mariadb</a></h3>
             
-                <a href="/tag/database.html">
-                    <span class="label label-default">database</span></a>
+            <a href="/tag/mysql.html">
+                <span class="label label-default">mysql</span></a>
             
-                <a href="/tag/sql.html">
-                    <span class="label label-default">sql</span></a>
+            <a href="/tag/mariadb.html">
+                <span class="label label-default">mariadb</span></a>
             
-                <a href="/tag/mysql.html">
-                    <span class="label label-default">mysql</span></a>
+            <a href="/tag/database.html">
+                <span class="label label-default">database</span></a>
             
-                <a href="/tag/stored_procedure.html">
-                    <span class="label label-default">stored_procedure</span></a>
+            <a href="/tag/json.html">
+                <span class="label label-default">json</span></a>
             
-        <p>یک روشی که خیلی مورد پسند بنده واقع شده، روشی است که در آن با استفاده از استور پروسیجرها کار هایم با دیتابیس را انجام می دهم. استور پروسیجر ها امکانی است که برخی نرم افزارهای مدیریت پایگاه داده ها آن را حمایت کرده و برخی خیر. از جلمه این پایگاه داده ها می توان از `MySQL، MSSQL` و... نام برد.</p>
-        <hr />
+            <a href="/tag/sql.html">
+                <span class="label label-default">sql</span></a>
+            
+            <a href="/tag/noSql.html">
+                <span class="label label-default">noSql</span></a>
+            
+            <p>این نوع داده بر اساس استاندارد RFC 7159 بوده و به صورت یک رشته با قالب JSON قابل ذخیره سازی می باشد.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/Mysql-JSON-DataType.jpg" alt="معرفی نوع داده JSON در دیتابیس Mysql-Mariadb" class="img-post" />
+            </div>
+        </div>
       
-        <h3><a href="/2012-11-28/create_mysql_stored_procedures1.html" title="نحوه ایجاد یک Stored Procedures در MySQL5- بخش اول">نحوه ایجاد یک Stored Procedures در MySQL5- بخش اول</a></h3>
+        <div class="row-line">
+            <div class="col-md-8">
+            <h3><a href="/2018-07-18/migrate_from_mariadb_instace_to_galera_cluster.html" title="مهاجرت از دیتابیس mariadb به galera cluster">مهاجرت از دیتابیس mariadb به galera cluster</a></h3>
             
-                <a href="/tag/database.html">
-                    <span class="label label-default">database</span></a>
+            <a href="/tag/galera.html">
+                <span class="label label-default">galera</span></a>
             
-                <a href="/tag/sql.html">
-                    <span class="label label-default">sql</span></a>
+            <a href="/tag/galera_cluster.html">
+                <span class="label label-default">galera_cluster</span></a>
             
-                <a href="/tag/mysql.html">
-                    <span class="label label-default">mysql</span></a>
+            <a href="/tag/mariadb.html">
+                <span class="label label-default">mariadb</span></a>
             
-                <a href="/tag/stored_procedure.html">
-                    <span class="label label-default">stored_procedure</span></a>
+            <a href="/tag/database.html">
+                <span class="label label-default">database</span></a>
             
-        <p>یک روشی که خیلی مورد پسند بنده واقع شده، روشی است که در آن با استفاده از استور پروسیجرها کار هایم با دیتابیس را انجام می دهم. استور پروسیجر ها امکانی است که برخی نرم افزارهای مدیریت پایگاه داده ها آن را حمایت کرده و برخی خیر. از جلمه این پایگاه داده ها می توان از `MySQL، MSSQL` و... نام برد.</p>
-        <hr />
+            <p>در این نوشتار، مراحل مهاجرت از یک دیتابیس mariadb که حاوی اطلاعات می باشد، به کلاسترینگ galera بدون نیاز به ایجاد تغییرات زیاد، بیان شده است.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/migrate_from_mariadb_instace_to_galera_cluster.jpg" alt="مهاجرت از دیتابیس mariadb به galera cluster" class="img-post" />
+            </div>
+        </div>
       
+        <div class="row-line">
+            <div class="col-md-8">
+            <h3><a href="/2018-05-05/Configuring-MySQL-Memory-Usage.html" title="تنظیم بهینه Mysql برای استفاده از حافظه">تنظیم بهینه Mysql برای استفاده از حافظه</a></h3>
+            
+            <a href="/tag/mysql.html">
+                <span class="label label-default">mysql</span></a>
+            
+            <a href="/tag/database.html">
+                <span class="label label-default">database</span></a>
+            
+            <a href="/tag/optimization.html">
+                <span class="label label-default">optimization</span></a>
+            
+            <p>ارائه برخی راهکارهای انجام تنظیمات دیتابیس `Mysql` برای استفاده از حافظه به صورت بهینه مطرح می گردد.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/Configuring-MySQL-Memory-Usage.jpg" alt="تنظیم بهینه Mysql برای استفاده از حافظه" class="img-post" />
+            </div>
+        </div>
+      
+        <div class="row-line">
+            <div class="col-md-8">
+            <h3><a href="/2013-01-06/using_PDO_in_PHP.html" title="استفاده از PDO برای ارتباط با دیتابیس در PHP">استفاده از PDO برای ارتباط با دیتابیس در PHP</a></h3>
+            
+            <a href="/tag/php.html">
+                <span class="label label-default">php</span></a>
+            
+            <a href="/tag/pdo.html">
+                <span class="label label-default">pdo</span></a>
+            
+            <a href="/tag/database.html">
+                <span class="label label-default">database</span></a>
+            
+            <p>بسیاری از برنامه نویسیان که کار با `PHP` را تازه شروع کرده اند، معمولا برای ارتباط با دیتابیس از اکستنشن های `MySQL` یا `MySQLi` استفاده کنند. شئ داده `PHP` معروف به `PDO` متدهایی را برای آماده سازی دستورات و کار با اشیایی که شما را به مراتب بیشتر درگیر می کنند، ارائه کرده است.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/using_PDO_in_PHP.jpg" alt="استفاده از PDO برای ارتباط با دیتابیس در PHP" class="img-post" />
+            </div>
+        </div>
+      
+        <div class="row-line">
+            <div class="col-md-8">
+            <h3><a href="/2012-11-30/create_mysql_stored_procedures2.html" title="نحوه ایجاد یک Stored Procedures در MySQL5- بخش دوم">نحوه ایجاد یک Stored Procedures در MySQL5- بخش دوم</a></h3>
+            
+            <a href="/tag/database.html">
+                <span class="label label-default">database</span></a>
+            
+            <a href="/tag/sql.html">
+                <span class="label label-default">sql</span></a>
+            
+            <a href="/tag/mysql.html">
+                <span class="label label-default">mysql</span></a>
+            
+            <a href="/tag/stored_procedure.html">
+                <span class="label label-default">stored_procedure</span></a>
+            
+            <p>یک روشی که خیلی مورد پسند بنده واقع شده، روشی است که در آن با استفاده از استور پروسیجرها کار هایم با دیتابیس را انجام می دهم. استور پروسیجر ها امکانی است که برخی نرم افزارهای مدیریت پایگاه داده ها آن را حمایت کرده و برخی خیر. از جلمه این پایگاه داده ها می توان از `MySQL، MSSQL` و... نام برد.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/create_mysql_stored_procedures2.jpg" alt="نحوه ایجاد یک Stored Procedures در MySQL5- بخش دوم" class="img-post" />
+            </div>
+        </div>
+      
+        <div class="row-line">
+            <div class="col-md-8">
+            <h3><a href="/2012-11-28/create_mysql_stored_procedures1.html" title="نحوه ایجاد یک Stored Procedures در MySQL5- بخش اول">نحوه ایجاد یک Stored Procedures در MySQL5- بخش اول</a></h3>
+            
+            <a href="/tag/database.html">
+                <span class="label label-default">database</span></a>
+            
+            <a href="/tag/sql.html">
+                <span class="label label-default">sql</span></a>
+            
+            <a href="/tag/mysql.html">
+                <span class="label label-default">mysql</span></a>
+            
+            <a href="/tag/stored_procedure.html">
+                <span class="label label-default">stored_procedure</span></a>
+            
+            <p>یک روشی که خیلی مورد پسند بنده واقع شده، روشی است که در آن با استفاده از استور پروسیجرها کار هایم با دیتابیس را انجام می دهم. استور پروسیجر ها امکانی است که برخی نرم افزارهای مدیریت پایگاه داده ها آن را حمایت کرده و برخی خیر. از جلمه این پایگاه داده ها می توان از `MySQL، MSSQL` و... نام برد.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/create_mysql_stored_procedures1.jpg" alt="نحوه ایجاد یک Stored Procedures در MySQL5- بخش اول" class="img-post" />
+            </div>
+        </div>
+      
+
+
       
               <ul class="pagination">
                 
@@ -242,6 +369,7 @@
                 
               </ul>
       
+    </div>
 
         </div>
         <div class="col-md-3">
@@ -268,11 +396,24 @@
                     <div class="panel-body">
                             <div class="counter-box">
                                 <h2>
-                                    <span class="count">60</span>
+                                    <span class="count">63</span>
                                 </h2>
                             </div>
                     </div>
                 </div>
+                    <div class="panel-group">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                تجربیات به سال
+                            </div>
+                            <div class="panel-body">
+                                <div class="counter-box">
+                                    <h2>
+                                        <span class="count">20</span>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
 
                 <div class="panel-group">
                     <div class="panel panel-primary">
@@ -281,21 +422,25 @@
                         </div>
                         <div class="panel-body">
                             <ul>
+                                <li><a href="https://shgn.ir/2024-11-24/failover-by-maxscale.html"
+                                       title="جلوگیری توقف سرویس دهی دیتابیس با maxscale">جلوگیری توقف سرویس دهی دیتابیس با maxscale</a>
+                                </li>
+                                <li><a href="https://shgn.ir/2025-03-26/linux-server-as-gateway.html"}
+                                       title="راه‌اندازی یک سرور لینوکس به عنوان Gateway">راه‌اندازی یک سرور لینوکس به عنوان Gateway</a>
+                                </li>
                                 <li><a href="https://shgn.ir/2021-03-07/galera-cluster-debian-10.html"
                                        title="نصب Galer Cluster بر روی debian 10">نصب Galer Cluster بر روی debian 10</a>
                                 </li>
-                                <li><a href="https://shgn.ir/2020-08-15/installing_docker_on_debian.html"
-                                       title="نصب Docker روی Debian 10">نصب Docker روی Debian 10</a></li>
-                                <li><a href="https://shgn.ir/2018-09-05/Mysql-JSON-DataType.html"
-                                       title="معرفی نوع داده JSON در دیتابیس Mysql-Mariadb">معرفی نوع داده JSON در
-                                    دیتابیس Mysql-Mariadb</a></li>
-                                <li><a href="https://shgn.ir/2018-07-23/ssh_automatic_login.html"
-                                       title="لاگین خودکار با SSH">لاگین خودکار با SSH</a></li>
+                                <li><a href="https://shgn.ir/2025-04-12/installing-docker-on-debian12.html"
+                                       title="نصب Docker روی Debian 12 bookworm">نصب Docker روی Debian 12 bookworm</a></li>
+                                <li><a href="https://shgn.ir2024-04-22/create-lvm-partiotion-in-linux.html"
+                                       title="ایجاد دیسک LVM در لینوکس">ایجاد دیسک LVM در لینوکس</a>
+                                </li>
                                 <li><a href="https://shgn.ir/2017-08-16/galera_cluster.html"
                                        title="نصب Galer Cluster بر روی debian8">نصب Galer Cluster بر روی debian8</a>
                                 </li>
-                                <li><a href="https://shgn.ir/2022-07-02/mysql-slave-replicaion.html"
-                                       title="راه اندازی Mysql/Mariadb Slave Replication بدون توقف">راه اندازی Mysql/Mariadb Slave Replication بدون توقف</a>
+                                <li><a href="https://shgn.ir/2024-04-14/mysql-master-slave-replication.html"
+                                       title="راه اندازی Mysql/Mariadb Slave Replication">راه اندازی Mysql/Mariadb Slave Replication</a>
                                 </li>
                                 <li><a href="https://shgn.ir/2023-12-03/Using-all-CPU-with-tar.html"
                                        title="فشرده سازی با استفاده از تمام ظرفیت CPU">فشرده سازی با استفاده از تمام ظرفیت CPU</a>
@@ -322,6 +467,14 @@
                         </div>
                         <div class="panel-body">
                             <ul>
+                                
+                                <li><a href="/2018-09-05/Mysql-JSON-DataType.html" title="معرفی نوع داده JSON در دیتابیس Mysql-Mariadb">معرفی نوع داده JSON در دیتابیس Mysql-Mariadb</a></li>
+                                
+                                <li><a href="/2018-07-18/migrate_from_mariadb_instace_to_galera_cluster.html" title="مهاجرت از دیتابیس mariadb به galera cluster">مهاجرت از دیتابیس mariadb به galera cluster</a></li>
+                                
+                                <li><a href="/2018-05-05/Configuring-MySQL-Memory-Usage.html" title="تنظیم بهینه Mysql برای استفاده از حافظه">تنظیم بهینه Mysql برای استفاده از حافظه</a></li>
+                                
+                                <li><a href="/2013-01-06/using_PDO_in_PHP.html" title="استفاده از PDO برای ارتباط با دیتابیس در PHP">استفاده از PDO برای ارتباط با دیتابیس در PHP</a></li>
                                 
                                 <li><a href="/2012-11-30/create_mysql_stored_procedures2.html" title="نحوه ایجاد یک Stored Procedures در MySQL5- بخش دوم">نحوه ایجاد یک Stored Procedures در MySQL5- بخش دوم</a></li>
                                 
@@ -409,7 +562,7 @@
                 </ul>
             </div>
             <div class="col-md-12">
-                <p class="text-center"><small>https://shgn.ir &copy; 2023</small></p>
+                <p class="text-center"><small>https://shgn.ir &copy; 2025</small></p>
             </div>
         </div>
     </div>

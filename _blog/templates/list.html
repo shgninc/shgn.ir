@@ -7,15 +7,24 @@
       <h2>{{ page_title }}</h2>
       <p class="lead">{{ page_brefing }}</p>
     </div>
+    <div class="row">
       {% for item in page_items %}
-        <h3><a href="/{{ item['page_url'] }}" title="{{ item['page_title'] }}">{{ item['page_title'] }}</a></h3>
+        <div class="row-line">
+            <div class="col-md-9">
+            <h3><a href="/{{ item['page_url'] }}" title="{{ item['page_title'] }}">{{ item['page_title'] }}</a></h3>
             {% for tag in item['page_tags'] %}
-                <a href="/tag/{{ tag|replace(' ', '-') }}.html">
-                    <span class="label label-default">{{ tag }}</span></a>
+            <a href="/tag/{{ tag|replace(' ', '-') }}.html">
+                <span class="label label-default">{{ tag }}</span></a>
             {% endfor %}
-        <p>{{ item['page_briefing'] }}</p>
-        <hr />
+            <p>{{ item['page_briefing'] }}</p>
+            </div>
+            <div class="col-md-3">
+                <img src="{{ site_url }}/images/{{ item['page_slug'] }}.jpg" alt="{{ item['page_title'] }}" class="img-post" />
+            </div>
+        </div>
       {% endfor %}
+
+
       {% if total_pages > 0 %}
               <ul class="pagination">
                 {% for page in range(total_pages) %}
@@ -31,4 +40,5 @@
                 {% endfor %}
               </ul>
       {% endif %}
+    </div>
 {% endblock %}

@@ -78,7 +78,7 @@
         border-left: 5px solid #6ce26c;
       }
     .panel-body {
-        padding: 10px 0;
+        margin-right: -20px;
     }
     .panel-body ul li{
         margin: 5px 0;
@@ -126,29 +126,48 @@
     }
 
     #back2Top {
-    width: 40px;
-    line-height: 40px;
-    overflow: hidden;
-    z-index: 999;
-    display: none;
-    cursor: pointer;
-    -moz-transform: rotate(270deg);
-    -webkit-transform: rotate(270deg);
-    -o-transform: rotate(270deg);
-    -ms-transform: rotate(270deg);
-    transform: rotate(270deg);
-    position: fixed;
-    bottom: 50px;
-    right: 0;
-    background-color: #DDD;
-    text-align: center;
-    font-size: 30px;
-    text-decoration: none;
+        width: 40px;
+        line-height: 40px;
+        overflow: hidden;
+        z-index: 999;
+        display: none;
+        cursor: pointer;
+        -moz-transform: rotate(270deg);
+        -webkit-transform: rotate(270deg);
+        -o-transform: rotate(270deg);
+        -ms-transform: rotate(270deg);
+        transform: rotate(270deg);
+        position: fixed;
+        bottom: 50px;
+        right: 0;
+        background-color: #DDD;
+        text-align: center;
+        font-size: 30px;
+        text-decoration: none;
     }
     #back2Top:hover {
         background-color: #DDF;
         color: #000;
     }
+    .box {
+        width: 200px;
+        height: 200px;
+        background-color: lightblue;
+        border: 2px solid black;
+        padding: 20px;
+        margin: 20px;
+    }
+    .row-line{
+        margin-bottom: 10px;
+        margin-top: 10px;
+        overflow: hidden;
+    }
+    .img-post{
+        width: 100%;
+        height: 100%;
+        border-radius:20px
+    }
+
     </style>
 </head>
 <body>
@@ -193,310 +212,280 @@
       <h2>دست نوشته های یک تازه کار</h2>
       <p class="lead"></p>
     </div>
+    <div class="row">
       
-        <h3><a href="/2025-04-12/installing-docker-on-debian12.html" title="نصب Docker روی Debian 12 bookworm">نصب Docker روی Debian 12 bookworm</a></h3>
+        <div class="row-line">
+            <div class="col-md-8">
+            <h3><a href="/2025-04-12/installing-docker-on-debian12.html" title="نصب Docker روی Debian 12 bookworm">نصب Docker روی Debian 12 bookworm</a></h3>
             
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
+            <a href="/tag/linux.html">
+                <span class="label label-default">linux</span></a>
             
-                <a href="/tag/docker.html">
-                    <span class="label label-default">docker</span></a>
+            <a href="/tag/docker.html">
+                <span class="label label-default">docker</span></a>
             
-                <a href="/tag/debian.html">
-                    <span class="label label-default">debian</span></a>
+            <a href="/tag/debian.html">
+                <span class="label label-default">debian</span></a>
             
-                <a href="/tag/virtualization.html">
-                    <span class="label label-default">virtualization</span></a>
+            <a href="/tag/virtualization.html">
+                <span class="label label-default">virtualization</span></a>
             
-        <p>نحوه نصب Docker بر روی سیستم عامل محبوب  Debian 12 Bookworm.</p>
-        <hr />
+            <p>نحوه نصب Docker بر روی سیستم عامل محبوب  Debian 12 Bookworm.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/installing-docker-on-debian12.jpg" alt="نصب Docker روی Debian 12 bookworm" class="img-post" />
+            </div>
+        </div>
       
-        <h3><a href="/2025-03-27/trim-video-ffmpeg.html" title="برش یا کوتاه کردن ویدیو با FFmpeg">برش یا کوتاه کردن ویدیو با FFmpeg</a></h3>
+        <div class="row-line">
+            <div class="col-md-8">
+            <h3><a href="/2025-03-27/trim-video-ffmpeg.html" title="برش یا کوتاه کردن ویدیو با FFmpeg">برش یا کوتاه کردن ویدیو با FFmpeg</a></h3>
             
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
+            <a href="/tag/linux.html">
+                <span class="label label-default">linux</span></a>
             
-                <a href="/tag/tips.html">
-                    <span class="label label-default">tips</span></a>
+            <a href="/tag/tips.html">
+                <span class="label label-default">tips</span></a>
             
-                <a href="/tag/ffmpeg.html">
-                    <span class="label label-default">ffmpeg</span></a>
+            <a href="/tag/ffmpeg.html">
+                <span class="label label-default">ffmpeg</span></a>
             
-        <p>این راهنما به شما کمک می‌کند تا به‌راحتی ویدیوهای خود را با FFmpeg کوتاه کنید یا بخش‌هایی از آن‌ها را جدا کنید.</p>
-        <hr />
+            <p>این راهنما به شما کمک می‌کند تا به‌راحتی ویدیوهای خود را با FFmpeg کوتاه کنید یا بخش‌هایی از آن‌ها را جدا کنید.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/trim-video-ffmpeg.jpg" alt="برش یا کوتاه کردن ویدیو با FFmpeg" class="img-post" />
+            </div>
+        </div>
       
-        <h3><a href="/2025-03-26/linux-server-as-gateway.html" title="راه‌اندازی یک سرور لینوکس به عنوان Gateway">راه‌اندازی یک سرور لینوکس به عنوان Gateway</a></h3>
+        <div class="row-line">
+            <div class="col-md-8">
+            <h3><a href="/2025-03-26/linux-server-as-gateway.html" title="راه‌اندازی یک سرور لینوکس به عنوان Gateway">راه‌اندازی یک سرور لینوکس به عنوان Gateway</a></h3>
             
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
+            <a href="/tag/linux.html">
+                <span class="label label-default">linux</span></a>
             
-                <a href="/tag/tutorial.html">
-                    <span class="label label-default">tutorial</span></a>
+            <a href="/tag/tutorial.html">
+                <span class="label label-default">tutorial</span></a>
             
-                <a href="/tag/learn.html">
-                    <span class="label label-default">learn</span></a>
+            <a href="/tag/learn.html">
+                <span class="label label-default">learn</span></a>
             
-                <a href="/tag/debian.html">
-                    <span class="label label-default">debian</span></a>
+            <a href="/tag/debian.html">
+                <span class="label label-default">debian</span></a>
             
-                <a href="/tag/network.html">
-                    <span class="label label-default">network</span></a>
+            <a href="/tag/network.html">
+                <span class="label label-default">network</span></a>
             
-        <p>برای اینکه یک سرور لینوکس را به عنوان Gateway  راه‌اندازی کنید، باید آن را به یک روتر تبدیل کنید تا ترافیک شبکه را بین دو شبکه مختلف، مانند شبکه داخلی و اینترنت، هدایت کند.</p>
-        <hr />
+            <p>برای اینکه یک سرور لینوکس را به عنوان Gateway  راه‌اندازی کنید، باید آن را به یک روتر تبدیل کنید تا ترافیک شبکه را بین دو شبکه مختلف، مانند شبکه داخلی و اینترنت، هدایت کند.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/linux-server-as-gateway.jpg" alt="راه‌اندازی یک سرور لینوکس به عنوان Gateway" class="img-post" />
+            </div>
+        </div>
       
-        <h3><a href="/2024-11-24/failover-by-maxscale.html" title="جلوگیری توقف سرویس دهی دیتابیس با maxscale">جلوگیری توقف سرویس دهی دیتابیس با maxscale</a></h3>
+        <div class="row-line">
+            <div class="col-md-8">
+            <h3><a href="/2024-11-24/failover-by-maxscale.html" title="جلوگیری توقف سرویس دهی دیتابیس با maxscale">جلوگیری توقف سرویس دهی دیتابیس با maxscale</a></h3>
             
-                <a href="/tag/database.html">
-                    <span class="label label-default">database</span></a>
+            <a href="/tag/database.html">
+                <span class="label label-default">database</span></a>
             
-                <a href="/tag/mariadb.html">
-                    <span class="label label-default">mariadb</span></a>
+            <a href="/tag/mariadb.html">
+                <span class="label label-default">mariadb</span></a>
             
-                <a href="/tag/replication.html">
-                    <span class="label label-default">replication</span></a>
+            <a href="/tag/replication.html">
+                <span class="label label-default">replication</span></a>
             
-                <a href="/tag/maxscale.html">
-                    <span class="label label-default">maxscale</span></a>
+            <a href="/tag/maxscale.html">
+                <span class="label label-default">maxscale</span></a>
             
-                <a href="/tag/recovery.html">
-                    <span class="label label-default">recovery</span></a>
+            <a href="/tag/recovery.html">
+                <span class="label label-default">recovery</span></a>
             
-        <p>MariaDB MaxScaleیک پراکسی پایگاه داده است که در دسترس بودن، مقیاس پذیری و امنیت سرویس MariaDB را گسترش می دهد.</p>
-        <hr />
+            <p>MariaDB MaxScaleیک پراکسی پایگاه داده است که در دسترس بودن، مقیاس پذیری و امنیت سرویس MariaDB را گسترش می دهد.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/failover-by-maxscale.jpg" alt="جلوگیری توقف سرویس دهی دیتابیس با maxscale" class="img-post" />
+            </div>
+        </div>
       
-        <h3><a href="/2024-11-10/enabling-GTIDs-in-mariadb-replication.html" title="فعال سازی gtid در رپلیکیشن">فعال سازی gtid در رپلیکیشن</a></h3>
+        <div class="row-line">
+            <div class="col-md-8">
+            <h3><a href="/2024-11-10/enabling-GTIDs-in-mariadb-replication.html" title="فعال سازی gtid در رپلیکیشن">فعال سازی gtid در رپلیکیشن</a></h3>
             
-                <a href="/tag/database.html">
-                    <span class="label label-default">database</span></a>
+            <a href="/tag/database.html">
+                <span class="label label-default">database</span></a>
             
-                <a href="/tag/mariadb.html">
-                    <span class="label label-default">mariadb</span></a>
+            <a href="/tag/mariadb.html">
+                <span class="label label-default">mariadb</span></a>
             
-                <a href="/tag/learn.html">
-                    <span class="label label-default">learn</span></a>
+            <a href="/tag/learn.html">
+                <span class="label label-default">learn</span></a>
             
-                <a href="/tag/replication.html">
-                    <span class="label label-default">replication</span></a>
+            <a href="/tag/replication.html">
+                <span class="label label-default">replication</span></a>
             
-        <p>ممکن است که در رپلیکیشنی که ایجاد شده است، نیاز به فعال سازی gtid باشد.</p>
-        <hr />
+            <p>ممکن است که در رپلیکیشنی که ایجاد شده است، نیاز به فعال سازی gtid باشد.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/enabling-GTIDs-in-mariadb-replication.jpg" alt="فعال سازی gtid در رپلیکیشن" class="img-post" />
+            </div>
+        </div>
       
-        <h3><a href="/2024-11-05/recreate-docker-run-for-run-container.html" title="بازنویسی docker run از روی یک کانتینر در حال اجرا">بازنویسی docker run از روی یک کانتینر در حال اجرا</a></h3>
+        <div class="row-line">
+            <div class="col-md-8">
+            <h3><a href="/2024-11-05/recreate-docker-run-for-run-container.html" title="بازنویسی docker run از روی یک کانتینر در حال اجرا">بازنویسی docker run از روی یک کانتینر در حال اجرا</a></h3>
             
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
+            <a href="/tag/linux.html">
+                <span class="label label-default">linux</span></a>
             
-                <a href="/tag/tips.html">
-                    <span class="label label-default">tips</span></a>
+            <a href="/tag/tips.html">
+                <span class="label label-default">tips</span></a>
             
-                <a href="/tag/docker.html">
-                    <span class="label label-default">docker</span></a>
+            <a href="/tag/docker.html">
+                <span class="label label-default">docker</span></a>
             
-                <a href="/tag/container.html">
-                    <span class="label label-default">container</span></a>
+            <a href="/tag/container.html">
+                <span class="label label-default">container</span></a>
             
-        <p>باز سازی docker run از کانتینر در حال اجرا به راحتی.</p>
-        <hr />
+            <p>باز سازی docker run از کانتینر در حال اجرا به راحتی.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/recreate-docker-run-for-run-container.jpg" alt="بازنویسی docker run از روی یک کانتینر در حال اجرا" class="img-post" />
+            </div>
+        </div>
       
-        <h3><a href="/2024-10-27/nginx-different-proxy_pass-on-client-ip.html" title="ارسال درخواست nginx به upstream های متفاوت بر مبنای آدرس کلاینت">ارسال درخواست nginx به upstream های متفاوت بر مبنای آدرس کلاینت</a></h3>
+        <div class="row-line">
+            <div class="col-md-8">
+            <h3><a href="/2024-10-27/nginx-different-proxy_pass-on-client-ip.html" title="ارسال درخواست nginx به upstream های متفاوت بر مبنای آدرس کلاینت">ارسال درخواست nginx به upstream های متفاوت بر مبنای آدرس کلاینت</a></h3>
             
-                <a href="/tag/tips.html">
-                    <span class="label label-default">tips</span></a>
+            <a href="/tag/tips.html">
+                <span class="label label-default">tips</span></a>
             
-                <a href="/tag/nginx.html">
-                    <span class="label label-default">nginx</span></a>
+            <a href="/tag/nginx.html">
+                <span class="label label-default">nginx</span></a>
             
-                <a href="/tag/security.html">
-                    <span class="label label-default">security</span></a>
+            <a href="/tag/security.html">
+                <span class="label label-default">security</span></a>
             
-        <p>انتقال درخواست کاربر به بکند ای متفاوت براساس آدرس درخواست دهنده.</p>
-        <hr />
+            <p>انتقال درخواست کاربر به بکند ای متفاوت براساس آدرس درخواست دهنده.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/nginx-different-proxy_pass-on-client-ip.jpg" alt="ارسال درخواست nginx به upstream های متفاوت بر مبنای آدرس کلاینت" class="img-post" />
+            </div>
+        </div>
       
-        <h3><a href="/2024-10-12/survey-mysql-migration-to-mariadb.html" title="مهاجرت از mysql به mariadb">مهاجرت از mysql به mariadb</a></h3>
+        <div class="row-line">
+            <div class="col-md-8">
+            <h3><a href="/2024-10-12/survey-mysql-migration-to-mariadb.html" title="مهاجرت از mysql به mariadb">مهاجرت از mysql به mariadb</a></h3>
             
-                <a href="/tag/database.html">
-                    <span class="label label-default">database</span></a>
+            <a href="/tag/database.html">
+                <span class="label label-default">database</span></a>
             
-                <a href="/tag/mariadb.html">
-                    <span class="label label-default">mariadb</span></a>
+            <a href="/tag/mariadb.html">
+                <span class="label label-default">mariadb</span></a>
             
-                <a href="/tag/mysql.html">
-                    <span class="label label-default">mysql</span></a>
+            <a href="/tag/mysql.html">
+                <span class="label label-default">mysql</span></a>
             
-                <a href="/tag/backup.html">
-                    <span class="label label-default">backup</span></a>
+            <a href="/tag/backup.html">
+                <span class="label label-default">backup</span></a>
             
-        <p>انتقال یک دیتابیس حجیم از mysql به mariadb</p>
-        <hr />
+            <p>انتقال یک دیتابیس حجیم از mysql به mariadb</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/survey-mysql-migration-to-mariadb.jpg" alt="مهاجرت از mysql به mariadb" class="img-post" />
+            </div>
+        </div>
       
-        <h3><a href="/2024-10-05/mariadb-master-salve-replication-fastest.html" title="سریعترین راه mariadb master/slave replication">سریعترین راه mariadb master/slave replication</a></h3>
+        <div class="row-line">
+            <div class="col-md-8">
+            <h3><a href="/2024-10-05/mariadb-master-salve-replication-fastest.html" title="سریعترین راه mariadb master/slave replication">سریعترین راه mariadb master/slave replication</a></h3>
             
-                <a href="/tag/database.html">
-                    <span class="label label-default">database</span></a>
+            <a href="/tag/database.html">
+                <span class="label label-default">database</span></a>
             
-                <a href="/tag/mariadb.html">
-                    <span class="label label-default">mariadb</span></a>
+            <a href="/tag/mariadb.html">
+                <span class="label label-default">mariadb</span></a>
             
-                <a href="/tag/replication.html">
-                    <span class="label label-default">replication</span></a>
+            <a href="/tag/replication.html">
+                <span class="label label-default">replication</span></a>
             
-        <p>راه اندازی رپلیکیشن master/slave در mariadb در سریعترین حالت ممکن.</p>
-        <hr />
+            <p>راه اندازی رپلیکیشن master/slave در mariadb در سریعترین حالت ممکن.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/mariadb-master-salve-replication-fastest.jpg" alt="سریعترین راه mariadb master/slave replication" class="img-post" />
+            </div>
+        </div>
       
-        <h3><a href="/2024-09-03/backup-mriadb-with-mariadb-backup.html" title="پشتیبان گیری سریع دیتابیس mariadb">پشتیبان گیری سریع دیتابیس mariadb</a></h3>
+        <div class="row-line">
+            <div class="col-md-8">
+            <h3><a href="/2024-09-03/backup-mriadb-with-mariadb-backup.html" title="پشتیبان گیری سریع دیتابیس mariadb">پشتیبان گیری سریع دیتابیس mariadb</a></h3>
             
-                <a href="/tag/database.html">
-                    <span class="label label-default">database</span></a>
+            <a href="/tag/database.html">
+                <span class="label label-default">database</span></a>
             
-                <a href="/tag/mariadb.html">
-                    <span class="label label-default">mariadb</span></a>
+            <a href="/tag/mariadb.html">
+                <span class="label label-default">mariadb</span></a>
             
-                <a href="/tag/backup.html">
-                    <span class="label label-default">backup</span></a>
+            <a href="/tag/backup.html">
+                <span class="label label-default">backup</span></a>
             
-        <p>یکی از سریع ترین روش های پشتیبان گیری از دیتابیس mariadb استفاده از mariadb-backup است.</p>
-        <hr />
+            <p>یکی از سریع ترین روش های پشتیبان گیری از دیتابیس mariadb استفاده از mariadb-backup است.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/backup-mriadb-with-mariadb-backup.jpg" alt="پشتیبان گیری سریع دیتابیس mariadb" class="img-post" />
+            </div>
+        </div>
       
-        <h3><a href="/2024-08-24/linux-reset-a-forgotten-root-password.html" title="تغییر کلمه عبور کاربر root در لینوکس">تغییر کلمه عبور کاربر root در لینوکس</a></h3>
+        <div class="row-line">
+            <div class="col-md-8">
+            <h3><a href="/2024-08-24/linux-reset-a-forgotten-root-password.html" title="تغییر کلمه عبور کاربر root در لینوکس">تغییر کلمه عبور کاربر root در لینوکس</a></h3>
             
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
+            <a href="/tag/linux.html">
+                <span class="label label-default">linux</span></a>
             
-                <a href="/tag/learn.html">
-                    <span class="label label-default">learn</span></a>
+            <a href="/tag/learn.html">
+                <span class="label label-default">learn</span></a>
             
-                <a href="/tag/tutorial.html">
-                    <span class="label label-default">tutorial</span></a>
+            <a href="/tag/tutorial.html">
+                <span class="label label-default">tutorial</span></a>
             
-                <a href="/tag/recovery.html">
-                    <span class="label label-default">recovery</span></a>
+            <a href="/tag/recovery.html">
+                <span class="label label-default">recovery</span></a>
             
-        <p>نحوه ریست کلمه عبور کاربر root در سیستم عامل linux آمده است</p>
-        <hr />
+            <p>نحوه ریست کلمه عبور کاربر root در سیستم عامل linux آمده است</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/linux-reset-a-forgotten-root-password.jpg" alt="تغییر کلمه عبور کاربر root در لینوکس" class="img-post" />
+            </div>
+        </div>
       
-        <h3><a href="/2024-07-25/chnage-mysql-mariadb-root-password.html" title="تغییر کلمه عبور کاربر root در mysql/mariadb">تغییر کلمه عبور کاربر root در mysql/mariadb</a></h3>
+        <div class="row-line">
+            <div class="col-md-8">
+            <h3><a href="/2024-07-25/chnage-mysql-mariadb-root-password.html" title="تغییر کلمه عبور کاربر root در mysql/mariadb">تغییر کلمه عبور کاربر root در mysql/mariadb</a></h3>
             
-                <a href="/tag/database.html">
-                    <span class="label label-default">database</span></a>
+            <a href="/tag/database.html">
+                <span class="label label-default">database</span></a>
             
-                <a href="/tag/mariadb.html">
-                    <span class="label label-default">mariadb</span></a>
+            <a href="/tag/mariadb.html">
+                <span class="label label-default">mariadb</span></a>
             
-                <a href="/tag/mysql.html">
-                    <span class="label label-default">mysql</span></a>
+            <a href="/tag/mysql.html">
+                <span class="label label-default">mysql</span></a>
             
-                <a href="/tag/tips.html">
-                    <span class="label label-default">tips</span></a>
+            <a href="/tag/tips.html">
+                <span class="label label-default">tips</span></a>
             
-        <p>گاهی ممکن لازم باشه تا کلمه عبور کاربر root دیتابیس را بخواهیم تغییر بدیم.</p>
-        <hr />
+            <p>گاهی ممکن لازم باشه تا کلمه عبور کاربر root دیتابیس را بخواهیم تغییر بدیم.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/chnage-mysql-mariadb-root-password.jpg" alt="تغییر کلمه عبور کاربر root در mysql/mariadb" class="img-post" />
+            </div>
+        </div>
       
-        <h3><a href="/2024-05-27/using-htpasswd.html" title="استفاده از htpasswd">استفاده از htpasswd</a></h3>
-            
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
-            
-                <a href="/tag/utility.html">
-                    <span class="label label-default">utility</span></a>
-            
-                <a href="/tag/nginx.html">
-                    <span class="label label-default">nginx</span></a>
-            
-                <a href="/tag/apache.html">
-                    <span class="label label-default">apache</span></a>
-            
-                <a href="/tag/security.html">
-                    <span class="label label-default">security</span></a>
-            
-        <p>برخی از سرویس ها برای اهراز هویت کابران و ایجاد یک دسترسی ساده از برنامه htpasswd قدیمی استفاده می کنند.</p>
-        <hr />
-      
-        <h3><a href="/2024-05-14/How-to-compact-collection-in-mongodb.html" title="استفاده از commpact در mongodb">استفاده از commpact در mongodb</a></h3>
-            
-                <a href="/tag/database.html">
-                    <span class="label label-default">database</span></a>
-            
-                <a href="/tag/tips.html">
-                    <span class="label label-default">tips</span></a>
-            
-                <a href="/tag/optimization.html">
-                    <span class="label label-default">optimization</span></a>
-            
-                <a href="/tag/noSql.html">
-                    <span class="label label-default">noSql</span></a>
-            
-                <a href="/tag/mongodb.html">
-                    <span class="label label-default">mongodb</span></a>
-            
-        <p>زمانی که از کلکشنی در مونگو دیتایی حذف شود، فضایی آزاد می شود که به مرور زمان این فضا روی دیسک به صورت پراکنده می ماند، برای آزادسازی این فضا و بهبود عملکرد نوشتن، از دستور کامپکت استفاده می شود</p>
-        <hr />
-      
-        <h3><a href="/2024-04-22/migration-gitlab-to-another-server.html" title="مهاجرت سرور gitlab به سروری جدید">مهاجرت سرور gitlab به سروری جدید</a></h3>
-            
-                <a href="/tag/git.html">
-                    <span class="label label-default">git</span></a>
-            
-                <a href="/tag/tips.html">
-                    <span class="label label-default">tips</span></a>
-            
-                <a href="/tag/gitlab.html">
-                    <span class="label label-default">gitlab</span></a>
-            
-        <p>سرویس gitlab برای کنترل پروژه ها برنامه نویسی ونحوه خروجی آن برنامه ها می باشد</p>
-        <hr />
-      
-        <h3><a href="/2024-04-22/create-lvm-partiotion-in-linux.html" title="ایجاد دیسک LVM در لینوکس">ایجاد دیسک LVM در لینوکس</a></h3>
-            
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
-            
-                <a href="/tag/learn.html">
-                    <span class="label label-default">learn</span></a>
-            
-                <a href="/tag/tutorial.html">
-                    <span class="label label-default">tutorial</span></a>
-            
-                <a href="/tag/lvm.html">
-                    <span class="label label-default">lvm</span></a>
-            
-                <a href="/tag/disk.html">
-                    <span class="label label-default">disk</span></a>
-            
-        <p>کلمه LVM بر مبنی مدیریت دیسک ها منطقی -Logical Volume Management - معروف شده</p>
-        <hr />
-      
-        <h3><a href="/2024-04-14/mysql-master-slave-replication.html" title="راه اندازی Mysql/Mariadb Slave Replication">راه اندازی Mysql/Mariadb Slave Replication</a></h3>
-            
-                <a href="/tag/database.html">
-                    <span class="label label-default">database</span></a>
-            
-                <a href="/tag/mariadb.html">
-                    <span class="label label-default">mariadb</span></a>
-            
-                <a href="/tag/mysql.html">
-                    <span class="label label-default">mysql</span></a>
-            
-                <a href="/tag/replication.html">
-                    <span class="label label-default">replication</span></a>
-            
-        <p>یکی از روش های راه اندازی رپلیکیشن در دیتابیس ها master/slave است</p>
-        <hr />
-      
-        <h3><a href="/2024-01-13/hangup-a-call-on-asterisk.html" title="بستن تماس باز در asterisk">بستن تماس باز در asterisk</a></h3>
-            
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
-            
-                <a href="/tag/tips.html">
-                    <span class="label label-default">tips</span></a>
-            
-                <a href="/tag/asterisk.html">
-                    <span class="label label-default">asterisk</span></a>
-            
-        <p>گاهی ممکن است که روی برخی کانال تماس های asterisk به هر دلیلی بسته نشوند، و لازم باشد تا به صورت دستی آن ها را ببندید</p>
-        <hr />
-      
+
+
       
               <ul class="pagination">
                 
@@ -522,8 +511,21 @@
                         
                     
                 
+                    
+                        
+                            <li><a href="/page4.html">4</a></li>
+                        
+                    
+                
+                    
+                        
+                            <li><a href="/page5.html">5</a></li>
+                        
+                    
+                
               </ul>
       
+    </div>
 
         </div>
         <div class="col-md-3">
@@ -645,18 +647,6 @@
                                 <li><a href="/2024-08-24/linux-reset-a-forgotten-root-password.html" title="تغییر کلمه عبور کاربر root در لینوکس">تغییر کلمه عبور کاربر root در لینوکس</a></li>
                                 
                                 <li><a href="/2024-07-25/chnage-mysql-mariadb-root-password.html" title="تغییر کلمه عبور کاربر root در mysql/mariadb">تغییر کلمه عبور کاربر root در mysql/mariadb</a></li>
-                                
-                                <li><a href="/2024-05-27/using-htpasswd.html" title="استفاده از htpasswd">استفاده از htpasswd</a></li>
-                                
-                                <li><a href="/2024-05-14/How-to-compact-collection-in-mongodb.html" title="استفاده از commpact در mongodb">استفاده از commpact در mongodb</a></li>
-                                
-                                <li><a href="/2024-04-22/migration-gitlab-to-another-server.html" title="مهاجرت سرور gitlab به سروری جدید">مهاجرت سرور gitlab به سروری جدید</a></li>
-                                
-                                <li><a href="/2024-04-22/create-lvm-partiotion-in-linux.html" title="ایجاد دیسک LVM در لینوکس">ایجاد دیسک LVM در لینوکس</a></li>
-                                
-                                <li><a href="/2024-04-14/mysql-master-slave-replication.html" title="راه اندازی Mysql/Mariadb Slave Replication">راه اندازی Mysql/Mariadb Slave Replication</a></li>
-                                
-                                <li><a href="/2024-01-13/hangup-a-call-on-asterisk.html" title="بستن تماس باز در asterisk">بستن تماس باز در asterisk</a></li>
                                 
                             </ul>
 

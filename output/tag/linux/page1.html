@@ -78,7 +78,7 @@
         border-left: 5px solid #6ce26c;
       }
     .panel-body {
-        padding: 10px 0;
+        margin-right: -20px;
     }
     .panel-body ul li{
         margin: 5px 0;
@@ -126,29 +126,48 @@
     }
 
     #back2Top {
-    width: 40px;
-    line-height: 40px;
-    overflow: hidden;
-    z-index: 999;
-    display: none;
-    cursor: pointer;
-    -moz-transform: rotate(270deg);
-    -webkit-transform: rotate(270deg);
-    -o-transform: rotate(270deg);
-    -ms-transform: rotate(270deg);
-    transform: rotate(270deg);
-    position: fixed;
-    bottom: 50px;
-    right: 0;
-    background-color: #DDD;
-    text-align: center;
-    font-size: 30px;
-    text-decoration: none;
+        width: 40px;
+        line-height: 40px;
+        overflow: hidden;
+        z-index: 999;
+        display: none;
+        cursor: pointer;
+        -moz-transform: rotate(270deg);
+        -webkit-transform: rotate(270deg);
+        -o-transform: rotate(270deg);
+        -ms-transform: rotate(270deg);
+        transform: rotate(270deg);
+        position: fixed;
+        bottom: 50px;
+        right: 0;
+        background-color: #DDD;
+        text-align: center;
+        font-size: 30px;
+        text-decoration: none;
     }
     #back2Top:hover {
         background-color: #DDF;
         color: #000;
     }
+    .box {
+        width: 200px;
+        height: 200px;
+        background-color: lightblue;
+        border: 2px solid black;
+        padding: 20px;
+        margin: 20px;
+    }
+    .row-line{
+        margin-bottom: 10px;
+        margin-top: 10px;
+        overflow: hidden;
+    }
+    .img-post{
+        width: 100%;
+        height: 100%;
+        border-radius:20px
+    }
+
     </style>
 </head>
 <body>
@@ -193,310 +212,295 @@
       <h2>پستهای تگ شده با  'linux'</h2>
       <p class="lead"></p>
     </div>
+    <div class="row">
       
-        <h3><a href="/2020-12-27/Recover-MariaDB-Galera-Cluster.html" title="چطور گلرا کلاستر خراب شده کامل یا ناقص را بازگردانی کنیم">چطور گلرا کلاستر خراب شده کامل یا ناقص را بازگردانی کنیم</a></h3>
+        <div class="row-line">
+            <div class="col-md-8">
+            <h3><a href="/2022-10-22/reduce-LVM-Partition-size.html" title="کاهش فضای دیسک LVM">کاهش فضای دیسک LVM</a></h3>
             
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
+            <a href="/tag/lvm.html">
+                <span class="label label-default">lvm</span></a>
             
-                <a href="/tag/database.html">
-                    <span class="label label-default">database</span></a>
+            <a href="/tag/linux.html">
+                <span class="label label-default">linux</span></a>
             
-                <a href="/tag/galera.html">
-                    <span class="label label-default">galera</span></a>
+            <a href="/tag/partition.html">
+                <span class="label label-default">partition</span></a>
             
-                <a href="/tag/galera_cluster.html">
-                    <span class="label label-default">galera_cluster</span></a>
+            <a href="/tag/disk.html">
+                <span class="label label-default">disk</span></a>
             
-                <a href="/tag/mariadb.html">
-                    <span class="label label-default">mariadb</span></a>
-            
-                <a href="/tag/cluster.html">
-                    <span class="label label-default">cluster</span></a>
-            
-        <p>مشکل خرابی کلاستر گلرا در دیتابیس، مشکلی مرسوم و متداول می باشد، در این مطلب خیلی ساده روش های بازگرداندن کلاسترینگ را بیان خواهیم کرد.</p>
-        <hr />
+            <p>در این نوشته تلاش می شود تا نحوه کاهش فضای دیسک `LVM` بیان شود..</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/reduce-LVM-Partition-size.jpg" alt="کاهش فضای دیسک LVM" class="img-post" />
+            </div>
+        </div>
       
-        <h3><a href="/2020-12-10/how-to-install-bashtop.html" title="آشنایی با برنامه کابردی Bashtop">آشنایی با برنامه کابردی Bashtop</a></h3>
+        <div class="row-line">
+            <div class="col-md-8">
+            <h3><a href="/2022-10-16/docker-exec-environment.html" title="دسترسی به متغییرها با دستور docker exec">دسترسی به متغییرها با دستور docker exec</a></h3>
             
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
+            <a href="/tag/docker.html">
+                <span class="label label-default">docker</span></a>
             
-                <a href="/tag/monitoring.html">
-                    <span class="label label-default">monitoring</span></a>
+            <a href="/tag/linux.html">
+                <span class="label label-default">linux</span></a>
             
-                <a href="/tag/utility.html">
-                    <span class="label label-default">utility</span></a>
+            <a href="/tag/env.html">
+                <span class="label label-default">env</span></a>
             
-        <p>برنامه ای برای مانیتورینگ منابع در لینوکس.</p>
-        <hr />
+            <a href="/tag/environment.html">
+                <span class="label label-default">environment</span></a>
+            
+            <p>استفاده از متغییر های محیطی همسان بین `container` و `host` در دستور `docker exec`.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/docker-exec-environment.jpg" alt="دسترسی به متغییرها با دستور docker exec" class="img-post" />
+            </div>
+        </div>
       
-        <h3><a href="/2020-10-06/lpic1-exam-101-6-Utilities-to-Explore-System-Devices.html" title="دوره LPIC1 آزمون 101-5">دوره LPIC1 آزمون 101-5</a></h3>
+        <div class="row-line">
+            <div class="col-md-8">
+            <h3><a href="/2022-07-02/upgrade-gitlab-to-latest.html" title="آپدیت گیت لب از 13.11.3 به آخرین نسخه">آپدیت گیت لب از 13.11.3 به آخرین نسخه</a></h3>
             
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
+            <a href="/tag/linux.html">
+                <span class="label label-default">linux</span></a>
             
-                <a href="/tag/learn.html">
-                    <span class="label label-default">learn</span></a>
+            <a href="/tag/git.html">
+                <span class="label label-default">git</span></a>
             
-                <a href="/tag/lpic1.html">
-                    <span class="label label-default">lpic1</span></a>
+            <a href="/tag/gitlab.html">
+                <span class="label label-default">gitlab</span></a>
             
-                <a href="/tag/video.html">
-                    <span class="label label-default">video</span></a>
+            <a href="/tag/upgrade.html">
+                <span class="label label-default">upgrade</span></a>
             
-        <p>قسمت پنجم ویدیو های آموزشی دوره LPIC1 موسسه لینوکس آکادمی با سرفصل Tools and Utilities to Explore System Devices.</p>
-        <hr />
+            <a href="/tag/docker.html">
+                <span class="label label-default">docker</span></a>
+            
+            <p>نسخه فعلی که استفاده می شود، gitlab-ce 13.11.3 می باشد. آخرین نسخه ارائه شده گیت gitlab-ce 15.0.2 هست، که ما قصد داریم به این نسخه مهاجرت کنیم.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/upgrade-gitlab-to-latest.jpg" alt="آپدیت گیت لب از 13.11.3 به آخرین نسخه" class="img-post" />
+            </div>
+        </div>
       
-        <h3><a href="/2020-10-06/lpic1-exam-101-5-Hardware-Settings.html" title="دوره LPIC1 آزمون 101-4">دوره LPIC1 آزمون 101-4</a></h3>
+        <div class="row-line">
+            <div class="col-md-8">
+            <h3><a href="/2021-04-13/drone-ci.html" title="نصب و راه اندازی Drone CI.">نصب و راه اندازی Drone CI.</a></h3>
             
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
+            <a href="/tag/linux.html">
+                <span class="label label-default">linux</span></a>
             
-                <a href="/tag/learn.html">
-                    <span class="label label-default">learn</span></a>
+            <a href="/tag/devops.html">
+                <span class="label label-default">devops</span></a>
             
-                <a href="/tag/lpic1.html">
-                    <span class="label label-default">lpic1</span></a>
+            <a href="/tag/ci/cd.html">
+                <span class="label label-default">ci/cd</span></a>
             
-                <a href="/tag/video.html">
-                    <span class="label label-default">video</span></a>
+            <a href="/tag/drone.html">
+                <span class="label label-default">drone</span></a>
             
-        <p>قسمت چهارم ویدیو های آموزشی دوره LPIC1 موسسه لینوکس آکادمی.</p>
-        <hr />
+            <a href="/tag/tutorial.html">
+                <span class="label label-default">tutorial</span></a>
+            
+            <a href="/tag/docker.html">
+                <span class="label label-default">docker</span></a>
+            
+            <p>نصب و راه اندازی Drone CI.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/drone-ci.jpg" alt="نصب و راه اندازی Drone CI." class="img-post" />
+            </div>
+        </div>
       
-        <h3><a href="/2020-09-26/ssh-jumping-hosts.html" title="پرش با SSH">پرش با SSH</a></h3>
+        <div class="row-line">
+            <div class="col-md-8">
+            <h3><a href="/2021-03-07/galera-cluster-debian-10.html" title="نصب Galera Cluster بر روی debian 10">نصب Galera Cluster بر روی debian 10</a></h3>
             
-                <a href="/tag/ssh.html">
-                    <span class="label label-default">ssh</span></a>
+            <a href="/tag/linux.html">
+                <span class="label label-default">linux</span></a>
             
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
+            <a href="/tag/debian.html">
+                <span class="label label-default">debian</span></a>
             
-        <p>یک راهکار جایگزین برای ssh tunneling.</p>
-        <hr />
+            <a href="/tag/galera.html">
+                <span class="label label-default">galera</span></a>
+            
+            <a href="/tag/mariadb.html">
+                <span class="label label-default">mariadb</span></a>
+            
+            <a href="/tag/cluster.html">
+                <span class="label label-default">cluster</span></a>
+            
+            <p>یک برنامه کلاستر همزمان چند سرور Master-Master برمبنای replication همزمان می باشد.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/galera-cluster-debian-10.jpg" alt="نصب Galera Cluster بر روی debian 10" class="img-post" />
+            </div>
+        </div>
       
-        <h3><a href="/2020-09-19/lpic1-exam-101-Syllabus.html" title="دوره LPIC1 آزمون 101-3">دوره LPIC1 آزمون 101-3</a></h3>
+        <div class="row-line">
+            <div class="col-md-8">
+            <h3><a href="/2021-02-20/lpic1-exam-101-7-Boot-Process-sysvinit.html" title="دوره LPIC1 آزمون 101-6">دوره LPIC1 آزمون 101-6</a></h3>
             
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
+            <a href="/tag/linux.html">
+                <span class="label label-default">linux</span></a>
             
-                <a href="/tag/learn.html">
-                    <span class="label label-default">learn</span></a>
+            <a href="/tag/learn.html">
+                <span class="label label-default">learn</span></a>
             
-                <a href="/tag/lpic1.html">
-                    <span class="label label-default">lpic1</span></a>
+            <a href="/tag/lpic1.html">
+                <span class="label label-default">lpic1</span></a>
             
-                <a href="/tag/video.html">
-                    <span class="label label-default">video</span></a>
+            <a href="/tag/video.html">
+                <span class="label label-default">video</span></a>
             
-        <p>قسمت سوم ویدیو های آموزشی دوره LPIC1 موسسه لینوکس آکادمی.</p>
-        <hr />
+            <p>قسمت ششم ویدیو های آموزشی دوره LPIC1 موسسه لینوکس آکادمی با سرفصل '125-1096-3 - 101.2 - Boot Process - sysvinit - Power On to System Prompt.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/lpic1-exam-101-7-Boot-Process-sysvinit.jpg" alt="دوره LPIC1 آزمون 101-6" class="img-post" />
+            </div>
+        </div>
       
-        <h3><a href="/2020-09-17/lpic1-exam-101-Introduction-to-Exam.html" title="دوره LPIC1 آزمون 101-2">دوره LPIC1 آزمون 101-2</a></h3>
+        <div class="row-line">
+            <div class="col-md-8">
+            <h3><a href="/2020-12-27/Recover-MariaDB-Galera-Cluster.html" title="چطور گلرا کلاستر خراب شده کامل یا ناقص را بازگردانی کنیم">چطور گلرا کلاستر خراب شده کامل یا ناقص را بازگردانی کنیم</a></h3>
             
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
+            <a href="/tag/linux.html">
+                <span class="label label-default">linux</span></a>
             
-                <a href="/tag/learn.html">
-                    <span class="label label-default">learn</span></a>
+            <a href="/tag/database.html">
+                <span class="label label-default">database</span></a>
             
-                <a href="/tag/lpic1.html">
-                    <span class="label label-default">lpic1</span></a>
+            <a href="/tag/galera.html">
+                <span class="label label-default">galera</span></a>
             
-                <a href="/tag/video.html">
-                    <span class="label label-default">video</span></a>
+            <a href="/tag/galera_cluster.html">
+                <span class="label label-default">galera_cluster</span></a>
             
-        <p>قسمت دوم ویدیو های آموزشی دوره LPIC1 موسسه لینوکس آکادمی..</p>
-        <hr />
+            <a href="/tag/mariadb.html">
+                <span class="label label-default">mariadb</span></a>
+            
+            <a href="/tag/cluster.html">
+                <span class="label label-default">cluster</span></a>
+            
+            <p>مشکل خرابی کلاستر گلرا در دیتابیس، مشکلی مرسوم و متداول می باشد، در این مطلب خیلی ساده روش های بازگرداندن کلاسترینگ را بیان خواهیم کرد.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/Recover-MariaDB-Galera-Cluster.jpg" alt="چطور گلرا کلاستر خراب شده کامل یا ناقص را بازگردانی کنیم" class="img-post" />
+            </div>
+        </div>
       
-        <h3><a href="/2020-09-14/lpic1-exam-101-introduction.html" title="دوره LPIC1 آزمون 101-1">دوره LPIC1 آزمون 101-1</a></h3>
+        <div class="row-line">
+            <div class="col-md-8">
+            <h3><a href="/2020-12-10/how-to-install-bashtop.html" title="آشنایی با برنامه کابردی Bashtop">آشنایی با برنامه کابردی Bashtop</a></h3>
             
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
+            <a href="/tag/linux.html">
+                <span class="label label-default">linux</span></a>
             
-                <a href="/tag/learn.html">
-                    <span class="label label-default">learn</span></a>
+            <a href="/tag/monitoring.html">
+                <span class="label label-default">monitoring</span></a>
             
-                <a href="/tag/lpic1.html">
-                    <span class="label label-default">lpic1</span></a>
+            <a href="/tag/utility.html">
+                <span class="label label-default">utility</span></a>
             
-                <a href="/tag/video.html">
-                    <span class="label label-default">video</span></a>
-            
-        <p>قسمت اول ویدیو های آموزشی دوره LPIC1 موسسه لینوکس آکادمی.</p>
-        <hr />
+            <p>برنامه ای برای مانیتورینگ منابع در لینوکس.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/how-to-install-bashtop.jpg" alt="آشنایی با برنامه کابردی Bashtop" class="img-post" />
+            </div>
+        </div>
       
-        <h3><a href="/2020-08-15/installing_docker_on_debian.html" title="نصب Docker روی Debian 10">نصب Docker روی Debian 10</a></h3>
+        <div class="row-line">
+            <div class="col-md-8">
+            <h3><a href="/2020-10-06/lpic1-exam-101-6-Utilities-to-Explore-System-Devices.html" title="دوره LPIC1 آزمون 101-5">دوره LPIC1 آزمون 101-5</a></h3>
             
-                <a href="/tag/docker.html">
-                    <span class="label label-default">docker</span></a>
+            <a href="/tag/linux.html">
+                <span class="label label-default">linux</span></a>
             
-                <a href="/tag/container.html">
-                    <span class="label label-default">container</span></a>
+            <a href="/tag/learn.html">
+                <span class="label label-default">learn</span></a>
             
-                <a href="/tag/virtualization.html">
-                    <span class="label label-default">virtualization</span></a>
+            <a href="/tag/lpic1.html">
+                <span class="label label-default">lpic1</span></a>
             
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
+            <a href="/tag/video.html">
+                <span class="label label-default">video</span></a>
             
-        <p>نحوه نصب Docker بر روی سیستم عامل محبوب  Debian 10</p>
-        <hr />
+            <p>قسمت پنجم ویدیو های آموزشی دوره LPIC1 موسسه لینوکس آکادمی با سرفصل Tools and Utilities to Explore System Devices.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/lpic1-exam-101-6-Utilities-to-Explore-System-Devices.jpg" alt="دوره LPIC1 آزمون 101-5" class="img-post" />
+            </div>
+        </div>
       
-        <h3><a href="/2019-07-08/Cgroup-linux-kernel.html" title="آشنایی با ویژگی Cgroup در کرنل لینوکس">آشنایی با ویژگی Cgroup در کرنل لینوکس</a></h3>
+        <div class="row-line">
+            <div class="col-md-8">
+            <h3><a href="/2020-10-06/lpic1-exam-101-5-Hardware-Settings.html" title="دوره LPIC1 آزمون 101-4">دوره LPIC1 آزمون 101-4</a></h3>
             
-                <a href="/tag/kernel.html">
-                    <span class="label label-default">kernel</span></a>
+            <a href="/tag/linux.html">
+                <span class="label label-default">linux</span></a>
             
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
+            <a href="/tag/learn.html">
+                <span class="label label-default">learn</span></a>
             
-                <a href="/tag/virtualization.html">
-                    <span class="label label-default">virtualization</span></a>
+            <a href="/tag/lpic1.html">
+                <span class="label label-default">lpic1</span></a>
             
-                <a href="/tag/container.html">
-                    <span class="label label-default">container</span></a>
+            <a href="/tag/video.html">
+                <span class="label label-default">video</span></a>
             
-        <p>یک قابلیت هستهٔ لینوکس است که منابع مجموعه‌ای از فرایندها را مدیریت و مجزاسازی می‌کند.</p>
-        <hr />
+            <p>قسمت چهارم ویدیو های آموزشی دوره LPIC1 موسسه لینوکس آکادمی.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/lpic1-exam-101-5-Hardware-Settings.jpg" alt="دوره LPIC1 آزمون 101-4" class="img-post" />
+            </div>
+        </div>
       
-        <h3><a href="/2018-09-24/Flask-tutorial-02.html" title="آموزش برنامه نویسی Flask - فصل۲">آموزش برنامه نویسی Flask - فصل۲</a></h3>
+        <div class="row-line">
+            <div class="col-md-8">
+            <h3><a href="/2020-09-26/ssh-jumping-hosts.html" title="پرش با SSH">پرش با SSH</a></h3>
             
-                <a href="/tag/python.html">
-                    <span class="label label-default">python</span></a>
+            <a href="/tag/ssh.html">
+                <span class="label label-default">ssh</span></a>
             
-                <a href="/tag/flask.html">
-                    <span class="label label-default">flask</span></a>
+            <a href="/tag/linux.html">
+                <span class="label label-default">linux</span></a>
             
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
-            
-                <a href="/tag/programming.html">
-                    <span class="label label-default">programming</span></a>
-            
-                <a href="/tag/tutorial.html">
-                    <span class="label label-default">tutorial</span></a>
-            
-        <p>دسترسی سریع و ساده به آدرس ها و بخش های مختلف سایت از مزایای مهم این فریمورک می باشد.</p>
-        <hr />
+            <p>یک راهکار جایگزین برای ssh tunneling.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/ssh-jumping-hosts.jpg" alt="پرش با SSH" class="img-post" />
+            </div>
+        </div>
       
-        <h3><a href="/2018-09-09/Flask-tutorial-01.html" title="آموزش برنامه نویسی Flask - فصل۱">آموزش برنامه نویسی Flask - فصل۱</a></h3>
+        <div class="row-line">
+            <div class="col-md-8">
+            <h3><a href="/2020-09-19/lpic1-exam-101-Syllabus.html" title="دوره LPIC1 آزمون 101-3">دوره LPIC1 آزمون 101-3</a></h3>
             
-                <a href="/tag/python.html">
-                    <span class="label label-default">python</span></a>
+            <a href="/tag/linux.html">
+                <span class="label label-default">linux</span></a>
             
-                <a href="/tag/flask.html">
-                    <span class="label label-default">flask</span></a>
+            <a href="/tag/learn.html">
+                <span class="label label-default">learn</span></a>
             
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
+            <a href="/tag/lpic1.html">
+                <span class="label label-default">lpic1</span></a>
             
-                <a href="/tag/programming.html">
-                    <span class="label label-default">programming</span></a>
+            <a href="/tag/video.html">
+                <span class="label label-default">video</span></a>
             
-                <a href="/tag/tutorial.html">
-                    <span class="label label-default">tutorial</span></a>
-            
-        <p>در واقع فلسک یک میکرو فریمورک می باشد که با زبان پایتون نوشته شده و بسیار ساده و سبک عمل می کند.</p>
-        <hr />
+            <p>قسمت سوم ویدیو های آموزشی دوره LPIC1 موسسه لینوکس آکادمی.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/lpic1-exam-101-Syllabus.jpg" alt="دوره LPIC1 آزمون 101-3" class="img-post" />
+            </div>
+        </div>
       
-        <h3><a href="/2018-07-23/ssh_automatic_login.html" title="لاگین خودکار با SSH">لاگین خودکار با SSH</a></h3>
-            
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
-            
-                <a href="/tag/ssh.html">
-                    <span class="label label-default">ssh</span></a>
-            
-        <p>بعضی وقت ها پیش آمده که از تکرار ورود نام کاربر و کلمه در لاگین SSH خسته شده باشید.</p>
-        <hr />
-      
-        <h3><a href="/2018-04-15/linux_fonts.html" title="افزودن فونت های فارسی در لینوکس">افزودن فونت های فارسی در لینوکس</a></h3>
-            
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
-            
-                <a href="/tag/fonts.html">
-                    <span class="label label-default">fonts</span></a>
-            
-                <a href="/tag/persian.html">
-                    <span class="label label-default">persian</span></a>
-            
-        <p>استفاده از زبان فارسی برای فارسی زبانان عزیز در سیستم عامل لینوکس.</p>
-        <hr />
-      
-        <h3><a href="/2017-08-16/galera_cluster.html" title="نصب Galer Cluster بر روی debian8">نصب Galer Cluster بر روی debian8</a></h3>
-            
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
-            
-                <a href="/tag/debian.html">
-                    <span class="label label-default">debian</span></a>
-            
-                <a href="/tag/galera.html">
-                    <span class="label label-default">galera</span></a>
-            
-                <a href="/tag/mariadb.html">
-                    <span class="label label-default">mariadb</span></a>
-            
-                <a href="/tag/cluster.html">
-                    <span class="label label-default">cluster</span></a>
-            
-        <p>یک برنامه کلاستر همزمان چند سرور Master-Master برمبنای replication همزمان می باشد.</p>
-        <hr />
-      
-        <h3><a href="/2013-04-03/live_remove_linux_kernel.html" title="حذف کرنل لینوکس با دیسک زنده">حذف کرنل لینوکس با دیسک زنده</a></h3>
-            
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
-            
-                <a href="/tag/kernel.html">
-                    <span class="label label-default">kernel</span></a>
-            
-                <a href="/tag/live.html">
-                    <span class="label label-default">live</span></a>
-            
-                <a href="/tag/ubuntu.html">
-                    <span class="label label-default">ubuntu</span></a>
-            
-        <p>در این پست یک تجربه که نحوه برگرداندن ubuntu می باشد، ارائه شده است.</p>
-        <hr />
-      
-        <h3><a href="/2013-03-23/update_ubuntu_offline.html" title="به روز رسانی برنامه ها در ابونتو به صورت off-line">به روز رسانی برنامه ها در ابونتو به صورت off-line</a></h3>
-            
-                <a href="/tag/ubuntu.html">
-                    <span class="label label-default">ubuntu</span></a>
-            
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
-            
-                <a href="/tag/apt.html">
-                    <span class="label label-default">apt</span></a>
-            
-        <p>تا به حال شده که به خاطر تعدد دفعات update بسته های ubuntu (ماهی چند نوبت)، حجم حساب اینترنتی شما تمام شده باشد؟</p>
-        <hr />
-      
-        <h3><a href="/2013-03-19/mount_iso.html" title="بار گذاری یک فایل iso در لینوکس">بار گذاری یک فایل iso در لینوکس</a></h3>
-            
-                <a href="/tag/image.html">
-                    <span class="label label-default">image</span></a>
-            
-                <a href="/tag/iso.html">
-                    <span class="label label-default">iso</span></a>
-            
-                <a href="/tag/mount.html">
-                    <span class="label label-default">mount</span></a>
-            
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
-            
-                <a href="/tag/shell.html">
-                    <span class="label label-default">shell</span></a>
-            
-        <p>فایلهای `iso.` نوعی فایل فشرده هستند که معمولا اطلاعات داخل یک `cd` یا `dvd` را به این صورت تبدیل می کنند تا بتوانند آن را با حفظ ساختار `cd` یا `dvd` اش با استفاده از حافظه های جانبی یا درون شبکه منتقل و از آن اطلاعات استفاده کنند.</p>
-        <hr />
-      
+
+
       
               <ul class="pagination">
                 
@@ -516,8 +520,15 @@
                         
                     
                 
+                    
+                        
+                            <li><a href="/tag/linux/page3.html">3</a></li>
+                        
+                    
+                
               </ul>
       
+    </div>
 
         </div>
         <div class="col-md-3">
@@ -616,6 +627,18 @@
                         <div class="panel-body">
                             <ul>
                                 
+                                <li><a href="/2022-10-22/reduce-LVM-Partition-size.html" title="کاهش فضای دیسک LVM">کاهش فضای دیسک LVM</a></li>
+                                
+                                <li><a href="/2022-10-16/docker-exec-environment.html" title="دسترسی به متغییرها با دستور docker exec">دسترسی به متغییرها با دستور docker exec</a></li>
+                                
+                                <li><a href="/2022-07-02/upgrade-gitlab-to-latest.html" title="آپدیت گیت لب از 13.11.3 به آخرین نسخه">آپدیت گیت لب از 13.11.3 به آخرین نسخه</a></li>
+                                
+                                <li><a href="/2021-04-13/drone-ci.html" title="نصب و راه اندازی Drone CI.">نصب و راه اندازی Drone CI.</a></li>
+                                
+                                <li><a href="/2021-03-07/galera-cluster-debian-10.html" title="نصب Galera Cluster بر روی debian 10">نصب Galera Cluster بر روی debian 10</a></li>
+                                
+                                <li><a href="/2021-02-20/lpic1-exam-101-7-Boot-Process-sysvinit.html" title="دوره LPIC1 آزمون 101-6">دوره LPIC1 آزمون 101-6</a></li>
+                                
                                 <li><a href="/2020-12-27/Recover-MariaDB-Galera-Cluster.html" title="چطور گلرا کلاستر خراب شده کامل یا ناقص را بازگردانی کنیم">چطور گلرا کلاستر خراب شده کامل یا ناقص را بازگردانی کنیم</a></li>
                                 
                                 <li><a href="/2020-12-10/how-to-install-bashtop.html" title="آشنایی با برنامه کابردی Bashtop">آشنایی با برنامه کابردی Bashtop</a></li>
@@ -627,30 +650,6 @@
                                 <li><a href="/2020-09-26/ssh-jumping-hosts.html" title="پرش با SSH">پرش با SSH</a></li>
                                 
                                 <li><a href="/2020-09-19/lpic1-exam-101-Syllabus.html" title="دوره LPIC1 آزمون 101-3">دوره LPIC1 آزمون 101-3</a></li>
-                                
-                                <li><a href="/2020-09-17/lpic1-exam-101-Introduction-to-Exam.html" title="دوره LPIC1 آزمون 101-2">دوره LPIC1 آزمون 101-2</a></li>
-                                
-                                <li><a href="/2020-09-14/lpic1-exam-101-introduction.html" title="دوره LPIC1 آزمون 101-1">دوره LPIC1 آزمون 101-1</a></li>
-                                
-                                <li><a href="/2020-08-15/installing_docker_on_debian.html" title="نصب Docker روی Debian 10">نصب Docker روی Debian 10</a></li>
-                                
-                                <li><a href="/2019-07-08/Cgroup-linux-kernel.html" title="آشنایی با ویژگی Cgroup در کرنل لینوکس">آشنایی با ویژگی Cgroup در کرنل لینوکس</a></li>
-                                
-                                <li><a href="/2018-09-24/Flask-tutorial-02.html" title="آموزش برنامه نویسی Flask - فصل۲">آموزش برنامه نویسی Flask - فصل۲</a></li>
-                                
-                                <li><a href="/2018-09-09/Flask-tutorial-01.html" title="آموزش برنامه نویسی Flask - فصل۱">آموزش برنامه نویسی Flask - فصل۱</a></li>
-                                
-                                <li><a href="/2018-07-23/ssh_automatic_login.html" title="لاگین خودکار با SSH">لاگین خودکار با SSH</a></li>
-                                
-                                <li><a href="/2018-04-15/linux_fonts.html" title="افزودن فونت های فارسی در لینوکس">افزودن فونت های فارسی در لینوکس</a></li>
-                                
-                                <li><a href="/2017-08-16/galera_cluster.html" title="نصب Galer Cluster بر روی debian8">نصب Galer Cluster بر روی debian8</a></li>
-                                
-                                <li><a href="/2013-04-03/live_remove_linux_kernel.html" title="حذف کرنل لینوکس با دیسک زنده">حذف کرنل لینوکس با دیسک زنده</a></li>
-                                
-                                <li><a href="/2013-03-23/update_ubuntu_offline.html" title="به روز رسانی برنامه ها در ابونتو به صورت off-line">به روز رسانی برنامه ها در ابونتو به صورت off-line</a></li>
-                                
-                                <li><a href="/2013-03-19/mount_iso.html" title="بار گذاری یک فایل iso در لینوکس">بار گذاری یک فایل iso در لینوکس</a></li>
                                 
                             </ul>
 

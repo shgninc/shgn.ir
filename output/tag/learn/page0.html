@@ -78,7 +78,7 @@
         border-left: 5px solid #6ce26c;
       }
     .panel-body {
-        padding: 10px 0;
+        margin-right: -20px;
     }
     .panel-body ul li{
         margin: 5px 0;
@@ -126,29 +126,48 @@
     }
 
     #back2Top {
-    width: 40px;
-    line-height: 40px;
-    overflow: hidden;
-    z-index: 999;
-    display: none;
-    cursor: pointer;
-    -moz-transform: rotate(270deg);
-    -webkit-transform: rotate(270deg);
-    -o-transform: rotate(270deg);
-    -ms-transform: rotate(270deg);
-    transform: rotate(270deg);
-    position: fixed;
-    bottom: 50px;
-    right: 0;
-    background-color: #DDD;
-    text-align: center;
-    font-size: 30px;
-    text-decoration: none;
+        width: 40px;
+        line-height: 40px;
+        overflow: hidden;
+        z-index: 999;
+        display: none;
+        cursor: pointer;
+        -moz-transform: rotate(270deg);
+        -webkit-transform: rotate(270deg);
+        -o-transform: rotate(270deg);
+        -ms-transform: rotate(270deg);
+        transform: rotate(270deg);
+        position: fixed;
+        bottom: 50px;
+        right: 0;
+        background-color: #DDD;
+        text-align: center;
+        font-size: 30px;
+        text-decoration: none;
     }
     #back2Top:hover {
         background-color: #DDF;
         color: #000;
     }
+    .box {
+        width: 200px;
+        height: 200px;
+        background-color: lightblue;
+        border: 2px solid black;
+        padding: 20px;
+        margin: 20px;
+    }
+    .row-line{
+        margin-bottom: 10px;
+        margin-top: 10px;
+        overflow: hidden;
+    }
+    .img-post{
+        width: 100%;
+        height: 100%;
+        border-radius:20px
+    }
+
     </style>
 </head>
 <body>
@@ -193,183 +212,246 @@
       <h2>پستهای تگ شده با  'learn'</h2>
       <p class="lead"></p>
     </div>
+    <div class="row">
       
-        <h3><a href="/2025-03-26/linux-server-as-gateway.html" title="راه‌اندازی یک سرور لینوکس به عنوان Gateway">راه‌اندازی یک سرور لینوکس به عنوان Gateway</a></h3>
+        <div class="row-line">
+            <div class="col-md-8">
+            <h3><a href="/2025-03-26/linux-server-as-gateway.html" title="راه‌اندازی یک سرور لینوکس به عنوان Gateway">راه‌اندازی یک سرور لینوکس به عنوان Gateway</a></h3>
             
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
+            <a href="/tag/linux.html">
+                <span class="label label-default">linux</span></a>
             
-                <a href="/tag/tutorial.html">
-                    <span class="label label-default">tutorial</span></a>
+            <a href="/tag/tutorial.html">
+                <span class="label label-default">tutorial</span></a>
             
-                <a href="/tag/learn.html">
-                    <span class="label label-default">learn</span></a>
+            <a href="/tag/learn.html">
+                <span class="label label-default">learn</span></a>
             
-                <a href="/tag/debian.html">
-                    <span class="label label-default">debian</span></a>
+            <a href="/tag/debian.html">
+                <span class="label label-default">debian</span></a>
             
-                <a href="/tag/network.html">
-                    <span class="label label-default">network</span></a>
+            <a href="/tag/network.html">
+                <span class="label label-default">network</span></a>
             
-        <p>برای اینکه یک سرور لینوکس را به عنوان Gateway  راه‌اندازی کنید، باید آن را به یک روتر تبدیل کنید تا ترافیک شبکه را بین دو شبکه مختلف، مانند شبکه داخلی و اینترنت، هدایت کند.</p>
-        <hr />
+            <p>برای اینکه یک سرور لینوکس را به عنوان Gateway  راه‌اندازی کنید، باید آن را به یک روتر تبدیل کنید تا ترافیک شبکه را بین دو شبکه مختلف، مانند شبکه داخلی و اینترنت، هدایت کند.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/linux-server-as-gateway.jpg" alt="راه‌اندازی یک سرور لینوکس به عنوان Gateway" class="img-post" />
+            </div>
+        </div>
       
-        <h3><a href="/2024-11-10/enabling-GTIDs-in-mariadb-replication.html" title="فعال سازی gtid در رپلیکیشن">فعال سازی gtid در رپلیکیشن</a></h3>
+        <div class="row-line">
+            <div class="col-md-8">
+            <h3><a href="/2024-11-10/enabling-GTIDs-in-mariadb-replication.html" title="فعال سازی gtid در رپلیکیشن">فعال سازی gtid در رپلیکیشن</a></h3>
             
-                <a href="/tag/database.html">
-                    <span class="label label-default">database</span></a>
+            <a href="/tag/database.html">
+                <span class="label label-default">database</span></a>
             
-                <a href="/tag/mariadb.html">
-                    <span class="label label-default">mariadb</span></a>
+            <a href="/tag/mariadb.html">
+                <span class="label label-default">mariadb</span></a>
             
-                <a href="/tag/learn.html">
-                    <span class="label label-default">learn</span></a>
+            <a href="/tag/learn.html">
+                <span class="label label-default">learn</span></a>
             
-                <a href="/tag/replication.html">
-                    <span class="label label-default">replication</span></a>
+            <a href="/tag/replication.html">
+                <span class="label label-default">replication</span></a>
             
-        <p>ممکن است که در رپلیکیشنی که ایجاد شده است، نیاز به فعال سازی gtid باشد.</p>
-        <hr />
+            <p>ممکن است که در رپلیکیشنی که ایجاد شده است، نیاز به فعال سازی gtid باشد.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/enabling-GTIDs-in-mariadb-replication.jpg" alt="فعال سازی gtid در رپلیکیشن" class="img-post" />
+            </div>
+        </div>
       
-        <h3><a href="/2024-08-24/linux-reset-a-forgotten-root-password.html" title="تغییر کلمه عبور کاربر root در لینوکس">تغییر کلمه عبور کاربر root در لینوکس</a></h3>
+        <div class="row-line">
+            <div class="col-md-8">
+            <h3><a href="/2024-08-24/linux-reset-a-forgotten-root-password.html" title="تغییر کلمه عبور کاربر root در لینوکس">تغییر کلمه عبور کاربر root در لینوکس</a></h3>
             
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
+            <a href="/tag/linux.html">
+                <span class="label label-default">linux</span></a>
             
-                <a href="/tag/learn.html">
-                    <span class="label label-default">learn</span></a>
+            <a href="/tag/learn.html">
+                <span class="label label-default">learn</span></a>
             
-                <a href="/tag/tutorial.html">
-                    <span class="label label-default">tutorial</span></a>
+            <a href="/tag/tutorial.html">
+                <span class="label label-default">tutorial</span></a>
             
-                <a href="/tag/recovery.html">
-                    <span class="label label-default">recovery</span></a>
+            <a href="/tag/recovery.html">
+                <span class="label label-default">recovery</span></a>
             
-        <p>نحوه ریست کلمه عبور کاربر root در سیستم عامل linux آمده است</p>
-        <hr />
+            <p>نحوه ریست کلمه عبور کاربر root در سیستم عامل linux آمده است</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/linux-reset-a-forgotten-root-password.jpg" alt="تغییر کلمه عبور کاربر root در لینوکس" class="img-post" />
+            </div>
+        </div>
       
-        <h3><a href="/2024-04-22/create-lvm-partiotion-in-linux.html" title="ایجاد دیسک LVM در لینوکس">ایجاد دیسک LVM در لینوکس</a></h3>
+        <div class="row-line">
+            <div class="col-md-8">
+            <h3><a href="/2024-04-22/create-lvm-partiotion-in-linux.html" title="ایجاد دیسک LVM در لینوکس">ایجاد دیسک LVM در لینوکس</a></h3>
             
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
+            <a href="/tag/linux.html">
+                <span class="label label-default">linux</span></a>
             
-                <a href="/tag/learn.html">
-                    <span class="label label-default">learn</span></a>
+            <a href="/tag/learn.html">
+                <span class="label label-default">learn</span></a>
             
-                <a href="/tag/tutorial.html">
-                    <span class="label label-default">tutorial</span></a>
+            <a href="/tag/tutorial.html">
+                <span class="label label-default">tutorial</span></a>
             
-                <a href="/tag/lvm.html">
-                    <span class="label label-default">lvm</span></a>
+            <a href="/tag/lvm.html">
+                <span class="label label-default">lvm</span></a>
             
-                <a href="/tag/disk.html">
-                    <span class="label label-default">disk</span></a>
+            <a href="/tag/disk.html">
+                <span class="label label-default">disk</span></a>
             
-        <p>کلمه LVM بر مبنی مدیریت دیسک ها منطقی -Logical Volume Management - معروف شده</p>
-        <hr />
+            <p>کلمه LVM بر مبنی مدیریت دیسک ها منطقی -Logical Volume Management - معروف شده</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/create-lvm-partiotion-in-linux.jpg" alt="ایجاد دیسک LVM در لینوکس" class="img-post" />
+            </div>
+        </div>
       
-        <h3><a href="/2021-02-20/lpic1-exam-101-7-Boot-Process-sysvinit.html" title="دوره LPIC1 آزمون 101-6">دوره LPIC1 آزمون 101-6</a></h3>
+        <div class="row-line">
+            <div class="col-md-8">
+            <h3><a href="/2021-02-20/lpic1-exam-101-7-Boot-Process-sysvinit.html" title="دوره LPIC1 آزمون 101-6">دوره LPIC1 آزمون 101-6</a></h3>
             
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
+            <a href="/tag/linux.html">
+                <span class="label label-default">linux</span></a>
             
-                <a href="/tag/learn.html">
-                    <span class="label label-default">learn</span></a>
+            <a href="/tag/learn.html">
+                <span class="label label-default">learn</span></a>
             
-                <a href="/tag/lpic1.html">
-                    <span class="label label-default">lpic1</span></a>
+            <a href="/tag/lpic1.html">
+                <span class="label label-default">lpic1</span></a>
             
-                <a href="/tag/video.html">
-                    <span class="label label-default">video</span></a>
+            <a href="/tag/video.html">
+                <span class="label label-default">video</span></a>
             
-        <p>قسمت ششم ویدیو های آموزشی دوره LPIC1 موسسه لینوکس آکادمی با سرفصل '125-1096-3 - 101.2 - Boot Process - sysvinit - Power On to System Prompt.</p>
-        <hr />
+            <p>قسمت ششم ویدیو های آموزشی دوره LPIC1 موسسه لینوکس آکادمی با سرفصل '125-1096-3 - 101.2 - Boot Process - sysvinit - Power On to System Prompt.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/lpic1-exam-101-7-Boot-Process-sysvinit.jpg" alt="دوره LPIC1 آزمون 101-6" class="img-post" />
+            </div>
+        </div>
       
-        <h3><a href="/2020-10-06/lpic1-exam-101-6-Utilities-to-Explore-System-Devices.html" title="دوره LPIC1 آزمون 101-5">دوره LPIC1 آزمون 101-5</a></h3>
+        <div class="row-line">
+            <div class="col-md-8">
+            <h3><a href="/2020-10-06/lpic1-exam-101-6-Utilities-to-Explore-System-Devices.html" title="دوره LPIC1 آزمون 101-5">دوره LPIC1 آزمون 101-5</a></h3>
             
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
+            <a href="/tag/linux.html">
+                <span class="label label-default">linux</span></a>
             
-                <a href="/tag/learn.html">
-                    <span class="label label-default">learn</span></a>
+            <a href="/tag/learn.html">
+                <span class="label label-default">learn</span></a>
             
-                <a href="/tag/lpic1.html">
-                    <span class="label label-default">lpic1</span></a>
+            <a href="/tag/lpic1.html">
+                <span class="label label-default">lpic1</span></a>
             
-                <a href="/tag/video.html">
-                    <span class="label label-default">video</span></a>
+            <a href="/tag/video.html">
+                <span class="label label-default">video</span></a>
             
-        <p>قسمت پنجم ویدیو های آموزشی دوره LPIC1 موسسه لینوکس آکادمی با سرفصل Tools and Utilities to Explore System Devices.</p>
-        <hr />
+            <p>قسمت پنجم ویدیو های آموزشی دوره LPIC1 موسسه لینوکس آکادمی با سرفصل Tools and Utilities to Explore System Devices.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/lpic1-exam-101-6-Utilities-to-Explore-System-Devices.jpg" alt="دوره LPIC1 آزمون 101-5" class="img-post" />
+            </div>
+        </div>
       
-        <h3><a href="/2020-10-06/lpic1-exam-101-5-Hardware-Settings.html" title="دوره LPIC1 آزمون 101-4">دوره LPIC1 آزمون 101-4</a></h3>
+        <div class="row-line">
+            <div class="col-md-8">
+            <h3><a href="/2020-10-06/lpic1-exam-101-5-Hardware-Settings.html" title="دوره LPIC1 آزمون 101-4">دوره LPIC1 آزمون 101-4</a></h3>
             
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
+            <a href="/tag/linux.html">
+                <span class="label label-default">linux</span></a>
             
-                <a href="/tag/learn.html">
-                    <span class="label label-default">learn</span></a>
+            <a href="/tag/learn.html">
+                <span class="label label-default">learn</span></a>
             
-                <a href="/tag/lpic1.html">
-                    <span class="label label-default">lpic1</span></a>
+            <a href="/tag/lpic1.html">
+                <span class="label label-default">lpic1</span></a>
             
-                <a href="/tag/video.html">
-                    <span class="label label-default">video</span></a>
+            <a href="/tag/video.html">
+                <span class="label label-default">video</span></a>
             
-        <p>قسمت چهارم ویدیو های آموزشی دوره LPIC1 موسسه لینوکس آکادمی.</p>
-        <hr />
+            <p>قسمت چهارم ویدیو های آموزشی دوره LPIC1 موسسه لینوکس آکادمی.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/lpic1-exam-101-5-Hardware-Settings.jpg" alt="دوره LPIC1 آزمون 101-4" class="img-post" />
+            </div>
+        </div>
       
-        <h3><a href="/2020-09-19/lpic1-exam-101-Syllabus.html" title="دوره LPIC1 آزمون 101-3">دوره LPIC1 آزمون 101-3</a></h3>
+        <div class="row-line">
+            <div class="col-md-8">
+            <h3><a href="/2020-09-19/lpic1-exam-101-Syllabus.html" title="دوره LPIC1 آزمون 101-3">دوره LPIC1 آزمون 101-3</a></h3>
             
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
+            <a href="/tag/linux.html">
+                <span class="label label-default">linux</span></a>
             
-                <a href="/tag/learn.html">
-                    <span class="label label-default">learn</span></a>
+            <a href="/tag/learn.html">
+                <span class="label label-default">learn</span></a>
             
-                <a href="/tag/lpic1.html">
-                    <span class="label label-default">lpic1</span></a>
+            <a href="/tag/lpic1.html">
+                <span class="label label-default">lpic1</span></a>
             
-                <a href="/tag/video.html">
-                    <span class="label label-default">video</span></a>
+            <a href="/tag/video.html">
+                <span class="label label-default">video</span></a>
             
-        <p>قسمت سوم ویدیو های آموزشی دوره LPIC1 موسسه لینوکس آکادمی.</p>
-        <hr />
+            <p>قسمت سوم ویدیو های آموزشی دوره LPIC1 موسسه لینوکس آکادمی.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/lpic1-exam-101-Syllabus.jpg" alt="دوره LPIC1 آزمون 101-3" class="img-post" />
+            </div>
+        </div>
       
-        <h3><a href="/2020-09-17/lpic1-exam-101-Introduction-to-Exam.html" title="دوره LPIC1 آزمون 101-2">دوره LPIC1 آزمون 101-2</a></h3>
+        <div class="row-line">
+            <div class="col-md-8">
+            <h3><a href="/2020-09-17/lpic1-exam-101-Introduction-to-Exam.html" title="دوره LPIC1 آزمون 101-2">دوره LPIC1 آزمون 101-2</a></h3>
             
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
+            <a href="/tag/linux.html">
+                <span class="label label-default">linux</span></a>
             
-                <a href="/tag/learn.html">
-                    <span class="label label-default">learn</span></a>
+            <a href="/tag/learn.html">
+                <span class="label label-default">learn</span></a>
             
-                <a href="/tag/lpic1.html">
-                    <span class="label label-default">lpic1</span></a>
+            <a href="/tag/lpic1.html">
+                <span class="label label-default">lpic1</span></a>
             
-                <a href="/tag/video.html">
-                    <span class="label label-default">video</span></a>
+            <a href="/tag/video.html">
+                <span class="label label-default">video</span></a>
             
-        <p>قسمت دوم ویدیو های آموزشی دوره LPIC1 موسسه لینوکس آکادمی..</p>
-        <hr />
+            <p>قسمت دوم ویدیو های آموزشی دوره LPIC1 موسسه لینوکس آکادمی..</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/lpic1-exam-101-Introduction-to-Exam.jpg" alt="دوره LPIC1 آزمون 101-2" class="img-post" />
+            </div>
+        </div>
       
-        <h3><a href="/2020-09-14/lpic1-exam-101-introduction.html" title="دوره LPIC1 آزمون 101-1">دوره LPIC1 آزمون 101-1</a></h3>
+        <div class="row-line">
+            <div class="col-md-8">
+            <h3><a href="/2020-09-14/lpic1-exam-101-introduction.html" title="دوره LPIC1 آزمون 101-1">دوره LPIC1 آزمون 101-1</a></h3>
             
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
+            <a href="/tag/linux.html">
+                <span class="label label-default">linux</span></a>
             
-                <a href="/tag/learn.html">
-                    <span class="label label-default">learn</span></a>
+            <a href="/tag/learn.html">
+                <span class="label label-default">learn</span></a>
             
-                <a href="/tag/lpic1.html">
-                    <span class="label label-default">lpic1</span></a>
+            <a href="/tag/lpic1.html">
+                <span class="label label-default">lpic1</span></a>
             
-                <a href="/tag/video.html">
-                    <span class="label label-default">video</span></a>
+            <a href="/tag/video.html">
+                <span class="label label-default">video</span></a>
             
-        <p>قسمت اول ویدیو های آموزشی دوره LPIC1 موسسه لینوکس آکادمی.</p>
-        <hr />
+            <p>قسمت اول ویدیو های آموزشی دوره LPIC1 موسسه لینوکس آکادمی.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/lpic1-exam-101-introduction.jpg" alt="دوره LPIC1 آزمون 101-1" class="img-post" />
+            </div>
+        </div>
       
+
+
       
               <ul class="pagination">
                 
@@ -379,6 +461,7 @@
                 
               </ul>
       
+    </div>
 
         </div>
         <div class="col-md-3">
