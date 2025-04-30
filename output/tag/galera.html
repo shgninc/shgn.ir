@@ -78,7 +78,7 @@
         border-left: 5px solid #6ce26c;
       }
     .panel-body {
-        padding: 10px 0;
+        margin-right: -20px;
     }
     .panel-body ul li{
         margin: 5px 0;
@@ -126,29 +126,48 @@
     }
 
     #back2Top {
-    width: 40px;
-    line-height: 40px;
-    overflow: hidden;
-    z-index: 999;
-    display: none;
-    cursor: pointer;
-    -moz-transform: rotate(270deg);
-    -webkit-transform: rotate(270deg);
-    -o-transform: rotate(270deg);
-    -ms-transform: rotate(270deg);
-    transform: rotate(270deg);
-    position: fixed;
-    bottom: 50px;
-    right: 0;
-    background-color: #DDD;
-    text-align: center;
-    font-size: 30px;
-    text-decoration: none;
+        width: 40px;
+        line-height: 40px;
+        overflow: hidden;
+        z-index: 999;
+        display: none;
+        cursor: pointer;
+        -moz-transform: rotate(270deg);
+        -webkit-transform: rotate(270deg);
+        -o-transform: rotate(270deg);
+        -ms-transform: rotate(270deg);
+        transform: rotate(270deg);
+        position: fixed;
+        bottom: 50px;
+        right: 0;
+        background-color: #DDD;
+        text-align: center;
+        font-size: 30px;
+        text-decoration: none;
     }
     #back2Top:hover {
         background-color: #DDF;
         color: #000;
     }
+    .box {
+        width: 200px;
+        height: 200px;
+        background-color: lightblue;
+        border: 2px solid black;
+        padding: 20px;
+        margin: 20px;
+    }
+    .row-line{
+        margin-bottom: 10px;
+        margin-top: 10px;
+        overflow: hidden;
+    }
+    .img-post{
+        width: 100%;
+        height: 100%;
+        border-radius:20px
+    }
+
     </style>
 </head>
 <body>
@@ -193,110 +212,143 @@
       <h2>پستهای تگ شده با  'galera'</h2>
       <p class="lead"></p>
     </div>
+    <div class="row">
       
-        <h3><a href="/2023-12-20/galera-cluster-by-docker.html" title="راه اندازی گلرا کلاستر با داکر">راه اندازی گلرا کلاستر با داکر</a></h3>
+        <div class="row-line">
+            <div class="col-md-9">
+            <h3><a href="/2023-12-20/galera-cluster-by-docker.html" title="راه اندازی گلرا کلاستر با داکر">راه اندازی گلرا کلاستر با داکر</a></h3>
             
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
+            <a href="/tag/linux.html">
+                <span class="label label-default">linux</span></a>
             
-                <a href="/tag/database.html">
-                    <span class="label label-default">database</span></a>
+            <a href="/tag/database.html">
+                <span class="label label-default">database</span></a>
             
-                <a href="/tag/mariadb.html">
-                    <span class="label label-default">mariadb</span></a>
+            <a href="/tag/mariadb.html">
+                <span class="label label-default">mariadb</span></a>
             
-                <a href="/tag/docker.html">
-                    <span class="label label-default">docker</span></a>
+            <a href="/tag/docker.html">
+                <span class="label label-default">docker</span></a>
             
-                <a href="/tag/galera.html">
-                    <span class="label label-default">galera</span></a>
+            <a href="/tag/galera.html">
+                <span class="label label-default">galera</span></a>
             
-                <a href="/tag/cluster.html">
-                    <span class="label label-default">cluster</span></a>
+            <a href="/tag/cluster.html">
+                <span class="label label-default">cluster</span></a>
             
-        <p>با فراگیر شدن کانتینرها برای سرویس های مختلف، یکی از ساده ترین و راحت ترین این برنامه ها برای کنترل و مدیریت کانتینرها `docker` می باشد.</p>
-        <hr />
+            <p>با فراگیر شدن کانتینرها برای سرویس های مختلف، یکی از ساده ترین و راحت ترین این برنامه ها برای کنترل و مدیریت کانتینرها `docker` می باشد.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/galera-cluster-by-docker.jpg" alt="راه اندازی گلرا کلاستر با داکر" class="img-post" />
+            </div>
+        </div>
       
-        <h3><a href="/2021-03-07/galera-cluster-debian-10.html" title="نصب Galera Cluster بر روی debian 10">نصب Galera Cluster بر روی debian 10</a></h3>
+        <div class="row-line">
+            <div class="col-md-9">
+            <h3><a href="/2021-03-07/galera-cluster-debian-10.html" title="نصب Galera Cluster بر روی debian 10">نصب Galera Cluster بر روی debian 10</a></h3>
             
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
+            <a href="/tag/linux.html">
+                <span class="label label-default">linux</span></a>
             
-                <a href="/tag/debian.html">
-                    <span class="label label-default">debian</span></a>
+            <a href="/tag/debian.html">
+                <span class="label label-default">debian</span></a>
             
-                <a href="/tag/galera.html">
-                    <span class="label label-default">galera</span></a>
+            <a href="/tag/galera.html">
+                <span class="label label-default">galera</span></a>
             
-                <a href="/tag/mariadb.html">
-                    <span class="label label-default">mariadb</span></a>
+            <a href="/tag/mariadb.html">
+                <span class="label label-default">mariadb</span></a>
             
-                <a href="/tag/cluster.html">
-                    <span class="label label-default">cluster</span></a>
+            <a href="/tag/cluster.html">
+                <span class="label label-default">cluster</span></a>
             
-        <p>یک برنامه کلاستر همزمان چند سرور Master-Master برمبنای replication همزمان می باشد.</p>
-        <hr />
+            <p>یک برنامه کلاستر همزمان چند سرور Master-Master برمبنای replication همزمان می باشد.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/galera-cluster-debian-10.jpg" alt="نصب Galera Cluster بر روی debian 10" class="img-post" />
+            </div>
+        </div>
       
-        <h3><a href="/2020-12-27/Recover-MariaDB-Galera-Cluster.html" title="چطور گلرا کلاستر خراب شده کامل یا ناقص را بازگردانی کنیم">چطور گلرا کلاستر خراب شده کامل یا ناقص را بازگردانی کنیم</a></h3>
+        <div class="row-line">
+            <div class="col-md-9">
+            <h3><a href="/2020-12-27/Recover-MariaDB-Galera-Cluster.html" title="چطور گلرا کلاستر خراب شده کامل یا ناقص را بازگردانی کنیم">چطور گلرا کلاستر خراب شده کامل یا ناقص را بازگردانی کنیم</a></h3>
             
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
+            <a href="/tag/linux.html">
+                <span class="label label-default">linux</span></a>
             
-                <a href="/tag/database.html">
-                    <span class="label label-default">database</span></a>
+            <a href="/tag/database.html">
+                <span class="label label-default">database</span></a>
             
-                <a href="/tag/galera.html">
-                    <span class="label label-default">galera</span></a>
+            <a href="/tag/galera.html">
+                <span class="label label-default">galera</span></a>
             
-                <a href="/tag/galera_cluster.html">
-                    <span class="label label-default">galera_cluster</span></a>
+            <a href="/tag/galera_cluster.html">
+                <span class="label label-default">galera_cluster</span></a>
             
-                <a href="/tag/mariadb.html">
-                    <span class="label label-default">mariadb</span></a>
+            <a href="/tag/mariadb.html">
+                <span class="label label-default">mariadb</span></a>
             
-                <a href="/tag/cluster.html">
-                    <span class="label label-default">cluster</span></a>
+            <a href="/tag/cluster.html">
+                <span class="label label-default">cluster</span></a>
             
-        <p>مشکل خرابی کلاستر گلرا در دیتابیس، مشکلی مرسوم و متداول می باشد، در این مطلب خیلی ساده روش های بازگرداندن کلاسترینگ را بیان خواهیم کرد.</p>
-        <hr />
+            <p>مشکل خرابی کلاستر گلرا در دیتابیس، مشکلی مرسوم و متداول می باشد، در این مطلب خیلی ساده روش های بازگرداندن کلاسترینگ را بیان خواهیم کرد.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/Recover-MariaDB-Galera-Cluster.jpg" alt="چطور گلرا کلاستر خراب شده کامل یا ناقص را بازگردانی کنیم" class="img-post" />
+            </div>
+        </div>
       
-        <h3><a href="/2018-07-18/migrate_from_mariadb_instace_to_galera_cluster.html" title="مهاجرت از دیتابیس mariadb به galera cluster">مهاجرت از دیتابیس mariadb به galera cluster</a></h3>
+        <div class="row-line">
+            <div class="col-md-9">
+            <h3><a href="/2018-07-18/migrate_from_mariadb_instace_to_galera_cluster.html" title="مهاجرت از دیتابیس mariadb به galera cluster">مهاجرت از دیتابیس mariadb به galera cluster</a></h3>
             
-                <a href="/tag/galera.html">
-                    <span class="label label-default">galera</span></a>
+            <a href="/tag/galera.html">
+                <span class="label label-default">galera</span></a>
             
-                <a href="/tag/galera_cluster.html">
-                    <span class="label label-default">galera_cluster</span></a>
+            <a href="/tag/galera_cluster.html">
+                <span class="label label-default">galera_cluster</span></a>
             
-                <a href="/tag/mariadb.html">
-                    <span class="label label-default">mariadb</span></a>
+            <a href="/tag/mariadb.html">
+                <span class="label label-default">mariadb</span></a>
             
-                <a href="/tag/database.html">
-                    <span class="label label-default">database</span></a>
+            <a href="/tag/database.html">
+                <span class="label label-default">database</span></a>
             
-        <p>در این نوشتار، مراحل مهاجرت از یک دیتابیس mariadb که حاوی اطلاعات می باشد، به کلاسترینگ galera بدون نیاز به ایجاد تغییرات زیاد، بیان شده است.</p>
-        <hr />
+            <p>در این نوشتار، مراحل مهاجرت از یک دیتابیس mariadb که حاوی اطلاعات می باشد، به کلاسترینگ galera بدون نیاز به ایجاد تغییرات زیاد، بیان شده است.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/migrate_from_mariadb_instace_to_galera_cluster.jpg" alt="مهاجرت از دیتابیس mariadb به galera cluster" class="img-post" />
+            </div>
+        </div>
       
-        <h3><a href="/2017-08-16/galera_cluster.html" title="نصب Galer Cluster بر روی debian8">نصب Galer Cluster بر روی debian8</a></h3>
+        <div class="row-line">
+            <div class="col-md-9">
+            <h3><a href="/2017-08-16/galera_cluster.html" title="نصب Galer Cluster بر روی debian8">نصب Galer Cluster بر روی debian8</a></h3>
             
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
+            <a href="/tag/linux.html">
+                <span class="label label-default">linux</span></a>
             
-                <a href="/tag/debian.html">
-                    <span class="label label-default">debian</span></a>
+            <a href="/tag/debian.html">
+                <span class="label label-default">debian</span></a>
             
-                <a href="/tag/galera.html">
-                    <span class="label label-default">galera</span></a>
+            <a href="/tag/galera.html">
+                <span class="label label-default">galera</span></a>
             
-                <a href="/tag/mariadb.html">
-                    <span class="label label-default">mariadb</span></a>
+            <a href="/tag/mariadb.html">
+                <span class="label label-default">mariadb</span></a>
             
-                <a href="/tag/cluster.html">
-                    <span class="label label-default">cluster</span></a>
+            <a href="/tag/cluster.html">
+                <span class="label label-default">cluster</span></a>
             
-        <p>یک برنامه کلاستر همزمان چند سرور Master-Master برمبنای replication همزمان می باشد.</p>
-        <hr />
+            <p>یک برنامه کلاستر همزمان چند سرور Master-Master برمبنای replication همزمان می باشد.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/galera_cluster.jpg" alt="نصب Galer Cluster بر روی debian8" class="img-post" />
+            </div>
+        </div>
       
+
+
       
               <ul class="pagination">
                 
@@ -306,6 +358,7 @@
                 
               </ul>
       
+    </div>
 
         </div>
         <div class="col-md-3">

@@ -78,7 +78,7 @@
         border-left: 5px solid #6ce26c;
       }
     .panel-body {
-        padding: 10px 0;
+        margin-right: -20px;
     }
     .panel-body ul li{
         margin: 5px 0;
@@ -126,29 +126,48 @@
     }
 
     #back2Top {
-    width: 40px;
-    line-height: 40px;
-    overflow: hidden;
-    z-index: 999;
-    display: none;
-    cursor: pointer;
-    -moz-transform: rotate(270deg);
-    -webkit-transform: rotate(270deg);
-    -o-transform: rotate(270deg);
-    -ms-transform: rotate(270deg);
-    transform: rotate(270deg);
-    position: fixed;
-    bottom: 50px;
-    right: 0;
-    background-color: #DDD;
-    text-align: center;
-    font-size: 30px;
-    text-decoration: none;
+        width: 40px;
+        line-height: 40px;
+        overflow: hidden;
+        z-index: 999;
+        display: none;
+        cursor: pointer;
+        -moz-transform: rotate(270deg);
+        -webkit-transform: rotate(270deg);
+        -o-transform: rotate(270deg);
+        -ms-transform: rotate(270deg);
+        transform: rotate(270deg);
+        position: fixed;
+        bottom: 50px;
+        right: 0;
+        background-color: #DDD;
+        text-align: center;
+        font-size: 30px;
+        text-decoration: none;
     }
     #back2Top:hover {
         background-color: #DDF;
         color: #000;
     }
+    .box {
+        width: 200px;
+        height: 200px;
+        background-color: lightblue;
+        border: 2px solid black;
+        padding: 20px;
+        margin: 20px;
+    }
+    .row-line{
+        margin-bottom: 10px;
+        margin-top: 10px;
+        overflow: hidden;
+    }
+    .img-post{
+        width: 100%;
+        height: 100%;
+        border-radius:20px
+    }
+
     </style>
 </head>
 <body>
@@ -193,166 +212,223 @@
       <h2>پستهای تگ شده با  'mysql'</h2>
       <p class="lead"></p>
     </div>
+    <div class="row">
       
-        <h3><a href="/2024-10-12/survey-mysql-migration-to-mariadb.html" title="مهاجرت از mysql به mariadb">مهاجرت از mysql به mariadb</a></h3>
+        <div class="row-line">
+            <div class="col-md-9">
+            <h3><a href="/2024-10-12/survey-mysql-migration-to-mariadb.html" title="مهاجرت از mysql به mariadb">مهاجرت از mysql به mariadb</a></h3>
             
-                <a href="/tag/database.html">
-                    <span class="label label-default">database</span></a>
+            <a href="/tag/database.html">
+                <span class="label label-default">database</span></a>
             
-                <a href="/tag/mariadb.html">
-                    <span class="label label-default">mariadb</span></a>
+            <a href="/tag/mariadb.html">
+                <span class="label label-default">mariadb</span></a>
             
-                <a href="/tag/mysql.html">
-                    <span class="label label-default">mysql</span></a>
+            <a href="/tag/mysql.html">
+                <span class="label label-default">mysql</span></a>
             
-                <a href="/tag/backup.html">
-                    <span class="label label-default">backup</span></a>
+            <a href="/tag/backup.html">
+                <span class="label label-default">backup</span></a>
             
-        <p>انتقال یک دیتابیس حجیم از mysql به mariadb</p>
-        <hr />
+            <p>انتقال یک دیتابیس حجیم از mysql به mariadb</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/survey-mysql-migration-to-mariadb.jpg" alt="مهاجرت از mysql به mariadb" class="img-post" />
+            </div>
+        </div>
       
-        <h3><a href="/2024-07-25/change-mysql-mariadb-root-password.html" title="تغییر کلمه عبور کاربر root در mysql/mariadb">تغییر کلمه عبور کاربر root در mysql/mariadb</a></h3>
+        <div class="row-line">
+            <div class="col-md-9">
+            <h3><a href="/2024-07-25/change-mysql-mariadb-root-password.html" title="تغییر کلمه عبور کاربر root در mysql/mariadb">تغییر کلمه عبور کاربر root در mysql/mariadb</a></h3>
             
-                <a href="/tag/database.html">
-                    <span class="label label-default">database</span></a>
+            <a href="/tag/database.html">
+                <span class="label label-default">database</span></a>
             
-                <a href="/tag/mariadb.html">
-                    <span class="label label-default">mariadb</span></a>
+            <a href="/tag/mariadb.html">
+                <span class="label label-default">mariadb</span></a>
             
-                <a href="/tag/mysql.html">
-                    <span class="label label-default">mysql</span></a>
+            <a href="/tag/mysql.html">
+                <span class="label label-default">mysql</span></a>
             
-                <a href="/tag/tips.html">
-                    <span class="label label-default">tips</span></a>
+            <a href="/tag/tips.html">
+                <span class="label label-default">tips</span></a>
             
-        <p>گاهی ممکن لازم باشه تا کلمه عبور کاربر root دیتابیس را بخواهیم تغییر بدیم.</p>
-        <hr />
+            <p>گاهی ممکن لازم باشه تا کلمه عبور کاربر root دیتابیس را بخواهیم تغییر بدیم.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/change-mysql-mariadb-root-password.jpg" alt="تغییر کلمه عبور کاربر root در mysql/mariadb" class="img-post" />
+            </div>
+        </div>
       
-        <h3><a href="/2024-04-14/mysql-master-slave-replication.html" title="راه اندازی Mysql/Mariadb Slave Replication">راه اندازی Mysql/Mariadb Slave Replication</a></h3>
+        <div class="row-line">
+            <div class="col-md-9">
+            <h3><a href="/2024-04-14/mysql-master-slave-replication.html" title="راه اندازی Mysql/Mariadb Slave Replication">راه اندازی Mysql/Mariadb Slave Replication</a></h3>
             
-                <a href="/tag/database.html">
-                    <span class="label label-default">database</span></a>
+            <a href="/tag/database.html">
+                <span class="label label-default">database</span></a>
             
-                <a href="/tag/mariadb.html">
-                    <span class="label label-default">mariadb</span></a>
+            <a href="/tag/mariadb.html">
+                <span class="label label-default">mariadb</span></a>
             
-                <a href="/tag/mysql.html">
-                    <span class="label label-default">mysql</span></a>
+            <a href="/tag/mysql.html">
+                <span class="label label-default">mysql</span></a>
             
-                <a href="/tag/replication.html">
-                    <span class="label label-default">replication</span></a>
+            <a href="/tag/replication.html">
+                <span class="label label-default">replication</span></a>
             
-        <p>یکی از روش های راه اندازی رپلیکیشن در دیتابیس ها master/slave است</p>
-        <hr />
+            <p>یکی از روش های راه اندازی رپلیکیشن در دیتابیس ها master/slave است</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/mysql-master-slave-replication.jpg" alt="راه اندازی Mysql/Mariadb Slave Replication" class="img-post" />
+            </div>
+        </div>
       
-        <h3><a href="/2023-12-16/mydumper-myloader.html" title="آشنایی با mydumper/myloader">آشنایی با mydumper/myloader</a></h3>
+        <div class="row-line">
+            <div class="col-md-9">
+            <h3><a href="/2023-12-16/mydumper-myloader.html" title="آشنایی با mydumper/myloader">آشنایی با mydumper/myloader</a></h3>
             
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
+            <a href="/tag/linux.html">
+                <span class="label label-default">linux</span></a>
             
-                <a href="/tag/database.html">
-                    <span class="label label-default">database</span></a>
+            <a href="/tag/database.html">
+                <span class="label label-default">database</span></a>
             
-                <a href="/tag/mariadb.html">
-                    <span class="label label-default">mariadb</span></a>
+            <a href="/tag/mariadb.html">
+                <span class="label label-default">mariadb</span></a>
             
-                <a href="/tag/mysql.html">
-                    <span class="label label-default">mysql</span></a>
+            <a href="/tag/mysql.html">
+                <span class="label label-default">mysql</span></a>
             
-                <a href="/tag/tips.html">
-                    <span class="label label-default">tips</span></a>
+            <a href="/tag/tips.html">
+                <span class="label label-default">tips</span></a>
             
-        <p>در حوزه پشتیبان گیری از دیتابیس ها به ویژه دیتابیس mysql/mariadb مرسوم ترین و معروف ترین برنامه پشتیبان گیری، mysqldump می باشد که به شدت در این زمینه قدرتمند و دقیق عمل می کند.</p>
-        <hr />
+            <p>در حوزه پشتیبان گیری از دیتابیس ها به ویژه دیتابیس mysql/mariadb مرسوم ترین و معروف ترین برنامه پشتیبان گیری، mysqldump می باشد که به شدت در این زمینه قدرتمند و دقیق عمل می کند.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/mydumper-myloader.jpg" alt="آشنایی با mydumper/myloader" class="img-post" />
+            </div>
+        </div>
       
-        <h3><a href="/2018-10-06/mysql-recovery-ibd.html" title="بازیابی جداول دیتابیس از فایل های .frm و .ibd در MySql و Mariadb">بازیابی جداول دیتابیس از فایل های .frm و .ibd در MySql و Mariadb</a></h3>
+        <div class="row-line">
+            <div class="col-md-9">
+            <h3><a href="/2018-10-06/mysql-recovery-ibd.html" title="بازیابی جداول دیتابیس از فایل های .frm و .ibd در MySql و Mariadb">بازیابی جداول دیتابیس از فایل های .frm و .ibd در MySql و Mariadb</a></h3>
             
-                <a href="/tag/mariadb.html">
-                    <span class="label label-default">mariadb</span></a>
+            <a href="/tag/mariadb.html">
+                <span class="label label-default">mariadb</span></a>
             
-                <a href="/tag/mysql.html">
-                    <span class="label label-default">mysql</span></a>
+            <a href="/tag/mysql.html">
+                <span class="label label-default">mysql</span></a>
             
-                <a href="/tag/database.html">
-                    <span class="label label-default">database</span></a>
+            <a href="/tag/database.html">
+                <span class="label label-default">database</span></a>
             
-                <a href="/tag/recovery.html">
-                    <span class="label label-default">recovery</span></a>
+            <a href="/tag/recovery.html">
+                <span class="label label-default">recovery</span></a>
             
-        <p></p>
-        <hr />
+            <p></p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/mysql-recovery-ibd.jpg" alt="بازیابی جداول دیتابیس از فایل های .frm و .ibd در MySql و Mariadb" class="img-post" />
+            </div>
+        </div>
       
-        <h3><a href="/2018-09-05/Mysql-JSON-DataType.html" title="معرفی نوع داده JSON در دیتابیس Mysql-Mariadb">معرفی نوع داده JSON در دیتابیس Mysql-Mariadb</a></h3>
+        <div class="row-line">
+            <div class="col-md-9">
+            <h3><a href="/2018-09-05/Mysql-JSON-DataType.html" title="معرفی نوع داده JSON در دیتابیس Mysql-Mariadb">معرفی نوع داده JSON در دیتابیس Mysql-Mariadb</a></h3>
             
-                <a href="/tag/mysql.html">
-                    <span class="label label-default">mysql</span></a>
+            <a href="/tag/mysql.html">
+                <span class="label label-default">mysql</span></a>
             
-                <a href="/tag/mariadb.html">
-                    <span class="label label-default">mariadb</span></a>
+            <a href="/tag/mariadb.html">
+                <span class="label label-default">mariadb</span></a>
             
-                <a href="/tag/database.html">
-                    <span class="label label-default">database</span></a>
+            <a href="/tag/database.html">
+                <span class="label label-default">database</span></a>
             
-                <a href="/tag/json.html">
-                    <span class="label label-default">json</span></a>
+            <a href="/tag/json.html">
+                <span class="label label-default">json</span></a>
             
-                <a href="/tag/sql.html">
-                    <span class="label label-default">sql</span></a>
+            <a href="/tag/sql.html">
+                <span class="label label-default">sql</span></a>
             
-                <a href="/tag/noSql.html">
-                    <span class="label label-default">noSql</span></a>
+            <a href="/tag/noSql.html">
+                <span class="label label-default">noSql</span></a>
             
-        <p>این نوع داده بر اساس استاندارد RFC 7159 بوده و به صورت یک رشته با قالب JSON قابل ذخیره سازی می باشد.</p>
-        <hr />
+            <p>این نوع داده بر اساس استاندارد RFC 7159 بوده و به صورت یک رشته با قالب JSON قابل ذخیره سازی می باشد.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/Mysql-JSON-DataType.jpg" alt="معرفی نوع داده JSON در دیتابیس Mysql-Mariadb" class="img-post" />
+            </div>
+        </div>
       
-        <h3><a href="/2018-05-05/Configuring-MySQL-Memory-Usage.html" title="تنظیم بهینه Mysql برای استفاده از حافظه">تنظیم بهینه Mysql برای استفاده از حافظه</a></h3>
+        <div class="row-line">
+            <div class="col-md-9">
+            <h3><a href="/2018-05-05/Configuring-MySQL-Memory-Usage.html" title="تنظیم بهینه Mysql برای استفاده از حافظه">تنظیم بهینه Mysql برای استفاده از حافظه</a></h3>
             
-                <a href="/tag/mysql.html">
-                    <span class="label label-default">mysql</span></a>
+            <a href="/tag/mysql.html">
+                <span class="label label-default">mysql</span></a>
             
-                <a href="/tag/database.html">
-                    <span class="label label-default">database</span></a>
+            <a href="/tag/database.html">
+                <span class="label label-default">database</span></a>
             
-                <a href="/tag/optimization.html">
-                    <span class="label label-default">optimization</span></a>
+            <a href="/tag/optimization.html">
+                <span class="label label-default">optimization</span></a>
             
-        <p>ارائه برخی راهکارهای انجام تنظیمات دیتابیس `Mysql` برای استفاده از حافظه به صورت بهینه مطرح می گردد.</p>
-        <hr />
+            <p>ارائه برخی راهکارهای انجام تنظیمات دیتابیس `Mysql` برای استفاده از حافظه به صورت بهینه مطرح می گردد.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/Configuring-MySQL-Memory-Usage.jpg" alt="تنظیم بهینه Mysql برای استفاده از حافظه" class="img-post" />
+            </div>
+        </div>
       
-        <h3><a href="/2012-11-30/create_mysql_stored_procedures2.html" title="نحوه ایجاد یک Stored Procedures در MySQL5- بخش دوم">نحوه ایجاد یک Stored Procedures در MySQL5- بخش دوم</a></h3>
+        <div class="row-line">
+            <div class="col-md-9">
+            <h3><a href="/2012-11-30/create_mysql_stored_procedures2.html" title="نحوه ایجاد یک Stored Procedures در MySQL5- بخش دوم">نحوه ایجاد یک Stored Procedures در MySQL5- بخش دوم</a></h3>
             
-                <a href="/tag/database.html">
-                    <span class="label label-default">database</span></a>
+            <a href="/tag/database.html">
+                <span class="label label-default">database</span></a>
             
-                <a href="/tag/sql.html">
-                    <span class="label label-default">sql</span></a>
+            <a href="/tag/sql.html">
+                <span class="label label-default">sql</span></a>
             
-                <a href="/tag/mysql.html">
-                    <span class="label label-default">mysql</span></a>
+            <a href="/tag/mysql.html">
+                <span class="label label-default">mysql</span></a>
             
-                <a href="/tag/stored_procedure.html">
-                    <span class="label label-default">stored_procedure</span></a>
+            <a href="/tag/stored_procedure.html">
+                <span class="label label-default">stored_procedure</span></a>
             
-        <p>یک روشی که خیلی مورد پسند بنده واقع شده، روشی است که در آن با استفاده از استور پروسیجرها کار هایم با دیتابیس را انجام می دهم. استور پروسیجر ها امکانی است که برخی نرم افزارهای مدیریت پایگاه داده ها آن را حمایت کرده و برخی خیر. از جلمه این پایگاه داده ها می توان از `MySQL، MSSQL` و... نام برد.</p>
-        <hr />
+            <p>یک روشی که خیلی مورد پسند بنده واقع شده، روشی است که در آن با استفاده از استور پروسیجرها کار هایم با دیتابیس را انجام می دهم. استور پروسیجر ها امکانی است که برخی نرم افزارهای مدیریت پایگاه داده ها آن را حمایت کرده و برخی خیر. از جلمه این پایگاه داده ها می توان از `MySQL، MSSQL` و... نام برد.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/create_mysql_stored_procedures2.jpg" alt="نحوه ایجاد یک Stored Procedures در MySQL5- بخش دوم" class="img-post" />
+            </div>
+        </div>
       
-        <h3><a href="/2012-11-28/create_mysql_stored_procedures1.html" title="نحوه ایجاد یک Stored Procedures در MySQL5- بخش اول">نحوه ایجاد یک Stored Procedures در MySQL5- بخش اول</a></h3>
+        <div class="row-line">
+            <div class="col-md-9">
+            <h3><a href="/2012-11-28/create_mysql_stored_procedures1.html" title="نحوه ایجاد یک Stored Procedures در MySQL5- بخش اول">نحوه ایجاد یک Stored Procedures در MySQL5- بخش اول</a></h3>
             
-                <a href="/tag/database.html">
-                    <span class="label label-default">database</span></a>
+            <a href="/tag/database.html">
+                <span class="label label-default">database</span></a>
             
-                <a href="/tag/sql.html">
-                    <span class="label label-default">sql</span></a>
+            <a href="/tag/sql.html">
+                <span class="label label-default">sql</span></a>
             
-                <a href="/tag/mysql.html">
-                    <span class="label label-default">mysql</span></a>
+            <a href="/tag/mysql.html">
+                <span class="label label-default">mysql</span></a>
             
-                <a href="/tag/stored_procedure.html">
-                    <span class="label label-default">stored_procedure</span></a>
+            <a href="/tag/stored_procedure.html">
+                <span class="label label-default">stored_procedure</span></a>
             
-        <p>یک روشی که خیلی مورد پسند بنده واقع شده، روشی است که در آن با استفاده از استور پروسیجرها کار هایم با دیتابیس را انجام می دهم. استور پروسیجر ها امکانی است که برخی نرم افزارهای مدیریت پایگاه داده ها آن را حمایت کرده و برخی خیر. از جلمه این پایگاه داده ها می توان از `MySQL، MSSQL` و... نام برد.</p>
-        <hr />
+            <p>یک روشی که خیلی مورد پسند بنده واقع شده، روشی است که در آن با استفاده از استور پروسیجرها کار هایم با دیتابیس را انجام می دهم. استور پروسیجر ها امکانی است که برخی نرم افزارهای مدیریت پایگاه داده ها آن را حمایت کرده و برخی خیر. از جلمه این پایگاه داده ها می توان از `MySQL، MSSQL` و... نام برد.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/create_mysql_stored_procedures1.jpg" alt="نحوه ایجاد یک Stored Procedures در MySQL5- بخش اول" class="img-post" />
+            </div>
+        </div>
       
+
+
       
               <ul class="pagination">
                 
@@ -362,6 +438,7 @@
                 
               </ul>
       
+    </div>
 
         </div>
         <div class="col-md-3">

@@ -14,6 +14,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="https://shgn.ir/images/favicon.ico">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title> دست نوشته های یک تازه کار - دست نوشته های یک تازه کار </title>
     <meta name="description"
@@ -21,6 +22,7 @@
     <meta name="keywords"
           content="لینوکس،لینوکس مشهد،آموزش,پایتون,پایتون مشهد,آموزش لینوکس,دیتابیس,آموزش دیتابیس,برنامه نویسی,linux,database,mysql,mariadb,datamart,galera cluster,apache,big data,dataware house,cluster,galera,percona,python,php,tutorial,debian,ubuntu,centos,arch linux,mashhad linux,iran linux,debian mashhad,"/>
 
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
           integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
@@ -37,27 +39,60 @@
     <style>
     body {
       direction: rtl;
+      font-family: Vazirmatn, sans-serif;
+      background-color: rgba(226,232,240,.8)
     }
     p {
         font-size: 1.3em;
         line-height: 1.5em;
         text-align: justify;
       }
+    p img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .header {
+        margin-top: 150px;
+        text-align: center;
+    }
+    .header h1{
+        text-align: center;
+        font-size: 50px;
+        margin: 0;
+        font-family: 'Inter';
+    }
+    .counter-box {
+      width: 350px;
+    }
+    .counter-box h2 {
+      font-size: 60px;
+      margin-right: 90px;
+    }
+    .counter-box p{
+        text-align: center;
+      font-family: arial;
+    }
     pre {
         direction: ltr;
         border-left: 5px solid #6ce26c;
       }
+    .panel-body {
+        margin-right: -20px;
+    }
     .panel-body ul li{
-        margin: 10px 0;
+        margin: 5px 0;
     }
     a {
         color: #4608ad;
       }
     .panel-group .panel {
         margin-bottom: 5px;
+        border-radius: 1.1rem
     }
     .panel-primary > .panel-heading {
         background-color: #4608ad;
+        border-radius: 1.1rem
     }
     .navbar-default {
         background-color: #4608ad;
@@ -91,30 +126,47 @@
     }
 
     #back2Top {
-    width: 40px;
-    line-height: 40px;
-    overflow: hidden;
-    z-index: 999;
-    display: none;
-    cursor: pointer;
-    -moz-transform: rotate(270deg);
-    -webkit-transform: rotate(270deg);
-    -o-transform: rotate(270deg);
-    -ms-transform: rotate(270deg);
-    transform: rotate(270deg);
-    position: fixed;
-    bottom: 50px;
-    right: 0;
-    background-color: #DDD;
-    text-align: center;
-    font-size: 30px;
-    text-decoration: none;
+        width: 40px;
+        line-height: 40px;
+        overflow: hidden;
+        z-index: 999;
+        display: none;
+        cursor: pointer;
+        -moz-transform: rotate(270deg);
+        -webkit-transform: rotate(270deg);
+        -o-transform: rotate(270deg);
+        -ms-transform: rotate(270deg);
+        transform: rotate(270deg);
+        position: fixed;
+        bottom: 50px;
+        right: 0;
+        background-color: #DDD;
+        text-align: center;
+        font-size: 30px;
+        text-decoration: none;
     }
     #back2Top:hover {
         background-color: #DDF;
         color: #000;
     }
-
+    .box {
+        width: 200px;
+        height: 200px;
+        background-color: lightblue;
+        border: 2px solid black;
+        padding: 20px;
+        margin: 20px;
+    }
+    .row-line{
+        margin-bottom: 10px;
+        margin-top: 10px;
+        overflow: hidden;
+    }
+    .img-post{
+        width: 100%;
+        height: 100%;
+        border-radius:20px
+    }
 
     </style>
 </head>
@@ -160,75 +212,283 @@
       <h2>دست نوشته های یک تازه کار</h2>
       <p class="lead"></p>
     </div>
+    <div class="row">
       
-        <h3><a href="/2012-12-31/Desktop_capture_in_ubuntu.html" title="بهترین نرم افزارها برای ضبط صفحه در اوبونتو">بهترین نرم افزارها برای ضبط صفحه در اوبونتو</a></h3>
+        <div class="row-line">
+            <div class="col-md-9">
+            <h3><a href="/2017-08-16/galera_cluster.html" title="نصب Galer Cluster بر روی debian8">نصب Galer Cluster بر روی debian8</a></h3>
             
-                <a href="/tag/gnome.html">
-                    <span class="label label-default">gnome</span></a>
+            <a href="/tag/linux.html">
+                <span class="label label-default">linux</span></a>
             
-                <a href="/tag/KDE.html">
-                    <span class="label label-default">KDE</span></a>
+            <a href="/tag/debian.html">
+                <span class="label label-default">debian</span></a>
             
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
+            <a href="/tag/galera.html">
+                <span class="label label-default">galera</span></a>
             
-                <a href="/tag/ubuntu.html">
-                    <span class="label label-default">ubuntu</span></a>
+            <a href="/tag/mariadb.html">
+                <span class="label label-default">mariadb</span></a>
             
-                <a href="/tag/GNU.html">
-                    <span class="label label-default">GNU</span></a>
+            <a href="/tag/cluster.html">
+                <span class="label label-default">cluster</span></a>
             
-        <p>سیستم عامل اوبونتو دارای نرم افزارهای ضبط صفحه زیادی برای تصویر برداری از صفحه دسکتاپ دارد. بعضی از محبوبترین های آنها عبارتند از: xvidcap, Tibesti, RecordMyDesktop, Kazam و... . از این نرم افزارها جهت ایجاد مطالب آموزشی استفاده می گردد، پس ضبط این گونه تصاویر نباید به کندی و با اعوجاج و البته در حالت با کیفیت تصویر بالا HD صورت پذیرد.</p>
-        <hr />
+            <p>یک برنامه کلاستر همزمان چند سرور Master-Master برمبنای replication همزمان می باشد.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/galera_cluster.jpg" alt="نصب Galer Cluster بر روی debian8" class="img-post" />
+            </div>
+        </div>
       
-        <h3><a href="/2012-12-02/download_MMS_Files_ubuntu.html" title="نحوه دانلود فایل با پروتکل mms در ubuntu">نحوه دانلود فایل با پروتکل mms در ubuntu</a></h3>
+        <div class="row-line">
+            <div class="col-md-9">
+            <h3><a href="/2013-04-03/live_remove_linux_kernel.html" title="حذف کرنل لینوکس با دیسک زنده">حذف کرنل لینوکس با دیسک زنده</a></h3>
             
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
+            <a href="/tag/linux.html">
+                <span class="label label-default">linux</span></a>
             
-                <a href="/tag/ubuntu.html">
-                    <span class="label label-default">ubuntu</span></a>
+            <a href="/tag/kernel.html">
+                <span class="label label-default">kernel</span></a>
             
-                <a href="/tag/video.html">
-                    <span class="label label-default">video</span></a>
+            <a href="/tag/live.html">
+                <span class="label label-default">live</span></a>
             
-        <p>در سایت ها نوعی پروتکل به نام `MMS` وجود دارد که عمدتا فایلهای چند رسانه ای فیلم را ارائه می کنند. برای دانلود این نوع فایل ها، به جای تماشای آن فیلمها به صورت `on-line`، باید از طریق نرم افزارها یا ابزار خاصی استفاده شود تا بتوان این فیلمها را به صورت `off-line` و در سیستم خانگی خود تماشا نمود.</p>
-        <hr />
+            <a href="/tag/ubuntu.html">
+                <span class="label label-default">ubuntu</span></a>
+            
+            <p>در این پست یک تجربه که نحوه برگرداندن ubuntu می باشد، ارائه شده است.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/live_remove_linux_kernel.jpg" alt="حذف کرنل لینوکس با دیسک زنده" class="img-post" />
+            </div>
+        </div>
       
-        <h3><a href="/2012-11-30/create_mysql_stored_procedures2.html" title="نحوه ایجاد یک Stored Procedures در MySQL5- بخش دوم">نحوه ایجاد یک Stored Procedures در MySQL5- بخش دوم</a></h3>
+        <div class="row-line">
+            <div class="col-md-9">
+            <h3><a href="/2013-03-29/php_mail.html" title="طریقه ارسال ایمیل با PHP">طریقه ارسال ایمیل با PHP</a></h3>
             
-                <a href="/tag/database.html">
-                    <span class="label label-default">database</span></a>
+            <a href="/tag/php.html">
+                <span class="label label-default">php</span></a>
             
-                <a href="/tag/sql.html">
-                    <span class="label label-default">sql</span></a>
+            <a href="/tag/email.html">
+                <span class="label label-default">email</span></a>
             
-                <a href="/tag/mysql.html">
-                    <span class="label label-default">mysql</span></a>
-            
-                <a href="/tag/stored_procedure.html">
-                    <span class="label label-default">stored_procedure</span></a>
-            
-        <p>یک روشی که خیلی مورد پسند بنده واقع شده، روشی است که در آن با استفاده از استور پروسیجرها کار هایم با دیتابیس را انجام می دهم. استور پروسیجر ها امکانی است که برخی نرم افزارهای مدیریت پایگاه داده ها آن را حمایت کرده و برخی خیر. از جلمه این پایگاه داده ها می توان از `MySQL، MSSQL` و... نام برد.</p>
-        <hr />
+            <p>یکی از قابلیت ها و امکانات زبان برنامه نویسی PHP، امکان ارسال رایانامه به راحتی با آن است.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/php_mail.jpg" alt="طریقه ارسال ایمیل با PHP" class="img-post" />
+            </div>
+        </div>
       
-        <h3><a href="/2012-11-28/create_mysql_stored_procedures1.html" title="نحوه ایجاد یک Stored Procedures در MySQL5- بخش اول">نحوه ایجاد یک Stored Procedures در MySQL5- بخش اول</a></h3>
+        <div class="row-line">
+            <div class="col-md-9">
+            <h3><a href="/2013-03-23/update_ubuntu_offline.html" title="به روز رسانی برنامه ها در ابونتو به صورت off-line">به روز رسانی برنامه ها در ابونتو به صورت off-line</a></h3>
             
-                <a href="/tag/database.html">
-                    <span class="label label-default">database</span></a>
+            <a href="/tag/ubuntu.html">
+                <span class="label label-default">ubuntu</span></a>
             
-                <a href="/tag/sql.html">
-                    <span class="label label-default">sql</span></a>
+            <a href="/tag/linux.html">
+                <span class="label label-default">linux</span></a>
             
-                <a href="/tag/mysql.html">
-                    <span class="label label-default">mysql</span></a>
+            <a href="/tag/apt.html">
+                <span class="label label-default">apt</span></a>
             
-                <a href="/tag/stored_procedure.html">
-                    <span class="label label-default">stored_procedure</span></a>
-            
-        <p>یک روشی که خیلی مورد پسند بنده واقع شده، روشی است که در آن با استفاده از استور پروسیجرها کار هایم با دیتابیس را انجام می دهم. استور پروسیجر ها امکانی است که برخی نرم افزارهای مدیریت پایگاه داده ها آن را حمایت کرده و برخی خیر. از جلمه این پایگاه داده ها می توان از `MySQL، MSSQL` و... نام برد.</p>
-        <hr />
+            <p>تا به حال شده که به خاطر تعدد دفعات update بسته های ubuntu (ماهی چند نوبت)، حجم حساب اینترنتی شما تمام شده باشد؟</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/update_ubuntu_offline.jpg" alt="به روز رسانی برنامه ها در ابونتو به صورت off-line" class="img-post" />
+            </div>
+        </div>
       
+        <div class="row-line">
+            <div class="col-md-9">
+            <h3><a href="/2013-03-19/mount_iso.html" title="بار گذاری یک فایل iso در لینوکس">بار گذاری یک فایل iso در لینوکس</a></h3>
+            
+            <a href="/tag/image.html">
+                <span class="label label-default">image</span></a>
+            
+            <a href="/tag/iso.html">
+                <span class="label label-default">iso</span></a>
+            
+            <a href="/tag/mount.html">
+                <span class="label label-default">mount</span></a>
+            
+            <a href="/tag/linux.html">
+                <span class="label label-default">linux</span></a>
+            
+            <a href="/tag/shell.html">
+                <span class="label label-default">shell</span></a>
+            
+            <p>فایلهای `iso.` نوعی فایل فشرده هستند که معمولا اطلاعات داخل یک `cd` یا `dvd` را به این صورت تبدیل می کنند تا بتوانند آن را با حفظ ساختار `cd` یا `dvd` اش با استفاده از حافظه های جانبی یا درون شبکه منتقل و از آن اطلاعات استفاده کنند.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/mount_iso.jpg" alt="بار گذاری یک فایل iso در لینوکس" class="img-post" />
+            </div>
+        </div>
+      
+        <div class="row-line">
+            <div class="col-md-9">
+            <h3><a href="/2013-03-02/downloadManager_for_ubuntu.html" title="معرفی برنامه مدیریت دانلود برای اوبونتو">معرفی برنامه مدیریت دانلود برای اوبونتو</a></h3>
+            
+            <a href="/tag/terminal.html">
+                <span class="label label-default">terminal</span></a>
+            
+            <a href="/tag/opensource.html">
+                <span class="label label-default">opensource</span></a>
+            
+            <a href="/tag/gtk.html">
+                <span class="label label-default">gtk</span></a>
+            
+            <a href="/tag/download.html">
+                <span class="label label-default">download</span></a>
+            
+            <a href="/tag/ubuntu.html">
+                <span class="label label-default">ubuntu</span></a>
+            
+            <a href="/tag/linux.html">
+                <span class="label label-default">linux</span></a>
+            
+            <p>یک برنامه ساده مدیریت دانلود براساس GTK+ در گنوم به نام steadyflow می باشد..</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/downloadManager_for_ubuntu.jpg" alt="معرفی برنامه مدیریت دانلود برای اوبونتو" class="img-post" />
+            </div>
+        </div>
+      
+        <div class="row-line">
+            <div class="col-md-9">
+            <h3><a href="/2013-01-20/HyperTem_linux_alternative.html" title="نرم افزاری معادل Microsoft HyperTerminal در linux">نرم افزاری معادل Microsoft HyperTerminal در linux</a></h3>
+            
+            <a href="/tag/microsoft.html">
+                <span class="label label-default">microsoft</span></a>
+            
+            <a href="/tag/linux.html">
+                <span class="label label-default">linux</span></a>
+            
+            <a href="/tag/windows.html">
+                <span class="label label-default">windows</span></a>
+            
+            <a href="/tag/terminal.html">
+                <span class="label label-default">terminal</span></a>
+            
+            <p>از جمله نرم افزارهایی که در اوبونتو می تواند به جای برنامه `Microsoft HyperTerminal` برای کا با پورتهای سریال به کار رود نرم افزار `GTKTerm` می باشد.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/HyperTem_linux_alternative.jpg" alt="نرم افزاری معادل Microsoft HyperTerminal در linux" class="img-post" />
+            </div>
+        </div>
+      
+        <div class="row-line">
+            <div class="col-md-9">
+            <h3><a href="/2013-01-15/install_marlin_ubunto.html" title="نصب نرم افزار Marlin در اوبونتو">نصب نرم افزار Marlin در اوبونتو</a></h3>
+            
+            <a href="/tag/ubuntu.html">
+                <span class="label label-default">ubuntu</span></a>
+            
+            <a href="/tag/linux.html">
+                <span class="label label-default">linux</span></a>
+            
+            <a href="/tag/nautilus.html">
+                <span class="label label-default">nautilus</span></a>
+            
+            <p>marlinبرنامه مدیریت و مرور فایلها و شاخه ها که به عنوان جایگزین برنامه  Nautilus در دسکتاپ گنوم می توان نصب نمود.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/install_marlin_ubunto.jpg" alt="نصب نرم افزار Marlin در اوبونتو" class="img-post" />
+            </div>
+        </div>
+      
+        <div class="row-line">
+            <div class="col-md-9">
+            <h3><a href="/2013-01-06/using_PDO_in_PHP.html" title="استفاده از PDO برای ارتباط با دیتابیس در PHP">استفاده از PDO برای ارتباط با دیتابیس در PHP</a></h3>
+            
+            <a href="/tag/php.html">
+                <span class="label label-default">php</span></a>
+            
+            <a href="/tag/pdo.html">
+                <span class="label label-default">pdo</span></a>
+            
+            <a href="/tag/database.html">
+                <span class="label label-default">database</span></a>
+            
+            <p>بسیاری از برنامه نویسیان که کار با `PHP` را تازه شروع کرده اند، معمولا برای ارتباط با دیتابیس از اکستنشن های `MySQL` یا `MySQLi` استفاده کنند. شئ داده `PHP` معروف به `PDO` متدهایی را برای آماده سازی دستورات و کار با اشیایی که شما را به مراتب بیشتر درگیر می کنند، ارائه کرده است.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/using_PDO_in_PHP.jpg" alt="استفاده از PDO برای ارتباط با دیتابیس در PHP" class="img-post" />
+            </div>
+        </div>
+      
+        <div class="row-line">
+            <div class="col-md-9">
+            <h3><a href="/2012-12-31/Desktop_capture_in_ubuntu.html" title="بهترین نرم افزارها برای ضبط صفحه در اوبونتو">بهترین نرم افزارها برای ضبط صفحه در اوبونتو</a></h3>
+            
+            <a href="/tag/gnome.html">
+                <span class="label label-default">gnome</span></a>
+            
+            <a href="/tag/KDE.html">
+                <span class="label label-default">KDE</span></a>
+            
+            <a href="/tag/linux.html">
+                <span class="label label-default">linux</span></a>
+            
+            <a href="/tag/ubuntu.html">
+                <span class="label label-default">ubuntu</span></a>
+            
+            <a href="/tag/GNU.html">
+                <span class="label label-default">GNU</span></a>
+            
+            <p>سیستم عامل اوبونتو دارای نرم افزارهای ضبط صفحه زیادی برای تصویر برداری از صفحه دسکتاپ دارد. بعضی از محبوبترین های آنها عبارتند از: xvidcap, Tibesti, RecordMyDesktop, Kazam و... . از این نرم افزارها جهت ایجاد مطالب آموزشی استفاده می گردد، پس ضبط این گونه تصاویر نباید به کندی و با اعوجاج و البته در حالت با کیفیت تصویر بالا HD صورت پذیرد.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/Desktop_capture_in_ubuntu.jpg" alt="بهترین نرم افزارها برای ضبط صفحه در اوبونتو" class="img-post" />
+            </div>
+        </div>
+      
+        <div class="row-line">
+            <div class="col-md-9">
+            <h3><a href="/2012-12-02/download_MMS_Files_ubuntu.html" title="نحوه دانلود فایل با پروتکل mms در ubuntu">نحوه دانلود فایل با پروتکل mms در ubuntu</a></h3>
+            
+            <a href="/tag/linux.html">
+                <span class="label label-default">linux</span></a>
+            
+            <a href="/tag/ubuntu.html">
+                <span class="label label-default">ubuntu</span></a>
+            
+            <a href="/tag/video.html">
+                <span class="label label-default">video</span></a>
+            
+            <p>در سایت ها نوعی پروتکل به نام `MMS` وجود دارد که عمدتا فایلهای چند رسانه ای فیلم را ارائه می کنند. برای دانلود این نوع فایل ها، به جای تماشای آن فیلمها به صورت `on-line`، باید از طریق نرم افزارها یا ابزار خاصی استفاده شود تا بتوان این فیلمها را به صورت `off-line` و در سیستم خانگی خود تماشا نمود.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/download_MMS_Files_ubuntu.jpg" alt="نحوه دانلود فایل با پروتکل mms در ubuntu" class="img-post" />
+            </div>
+        </div>
+      
+        <div class="row-line">
+            <div class="col-md-9">
+            <h3><a href="/2012-11-30/create_mysql_stored_procedures2.html" title="نحوه ایجاد یک Stored Procedures در MySQL5- بخش دوم">نحوه ایجاد یک Stored Procedures در MySQL5- بخش دوم</a></h3>
+            
+            <a href="/tag/database.html">
+                <span class="label label-default">database</span></a>
+            
+            <a href="/tag/sql.html">
+                <span class="label label-default">sql</span></a>
+            
+            <a href="/tag/mysql.html">
+                <span class="label label-default">mysql</span></a>
+            
+            <a href="/tag/stored_procedure.html">
+                <span class="label label-default">stored_procedure</span></a>
+            
+            <p>یک روشی که خیلی مورد پسند بنده واقع شده، روشی است که در آن با استفاده از استور پروسیجرها کار هایم با دیتابیس را انجام می دهم. استور پروسیجر ها امکانی است که برخی نرم افزارهای مدیریت پایگاه داده ها آن را حمایت کرده و برخی خیر. از جلمه این پایگاه داده ها می توان از `MySQL، MSSQL` و... نام برد.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/create_mysql_stored_procedures2.jpg" alt="نحوه ایجاد یک Stored Procedures در MySQL5- بخش دوم" class="img-post" />
+            </div>
+        </div>
+      
+
+
       
               <ul class="pagination">
                 
@@ -260,8 +520,15 @@
                         <li class="active"><a href="#">4 <span class="sr-only">(current)</span></a></li>
                     
                 
+                    
+                        
+                            <li><a href="/page5.html">5</a></li>
+                        
+                    
+                
               </ul>
       
+    </div>
 
         </div>
         <div class="col-md-3">
@@ -280,7 +547,32 @@
                         </div>
                     </div>
                 </div>
-
+                <div class="panel-group">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        مطالب نوشته شده تا کنون
+                    </div>
+                    <div class="panel-body">
+                            <div class="counter-box">
+                                <h2>
+                                    <span class="count">63</span>
+                                </h2>
+                            </div>
+                    </div>
+                </div>
+                    <div class="panel-group">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                تجربیات به سال
+                            </div>
+                            <div class="panel-body">
+                                <div class="counter-box">
+                                    <h2>
+                                        <span class="count">20</span>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
 
                 <div class="panel-group">
                     <div class="panel panel-primary">
@@ -289,46 +581,38 @@
                         </div>
                         <div class="panel-body">
                             <ul>
+                                <li><a href="https://shgn.ir/2024-11-24/failover-by-maxscale.html"
+                                       title="جلوگیری توقف سرویس دهی دیتابیس با maxscale">جلوگیری توقف سرویس دهی دیتابیس با maxscale</a>
+                                </li>
+                                <li><a href="https://shgn.ir/2025-03-26/linux-server-as-gateway.html"}
+                                       title="راه‌اندازی یک سرور لینوکس به عنوان Gateway">راه‌اندازی یک سرور لینوکس به عنوان Gateway</a>
+                                </li>
                                 <li><a href="https://shgn.ir/2021-03-07/galera-cluster-debian-10.html"
                                        title="نصب Galer Cluster بر روی debian 10">نصب Galer Cluster بر روی debian 10</a>
                                 </li>
-                                <li><a href="https://shgn.ir/2020-08-15/installing_docker_on_debian.html"
-                                       title="نصب Docker روی Debian 10">نصب Docker روی Debian 10</a></li>
-                                <li><a href="https://shgn.ir/2018-09-05/Mysql-JSON-DataType.html"
-                                       title="معرفی نوع داده JSON در دیتابیس Mysql-Mariadb">معرفی نوع داده JSON در
-                                    دیتابیس Mysql-Mariadb</a></li>
-                                <li><a href="https://shgn.ir/2018-07-23/ssh_automatic_login.html"
-                                       title="لاگین خودکار با SSH">لاگین خودکار با SSH</a></li>
+                                <li><a href="https://shgn.ir/2025-04-12/installing-docker-on-debian12.html"
+                                       title="نصب Docker روی Debian 12 bookworm">نصب Docker روی Debian 12 bookworm</a></li>
+                                <li><a href="https://shgn.ir2024-04-22/create-lvm-partiotion-in-linux.html"
+                                       title="ایجاد دیسک LVM در لینوکس">ایجاد دیسک LVM در لینوکس</a>
+                                </li>
                                 <li><a href="https://shgn.ir/2017-08-16/galera_cluster.html"
                                        title="نصب Galer Cluster بر روی debian8">نصب Galer Cluster بر روی debian8</a>
                                 </li>
-                            </ul>
-
-                        </div>
-                    </div>
-                </div>
-
-                <div class="panel-group">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            Linux ISO Images
-                        </div>
-                        <div class="panel-body">
-                            <ul>
-                                <li><a href="https://shgn.ir/images/gparted-live-1.1.0-1-amd64.iso"
-                                       title="gparted-live-1.1.0-1-amd64">GParted Live CD/USB/HD/PXE Bootable Image</a></li>
-                                <li><a href="https://shgn.ir/images/debian-10.3.0-amd64-xfce-CD-1.iso"
-                                       title="debian-10.3.0-amd64-xfce-CD-1">Debian-10-amd64-xfce-CD</a></li>
-                                <li><a href="https://shgn.ir/images/debian-9.13.0-amd64-xfce-CD-1.iso"
-                                       title="debian-9.13.0-amd64-xfce-CD-1">debian-9-amd64-xfce-CD</a></li>
-                                <li><a href="https://shgn.ir/images/ubuntu-18.04.4-desktop-amd64.iso"
-                                       title="ubuntu-18.04.4-desktop-amd64">Ubuntu Desktop</a></li>
-                                <li><a href="https://shgn.ir/images/ubuntu-18.04.4-live-server-amd64.iso"
-                                       title="ubuntu-18.04.4-live-server-amd64">Ubuntu Server</a></li>
-                                <li><a href="https://shgn.ir/images/CentOS-7-aarch64-Minimal-1908.iso"
-                                       title="CentOS-7-aarch64-Minimal-1908">CentOS-7-aarch64-Minimal-1908</a></li>
-                                <li><a href="https://shgn.ir/images/CentOS-8.2.2004-x86_64-minimal.iso"
-                                       title="CentOS-8.2.2004-x86_64-minimal">CentOS-8.2.2004-x86_64-minimal</a></li>
+                                <li><a href="https://shgn.ir/2024-04-14/mysql-master-slave-replication.html"
+                                       title="راه اندازی Mysql/Mariadb Slave Replication">راه اندازی Mysql/Mariadb Slave Replication</a>
+                                </li>
+                                <li><a href="https://shgn.ir/2023-12-03/Using-all-CPU-with-tar.html"
+                                       title="فشرده سازی با استفاده از تمام ظرفیت CPU">فشرده سازی با استفاده از تمام ظرفیت CPU</a>
+                                </li>
+                                <li><a href="https://shgn.ir/2022-10-22/reduce-LVM-Partition-size.html"
+                                       title="کاهش فضای دیسک LVM">کاهش فضای دیسک LVM</a>
+                                </li>
+                                <li><a href="https://shgn.ir/2023-12-03/Using-all-CPU-with-tar.html"
+                                       title="فشرده سازی با استفاده از تمام ظرفیت CPU">فشرده سازی با استفاده از تمام ظرفیت CPU</a>
+                                </li>
+                                <li><a href="https://shgn.ir/2024-01-13/hangup-a-call-on-asterisk.html"
+                                       title="بستن تماس باز در asterisk">بستن تماس باز در asterisk</a>
+                                </li>
                             </ul>
 
                         </div>
@@ -343,13 +627,29 @@
                         <div class="panel-body">
                             <ul>
                                 
+                                <li><a href="/2017-08-16/galera_cluster.html" title="نصب Galer Cluster بر روی debian8">نصب Galer Cluster بر روی debian8</a></li>
+                                
+                                <li><a href="/2013-04-03/live_remove_linux_kernel.html" title="حذف کرنل لینوکس با دیسک زنده">حذف کرنل لینوکس با دیسک زنده</a></li>
+                                
+                                <li><a href="/2013-03-29/php_mail.html" title="طریقه ارسال ایمیل با PHP">طریقه ارسال ایمیل با PHP</a></li>
+                                
+                                <li><a href="/2013-03-23/update_ubuntu_offline.html" title="به روز رسانی برنامه ها در ابونتو به صورت off-line">به روز رسانی برنامه ها در ابونتو به صورت off-line</a></li>
+                                
+                                <li><a href="/2013-03-19/mount_iso.html" title="بار گذاری یک فایل iso در لینوکس">بار گذاری یک فایل iso در لینوکس</a></li>
+                                
+                                <li><a href="/2013-03-02/downloadManager_for_ubuntu.html" title="معرفی برنامه مدیریت دانلود برای اوبونتو">معرفی برنامه مدیریت دانلود برای اوبونتو</a></li>
+                                
+                                <li><a href="/2013-01-20/HyperTem_linux_alternative.html" title="نرم افزاری معادل Microsoft HyperTerminal در linux">نرم افزاری معادل Microsoft HyperTerminal در linux</a></li>
+                                
+                                <li><a href="/2013-01-15/install_marlin_ubunto.html" title="نصب نرم افزار Marlin در اوبونتو">نصب نرم افزار Marlin در اوبونتو</a></li>
+                                
+                                <li><a href="/2013-01-06/using_PDO_in_PHP.html" title="استفاده از PDO برای ارتباط با دیتابیس در PHP">استفاده از PDO برای ارتباط با دیتابیس در PHP</a></li>
+                                
                                 <li><a href="/2012-12-31/Desktop_capture_in_ubuntu.html" title="بهترین نرم افزارها برای ضبط صفحه در اوبونتو">بهترین نرم افزارها برای ضبط صفحه در اوبونتو</a></li>
                                 
                                 <li><a href="/2012-12-02/download_MMS_Files_ubuntu.html" title="نحوه دانلود فایل با پروتکل mms در ubuntu">نحوه دانلود فایل با پروتکل mms در ubuntu</a></li>
                                 
                                 <li><a href="/2012-11-30/create_mysql_stored_procedures2.html" title="نحوه ایجاد یک Stored Procedures در MySQL5- بخش دوم">نحوه ایجاد یک Stored Procedures در MySQL5- بخش دوم</a></li>
-                                
-                                <li><a href="/2012-11-28/create_mysql_stored_procedures1.html" title="نحوه ایجاد یک Stored Procedures در MySQL5- بخش اول">نحوه ایجاد یک Stored Procedures در MySQL5- بخش اول</a></li>
                                 
                             </ul>
 
@@ -358,6 +658,40 @@
 
 
                 </div>
+
+                <div class="panel-group">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            Linux ISO Images
+                        </div>
+                        <div class="panel-body">
+                            <ul>
+                                <li><a href="https://shgn.ir/images/gparted-live-1.1.0-1-amd64.iso"
+                                       title="gparted-live-1.1.0-1-amd64">GParted Live CD/USB/HD/PXE Bootable Image</a></li>
+                                <li><a href="https://shgn.ir/images/debian-10.3.0-amd64-xfce-CD-1.iso"
+                                       title="debian-10.3.0-amd64-xfce-CD-1">Debian-10-amd64-xfce-CD</a></li>
+                                <li><a href="https://shgn.ir/images/SNG7-PBX16-64bit-2302-1.iso"
+                                       title="FreePBX16-64bit-2302-1">FreePBX16-64bit-2302-1</a></li>
+                                <li><a href="https://shgn.ir/images/debian-12.2.0-amd64-netinst.iso"
+                                       title="debian-12.2.0-amd64-netinst.iso">debian-12.2.0-amd64-netinst</a></li>
+                                <li><a href="https://shgn.ir/images/debian-live-12.2.0-amd64-xfce.iso"
+                                       title="debian-live-12.2.0-amd64-xfce">debian-live-12.2.0-amd64-xfce</a></li>
+                                <li><a href="https://shgn.ir/images/ubuntu-22.04.3-desktop-amd64.iso"
+                                       title="ubuntu-22.04.3-desktop-amd64">Ubuntu Desktop</a></li>
+                                <li><a href="https://shgn.ir/images/ubuntu-22.04.3-live-server-amd64.iso"
+                                       title="ubuntu-22.04.3-live-server-amd64">Ubuntu Server</a></li>
+                                <li><a href="https://shgn.ir/images/CentOS-7-aarch64-Minimal-1908.iso"
+                                       title="CentOS-7-aarch64-Minimal-1908">CentOS-7-aarch64-Minimal-1908</a></li>
+                                <li><a href="https://shgn.ir/images/CentOS-8.2.2004-x86_64-minimal.iso"
+                                       title="CentOS-8.2.2004-x86_64-minimal">CentOS-8.2.2004-x86_64-minimal</a></li>
+                                <li><a href="https://shgn.ir/images/clonezilla-live-3.1.1-27-amd64.iso"
+                                       title="clonezilla-live-3.1.1-27-amd64">clonezilla-live</a></li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -375,11 +709,15 @@
                     
                     <li><a href="https://www.instagram.com/shgninc/">Instagram</a></li>
                     
-                    <li><a href="http://vasni.ir/">Vasni</a></li>
-                    
                     <li><a href="https://virgool.io/@shgninc">Virgool</a></li>
                     
+                    <li><a href="https://www.linkedin.com/in/sajjad-shahcheraghean/">Linkedin</a></li>
+                    
                     <li><a href="https://twitter.com/shahcheraghian">Twiteer</a></li>
+                    
+                    <li><a href="https://virasty.com/twitter">Virsty</a></li>
+                    
+                    <li><a href="https://shgn.ir/mariadb-failover">Falilover By Maxscale</a></li>
                     
                     <li><a href="https://shgn.ir/yii2/">معرفی Yii2</a></li>
                     
@@ -395,16 +733,21 @@
                 </ul>
             </div>
             <div class="col-md-12">
-                <p class="text-center"><small>https://shgn.ir &copy; 2021</small></p>
+                <p class="text-center"><small>https://shgn.ir &copy; 2025</small></p>
             </div>
         </div>
     </div>
 </footer>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://shgn.ir/static/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+            integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+            crossorigin="anonymous"></script>
+
+<script src="https://shgn.ir/static/jquery/3.5.1/app.js"></script>
 <script src="https://shgn.ir/static/ProngnRoll/prognroll.min.js"></script>
 <script>
-var jQ_3_5_1 = $.noConflict(true);
+var jQ_3_5_1 = jQuery.noConflict(true);
 
     /*Scroll to top when arrow up clicked BEGIN*/
 jQ_3_5_1(window).scroll(function() {
@@ -432,22 +775,8 @@ jQ_3_5_1("body").prognroll({
   color:"#f54905"
 });
 
-
 </script>
-
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="https://code.jquery.com/jquery-1.12.4.min.js"
-        integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ"
-        crossorigin="anonymous"></script>
-<script>
-var $x = jQuery.noConflict();
-
-</script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
-        integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
-        crossorigin="anonymous"></script>
 
 <a id="back2Top" title="Back to top" href="#">&#10148;</a>
-
 </body>
 </html>

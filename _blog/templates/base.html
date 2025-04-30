@@ -78,7 +78,7 @@
         border-left: 5px solid #6ce26c;
       }
     .panel-body {
-        padding: 10px 0;
+        margin-right: -20px;
     }
     .panel-body ul li{
         margin: 5px 0;
@@ -126,29 +126,48 @@
     }
 
     #back2Top {
-    width: 40px;
-    line-height: 40px;
-    overflow: hidden;
-    z-index: 999;
-    display: none;
-    cursor: pointer;
-    -moz-transform: rotate(270deg);
-    -webkit-transform: rotate(270deg);
-    -o-transform: rotate(270deg);
-    -ms-transform: rotate(270deg);
-    transform: rotate(270deg);
-    position: fixed;
-    bottom: 50px;
-    right: 0;
-    background-color: #DDD;
-    text-align: center;
-    font-size: 30px;
-    text-decoration: none;
+        width: 40px;
+        line-height: 40px;
+        overflow: hidden;
+        z-index: 999;
+        display: none;
+        cursor: pointer;
+        -moz-transform: rotate(270deg);
+        -webkit-transform: rotate(270deg);
+        -o-transform: rotate(270deg);
+        -ms-transform: rotate(270deg);
+        transform: rotate(270deg);
+        position: fixed;
+        bottom: 50px;
+        right: 0;
+        background-color: #DDD;
+        text-align: center;
+        font-size: 30px;
+        text-decoration: none;
     }
     #back2Top:hover {
         background-color: #DDF;
         color: #000;
     }
+    .box {
+        width: 200px;
+        height: 200px;
+        background-color: lightblue;
+        border: 2px solid black;
+        padding: 20px;
+        margin: 20px;
+    }
+    .row-line{
+        margin-bottom: 10px;
+        margin-top: 10px;
+        overflow: hidden;
+    }
+    .img-post{
+        width: 100%;
+        height: 100%;
+        border-radius:20px
+    }
+
     </style>
 </head>
 <body>
@@ -299,8 +318,6 @@
                             <ul>
                                 <li><a href="{{ site_url }}/images/gparted-live-1.1.0-1-amd64.iso"
                                        title="gparted-live-1.1.0-1-amd64">GParted Live CD/USB/HD/PXE Bootable Image</a></li>
-                                <li><a href="{{ site_url }}/images/debian-10.3.0-amd64-xfce-CD-1.iso"
-                                       title="debian-10.3.0-amd64-xfce-CD-1">Debian-10-amd64-xfce-CD</a></li>
                                 <li><a href="{{ site_url }}/images/SNG7-PBX16-64bit-2302-1.iso"
                                        title="FreePBX16-64bit-2302-1">FreePBX16-64bit-2302-1</a></li>
                                 <li><a href="{{ site_url }}/images/debian-12.2.0-amd64-netinst.iso"
@@ -311,8 +328,6 @@
                                        title="ubuntu-22.04.3-desktop-amd64">Ubuntu Desktop</a></li>
                                 <li><a href="{{ site_url }}/images/ubuntu-22.04.3-live-server-amd64.iso"
                                        title="ubuntu-22.04.3-live-server-amd64">Ubuntu Server</a></li>
-                                <li><a href="{{ site_url }}/images/CentOS-7-aarch64-Minimal-1908.iso"
-                                       title="CentOS-7-aarch64-Minimal-1908">CentOS-7-aarch64-Minimal-1908</a></li>
                                 <li><a href="{{ site_url }}/images/CentOS-8.2.2004-x86_64-minimal.iso"
                                        title="CentOS-8.2.2004-x86_64-minimal">CentOS-8.2.2004-x86_64-minimal</a></li>
                                 <li><a href="{{ site_url }}/images/clonezilla-live-3.1.1-27-amd64.iso"

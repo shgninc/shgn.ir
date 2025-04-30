@@ -78,7 +78,7 @@
         border-left: 5px solid #6ce26c;
       }
     .panel-body {
-        padding: 10px 0;
+        margin-right: -20px;
     }
     .panel-body ul li{
         margin: 5px 0;
@@ -126,29 +126,48 @@
     }
 
     #back2Top {
-    width: 40px;
-    line-height: 40px;
-    overflow: hidden;
-    z-index: 999;
-    display: none;
-    cursor: pointer;
-    -moz-transform: rotate(270deg);
-    -webkit-transform: rotate(270deg);
-    -o-transform: rotate(270deg);
-    -ms-transform: rotate(270deg);
-    transform: rotate(270deg);
-    position: fixed;
-    bottom: 50px;
-    right: 0;
-    background-color: #DDD;
-    text-align: center;
-    font-size: 30px;
-    text-decoration: none;
+        width: 40px;
+        line-height: 40px;
+        overflow: hidden;
+        z-index: 999;
+        display: none;
+        cursor: pointer;
+        -moz-transform: rotate(270deg);
+        -webkit-transform: rotate(270deg);
+        -o-transform: rotate(270deg);
+        -ms-transform: rotate(270deg);
+        transform: rotate(270deg);
+        position: fixed;
+        bottom: 50px;
+        right: 0;
+        background-color: #DDD;
+        text-align: center;
+        font-size: 30px;
+        text-decoration: none;
     }
     #back2Top:hover {
         background-color: #DDF;
         color: #000;
     }
+    .box {
+        width: 200px;
+        height: 200px;
+        background-color: lightblue;
+        border: 2px solid black;
+        padding: 20px;
+        margin: 20px;
+    }
+    .row-line{
+        margin-bottom: 10px;
+        margin-top: 10px;
+        overflow: hidden;
+    }
+    .img-post{
+        width: 100%;
+        height: 100%;
+        border-radius:20px
+    }
+
     </style>
 </head>
 <body>
@@ -193,18 +212,27 @@
       <h2>پستهای تگ شده با  'email'</h2>
       <p class="lead"></p>
     </div>
+    <div class="row">
       
-        <h3><a href="/2013-03-29/php_mail.html" title="طریقه ارسال ایمیل با PHP">طریقه ارسال ایمیل با PHP</a></h3>
+        <div class="row-line">
+            <div class="col-md-9">
+            <h3><a href="/2013-03-29/php_mail.html" title="طریقه ارسال ایمیل با PHP">طریقه ارسال ایمیل با PHP</a></h3>
             
-                <a href="/tag/php.html">
-                    <span class="label label-default">php</span></a>
+            <a href="/tag/php.html">
+                <span class="label label-default">php</span></a>
             
-                <a href="/tag/email.html">
-                    <span class="label label-default">email</span></a>
+            <a href="/tag/email.html">
+                <span class="label label-default">email</span></a>
             
-        <p>یکی از قابلیت ها و امکانات زبان برنامه نویسی PHP، امکان ارسال رایانامه به راحتی با آن است.</p>
-        <hr />
+            <p>یکی از قابلیت ها و امکانات زبان برنامه نویسی PHP، امکان ارسال رایانامه به راحتی با آن است.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/php_mail.jpg" alt="طریقه ارسال ایمیل با PHP" class="img-post" />
+            </div>
+        </div>
       
+
+
       
               <ul class="pagination">
                 
@@ -214,6 +242,7 @@
                 
               </ul>
       
+    </div>
 
         </div>
         <div class="col-md-3">

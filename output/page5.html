@@ -16,11 +16,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="https://shgn.ir/images/favicon.ico">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title> نصب و راه اندازی Drone CI. - دست نوشته های یک تازه کار </title>
+    <title> دست نوشته های یک تازه کار - دست نوشته های یک تازه کار </title>
     <meta name="description"
-          content="نصب و راه اندازی Drone CI."/>
+          content="این وبلاگ پیرامون تجربیات، دانسته ها، اینجاب درباره linux, database, mysql, mariadb, datamart, galera cluster,apache می باشد."/>
     <meta name="keywords"
-          content="لینوکس،لینوکس مشهد،آموزش,پایتون,پایتون مشهد,آموزش لینوکس,دیتابیس,آموزش دیتابیس,برنامه نویسی,linux,database,mysql,mariadb,datamart,galera cluster,apache,big data,dataware house,cluster,galera,percona,python,php,tutorial,debian,ubuntu,centos,arch linux,mashhad linux,iran linux,debian mashhad, linux, devops, ci/cd, drone, tutorial, docker"/>
+          content="لینوکس،لینوکس مشهد،آموزش,پایتون,پایتون مشهد,آموزش لینوکس,دیتابیس,آموزش دیتابیس,برنامه نویسی,linux,database,mysql,mariadb,datamart,galera cluster,apache,big data,dataware house,cluster,galera,percona,python,php,tutorial,debian,ubuntu,centos,arch linux,mashhad linux,iran linux,debian mashhad,"/>
 
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
     <!-- Bootstrap -->
@@ -208,172 +208,76 @@
     <div class="row">
         <div class="col-md-9">
             
-    <div itemscope itemtype="http://schema.org/NewsArticle">
-    <meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="http://https://shgn.ir/2021-04-13/drone-ci.html"/>
     <div class="page-header">
-      <h3 itemprop="name">نصب و راه اندازی Drone CI.</h3>
-      
-      
-        <small>
-          <p class="text-right">
-            ارسال شده <span itemprop="author" itemscope itemtype="https://schema.org/Person">
-                توسط <span itemprop="name">سید سجاد شاهچراغیان</span>
-              </span>
-              در تاریخ <span itemprop="datePublished">2021-04-13</span>
-          </p>
-        </small>
-      
+      <h2>دست نوشته های یک تازه کار</h2>
+      <p class="lead"></p>
     </div>
-      <section itemprop="articleBody">
-        <h2>مقدمه</h2>
-<p>بعید می دونم که کسی به عنوان یک <code>sysadmin</code> یا <code>devops</code> مشغول به کار باشد و با واژه <code>CI/CD</code> و مفهوم آن آشنایی نداشته باشد.
-در واقع مفاهیمی که در دل <code>devops</code> زاده شده اند برای توسعه و راه اندازی هرچه بهتر و سریعتر برنامه ها در بوده اند.</p>
-<p>برای درک بهتر سرویس <code>drone</code> لازم است تا با مفاهیمی آشنا باشیم. پس با این مفاهیم شروع می کنیم</p>
-<h3>واژگان</h3>
-<h4>git</h4>
-<p>برنامه ای کاربردی و پر استفاده برای کنترل و مدیریت کدهای برنامه بین اعضاء یک تیم برنامه نویسی است.</p>
-<h4>CI/CD</h4>
-<p>به فرایندی که با هماهنگی بین توسعه دهنده برنامه و مدیر سیستمی که قرار است برنامه روی ان اجرا شود، پیاده سازی می گردد.
-این فرایند کاملا سیستمی و <em>بدون دخالت انسان</em> انجام می شود.</p>
-<ul>
-<li>CI: continuous integration</li>
-<li>CD: continuous delivery/deployment</li>
-</ul>
-<p>معمولا این فرایند به گونه ای دیده می شود که گام های تصویر زیر را انجام دهد:</p>
-<h4>ابزار CI/CD</h4>
-<p>ابزارهای 'CI/CD' برای کمک به تیم توسعه و تیم زیرساخت برای طی فرایند توسعه برنامه، انتقا و اجرای نهایی آن در بستر مورد نظر می باشد.
-از جمله این ابزارها می توان موارد زیر را نام برد:</p>
-<ul>
-<li>jenkins</li>
-<li>drone</li>
-<li>gitlab-ci</li>
-<li>circle-ci</li>
-<li>travis ci</li>
-</ul>
-<h2>چرا Drone CI</h2>
-<p>در بین ابزارهایی که در بالا ذکر شدند، در این نوشته قصد داریم تا درباره <code>Drone CI</code> صحبت کنیم.
-یکی از ویژگی های این ابزار، انجام مراحل <code>Ci</code> در قالب ایمیج های داکر می باشد. به طور مثال، ممکن برنامه شما
-از روند گیت مشخصی پیروی کنه که در آن زمانی پروژه باید به اجرای نهایی یا تجاری رود که توسعه دهنده روی برنچ مستر پوش و یک تگ یا نسخه بزند، در مرحله بعد باید
-کدهای برنامه <code>build</code> شوند، سپس تست های مد نظر و لازم روی آن کدها اجرا شوند، در صورتی که مشکلی نبود آن نسخه
-نهایی روی سرور های نهایی یا تجاری ارسال، جایگزین نسخه قبلی و اجرا شوند.</p>
-<p>پس همانطور که بیان شد، تمامی مراحل بالا در قالب یک یا چند کانتینر در داکر (خود <code>drone</code> آن کانتینر ها را ایجاد، مدیریت می کند)
-اجرا خواهند شد</p>
-<h3>نصب سرور</h3>
-<p>نصب <code>drone</code> کار بسیار راحت و ساده ای می باشد. برای انجام آن کافی هست تا کانتینر آن را اجرا کنید. برای اجرا 
-کافی هست فقط روی سروری که روی آن سرویس <code>docker-engin</code> وجود داشته باشد، یک فایل <code>docker-compose.yml</code> ایجاد 
-و آن را اجرا نماید:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">version</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;3.5&quot;</span>
-<span class="n">services</span><span class="p">:</span>
-<span class="w">  </span><span class="n">drone</span><span class="o">-</span><span class="n">server</span><span class="p">:</span>
-<span class="w">    </span><span class="n">image</span><span class="p">:</span><span class="w"> </span><span class="n">drone</span><span class="p">:</span><span class="mi">1</span>
-<span class="w">    </span><span class="n">container_name</span><span class="p">:</span><span class="w"> </span><span class="n">drone</span><span class="o">-</span><span class="n">server</span>
-<span class="w">    </span><span class="n">ports</span><span class="p">:</span>
-<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="mi">8081</span><span class="p">:</span><span class="mi">80</span>
-<span class="w">    </span><span class="n">environment</span><span class="p">:</span>
-<span class="w">      </span><span class="n">DRONE_SERVER_HOST</span><span class="p">:</span><span class="w"> </span><span class="n">drone</span><span class="o">.</span><span class="n">ci</span>
-<span class="w">      </span><span class="n">DRONE_SERVER_PROTO</span><span class="p">:</span><span class="w"> </span><span class="n">http</span>
-<span class="w">      </span><span class="n">DRONE_RPC_SECRET</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="n">cd19b43db8d8b9ffg55048c57ecf9fc</span>
-<span class="w">      </span><span class="n">DRONE_GITLAB_CLIENT_SECRET</span><span class="p">:</span><span class="w"> </span><span class="o">$</span><span class="p">{</span><span class="n">GITLAB_CLIENT_SECRET</span><span class="p">}</span>
-<span class="w">      </span><span class="n">DRONE_GITLAB_CLIENT_ID</span><span class="p">:</span><span class="w"> </span><span class="o">$</span><span class="p">{</span><span class="n">GITLAB_CLIENT_ID</span><span class="p">}</span>
-<span class="w">      </span><span class="n">DRONE_GITLAB_SERVER</span><span class="p">:</span><span class="w"> </span><span class="o">$</span><span class="p">{</span><span class="n">GITLAB_SERVER</span><span class="p">}</span>
-<span class="w">      </span><span class="n">DRONE_DATABASE_DRIVER</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;mysql&quot;</span>
-<span class="w">      </span><span class="n">DRONE_DATABASE_DATASOURCE</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;usr_drone:123456321@tcp(127.0.0.1:3306)/drone?parseTime=true&quot;</span>
-<span class="w">    </span><span class="n">volumes</span><span class="p">:</span>
-<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="o">./</span><span class="n">db</span><span class="o">/</span><span class="n">dronesrv</span><span class="p">:</span><span class="o">/</span><span class="n">data</span>
-<span class="w">    </span><span class="n">depends_on</span><span class="p">:</span>
-<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="n">mysql_db</span>
+    <div class="row">
+      
+        <div class="row-line">
+            <div class="col-md-9">
+            <h3><a href="/2012-11-28/create_mysql_stored_procedures1.html" title="نحوه ایجاد یک Stored Procedures در MySQL5- بخش اول">نحوه ایجاد یک Stored Procedures در MySQL5- بخش اول</a></h3>
+            
+            <a href="/tag/database.html">
+                <span class="label label-default">database</span></a>
+            
+            <a href="/tag/sql.html">
+                <span class="label label-default">sql</span></a>
+            
+            <a href="/tag/mysql.html">
+                <span class="label label-default">mysql</span></a>
+            
+            <a href="/tag/stored_procedure.html">
+                <span class="label label-default">stored_procedure</span></a>
+            
+            <p>یک روشی که خیلی مورد پسند بنده واقع شده، روشی است که در آن با استفاده از استور پروسیجرها کار هایم با دیتابیس را انجام می دهم. استور پروسیجر ها امکانی است که برخی نرم افزارهای مدیریت پایگاه داده ها آن را حمایت کرده و برخی خیر. از جلمه این پایگاه داده ها می توان از `MySQL، MSSQL` و... نام برد.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/create_mysql_stored_procedures1.jpg" alt="نحوه ایجاد یک Stored Procedures در MySQL5- بخش اول" class="img-post" />
+            </div>
+        </div>
+      
 
-<span class="w">  </span><span class="n">mysql_db</span><span class="p">:</span>
-<span class="w">    </span><span class="n">image</span><span class="p">:</span><span class="w"> </span><span class="n">mariadb</span><span class="p">:</span><span class="mf">10.3</span>
-<span class="w">    </span><span class="n">restart</span><span class="p">:</span><span class="w"> </span><span class="n">always</span>
-<span class="w">    </span><span class="n">ports</span><span class="p">:</span>
-<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="mi">3306</span><span class="p">:</span><span class="mi">3306</span>
-<span class="w">    </span><span class="n">environment</span><span class="p">:</span>
-<span class="w">      </span><span class="n">MYSQL_ROOT_PASSWORD</span><span class="p">:</span><span class="w"> </span><span class="n">p</span><span class="err">@</span><span class="n">ssw0rd</span>
-<span class="w">      </span><span class="n">MYSQL_DATABASE</span><span class="p">:</span><span class="w"> </span><span class="n">drone</span>
-<span class="w">      </span><span class="n">MYSQL_USER</span><span class="p">:</span><span class="w"> </span><span class="n">usr_drone</span>
-<span class="w">      </span><span class="n">MYSQL_PASSWORD</span><span class="p">:</span><span class="w"> </span><span class="mi">123456321</span>
-<span class="w">    </span><span class="n">volumes</span><span class="p">:</span>
-<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="o">./</span><span class="n">db</span><span class="o">/</span><span class="n">dronesrv</span><span class="p">:</span><span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">mysql</span>
-</code></pre></div>
 
-<p>نکته این که در این سناریو از دیتابیس <code>mariadb</code> برای نگهداری اطلاعات <code>drone</code> استفاده می شود. در نهایت با دستور
-زیر اجرا می شود:</p>
-<div class="codehilite"><pre><span></span><code>docker-compose up -d
-</code></pre></div>
-
-<h4>دسترسی به سرور</h4>
-<p>زمانی که سرور را راه اندازی می کنید، یک پنل  در آدرس تنظیم شده، برای استفاده مهیا می گردد که از طریق آدرس 
-تنظیمی در پارامترهای سرور قابل دسترس بوده و ریپوهایی که کاربر شما در گیت لب به آن ها دسترسی دارد، نمایش 
-داده و یک سری امکانات مدیریت برای <code>drone ci</code> را در اختیار شما قرار می دهد.</p>
-<p><img alt="drone-panle" src="drone-panel.png" /></p>
-<h3>نصب agent</h3>
-<p>این سرویس صرفا از سرور به طور مستمر در حال سوال پرسیدن هست تا کارهای قابل انجام، را روی خودش دریافت و شروع
-به انجام آنها کند.  <code>agent</code> یا <code>runner</code> دارای انواع مختلفی به ترتیب زیر، در <code>drone</code> هستند:</p>
-<ul>
-<li>Docker</li>
-<li>Kubernetes</li>
-<li>Exec</li>
-<li>SSH</li>
-<li>Digital Ocean</li>
-<li>Macstadium</li>
-</ul>
-<p>در این سناریو ما از <code>Docker runner</code> استفاده می کنیم. برای این مهم در یک فایل <code>docker-compose.yml</code>موارد 
-زیر را ذخیره و اجرا می کنیم.</p>
-<div class="codehilite"><pre><span></span><code><span class="n">version</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;3.5&quot;</span>
-<span class="n">services</span><span class="p">:</span>
-<span class="w">     </span><span class="n">drone</span><span class="o">-</span><span class="n">agent</span><span class="p">:</span>
-<span class="w">     </span><span class="n">image</span><span class="p">:</span><span class="w"> </span><span class="n">drone</span><span class="o">-</span><span class="n">runner</span><span class="o">-</span><span class="n">docker</span><span class="p">:</span><span class="mi">1</span>
-<span class="w">     </span><span class="n">container_name</span><span class="p">:</span><span class="w"> </span><span class="n">dron</span><span class="o">-</span><span class="n">agent</span>
-<span class="w">     </span><span class="n">depends_on</span><span class="p">:</span>
-<span class="w">       </span><span class="o">-</span><span class="w"> </span><span class="n">drone</span><span class="o">-</span><span class="n">server</span>
-<span class="w">     </span><span class="n">volumes</span><span class="p">:</span>
-<span class="w">       </span><span class="o">-</span><span class="w"> </span><span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">docker</span><span class="o">.</span><span class="n">sock</span><span class="p">:</span><span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">docker</span><span class="o">.</span><span class="n">sock</span>
-<span class="w">       </span><span class="o">-</span><span class="w"> </span><span class="o">./</span><span class="n">dockerconfig</span><span class="o">.</span><span class="n">json</span><span class="p">:</span><span class="o">/</span><span class="n">root</span><span class="o">/.</span><span class="n">docker</span><span class="o">/</span><span class="n">config</span><span class="o">.</span><span class="n">json</span><span class="p">:</span><span class="n">ro</span>
-
-<span class="w">     </span><span class="n">ports</span><span class="p">:</span>
-<span class="w">       </span><span class="o">-</span><span class="w"> </span><span class="mi">3000</span><span class="p">:</span><span class="mi">3000</span>
-<span class="w">     </span><span class="n">environment</span><span class="p">:</span>
-<span class="w">       </span><span class="n">DRONE_RPC_PROTO</span><span class="p">:</span><span class="w"> </span><span class="n">drone</span><span class="o">.</span><span class="n">ci</span>
-<span class="w">       </span><span class="n">DRONE_RPC_HOST</span><span class="p">:</span><span class="w"> </span><span class="n">http</span>
-<span class="w">       </span><span class="n">DRONE_RPC_SECRET</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="n">cd19b43db8d8b9ffg55048c57ecf9fc</span>
-<span class="w">       </span><span class="n">DRONE_RUNNER_CAPACITY</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span>
-<span class="w">       </span><span class="n">DRONE_RUNNER_NAME</span><span class="p">:</span><span class="w"> </span><span class="n">runn</span><span class="o">-</span><span class="n">drone</span>
-</code></pre></div>
-
-<h2>نتیجه گیری</h2>
-<p>تا اینجا با هم یک سری مفاهیم اولیه <code>CI/CD</code> و <code>DevOps</code> آشنا شدیم و بعد از آن سرور <code>drone</code> را در بستر 
-<code>Docker</code> برای <code>Gitlab</code> راه اندازی کردیم و سپس اجرا کننده آن را نیز با <code>Docker</code> و روی <code>Docker</code> راه اندازی شد.</p>
-<p>در گام بعدی قصد داریم تا به توضیح فایل کنترل کننده <code>CI/CD</code> برای <code>drone</code> بپردازیم</p>
-      </section>
-      <div>
-        برچسب ها:
       
-        <a href="/tag/linux.html">
-            <span class="label label-default" itemprop="about">linux</span>
-        </a>
+              <ul class="pagination">
+                
+                    
+                        
+                            <li><a href="/page0.html">0</a></li>
+                        
+                    
+                
+                    
+                        
+                            <li><a href="/page1.html">1</a></li>
+                        
+                    
+                
+                    
+                        
+                            <li><a href="/page2.html">2</a></li>
+                        
+                    
+                
+                    
+                        
+                            <li><a href="/page3.html">3</a></li>
+                        
+                    
+                
+                    
+                        
+                            <li><a href="/page4.html">4</a></li>
+                        
+                    
+                
+                    
+                        <li class="active"><a href="#">5 <span class="sr-only">(current)</span></a></li>
+                    
+                
+              </ul>
       
-        <a href="/tag/devops.html">
-            <span class="label label-default" itemprop="about">devops</span>
-        </a>
-      
-        <a href="/tag/ci/cd.html">
-            <span class="label label-default" itemprop="about">ci/cd</span>
-        </a>
-      
-        <a href="/tag/drone.html">
-            <span class="label label-default" itemprop="about">drone</span>
-        </a>
-      
-        <a href="/tag/tutorial.html">
-            <span class="label label-default" itemprop="about">tutorial</span>
-        </a>
-      
-        <a href="/tag/docker.html">
-            <span class="label label-default" itemprop="about">docker</span>
-        </a>
-      
-    </div>
     </div>
 
         </div>
@@ -472,6 +376,8 @@
                         </div>
                         <div class="panel-body">
                             <ul>
+                                
+                                <li><a href="/2012-11-28/create_mysql_stored_procedures1.html" title="نحوه ایجاد یک Stored Procedures در MySQL5- بخش اول">نحوه ایجاد یک Stored Procedures در MySQL5- بخش اول</a></li>
                                 
                             </ul>
 

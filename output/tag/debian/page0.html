@@ -78,7 +78,7 @@
         border-left: 5px solid #6ce26c;
       }
     .panel-body {
-        padding: 10px 0;
+        margin-right: -20px;
     }
     .panel-body ul li{
         margin: 5px 0;
@@ -126,29 +126,48 @@
     }
 
     #back2Top {
-    width: 40px;
-    line-height: 40px;
-    overflow: hidden;
-    z-index: 999;
-    display: none;
-    cursor: pointer;
-    -moz-transform: rotate(270deg);
-    -webkit-transform: rotate(270deg);
-    -o-transform: rotate(270deg);
-    -ms-transform: rotate(270deg);
-    transform: rotate(270deg);
-    position: fixed;
-    bottom: 50px;
-    right: 0;
-    background-color: #DDD;
-    text-align: center;
-    font-size: 30px;
-    text-decoration: none;
+        width: 40px;
+        line-height: 40px;
+        overflow: hidden;
+        z-index: 999;
+        display: none;
+        cursor: pointer;
+        -moz-transform: rotate(270deg);
+        -webkit-transform: rotate(270deg);
+        -o-transform: rotate(270deg);
+        -ms-transform: rotate(270deg);
+        transform: rotate(270deg);
+        position: fixed;
+        bottom: 50px;
+        right: 0;
+        background-color: #DDD;
+        text-align: center;
+        font-size: 30px;
+        text-decoration: none;
     }
     #back2Top:hover {
         background-color: #DDF;
         color: #000;
     }
+    .box {
+        width: 200px;
+        height: 200px;
+        background-color: lightblue;
+        border: 2px solid black;
+        padding: 20px;
+        margin: 20px;
+    }
+    .row-line{
+        margin-bottom: 10px;
+        margin-top: 10px;
+        overflow: hidden;
+    }
+    .img-post{
+        width: 100%;
+        height: 100%;
+        border-radius:20px
+    }
+
     </style>
 </head>
 <body>
@@ -193,107 +212,140 @@
       <h2>پستهای تگ شده با  'debian'</h2>
       <p class="lead"></p>
     </div>
+    <div class="row">
       
-        <h3><a href="/2025-04-12/installing-docker-on-debian12.html" title="نصب Docker روی Debian 12 bookworm">نصب Docker روی Debian 12 bookworm</a></h3>
+        <div class="row-line">
+            <div class="col-md-9">
+            <h3><a href="/2025-04-12/installing-docker-on-debian12.html" title="نصب Docker روی Debian 12 bookworm">نصب Docker روی Debian 12 bookworm</a></h3>
             
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
+            <a href="/tag/linux.html">
+                <span class="label label-default">linux</span></a>
             
-                <a href="/tag/docker.html">
-                    <span class="label label-default">docker</span></a>
+            <a href="/tag/docker.html">
+                <span class="label label-default">docker</span></a>
             
-                <a href="/tag/debian.html">
-                    <span class="label label-default">debian</span></a>
+            <a href="/tag/debian.html">
+                <span class="label label-default">debian</span></a>
             
-                <a href="/tag/virtualization.html">
-                    <span class="label label-default">virtualization</span></a>
+            <a href="/tag/virtualization.html">
+                <span class="label label-default">virtualization</span></a>
             
-        <p>نحوه نصب Docker بر روی سیستم عامل محبوب  Debian 12 Bookworm.</p>
-        <hr />
+            <p>نحوه نصب Docker بر روی سیستم عامل محبوب  Debian 12 Bookworm.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/installing-docker-on-debian12.jpg" alt="نصب Docker روی Debian 12 bookworm" class="img-post" />
+            </div>
+        </div>
       
-        <h3><a href="/2025-03-26/linux-server-as-gateway.html" title="راه‌اندازی یک سرور لینوکس به عنوان Gateway">راه‌اندازی یک سرور لینوکس به عنوان Gateway</a></h3>
+        <div class="row-line">
+            <div class="col-md-9">
+            <h3><a href="/2025-03-26/linux-server-as-gateway.html" title="راه‌اندازی یک سرور لینوکس به عنوان Gateway">راه‌اندازی یک سرور لینوکس به عنوان Gateway</a></h3>
             
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
+            <a href="/tag/linux.html">
+                <span class="label label-default">linux</span></a>
             
-                <a href="/tag/tutorial.html">
-                    <span class="label label-default">tutorial</span></a>
+            <a href="/tag/tutorial.html">
+                <span class="label label-default">tutorial</span></a>
             
-                <a href="/tag/learn.html">
-                    <span class="label label-default">learn</span></a>
+            <a href="/tag/learn.html">
+                <span class="label label-default">learn</span></a>
             
-                <a href="/tag/debian.html">
-                    <span class="label label-default">debian</span></a>
+            <a href="/tag/debian.html">
+                <span class="label label-default">debian</span></a>
             
-                <a href="/tag/network.html">
-                    <span class="label label-default">network</span></a>
+            <a href="/tag/network.html">
+                <span class="label label-default">network</span></a>
             
-        <p>برای اینکه یک سرور لینوکس را به عنوان Gateway  راه‌اندازی کنید، باید آن را به یک روتر تبدیل کنید تا ترافیک شبکه را بین دو شبکه مختلف، مانند شبکه داخلی و اینترنت، هدایت کند.</p>
-        <hr />
+            <p>برای اینکه یک سرور لینوکس را به عنوان Gateway  راه‌اندازی کنید، باید آن را به یک روتر تبدیل کنید تا ترافیک شبکه را بین دو شبکه مختلف، مانند شبکه داخلی و اینترنت، هدایت کند.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/linux-server-as-gateway.jpg" alt="راه‌اندازی یک سرور لینوکس به عنوان Gateway" class="img-post" />
+            </div>
+        </div>
       
-        <h3><a href="/2023-12-03/Using-all-CPU-with-tar.html" title="فشرده سازی با استفاده از تمام ظرفیت CPU">فشرده سازی با استفاده از تمام ظرفیت CPU</a></h3>
+        <div class="row-line">
+            <div class="col-md-9">
+            <h3><a href="/2023-12-03/Using-all-CPU-with-tar.html" title="فشرده سازی با استفاده از تمام ظرفیت CPU">فشرده سازی با استفاده از تمام ظرفیت CPU</a></h3>
             
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
+            <a href="/tag/linux.html">
+                <span class="label label-default">linux</span></a>
             
-                <a href="/tag/tar.html">
-                    <span class="label label-default">tar</span></a>
+            <a href="/tag/tar.html">
+                <span class="label label-default">tar</span></a>
             
-                <a href="/tag/gzip.html">
-                    <span class="label label-default">gzip</span></a>
+            <a href="/tag/gzip.html">
+                <span class="label label-default">gzip</span></a>
             
-                <a href="/tag/shell.html">
-                    <span class="label label-default">shell</span></a>
+            <a href="/tag/shell.html">
+                <span class="label label-default">shell</span></a>
             
-                <a href="/tag/debian.html">
-                    <span class="label label-default">debian</span></a>
+            <a href="/tag/debian.html">
+                <span class="label label-default">debian</span></a>
             
-                <a href="/tag/tips.html">
-                    <span class="label label-default">tips</span></a>
+            <a href="/tag/tips.html">
+                <span class="label label-default">tips</span></a>
             
-        <p>با برنامه pigz می توان از تمام ظرفیت cpu برای فشرده سازی با دستور tar استفاده کرد.</p>
-        <hr />
+            <p>با برنامه pigz می توان از تمام ظرفیت cpu برای فشرده سازی با دستور tar استفاده کرد.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/Using-all-CPU-with-tar.jpg" alt="فشرده سازی با استفاده از تمام ظرفیت CPU" class="img-post" />
+            </div>
+        </div>
       
-        <h3><a href="/2021-03-07/galera-cluster-debian-10.html" title="نصب Galera Cluster بر روی debian 10">نصب Galera Cluster بر روی debian 10</a></h3>
+        <div class="row-line">
+            <div class="col-md-9">
+            <h3><a href="/2021-03-07/galera-cluster-debian-10.html" title="نصب Galera Cluster بر روی debian 10">نصب Galera Cluster بر روی debian 10</a></h3>
             
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
+            <a href="/tag/linux.html">
+                <span class="label label-default">linux</span></a>
             
-                <a href="/tag/debian.html">
-                    <span class="label label-default">debian</span></a>
+            <a href="/tag/debian.html">
+                <span class="label label-default">debian</span></a>
             
-                <a href="/tag/galera.html">
-                    <span class="label label-default">galera</span></a>
+            <a href="/tag/galera.html">
+                <span class="label label-default">galera</span></a>
             
-                <a href="/tag/mariadb.html">
-                    <span class="label label-default">mariadb</span></a>
+            <a href="/tag/mariadb.html">
+                <span class="label label-default">mariadb</span></a>
             
-                <a href="/tag/cluster.html">
-                    <span class="label label-default">cluster</span></a>
+            <a href="/tag/cluster.html">
+                <span class="label label-default">cluster</span></a>
             
-        <p>یک برنامه کلاستر همزمان چند سرور Master-Master برمبنای replication همزمان می باشد.</p>
-        <hr />
+            <p>یک برنامه کلاستر همزمان چند سرور Master-Master برمبنای replication همزمان می باشد.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/galera-cluster-debian-10.jpg" alt="نصب Galera Cluster بر روی debian 10" class="img-post" />
+            </div>
+        </div>
       
-        <h3><a href="/2017-08-16/galera_cluster.html" title="نصب Galer Cluster بر روی debian8">نصب Galer Cluster بر روی debian8</a></h3>
+        <div class="row-line">
+            <div class="col-md-9">
+            <h3><a href="/2017-08-16/galera_cluster.html" title="نصب Galer Cluster بر روی debian8">نصب Galer Cluster بر روی debian8</a></h3>
             
-                <a href="/tag/linux.html">
-                    <span class="label label-default">linux</span></a>
+            <a href="/tag/linux.html">
+                <span class="label label-default">linux</span></a>
             
-                <a href="/tag/debian.html">
-                    <span class="label label-default">debian</span></a>
+            <a href="/tag/debian.html">
+                <span class="label label-default">debian</span></a>
             
-                <a href="/tag/galera.html">
-                    <span class="label label-default">galera</span></a>
+            <a href="/tag/galera.html">
+                <span class="label label-default">galera</span></a>
             
-                <a href="/tag/mariadb.html">
-                    <span class="label label-default">mariadb</span></a>
+            <a href="/tag/mariadb.html">
+                <span class="label label-default">mariadb</span></a>
             
-                <a href="/tag/cluster.html">
-                    <span class="label label-default">cluster</span></a>
+            <a href="/tag/cluster.html">
+                <span class="label label-default">cluster</span></a>
             
-        <p>یک برنامه کلاستر همزمان چند سرور Master-Master برمبنای replication همزمان می باشد.</p>
-        <hr />
+            <p>یک برنامه کلاستر همزمان چند سرور Master-Master برمبنای replication همزمان می باشد.</p>
+            </div>
+            <div class="col-md-3">
+                <img src="https://shgn.ir/images/galera_cluster.jpg" alt="نصب Galer Cluster بر روی debian8" class="img-post" />
+            </div>
+        </div>
       
+
+
       
               <ul class="pagination">
                 
@@ -303,6 +355,7 @@
                 
               </ul>
       
+    </div>
 
         </div>
         <div class="col-md-3">
