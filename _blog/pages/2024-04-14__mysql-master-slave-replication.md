@@ -1,4 +1,4 @@
-title: راه اندازی Mysql/Mariadb Slave Replication
+title: همه چیز درباره راه اندازی Mysql/Mariadb Slave Replication
 briefing: یکی از روش های راه اندازی رپلیکیشن در دیتابیس ها master/slave است
 date_time: 2024-04-14 16:10
 slug: mysql-master-slave-replication
@@ -233,6 +233,22 @@ log-bin ویژگی ثبت باینری لاگ ها را فعال می کند
 
 اگر رپلیکیشن تشخیص دهد که تراکنش های روی مستر با هم کنفلیکتی ندارند، می تواند آن ها را به صورت 
 موازی روی اسلیوها پردازش کند.
+
+#رپلیکیشن با تأخیر
+رپلیکیشن تأخیری این امکان را فراهم می‌کند که مشخص شود یک نود اسلیو باید به اندازه‌ی معینی 
+از زمان (بر حسب ثانیه) از پایگاه داده اصلی عقب‌تر باشد. قبل از اجرای هر رویداد، رپلیکا 
+ابتدا منتظر می‌ماند تا مدت زمان تعیین‌شده برای تأخیر در سرور اصلی بگذرد، نتیجه این است که 
+رپلیکا وضعیت گذشته‌ای از سرور اصلی را ارائه می‌دهد.
+
+مقدار پیش‌فرض این تأخیر صفر است (بدون تأخیر)، و حداکثر مقدار مجاز ۲۱۴۷۴۸۳۶۴۷ ثانیه 
+(تقریباً ۶۸ سال) می‌باشد.
+
+برای فعال‌سازی تکثیر تأخیری از گزینه‌ی `MASTER_DELAY` در دستور `CHANGE MASTER` استفاده می‌شود:
+
+      stop slave;
+      CHANGE MASTER TO master_delay=3600;
+      start slave;
+
 #منابع
  * [MySQL/MariaDB Master-Slave Replication](https://medium.com/@chandika.s/mysql-mariadb-master-slave-replication-feca556baa8f)
  * [MySQL Replication Setup without Downtime](https://linuxscriptshub.com/mysql-replication-setup-without-downtime/)
@@ -240,3 +256,4 @@ log-bin ویژگی ثبت باینری لاگ ها را فعال می کند
  * [Setting Up Replication](https://mariadb.com/kb/en/setting-up-replication/)
  * [SET GLOBAL SQL_SLAVE_SKIP_COUNTER](https://mariadb.com/kb/en/set-global-sql_slave_skip_counter/)
  * [Alter Lock Strategy](https://mariadb.com/kb/en/innodb-online-ddl-overview/#alter-locking-strategies)
+ * [Delayed Replication](https://mariadb.com/kb/en/delayed-replication/)

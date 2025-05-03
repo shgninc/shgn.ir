@@ -16,7 +16,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="https://shgn.ir/images/favicon.ico">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title> راه اندازی Mysql/Mariadb Slave Replication - دست نوشته های یک تازه کار </title>
+    <title> همه چیز درباره راه اندازی Mysql/Mariadb Slave Replication - دست نوشته های یک تازه کار </title>
     <meta name="description"
           content="یکی از روش های راه اندازی رپلیکیشن در دیتابیس ها master/slave است"/>
     <meta name="keywords"
@@ -211,7 +211,7 @@
     <div itemscope itemtype="http://schema.org/NewsArticle">
     <meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="http://https://shgn.ir/2024-04-14/mysql-master-slave-replication.html"/>
     <div class="page-header">
-      <h3 itemprop="name">راه اندازی Mysql/Mariadb Slave Replication</h3>
+      <h3 itemprop="name">همه چیز درباره راه اندازی Mysql/Mariadb Slave Replication</h3>
       
       
         <small>
@@ -439,6 +439,19 @@ mysql -uroot -p mydb &lt; ~/mysqldump.sql
 
 <p>اگر رپلیکیشن تشخیص دهد که تراکنش های روی مستر با هم کنفلیکتی ندارند، می تواند آن ها را به صورت 
 موازی روی اسلیوها پردازش کند.</p>
+<h1>رپلیکیشن با تأخیر</h1>
+<p>رپلیکیشن تأخیری این امکان را فراهم می‌کند که مشخص شود یک نود اسلیو باید به اندازه‌ی معینی 
+از زمان (بر حسب ثانیه) از پایگاه داده اصلی عقب‌تر باشد. قبل از اجرای هر رویداد، رپلیکا 
+ابتدا منتظر می‌ماند تا مدت زمان تعیین‌شده برای تأخیر در سرور اصلی بگذرد، نتیجه این است که 
+رپلیکا وضعیت گذشته‌ای از سرور اصلی را ارائه می‌دهد.</p>
+<p>مقدار پیش‌فرض این تأخیر صفر است (بدون تأخیر)، و حداکثر مقدار مجاز ۲۱۴۷۴۸۳۶۴۷ ثانیه 
+(تقریباً ۶۸ سال) می‌باشد.</p>
+<p>برای فعال‌سازی تکثیر تأخیری از گزینه‌ی <code>MASTER_DELAY</code> در دستور <code>CHANGE MASTER</code> استفاده می‌شود:</p>
+<div class="codehilite"><pre><span></span><code>  stop slave;
+  CHANGE MASTER TO master_delay=3600;
+  start slave;
+</code></pre></div>
+
 <h1>منابع</h1>
 <ul>
 <li><a href="https://medium.com/@chandika.s/mysql-mariadb-master-slave-replication-feca556baa8f">MySQL/MariaDB Master-Slave Replication</a></li>
@@ -447,6 +460,7 @@ mysql -uroot -p mydb &lt; ~/mysqldump.sql
 <li><a href="https://mariadb.com/kb/en/setting-up-replication/">Setting Up Replication</a></li>
 <li><a href="https://mariadb.com/kb/en/set-global-sql_slave_skip_counter/">SET GLOBAL SQL_SLAVE_SKIP_COUNTER</a></li>
 <li><a href="https://mariadb.com/kb/en/innodb-online-ddl-overview/#alter-locking-strategies">Alter Lock Strategy</a></li>
+<li><a href="https://mariadb.com/kb/en/delayed-replication/">Delayed Replication</a></li>
 </ul>
       </section>
       <div>
@@ -540,7 +554,7 @@ mysql -uroot -p mydb &lt; ~/mysqldump.sql
                                        title="نصب Galer Cluster بر روی debian8">نصب Galer Cluster بر روی debian8</a>
                                 </li>
                                 <li><a href="https://shgn.ir/2024-04-14/mysql-master-slave-replication.html"
-                                       title="راه اندازی Mysql/Mariadb Slave Replication">راه اندازی Mysql/Mariadb Slave Replication</a>
+                                       title="همه چیز درباره راه اندازی Mysql/Mariadb Slave Replication">همه چیز درباره راه اندازی Mysql/Mariadb Slave Replication</a>
                                 </li>
                                 <li><a href="https://shgn.ir/2023-12-03/Using-all-CPU-with-tar.html"
                                        title="فشرده سازی با استفاده از تمام ظرفیت CPU">فشرده سازی با استفاده از تمام ظرفیت CPU</a>
