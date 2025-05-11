@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!— Global site tag (gtag.js) - Google Analytics —>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-124515881-2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-124515881-2');
+
+    </script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="https://shgn.ir/images/favicon.ico">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title> مدیریت سرویس maxscale - دست نوشته های یک تازه کار </title>
+    <meta name="description"
+          content="در این نوشته با کنترل و مدیریت سرویس maxscale در حین اجرا آشنا می شویم."/>
+    <meta name="keywords"
+          content="لینوکس،لینوکس مشهد،آموزش,پایتون,پایتون مشهد,آموزش لینوکس,دیتابیس,آموزش دیتابیس,برنامه نویسی,linux,database,mysql,mariadb,datamart,galera cluster,apache,big data,dataware house,cluster,galera,percona,python,php,tutorial,debian,ubuntu,centos,arch linux,mashhad linux,iran linux,debian mashhad, database, mariadb, mysql, maxscale"/>
+
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+          integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+    <!--    <link href="https://rawgit.com/richleland/pygments-css/master/github.css" rel="stylesheet" crossorigin="anonymous">-->
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <style>
+    body {
+      direction: rtl;
+      font-family: Vazirmatn, sans-serif;
+      background-color: rgba(226,232,240,.8)
+    }
+    p {
+        font-size: 1.3em;
+        line-height: 1.5em;
+        text-align: justify;
+      }
+    p img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .header {
+        margin-top: 150px;
+        text-align: center;
+    }
+    .header h1{
+        text-align: center;
+        font-size: 50px;
+        margin: 0;
+        font-family: 'Inter';
+    }
+    .counter-box {
+      width: 350px;
+    }
+    .counter-box h2 {
+      font-size: 60px;
+      margin-right: 90px;
+    }
+    .counter-box p{
+        text-align: center;
+      font-family: arial;
+    }
+    pre {
+        direction: ltr;
+        border-left: 5px solid #6ce26c;
+      }
+    .panel-body {
+        margin-right: -20px;
+    }
+    .panel-body ul li{
+        margin: 5px 0;
+    }
+    a {
+        color: #4608ad;
+      }
+    .panel-group .panel {
+        margin-bottom: 5px;
+        border-radius: 1.1rem
+    }
+    .panel-primary > .panel-heading {
+        background-color: #4608ad;
+        border-radius: 1.1rem
+    }
+    .navbar-default {
+        background-color: #4608ad;
+    }
+    .navbar-default .navbar-brand {
+        color: #ffffff;
+    }
+    .navbar-default .navbar-nav > li > a {
+        color: #ffffff;
+        font-size:initial;
+    }
+    .navbar-default .navbar-nav > li > a:hover{
+        color: #00ffd9;
+    }
+    .navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:focus, .navbar-default .navbar-nav > .open > a:hover{
+        color: #4608ad;
+    }
+
+    .dropdown-menu{
+        background-color: #4608ad;
+        color:#ffffff;
+        font-size:initial;
+    }
+    .dropdown-menu > li > a{
+        color:#ffffff;
+        font-size:initial;
+    }
+    .dropdown-menu > li > a:hover{
+        color: #00ffd9;
+        background-color:#4608ad;
+    }
+
+    #back2Top {
+        width: 40px;
+        line-height: 40px;
+        overflow: hidden;
+        z-index: 999;
+        display: none;
+        cursor: pointer;
+        -moz-transform: rotate(270deg);
+        -webkit-transform: rotate(270deg);
+        -o-transform: rotate(270deg);
+        -ms-transform: rotate(270deg);
+        transform: rotate(270deg);
+        position: fixed;
+        bottom: 50px;
+        right: 0;
+        background-color: #DDD;
+        text-align: center;
+        font-size: 30px;
+        text-decoration: none;
+    }
+    #back2Top:hover {
+        background-color: #DDF;
+        color: #000;
+    }
+    .box {
+        width: 200px;
+        height: 200px;
+        background-color: lightblue;
+        border: 2px solid black;
+        padding: 20px;
+        margin: 20px;
+    }
+    .row-line{
+        margin-bottom: 10px;
+        margin-top: 10px;
+        overflow: hidden;
+    }
+    .img-post{
+        width: 100%;
+        height: 100%;
+        border-radius:20px
+    }
+
+    </style>
+</head>
+<body>
+
+<a id="top"></a>
+<div id="scroollto1"></div>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header navbar-right">
+            <a class="navbar-brand" href="/">دست نوشته های یک تازه کار</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            
+            
+            <li><a href="https://shgn.ir/about.html" title="درباره ما">درباره ما</a></li>
+            
+            <li><a href="https://shgn.ir/contacus.html" title="ارتباط با ما">ارتباط با ما</a></li>
+            
+            <li><a href="https://shgn.ir/links.html" title="لینک های مفید">لینک های مفید</a></li>
+            
+            <li><a href="https://shgn.ir/tag/database.html" title="دیتابیس">دیتابیس</a></li>
+            
+            <li><a href="https://shgn.ir/tag/linux.html" title="لینوکس">لینوکس</a></li>
+            
+            <li class="dropdown">
+                <a href="https://shgn.ir/tag/learn.html" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                   aria-expanded="false">آموزش <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="https://shgn.ir/tag/lpic1.html">دوره LPIC1</a></li>
+                </ul>
+            </li>
+            
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-9">
+            
+    <div itemscope itemtype="http://schema.org/NewsArticle">
+    <meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="http://https://shgn.ir/2025-05-07/maxscale-management-by-maxctrl.html"/>
+    <div class="page-header">
+      <h3 itemprop="name">مدیریت سرویس maxscale</h3>
+      
+      
+        <small>
+          <p class="text-right">
+            ارسال شده <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+                توسط <span itemprop="name">سید سجاد شاهچراغیان</span>
+              </span>
+              در تاریخ <span itemprop="datePublished">2025-05-07</span>
+          </p>
+        </small>
+      
+    </div>
+      <section itemprop="articleBody">
+        <p>در مطلب قبلی،
+<a href="https://shgn.ir/2024-11-24/failover-by-maxscale.html">جلوگیری توقف سرویس دهی دیتابیس با maxscale</a>
+پیرامون نحوه راه اندازی و انحام تنظیمات سرویس <code>maxscale</code> را بیان کردیم.</p>
+<p>با توجه به مدل کارکرد و اهمیت این سرویس که آمده، تا سرویس دهی بدون وقفه را انجام دهد، 
+کنترل و مدیریت روی این سرویس نیز از نظر نداشتن توقف بشدت دارای اهمیت می باشد</p>
+<p>در این نوشته با کنترل و مدیریت سرویس <code>maxscale</code> برای موارد زیر که برای کنترل و مدیریت یک لودبالانسر 
+مورد نیاز می باشد، آشنا می شویم:</p>
+<ul>
+<li>مدیریت سرورها</li>
+<li>مدیریت سرویس ها</li>
+<li>مدیریت مانتورها</li>
+<li>مدیریت listenerها</li>
+<li>مدیریت فیلترها</li>
+<li>مدیریت maxscale</li>
+<li>مدیریت لاگ ها</li>
+</ul>
+<p>پیش فرض این است که طبق نوشته قبلی که در بالاتر به آن اشاره شد، ما یک کلاستر از <code>maxscale</code> با سرورها، مانتورینگ
+listener و ... داریم و در ادامه قصد کنترل أن ها بدون قطعی و در حال اجرا را داریم.</p>
+<h1>مدیریت سروها</h1>
+<p>ابتدا لازم داریم تا لیستی از سرورهای موجود را مشاهده کنیم:</p>
+<h2>فهرست یا نمایش سرورها</h2>
+<p>با دستور زیر لستی از سرورها ومشخصات آن ها را می توان مشاهده کرد:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">maxctrl</span><span class="o">:</span><span class="w"> </span><span class="n">list</span><span class="w"> </span><span class="n">servers</span>
+<span class="err">┌──────────┬───────────────┬──────┬─────────────┬─────────────────────────┬─────────────┐</span>
+<span class="err">│</span><span class="w"> </span><span class="n">Server</span><span class="w">   </span><span class="err">│</span><span class="w"> </span><span class="n">Address</span><span class="w">       </span><span class="err">│</span><span class="w"> </span><span class="n">Port</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="n">Connections</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="n">State</span><span class="w">                   </span><span class="err">│</span><span class="w"> </span><span class="n">GTID</span><span class="w">        </span><span class="err">│</span>
+<span class="err">├──────────┼───────────────┼──────┼─────────────┼─────────────────────────┼─────────────┤</span>
+<span class="err">│</span><span class="w"> </span><span class="n">mariadb1</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="mf">192.168</span><span class="o">.</span><span class="mf">0.201</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="mi">3306</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="mi">0</span><span class="w">           </span><span class="err">│</span><span class="w"> </span><span class="n">Slave</span><span class="o">,</span><span class="w"> </span><span class="n">Synced</span><span class="o">,</span><span class="w"> </span><span class="n">Running</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="mi">100</span><span class="o">-</span><span class="mi">100</span><span class="o">-</span><span class="mi">203</span><span class="w"> </span><span class="err">│</span>
+<span class="err">├──────────┼───────────────┼──────┼─────────────┼─────────────────────────┼─────────────┤</span>
+<span class="err">│</span><span class="w"> </span><span class="n">mariadb2</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="mf">192.168</span><span class="o">.</span><span class="mf">0.202</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="mi">3306</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="mi">0</span><span class="w">           </span><span class="err">│</span><span class="w"> </span><span class="n">Slave</span><span class="o">,</span><span class="w"> </span><span class="n">Synced</span><span class="o">,</span><span class="w"> </span><span class="n">Running</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="mi">100</span><span class="o">-</span><span class="mi">100</span><span class="o">-</span><span class="mi">203</span><span class="w"> </span><span class="err">│</span>
+<span class="err">├──────────┼───────────────┼──────┼─────────────┼─────────────────────────┼─────────────┤</span>
+<span class="err">│</span><span class="w"> </span><span class="n">mariadb3</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="mf">192.168</span><span class="o">.</span><span class="mf">0.203</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="mi">3306</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="mi">0</span><span class="w">           </span><span class="err">│</span><span class="w"> </span><span class="n">Master</span><span class="o">,</span><span class="w"> </span><span class="n">Synced</span><span class="o">,</span><span class="w"> </span><span class="n">Running</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="mi">100</span><span class="o">-</span><span class="mi">100</span><span class="o">-</span><span class="mi">203</span><span class="w"> </span><span class="err">│</span>
+<span class="err">└──────────┴───────────────┴──────┴─────────────┴─────────────────────────┴─────────────┘</span>
+</code></pre></div>
+
+<p><code>MaxScale</code> از این وضعیت، برای الگوریتم مسیردهی استفاده می‌ کند:</p>
+<ul>
+<li>Master (مستر) – در یک کلاستر با رپلیکیشن، این نقش به عنوان نود قابل نوشتن (Write-Master) در نظر گرفته می‌شود.</li>
+<li>Slave (اسلیو) – نودهای با وضعیت خواندن، توسط <code>maxscale</code> برای عملبات (کوئری های)خواندن انتخاب می شوند. 
+اگر تمام نودهای اسلیو از دسترس خارج شوند ولی مستر هنوز در دسترس باشد، روتر از مستر استفاده خواهد کرد.</li>
+<li>Synced (همگام) – نشان دهنده وضعیت نودی از کلاستر/رپلیکیشن است که با سایر نودها در وضعیت همگام قرار دارد.</li>
+<li>Running (در حال اجرا) – نشان دهنده وضعیت سروری که فعال و قابل دسترسی است. تمامی سرورهایی که <code>MariaDB MaxScale</code>
+قادر به اتصال به آن‌هاست، به عنوان "در حال اجرا" علامت‌گذاری می‌شوند.</li>
+</ul>
+<p>و برای نمایش جزئیات بیشتر از وضعیت و مشخصات یک سرور دیتبایس با دستور زیرقابل انجام می باشد:</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">maxctrl</span><span class="w"> </span><span class="k">show</span><span class="w"> </span><span class="nv">server</span><span class="w"> </span><span class="nv">mariadb1</span>
+</code></pre></div>
+
+<h1>تغییر وضعیت سرور به حالت تعمیرات</h1>
+<p>گاهی پش می آید که لازم است تا برای تغییرات/تعمیرات روی یک سرور بکند دیتبایس، هیچ کوئری ای به آن سرور نرود،
+ پس باید موقتا از لودبالانسر خارج شود. اصطلاحا به این وضعیت <code>maintenance mode</code> گفته می شود. برای تنظیم این
+حالب برای یک سرور، دستور زیر قابل اجرا می باشد:</p>
+<div class="codehilite"><pre><span></span><code>maxctrl set server mariadb1 maintenance
+OK
+</code></pre></div>
+
+<p>پس اگر اکنون وضعیت سرورهای گرفته شود، به صورت زیر تغییر می کند:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">maxctrl</span><span class="o">:</span><span class="w"> </span><span class="n">show</span><span class="w"> </span><span class="n">server</span><span class="w"> </span><span class="n">mariadb1</span>
+<span class="o">...</span>
+<span class="err">│</span><span class="w"> </span><span class="n">State</span><span class="w">            </span><span class="err">│</span><span class="w"> </span><span class="n">Maintenance</span><span class="o">,</span><span class="w"> </span><span class="n">Running</span>
+<span class="o">...</span>
+</code></pre></div>
+
+<p>در این وضعیت هیچ ارتباط و کوئری ای سمت این سرور ارسال نخواهد شد.</p>
+<p>همچنین برای خروج از وضعیت تغییرات/تعمیرات می توان دستور زیر را اجرا نمود:</p>
+<div class="codehilite"><pre><span></span><code>maxctrl clear server mariadb1 maintenace
+</code></pre></div>
+
+<h1>ایجاد سرور جدید</h1>
+<p>یکی از مرسوم ترین عملیات در لودبالانسر، ایجاد و اضافه نمودن یک بکند (سرور دیتابیس جدید) می باشد. برای این مهم
+ابتدا باید سرور را در لودبالانسر ایجاد نمود:</p>
+<div class="codehilite"><pre><span></span><code>maxctrl create server mariadb4 address=192.168.0.204 port=3306
+</code></pre></div>
+
+<p>و سپس آن نود به یک مانیتور اضافه شود:</p>
+<div class="codehilite"><pre><span></span><code>maxctrl link monitor cluster-monitor mariadb4
+</code></pre></div>
+
+<p>حالا این سرور در مانتورینگ اضافه شده و قابلیت <code>failover</code> و <code>autorejoin</code> به آن افزوده شده است. اما قابلیت 
+سرویس دهی و ارسال کوئری به سمت آن هنوز مهیا نیست. برای افزودن این سرور به سرویس دهی، باید این سرور به <code>service</code>
+در <code>maxscale</code> اضافه شود.</p>
+<div class="codehilite"><pre><span></span><code> maxctrl link service cluster-service mariadb4
+</code></pre></div>
+
+<p>حالا سرور قابلیت سرویس دهی در لودبالانسر را دارد.</p>
+<h1>حذف یک سرور</h1>
+<p>برای حذف یک سرور بکند از لودبالانسر چند مرجله باید طی شود. ابتدا باید سرور از سرویس های مرتبط جدا شود
+سپس از مانیتورینگ جدا شود و در نهایت می توان سرور را حذف نمود.</p>
+<h2>حذف از سرویس ها</h2>
+<p>ابتدا باید سرور را از سرویس هایی که به آنها متصل است جدا کنیم تا از چرخه بکند سرویس دهی خارج شده و کوئری ای
+سمت آن ارسال نشود:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">maxctrl</span><span class="o">:</span><span class="w"> </span><span class="n">list</span><span class="w"> </span><span class="n">services</span>
+<span class="err">┌──────────────────┬────────────────┬─────────────┬───────────────────┬──────────────────────────────┐</span>
+<span class="err">│</span><span class="w"> </span><span class="n">Service</span><span class="w">          </span><span class="err">│</span><span class="w"> </span><span class="n">Router</span><span class="w">         </span><span class="err">│</span><span class="w"> </span><span class="n">Connections</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="n">Total</span><span class="w"> </span><span class="n">Connections</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="n">Servers</span><span class="w">                      </span><span class="err">│</span>
+<span class="err">├──────────────────┼────────────────┼─────────────┼───────────────────┼──────────────────────────────┤</span>
+<span class="err">│</span><span class="w"> </span><span class="n">cluster</span><span class="o">-</span><span class="n">Service</span><span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="n">readwritesplit</span><span class="w"> </span><span class="err">│</span><span class="w"> </span><span class="mi">1</span><span class="w">           </span><span class="err">│</span><span class="w"> </span><span class="mi">1</span><span class="w">                 </span><span class="err">│</span><span class="w"> </span><span class="n">mariadb1</span><span class="o">,</span><span class="w"> </span><span class="n">mariadb2</span><span class="o">,</span><span class="w"> </span><span class="n">mariadb4</span><span class="w"> </span><span class="err">│</span>
+<span class="err">└──────────────────┴────────────────┴─────────────┴───────────────────┴──────────────────────────────┘</span>
+</code></pre></div>
+
+<p>لیستی از سرویس ها و سرروهایی که به آن سرویس متصل هستند نمایش داده می شود. حالا بر این مبنا می توان 
+ادامه داد.</p>
+<p>در گام بعدی باید سرور را از سرویس جدا کرد:</p>
+<div class="codehilite"><pre><span></span><code><span class="w"> </span><span class="nv">maxctrl</span><span class="w"> </span><span class="k">unlink</span><span class="w"> </span><span class="nv">service</span><span class="w"> </span><span class="nv">cluster</span><span class="o">-</span><span class="nv">ervice</span><span class="w"> </span><span class="nv">mariadb4</span>
+<span class="w"> </span><span class="nv">OK</span>
+</code></pre></div>
+
+<p>حال سرور از سرویس جدا، و کوئری ای سمت آن ارسال نمی شود.</p>
+<h2>حذف از مانیتورینگ</h2>
+<p>سپس باید سرور را از مانتیورینگ <code>maxscale</code> نیز جدا نمود:</p>
+<div class="codehilite"><pre><span></span><code><span class="w"> </span><span class="nv">maxctrl</span><span class="w"> </span><span class="k">unlink</span><span class="w"> </span><span class="nv">monitor</span><span class="w"> </span><span class="nv">cluster</span><span class="o">-</span><span class="nv">monitor</span><span class="w"> </span><span class="nv">mariadb4</span>
+<span class="w"> </span><span class="nv">OK</span>
+</code></pre></div>
+
+<p>اکنون در لیست مانتورینگ، این سرور نبوده و <code>maxscale</code> من بعد کاری به آن نداشته و در قابلیت های <code>failover</code> و
+<code>autorejoin</code> و <code>switchover</code> نمی باشد.</p>
+<h2>حذف سرور</h2>
+<p>در پایان و بعد از جدایی سرور از سرویس و مانتورینگ، می توان خود سرور را از چرخه لودبالانسر <code>maxscael</code> حذف نمود:</p>
+<div class="codehilite"><pre><span></span><code>maxctrl destroy server mariadb4
+OK
+</code></pre></div>
+
+<h1>مدیریت مانیتورینگ maxscale</h1>
+<p>تعریف یک ماژول مانیتورینگ مناسب برای <code>maxscale</code> که به آن اجازه می دهد تا بهترین روتینگ کوئری ها 
+براساس وضعیت حاری نودها را انجام دهد، ضروری می باشد. یکی از این ماژول ها <code>mariadbmon</code> و یکی هم 
+<code>galeramon</code> می باشد که برای کلاستر <code>Galera</code> استفاده می شود</p>
+<p>قبل از ایجاد مانتورینگ، لازم است تا یک حساب کاربری با دسترسی های مورد نیاز ماژول مانتورینگ، روی نودهای 
+دیتابیس ایجاد شود. حداقل های این دسترسی ها به ترتیب زیر می باشند:</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">MariaDB</span><span class="o">&gt;</span><span class="w"> </span><span class="nv">CREATE</span><span class="w"> </span><span class="nv">USER</span><span class="w"> </span><span class="nv">maxscale_monitor</span>@<span class="s1">&#39;٪&#39;</span><span class="w"> </span><span class="nv">IDENTIFIED</span><span class="w"> </span><span class="nv">BY</span><span class="w"> </span><span class="s1">&#39;MaXSc4LeP4ss&#39;</span><span class="c1">;</span>
+<span class="nv">MariaDB</span><span class="o">&gt;</span><span class="w"> </span><span class="nv">GRANT</span><span class="w"> </span><span class="nv">SELECT</span><span class="w"> </span><span class="nv">ON</span><span class="w"> </span><span class="nv">mysql</span>.<span class="o">*</span><span class="w"> </span><span class="nv">TO</span><span class="w"> </span><span class="s1">&#39;maxscale_monitor&#39;</span>@<span class="s1">&#39;٪&#39;</span><span class="c1">;</span>
+<span class="nv">MariaDB</span><span class="o">&gt;</span><span class="w"> </span><span class="nv">GRANT</span><span class="w"> </span><span class="k">SHOW</span><span class="w"> </span><span class="nv">DATABASES</span><span class="w"> </span><span class="nv">ON</span><span class="w"> </span><span class="o">*</span>.<span class="o">*</span><span class="w"> </span><span class="nv">TO</span><span class="w"> </span><span class="s1">&#39;maxscale_monitor&#39;</span>@<span class="s1">&#39;٪&#39;</span><span class="c1">;</span>
+</code></pre></div>
+
+<p>البته کامل ان دسترسی ها در مطلب قبلی توضیح داده شده است.
+<a href="https://shgn.ir/2024-11-24/failover-by-maxscale.html">جلوگیری توقف سرویس دهی دیتابیس با maxscale</a></p>
+<p>برای ایجاد یک مانتور در حال اجرا سرویس <code>maxscale</code> از دستور زیر استفاده می شود:</p>
+<div class="codehilite"><pre><span></span><code>maxctrl create monitor cluster-monitor mariadbmon servers=mariadb1,mariadb2,mariadb3 user=maxscale_monitor password=MaXSc4LeP4ss
+OK
+</code></pre></div>
+
+<p>اکنون یک مانیتور با ۳ سرور در بکندش برای مانیتورینگ به وجود آمده است.</p>
+<h2>فهرست و نمایش مانیتور</h2>
+<p>برای نمایس لیست مانتیتورها از دستور زیر استفاده می شود:</p>
+<div class="codehilite"><pre><span></span><code>maxctrl list monitors
+┌─────────────────┬─────────┬──────────────────────────────┐
+│ Monitor         │ State   │ Servers                      │
+├─────────────────┼─────────┼──────────────────────────────┤
+│ cluster-monitor │ Running │ mariadb1, mariadb2, mariadb3 │
+└─────────────────┴─────────┴──────────────────────────────┘
+</code></pre></div>
+
+<p>برای مشاهده جزئیات بیشتر از یک مانیتور لازم است تا دستور زیر اجرا شود:</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">maxctrl</span><span class="w"> </span><span class="k">show</span><span class="w"> </span><span class="nv">monitor</span><span class="w"> </span><span class="nv">cluster</span><span class="o">-</span><span class="nv">monitor</span>
+</code></pre></div>
+
+<h2>استارت و استاپ مانیتور</h2>
+<p>متوقف کردن یک مانیتور در <code>maxscale</code> موجب توقف مانیتورینگ وضعیت سرورهای بکند می گردد، این کار در ارتباط
+با دستور <code>set server</code> و برای کنترل دستی وضعیت سرورها انجام می شود.</p>
+<div class="codehilite"><pre><span></span><code>maxctrl stop monitor cluster-monitor
+</code></pre></div>
+
+<p>و برای شروع مجددش به صورت زیر اجرا می شود:</p>
+<div class="codehilite"><pre><span></span><code>maxctrl start monitor cluster-monitor
+</code></pre></div>
+
+<h2>حذف یک مانیتور</h2>
+<p>به منظور حذف یک مانیتور در <code>maxscale</code> ابتدا لازم است تا تمامی سرورهایی که به آن متصل هستند را جدا نمود، 
+به همین جهت مراحل زیر اجرا می شوند:</p>
+<div class="codehilite"><pre><span></span><code>maxcltrl list monitors
+┌─────────────────┬─────────┬──────────────────────────────┐
+│ Monitor         │ State   │ Servers                      │
+├─────────────────┼─────────┼──────────────────────────────┤
+│ cluster-monitor │ Running │ mariadb1, mariadb2, mariadb3 │
+└─────────────────┴─────────┴──────────────────────────────┘
+</code></pre></div>
+
+<p>پس برا جدا سازی بدین سان عمل می شود:</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">maxctrl</span><span class="w"> </span><span class="k">unlink</span><span class="w"> </span><span class="nv">monitor</span><span class="w"> </span><span class="nv">cluster</span><span class="o">-</span><span class="nv">monitor</span><span class="w"> </span><span class="nv">mariadb1</span><span class="w"> </span><span class="nv">mariadb2</span><span class="w"> </span><span class="nv">mariadb3</span>
+</code></pre></div>
+
+<p>سپس، با اطمینان از جدا شدن سرورها از مانیتور می توان دستور حذف آن را اجرا نمود:</p>
+<div class="codehilite"><pre><span></span><code>maxctrl destroy monitor cluster-nobitor
+OK
+</code></pre></div>
+
+<h1>مدیریت سرویس</h1>
+<p>به منظور مدیریت سرویس یا به عبارت دیگر تقسیم یا توزیع کننده،ابتدا باید یک حساب کاربری با دسترسی های 
+موردنیاز روی نودهای دیتابیس ایجاد شود.</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">MariaDB</span><span class="o">&gt;</span><span class="w"> </span><span class="nv">CREATE</span><span class="w"> </span><span class="nv">USER</span><span class="w"> </span><span class="nv">maxscale_monitor</span>@<span class="s1">&#39;%&#39;</span><span class="w"> </span><span class="nv">IDENTIFIED</span><span class="w"> </span><span class="nv">BY</span><span class="w"> </span><span class="s1">&#39;MaXSc4LeP4ss&#39;</span><span class="c1">;</span>
+<span class="nv">MariaDB</span><span class="o">&gt;</span><span class="w"> </span><span class="nv">GRANT</span><span class="w"> </span><span class="nv">SELECT</span><span class="w"> </span><span class="nv">ON</span><span class="w"> </span><span class="nv">mysql</span>.<span class="o">*</span><span class="w"> </span><span class="nv">TO</span><span class="w"> </span><span class="s1">&#39;maxscale_monitor&#39;</span>@<span class="s1">&#39;%&#39;</span><span class="c1">;</span>
+<span class="nv">MariaDB</span><span class="o">&gt;</span><span class="w"> </span><span class="nv">GRANT</span><span class="w"> </span><span class="k">SHOW</span><span class="w"> </span><span class="nv">DATABASES</span><span class="w"> </span><span class="nv">ON</span><span class="w"> </span><span class="o">*</span>.<span class="o">*</span><span class="w"> </span><span class="nv">TO</span><span class="w"> </span><span class="s1">&#39;maxscale_monitor&#39;</span>@<span class="s1">&#39;%&#39;</span><span class="c1">;</span>
+</code></pre></div>
+
+<p>البته کامل آن دسترسی ها در مطلب قبلی توضیح داده شده است.
+<a href="https://shgn.ir/2024-11-24/failover-by-maxscale.html">جلوگیری توقف سرویس دهی دیتابیس با maxscale</a></p>
+<h2>ایجاد سرویس جدید</h2>
+<p>برای ایجاد سرویس جدید در <code>maxscale</code> دستور زیر را اجرا می کنیم:</p>
+<div class="codehilite"><pre><span></span><code>maxctrl create service زمعسفثق-Service readconnroute user=maxscale_monitor password=******
+OK
+</code></pre></div>
+
+<h2>لیست یا نمایش سرویس</h2>
+<p>برای نمایش لیستی از سرویس های دستور زیر را اجرا می کنیم:</p>
+<div class="codehilite"><pre><span></span><code>maxctrl list services
+┌──────────────────┬────────────────┬─────────────┬───────────────────┬──────────────────────────────┐
+│ Service          │ Router         │ Connections │ Total Connections │ Servers                      │
+├──────────────────┼────────────────┼─────────────┼───────────────────┼──────────────────────────────┤
+│ cluster-service  │ readwritesplit │ 1           │ 1                 │ mariadb1, mariadb2, mariadb3 │
+└──────────────────┴────────────────┴─────────────┴───────────────────┴──────────────────────────────┘
+</code></pre></div>
+
+<p>و برای مشاهده جزئیات یک سرویس کافی است دستور زیر اجرا شود:</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">maxctrl</span><span class="w"> </span><span class="k">show</span><span class="w"> </span><span class="nv">service</span><span class="w"> </span><span class="nv">cluster</span><span class="o">-</span><span class="nv">service</span>
+</code></pre></div>
+
+<h2>حذف یک سرویس</h2>
+<p>برای حذف یک سرویس ابتدا لازم است تا سرویس ها متصل به آن جدا شوند:</p>
+<div class="codehilite"><pre><span></span><code>maxctrl unlik servcie cluster-service mariadb1 mariadb2 mariadb3
+</code></pre></div>
+
+<p>ممکن است که سرویسی با <code>listener</code> با هم درآمیخته شده باشند پس این نیز باید حذف شود:</p>
+<div class="codehilite"><pre><span></span><code>maxctrl destroy listener cluste-service cluster-listener
+</code></pre></div>
+
+<p>و در پایان:</p>
+<div class="codehilite"><pre><span></span><code>maxctrl destroy service cluster-service
+</code></pre></div>
+
+<h2>اضافه و کم کردن سرور از سرویس</h2>
+<p>بعد ایجاد سرویس برای این که بتوان از آن سرویس استفاده نمود لازم است تا سرورهایی را به آن متل نمود:</p>
+<div class="codehilite"><pre><span></span><code>maxctrl link service cluster-service mariadb1 mariadb2 mariadb3
+</code></pre></div>
+
+<p>هم چنین برای جدا کردن یک سرور از سرویس:</p>
+<div class="codehilite"><pre><span></span><code>maxctrl unlik service cluster service mariadb4
+</code></pre></div>
+
+<h1>مدیریت listener</h1>
+<p>در نهایت برای ایجاد یک سرویس لودبالانسر مناسب لازم است تا به روشی پورتی را برای سرویس دهی باز و سرویس 
+دهنده آن را مشخص نمود که این مهم در <code>maxscale</code>  با <code>listener</code> ها انجام می شود.</p>
+<h2>لیست/نمایش listener</h2>
+<p>برای نمایش لیستی از listenerها دستور زیر را اجرا می کنیم:</p>
+<div class="codehilite"><pre><span></span><code>maxctrl list listeners
+</code></pre></div>
+
+<p>و برای مشاهده جزئیات بیشتر از یک listener کافی است تا دستور زیر را اجرا نمود:</p>
+<div class="codehilite"><pre><span></span><code><span class="w"> </span><span class="nv">maxctrl</span><span class="w"> </span><span class="k">show</span><span class="w"> </span><span class="nv">listener</span><span class="w"> </span><span class="nv">cluster</span><span class="o">-</span><span class="nv">listener</span>
+</code></pre></div>
+
+<h2>ایجاد listener</h2>
+<p>برای ایجاد یک <code>listener</code> از دستور زیر استفاده می شود:</p>
+<div class="codehilite"><pre><span></span><code>maxctrl create listener cluster-service cluster-listener 3307
+</code></pre></div>
+
+<h2>حذف یک listener</h2>
+<p>برای حذف یک listener کافی است تا دستور زیر را اجرا نمود:</p>
+<div class="codehilite"><pre><span></span><code>maxctrl destroy listener cluster-service cluster-listener
+</code></pre></div>
+
+<p>در پایان، دستورات بکار برده شده در این مقاله با نسخه ای از <code>maxscale</code> می باشد و ممکن است که به مرور 
+زمان این دستورات یا پارامترهای آنها تغییراتی داشته باشند پس، قبل از اقدام و اجرا روی حالت پروداکشن،
+مروری روی مستندات سایت اصلی خود <code>maxscale</code> داشته باشید.</p>
+<h1>منابع</h1>
+<ul>
+<li><a href="https://severalnines.com/blog/maxscale-basic-management-using-maxctrl-mariadb-cluster/">MaxScale Basic Management Using MaxCtrl for MariaDB Cluster</a></li>
+<li><a href="https://mariadb.com/kb/en/mariadb-maxscale-24-maxctrl/">MaxCtrl</a></li>
+<li><a href="https://mariadb.com/kb/en/maxctrl-setting-a-server-to-maintenance-mode-in-maxscale-with-maxctrl/">Setting a Server to Maintenance Mode in MaxScale with MaxCtrl</a></li>
+<li><a href="https://fossies.org/linux/MaxScale/Documentation/Tutorials/Administration-Tutorial.md">MariaDB MaxScale Administration Tutorial</a></li>
+</ul>
+      </section>
+      <div>
+        برچسب ها:
+      
+        <a href="/tag/database.html">
+            <span class="label label-default" itemprop="about">database</span>
+        </a>
+      
+        <a href="/tag/mariadb.html">
+            <span class="label label-default" itemprop="about">mariadb</span>
+        </a>
+      
+        <a href="/tag/mysql.html">
+            <span class="label label-default" itemprop="about">mysql</span>
+        </a>
+      
+        <a href="/tag/maxscale.html">
+            <span class="label label-default" itemprop="about">maxscale</span>
+        </a>
+      
+    </div>
+    </div>
+
+        </div>
+        <div class="col-md-3">
+            <div class="panel-group">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        من در stackexchange.com
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-md-3 col-md-offset-9">
+                            <a href="https://stackexchange.com/users/887576" target="_blank">
+                                <img src="https://stackexchange.com/users/flair/887576.png" width="208" height="58"
+                                     alt="profile for shgnInc on Stack Exchange, a network of free, community-driven Q&A sites"
+                                     title="profile for shgnInc on Stack Exchange, a network of free, community-driven Q&A sites">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-group">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        مطالب نوشته شده تا کنون
+                    </div>
+                    <div class="panel-body">
+                            <div class="counter-box">
+                                <h2>
+                                    <span class="count">64</span>
+                                </h2>
+                            </div>
+                    </div>
+                </div>
+                    <div class="panel-group">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                تجربیات به سال
+                            </div>
+                            <div class="panel-body">
+                                <div class="counter-box">
+                                    <h2>
+                                        <span class="count">20</span>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+
+                <div class="panel-group">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            مطالب مهم
+                        </div>
+                        <div class="panel-body">
+                            <ul>
+                                <li><a href="https://shgn.ir/2024-11-24/failover-by-maxscale.html"
+                                       title="جلوگیری توقف سرویس دهی دیتابیس با maxscale">جلوگیری توقف سرویس دهی دیتابیس با maxscale</a>
+                                </li>
+                                <li><a href="https://shgn.ir/2025-03-26/linux-server-as-gateway.html"}
+                                       title="راه‌اندازی یک سرور لینوکس به عنوان Gateway">راه‌اندازی یک سرور لینوکس به عنوان Gateway</a>
+                                </li>
+                                <li><a href="https://shgn.ir/2021-03-07/galera-cluster-debian-10.html"
+                                       title="نصب Galer Cluster بر روی debian 10">نصب Galer Cluster بر روی debian 10</a>
+                                </li>
+                                <li><a href="https://shgn.ir/2025-04-12/installing-docker-on-debian12.html"
+                                       title="نصب Docker روی Debian 12 bookworm">نصب Docker روی Debian 12 bookworm</a></li>
+                                <li><a href="https://shgn.ir2024-04-22/create-lvm-partiotion-in-linux.html"
+                                       title="ایجاد دیسک LVM در لینوکس">ایجاد دیسک LVM در لینوکس</a>
+                                </li>
+                                <li><a href="https://shgn.ir/2017-08-16/galera_cluster.html"
+                                       title="نصب Galer Cluster بر روی debian8">نصب Galer Cluster بر روی debian8</a>
+                                </li>
+                                <li><a href="https://shgn.ir/2024-04-14/mysql-master-slave-replication.html"
+                                       title="همه چیز درباره راه اندازی Mysql/Mariadb Slave Replication">همه چیز درباره راه اندازی Mysql/Mariadb Slave Replication</a>
+                                </li>
+                                <li><a href="https://shgn.ir/2023-12-03/Using-all-CPU-with-tar.html"
+                                       title="فشرده سازی با استفاده از تمام ظرفیت CPU">فشرده سازی با استفاده از تمام ظرفیت CPU</a>
+                                </li>
+                                <li><a href="https://shgn.ir/2022-10-22/reduce-LVM-Partition-size.html"
+                                       title="کاهش فضای دیسک LVM">کاهش فضای دیسک LVM</a>
+                                </li>
+                                <li><a href="https://shgn.ir/2023-12-03/Using-all-CPU-with-tar.html"
+                                       title="فشرده سازی با استفاده از تمام ظرفیت CPU">فشرده سازی با استفاده از تمام ظرفیت CPU</a>
+                                </li>
+                                <li><a href="https://shgn.ir/2024-01-13/hangup-a-call-on-asterisk.html"
+                                       title="بستن تماس باز در asterisk">بستن تماس باز در asterisk</a>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-group">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            تازه ترین مطالب
+                        </div>
+                        <div class="panel-body">
+                            <ul>
+                                
+                            </ul>
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="panel-group">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            Linux ISO Images
+                        </div>
+                        <div class="panel-body">
+                            <ul>
+                                <li><a href="https://shgn.ir/images/gparted-live-1.1.0-1-amd64.iso"
+                                       title="gparted-live-1.1.0-1-amd64">GParted Live CD/USB/HD/PXE Bootable Image</a></li>
+                                <li><a href="https://shgn.ir/images/SNG7-PBX16-64bit-2302-1.iso"
+                                       title="FreePBX16-64bit-2302-1">FreePBX16-64bit-2302-1</a></li>
+                                <li><a href="https://shgn.ir/images/debian-12.2.0-amd64-netinst.iso"
+                                       title="debian-12.2.0-amd64-netinst.iso">debian-12.2.0-amd64-netinst</a></li>
+                                <li><a href="https://shgn.ir/images/debian-live-12.2.0-amd64-xfce.iso"
+                                       title="debian-live-12.2.0-amd64-xfce">debian-live-12.2.0-amd64-xfce</a></li>
+                                <li><a href="https://shgn.ir/images/ubuntu-22.04.3-desktop-amd64.iso"
+                                       title="ubuntu-22.04.3-desktop-amd64">Ubuntu Desktop</a></li>
+                                <li><a href="https://shgn.ir/images/ubuntu-22.04.3-live-server-amd64.iso"
+                                       title="ubuntu-22.04.3-live-server-amd64">Ubuntu Server</a></li>
+                                <li><a href="https://shgn.ir/images/CentOS-8.2.2004-x86_64-minimal.iso"
+                                       title="CentOS-8.2.2004-x86_64-minimal">CentOS-8.2.2004-x86_64-minimal</a></li>
+                                <li><a href="https://shgn.ir/images/clonezilla-live-3.1.1-27-amd64.iso"
+                                       title="clonezilla-live-3.1.1-27-amd64">clonezilla-live</a></li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<hr/>
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                
+                <strong>پیشنهادی های</strong>
+                <ul>
+                    
+                    <li><a href="https://github.com/shgninc">GitHub</a></li>
+                    
+                    <li><a href="https://www.instagram.com/shgninc/">Instagram</a></li>
+                    
+                    <li><a href="https://virgool.io/@shgninc">Virgool</a></li>
+                    
+                    <li><a href="https://www.linkedin.com/in/sajjad-shahcheraghean/">Linkedin</a></li>
+                    
+                    <li><a href="https://twitter.com/shahcheraghian">Twiteer</a></li>
+                    
+                    <li><a href="https://virasty.com/twitter">Virsty</a></li>
+                    
+                    <li><a href="https://shgn.ir/mariadb-failover">Falilover By Maxscale</a></li>
+                    
+                    <li><a href="https://shgn.ir/yii2/">معرفی Yii2</a></li>
+                    
+                </ul>
+                
+            </div>
+            <div class="col-md-6">
+                <strong>دسترسی های ساده</strong>
+                <ul>
+                    <li><a href="/">تمامی پست ها</a></li>
+                    <li><a href="/tags.html">فهرست تگ ها</a></li>
+                    <li><a href="/tag/video.html">ویدیوها</a></li>
+                </ul>
+            </div>
+            <div class="col-md-12">
+                <p class="text-center"><small>https://shgn.ir &copy; 2025</small></p>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://shgn.ir/static/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+            integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+            crossorigin="anonymous"></script>
+
+<script src="https://shgn.ir/static/jquery/3.5.1/app.js"></script>
+<script src="https://shgn.ir/static/ProngnRoll/prognroll.min.js"></script>
+<script>
+var jQ_3_5_1 = jQuery.noConflict(true);
+
+    /*Scroll to top when arrow up clicked BEGIN*/
+jQ_3_5_1(window).scroll(function() {
+    var height = jQ_3_5_1(window).scrollTop();
+    if (height > 100) {
+        jQ_3_5_1('#back2Top').fadeIn();
+    } else {
+        jQ_3_5_1('#back2Top').fadeOut();
+    }
+});
+jQ_3_5_1(document).ready(function() {
+    jQ_3_5_1("#back2Top").click(function(event) {
+        event.preventDefault();
+        jQ_3_5_1("html, body").animate({ scrollTop: 0 }, "slow");
+        return false;
+    });
+});
+ /*Scroll to top when arrow up clicked END*/
+
+/* https://www.jqueryscript.net/other/jQuery-Scroll-Progress-Indicator-For-Any-Containers-ProngnRoll.html */
+
+jQ_3_5_1("body").prognroll({
+  position:"bottom",
+  height:5,
+  color:"#f54905"
+});
+
+</script>
+
+<a id="back2Top" title="Back to top" href="#">&#10148;</a>
+</body>
+</html>
